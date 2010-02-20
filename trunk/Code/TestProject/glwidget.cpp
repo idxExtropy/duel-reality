@@ -87,6 +87,8 @@ void GLWidget::paintGL()
 
 void GLWidget::resizeGL(int width, int height)
 {
+    initializeGL();
+
     // Never divide by zero.
     if (height==0)
     {
