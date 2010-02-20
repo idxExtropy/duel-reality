@@ -44,7 +44,7 @@ void GLWidget::paintGL()
     glDrawPixels(unitTeamA[0].width(), unitTeamA[0].height(), GL_RGBA, GL_UNSIGNED_BYTE, glUnitTeamA[0].bits());
 
     // Show unit 1's health.
-    glColor3f(0.8f, 0.0f, 0.0f);
+    glColor3f(0.6f, 0.0f, 0.0f);
     glBegin(GL_QUADS);
         glVertex3f( unitTeamA[0].width(),                unitTeamA[0].height(), 0.0f );	// Left And Up 1 Unit (Top Left)
         glVertex3f( unitTeamA[0].width() + statusWidth,  unitTeamA[0].height(), 0.0f );	// Right And Up 1 Unit (Top Right)
@@ -53,7 +53,7 @@ void GLWidget::paintGL()
     glEnd();
 
     // Show unit 1's action points.
-    glColor3f(0.0f, 0.0f, 0.8f);
+    glColor3f(0.0f, 0.0f, 0.6f);
     glBegin(GL_QUADS);
         glVertex3f( unitTeamA[0].width() + statusWidth,      unitTeamA[0].height(), 0.0f );	// Left And Up 1 Unit (Top Left)
         glVertex3f( unitTeamA[0].width() + (2*statusWidth),  unitTeamA[0].height(), 0.0f );	// Right And Up 1 Unit (Top Right)
@@ -88,6 +88,7 @@ void GLWidget::paintGL()
 void GLWidget::resizeGL(int width, int height)
 {
     initializeGL();
+    paintGL();
 
     // Never divide by zero.
     if (height==0)
