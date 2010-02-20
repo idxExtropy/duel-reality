@@ -22,6 +22,8 @@ protected:
 
     QImage unitTeamA[20], glUnitTeamA[20];
     QImage unitTeamB[20], glUnitTeamB[20];
+    int cellCount;
+    GLfloat aTime[20];
 private:
 
 
