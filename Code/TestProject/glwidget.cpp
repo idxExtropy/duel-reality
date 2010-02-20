@@ -2,9 +2,11 @@
 
 GLWidget::GLWidget()
 {
-    startTimer( 11 ); //64-65fps
+    cellCount = 10;
+    startTimer( 20 ); //64-65fps = 11
     rotX = rotY = rotZ = 0.f;
     col = 0;
+    aTime[0] = 0;
 }
 
 void GLWidget::initializeGL()
@@ -14,7 +16,7 @@ void GLWidget::initializeGL()
     unitTeamB[0].load("../sprites/desertsoldier_left.bmp");
 
     // Resize the sprites (hard coded).
-    unitTeamA[0] = unitTeamA[0].scaled(GLWidget::width()/10 * 0.7, GLWidget::height()/10, Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
+    unitTeamA[0] = unitTeamA[0].scaled(GLWidget::width()/cellCount * 0.7, GLWidget::height()/cellCount, Qt::KeepAspectRatio, Qt::SmoothTransformation );
     glUnitTeamA[0] = QGLWidget::convertToGLFormat(unitTeamA[0]);
 
     glShadeModel(GL_SMOOTH);						// Enable Smooth Shading
@@ -29,12 +31,10 @@ void GLWidget::initializeGL()
 
 void GLWidget::paintGL()
 {
-    int cellCount = 10;
-
     GLfloat fullWidth = GLWidget::width();
     GLfloat fullHeight = GLWidget::height();
 
-    GLfloat statusWidth = (fullWidth / cellCount) * 0.15f;
+    GLfloat statusWidth = (fullWidth / cellCount) * 0.1f;
 
     //draw scene here
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -55,8 +55,8 @@ void GLWidget::paintGL()
     // Show unit 1's action points.
     glColor3f(0.0f, 0.0f, 0.6f);
     glBegin(GL_QUADS);
-        glVertex3f( unitTeamA[0].width() + statusWidth,      unitTeamA[0].height(), 0.0f );	// Left And Up 1 Unit (Top Left)
-        glVertex3f( unitTeamA[0].width() + (2*statusWidth),  unitTeamA[0].height(), 0.0f );	// Right And Up 1 Unit (Top Right)
+        glVertex3f( unitTeamA[0].width() + statusWidth,      unitTeamA[0].height() * aTime[0], 0.0f );	// Left And Up 1 Unit (Top Left)
+        glVertex3f( unitTeamA[0].width() + (2*statusWidth),  unitTeamA[0].height() * aTime[0], 0.0f );	// Right And Up 1 Unit (Top Right)
         glVertex3f( unitTeamA[0].width() + (2*statusWidth),  0.0f, 0.0f );	// Right And Down One Unit (Bottom Right)
         glVertex3f( unitTeamA[0].width() + statusWidth,      0.0f, 0.0f );	// Left And Down One Unit (Bottom Left)
     glEnd();
@@ -83,13 +83,16 @@ void GLWidget::paintGL()
     // Write some text.
     qglColor(Qt::cyan);
     renderText(330, 310, 0.0, "Tom text!");
+
+    aTime[0] += 0.01;
+    if (aTime[0] >= 1)
+    {
+        aTime[0] = 0.0;
+    }
 }
 
 void GLWidget::resizeGL(int width, int height)
 {
-    initializeGL();
-    paintGL();
-
     // Never divide by zero.
     if (height==0)
     {
@@ -101,7 +104,10 @@ void GLWidget::resizeGL(int width, int height)
     glMatrixMode (GL_PROJECTION);
     glLoadIdentity();
     glOrtho(0, width,0,height,-1,1);
-    glMatrixMode (GL_MODELVIEW);    						// Reset The Modelview Matrix
+    glMatrixMode (GL_MODELVIEW);
+
+    initializeGL();
+    paintGL();
 }
 
 void GLWidget::mousePressEvent(QMouseEvent *event)
