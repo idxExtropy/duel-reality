@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Fri Feb 19 17:00:51 2010
+** Created: Fri Feb 19 23:26:58 2010
 **      by: Qt User Interface Compiler version 4.6.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -61,7 +61,7 @@ public:
         sizePolicy.setHeightForWidth(MainWindow->sizePolicy().hasHeightForWidth());
         MainWindow->setSizePolicy(sizePolicy);
         MainWindow->setMinimumSize(QSize(720, 540));
-        MainWindow->setMaximumSize(QSize(720, 540));
+        MainWindow->setMaximumSize(QSize(16777215, 16777215));
         MainWindow->setStyleSheet(QString::fromUtf8(""));
         actionE_xit = new QAction(MainWindow);
         actionE_xit->setObjectName(QString::fromUtf8("actionE_xit"));
