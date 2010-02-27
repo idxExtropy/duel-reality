@@ -8,11 +8,13 @@ static const int NO_UNIT = 0;
 static const int UNIT_DEAD = 1;
 static const int UNIT_OK = 2;
 static const int MAX_UNITS = 10;
+static const int TIMER_INTERVAL = 100;
 
 class characterUnit
 {
 public:
     QImage  image;
+    QImage  mask_image;
     int     xLocation;
     int     yLocation;
     int     hitPoints;
@@ -24,7 +26,7 @@ public:
     int     attackPower;
     int     status;
     bool    selected;
-    bool    team;
+    bool    leftTeam;
 };
 
 class GLWidget : public QGLWidget
