@@ -81,6 +81,7 @@
      <string>&amp;Config</string>
     </property>
     <addaction name="actionOptions"/>
+    <addaction name="actionD"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menu_Map"/>
@@ -172,6 +173,16 @@
    </property>
    <property name="toolTip">
     <string>Game Summary</string>
+   </property>
+  </action>
+  <action name="actionJkjjk">
+   <property name="text">
+    <string>jkjjk</string>
+   </property>
+  </action>
+  <action name="actionD">
+   <property name="text">
+    <string>D</string>
    </property>
   </action>
  </widget>
