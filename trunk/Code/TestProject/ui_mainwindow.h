@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Fri Feb 19 23:26:58 2010
+** Created: Tue Feb 23 19:41:38 2010
 **      by: Qt User Interface Compiler version 4.6.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -40,6 +40,8 @@ public:
     QAction *actionMOV;
     QAction *actionSTATUS;
     QAction *actionSummary;
+    QAction *actionJkjjk;
+    QAction *actionD;
     QWidget *centralWidget;
     QHBoxLayout *horizontalLayout_2;
     QHBoxLayout *horizontalLayout;
@@ -87,6 +89,10 @@ public:
         actionSTATUS->setObjectName(QString::fromUtf8("actionSTATUS"));
         actionSummary = new QAction(MainWindow);
         actionSummary->setObjectName(QString::fromUtf8("actionSummary"));
+        actionJkjjk = new QAction(MainWindow);
+        actionJkjjk->setObjectName(QString::fromUtf8("actionJkjjk"));
+        actionD = new QAction(MainWindow);
+        actionD->setObjectName(QString::fromUtf8("actionD"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         horizontalLayout_2 = new QHBoxLayout(centralWidget);
@@ -132,6 +138,7 @@ public:
         menu_Map->addSeparator();
         menu_Map->addAction(action_Load_New_Map);
         menu_Config->addAction(actionOptions);
+        menu_Config->addAction(actionD);
         mainToolBar->addAction(actionATK);
         mainToolBar->addAction(actionMOV);
         mainToolBar->addAction(actionSTATUS);
@@ -169,6 +176,8 @@ public:
 #ifndef QT_NO_TOOLTIP
         actionSummary->setToolTip(QApplication::translate("MainWindow", "Game Summary", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
+        actionJkjjk->setText(QApplication::translate("MainWindow", "jkjjk", 0, QApplication::UnicodeUTF8));
+        actionD->setText(QApplication::translate("MainWindow", "D", 0, QApplication::UnicodeUTF8));
         menuFile->setTitle(QApplication::translate("MainWindow", "&File", 0, QApplication::UnicodeUTF8));
         menu_Map->setTitle(QApplication::translate("MainWindow", "&Map", 0, QApplication::UnicodeUTF8));
         menu_Config->setTitle(QApplication::translate("MainWindow", "&Config", 0, QApplication::UnicodeUTF8));
