@@ -50,7 +50,7 @@
  </data>
  <data>
   <variable>activebuildconfiguration</variable>
-  <value type="QString">Debug</value>
+  <value type="QString">Release</value>
  </data>
  <data>
   <variable>buildConfiguration-Debug</variable>
@@ -251,18 +251,125 @@
   <variable>buildconfiguration-Release-buildstep0</variable>
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Release</value>
+   <valuelist key="abstractProcess.Environment" type="QVariantList">
+    <value type="QString">ALLUSERSPROFILE=C:\ProgramData</value>
+    <value type="QString">APPDATA=C:\Users\Copper\AppData\Roaming</value>
+    <value type="QString">COMMONPROGRAMFILES=C:\Program Files (x86)\Common Files</value>
+    <value type="QString">COMMONPROGRAMFILES(X86)=C:\Program Files (x86)\Common Files</value>
+    <value type="QString">COMMONPROGRAMW6432=C:\Program Files\Common Files</value>
+    <value type="QString">COMPUTERNAME=BLACKLAP</value>
+    <value type="QString">COMSPEC=C:\Windows\system32\cmd.exe</value>
+    <value type="QString">FP_NO_HOST_CHECK=NO</value>
+    <value type="QString">HOMEDRIVE=C:</value>
+    <value type="QString">HOMEPATH=\Users\Copper</value>
+    <value type="QString">LOCALAPPDATA=C:\Users\Copper\AppData\Local</value>
+    <value type="QString">LOGONSERVER=\\BLACKLAP</value>
+    <value type="QString">NUMBER_OF_PROCESSORS=8</value>
+    <value type="QString">ONLINESERVICES=Online Services</value>
+    <value type="QString">OS=Windows_NT</value>
+    <value type="QString">PATH=C:\Qt\2010.01\mingw\bin;C:\Qt\2010.01\qt\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Broadcom\Broadcom 802.11\Driver;C:\Program Files\MATLAB\R2007b\bin;C:\Program Files\MATLAB\R2007b\bin\win64;%QUARTUS_ROOTDIR%\bin;C:\Program Files\MATLAB\MATLAB Compiler Runtime\v712\runtime\win64;C:\Program Files\TortoiseSVN\bin;C:\Program Files (x86)\MATLAB\MATLAB Compiler Runtime\v711\runtime\win32</value>
+    <value type="QString">PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC</value>
+    <value type="QString">PCBRAND=Pavilion</value>
+    <value type="QString">PLATFORM=MCD</value>
+    <value type="QString">PROCESSOR_ARCHITECTURE=x86</value>
+    <value type="QString">PROCESSOR_ARCHITEW6432=AMD64</value>
+    <value type="QString">PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 30 Stepping 5, GenuineIntel</value>
+    <value type="QString">PROCESSOR_LEVEL=6</value>
+    <value type="QString">PROCESSOR_REVISION=1e05</value>
+    <value type="QString">PROGRAMDATA=C:\ProgramData</value>
+    <value type="QString">PROGRAMFILES=C:\Program Files (x86)</value>
+    <value type="QString">PROGRAMFILES(X86)=C:\Program Files (x86)</value>
+    <value type="QString">PROGRAMW6432=C:\Program Files</value>
+    <value type="QString">PSMODULEPATH=C:\Windows\system32\WindowsPowerShell\v1.0\Modules\</value>
+    <value type="QString">PUBLIC=C:\Users\Public</value>
+    <value type="QString">QTDIR=C:/Qt/2010.01/qt</value>
+    <value type="QString">SESSIONNAME=Console</value>
+    <value type="QString">SYSTEMDRIVE=C:</value>
+    <value type="QString">SYSTEMROOT=C:\Windows</value>
+    <value type="QString">TEMP=C:\Users\Copper\AppData\Local\Temp</value>
+    <value type="QString">TMP=C:\Users\Copper\AppData\Local\Temp</value>
+    <value type="QString">USERDOMAIN=BlackLap</value>
+    <value type="QString">USERNAME=Copper</value>
+    <value type="QString">USERPROFILE=C:\Users\Copper</value>
+    <value type="QString">VS90COMNTOOLS=c:\Program Files (x86)\Microsoft Visual Studio 9.0\Common7\Tools\</value>
+    <value type="QString">WINDIR=C:\Windows</value>
+   </valuelist>
+   <valuelist key="abstractProcess.arguments" type="QVariantList">
+    <value type="QString">C:/Users/Copper/Engineering/Classes/SE/duel-reality/Code/TestProject/DuelReality.pro</value>
+    <value type="QString">-spec</value>
+    <value type="QString">win32-g++</value>
+    <value type="QString">-r</value>
+    <value type="QString">CONFIG+=release</value>
+   </valuelist>
+   <value key="abstractProcess.command" type="QString">c:/qt/2010.01/qt/bin/qmake.exe</value>
+   <value key="abstractProcess.enabled" type="bool">true</value>
+   <value key="abstractProcess.workingDirectory" type="QString">C:/Users/Copper/Engineering/Classes/SE/duel-reality/Code/TestProject</value>
   </valuemap>
  </data>
  <data>
   <variable>buildconfiguration-Release-buildstep1</variable>
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Release</value>
+   <valuelist key="abstractProcess.Environment" type="QVariantList">
+    <value type="QString">ALLUSERSPROFILE=C:\ProgramData</value>
+    <value type="QString">APPDATA=C:\Users\Copper\AppData\Roaming</value>
+    <value type="QString">COMMONPROGRAMFILES=C:\Program Files (x86)\Common Files</value>
+    <value type="QString">COMMONPROGRAMFILES(X86)=C:\Program Files (x86)\Common Files</value>
+    <value type="QString">COMMONPROGRAMW6432=C:\Program Files\Common Files</value>
+    <value type="QString">COMPUTERNAME=BLACKLAP</value>
+    <value type="QString">COMSPEC=C:\Windows\system32\cmd.exe</value>
+    <value type="QString">FP_NO_HOST_CHECK=NO</value>
+    <value type="QString">HOMEDRIVE=C:</value>
+    <value type="QString">HOMEPATH=\Users\Copper</value>
+    <value type="QString">LOCALAPPDATA=C:\Users\Copper\AppData\Local</value>
+    <value type="QString">LOGONSERVER=\\BLACKLAP</value>
+    <value type="QString">NUMBER_OF_PROCESSORS=8</value>
+    <value type="QString">ONLINESERVICES=Online Services</value>
+    <value type="QString">OS=Windows_NT</value>
+    <value type="QString">PATH=C:\Qt\2010.01\mingw\bin;C:\Qt\2010.01\qt\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Broadcom\Broadcom 802.11\Driver;C:\Program Files\MATLAB\R2007b\bin;C:\Program Files\MATLAB\R2007b\bin\win64;%QUARTUS_ROOTDIR%\bin;C:\Program Files\MATLAB\MATLAB Compiler Runtime\v712\runtime\win64;C:\Program Files\TortoiseSVN\bin;C:\Program Files (x86)\MATLAB\MATLAB Compiler Runtime\v711\runtime\win32</value>
+    <value type="QString">PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC</value>
+    <value type="QString">PCBRAND=Pavilion</value>
+    <value type="QString">PLATFORM=MCD</value>
+    <value type="QString">PROCESSOR_ARCHITECTURE=x86</value>
+    <value type="QString">PROCESSOR_ARCHITEW6432=AMD64</value>
+    <value type="QString">PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 30 Stepping 5, GenuineIntel</value>
+    <value type="QString">PROCESSOR_LEVEL=6</value>
+    <value type="QString">PROCESSOR_REVISION=1e05</value>
+    <value type="QString">PROGRAMDATA=C:\ProgramData</value>
+    <value type="QString">PROGRAMFILES=C:\Program Files (x86)</value>
+    <value type="QString">PROGRAMFILES(X86)=C:\Program Files (x86)</value>
+    <value type="QString">PROGRAMW6432=C:\Program Files</value>
+    <value type="QString">PSMODULEPATH=C:\Windows\system32\WindowsPowerShell\v1.0\Modules\</value>
+    <value type="QString">PUBLIC=C:\Users\Public</value>
+    <value type="QString">QTDIR=C:/Qt/2010.01/qt</value>
+    <value type="QString">SESSIONNAME=Console</value>
+    <value type="QString">SYSTEMDRIVE=C:</value>
+    <value type="QString">SYSTEMROOT=C:\Windows</value>
+    <value type="QString">TEMP=C:\Users\Copper\AppData\Local\Temp</value>
+    <value type="QString">TMP=C:\Users\Copper\AppData\Local\Temp</value>
+    <value type="QString">USERDOMAIN=BlackLap</value>
+    <value type="QString">USERNAME=Copper</value>
+    <value type="QString">USERPROFILE=C:\Users\Copper</value>
+    <value type="QString">VS90COMNTOOLS=c:\Program Files (x86)\Microsoft Visual Studio 9.0\Common7\Tools\</value>
+    <value type="QString">WINDIR=C:\Windows</value>
+   </valuelist>
+   <value key="abstractProcess.IgnoreReturnValue" type="bool">false</value>
+   <valuelist key="abstractProcess.arguments" type="QVariantList">
+    <value type="QString">-w</value>
+   </valuelist>
+   <value key="abstractProcess.command" type="QString">C:/Qt/2010.01/mingw/bin/mingw32-make.exe</value>
+   <value key="abstractProcess.enabled" type="bool">true</value>
+   <value key="abstractProcess.workingDirectory" type="QString">C:/Users/Copper/Engineering/Classes/SE/duel-reality/Code/TestProject</value>
   </valuemap>
  </data>
  <data>
   <variable>buildconfiguration-Release-cleanstep0</variable>
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Release</value>
+   <value key="cleanConfig" type="bool">true</value>
+   <valuelist key="makeargs" type="QVariantList">
+    <value type="QString">clean</value>
+   </valuelist>
   </valuemap>
  </data>
  <data>
