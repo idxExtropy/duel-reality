@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>720</width>
+    <height>540</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>720</width>
+    <height>540</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>16777215</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Duel Reality: 2D Tactical Combat for 16.553</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="sizeConstraint">
+       <enum>QLayout::SetNoConstraint</enum>
+      </property>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>720</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>&amp;File</string>
+    </property>
+    <addaction name="action_New_Game"/>
+    <addaction name="action_Save_Game"/>
+    <addaction name="action_Load_Game"/>
+    <addaction name="separator"/>
+    <addaction name="actionE_xit"/>
+   </widget>
+   <widget class="QMenu" name="menu_Map">
+    <property name="title">
+     <string>&amp;Map</string>
+    </property>
+    <addaction name="actionAdd_Friendly_Unit"/>
+    <addaction name="actionAdd_Enemy_Unit"/>
+    <addaction name="separator"/>
+    <addaction name="action_Load_New_Map"/>
+   </widget>
+   <widget class="QMenu" name="menu_Config">
+    <property name="title">
+     <string>&amp;Config</string>
+    </property>
+    <addaction name="actionOptions"/>
+    <addaction name="actionD"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menu_Map"/>
+   <addaction name="menu_Config"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>LeftToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionATK"/>
+   <addaction name="actionMOV"/>
+   <addaction name="actionSTATUS"/>
+   <addaction name="actionSummary"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionE_xit">
+   <property name="text">
+    <string>E&amp;xit</string>
+   </property>
+  </action>
+  <action name="action_Load_Game">
+   <property name="text">
+    <string>&amp;Load Game</string>
+   </property>
+  </action>
+  <action name="action_Save_Game">
+   <property name="text">
+    <string>&amp;Save Game</string>
+   </property>
+  </action>
+  <action name="action_Load_New_Map">
+   <property name="text">
+    <string>&amp;Load New Map</string>
+   </property>
+  </action>
+  <action name="actionAdd_Friendly_Unit">
+   <property name="text">
+    <string>Add &amp;Friendly Unit</string>
+   </property>
+  </action>
+  <action name="actionAdd_Enemy_Unit">
+   <property name="text">
+    <string>Add &amp;Enemy Unit</string>
+   </property>
+  </action>
+  <action name="action_New_Game">
+   <property name="text">
+    <string>&amp;New Game</string>
+   </property>
+  </action>
+  <action name="actionOptions">
+   <property name="text">
+    <string>&amp;Options</string>
+   </property>
+  </action>
+  <action name="actionATK">
+   <property name="text">
+    <string>Attack</string>
+   </property>
+   <property name="toolTip">
+    <string>Attack</string>
+   </property>
+  </action>
+  <action name="actionMOV">
+   <property name="text">
+    <string>Move</string>
+   </property>
+   <property name="toolTip">
+    <string>Move Unit</string>
+   </property>
+  </action>
+  <action name="actionSTATUS">
+   <property name="text">
+    <string>Status</string>
+   </property>
+   <property name="toolTip">
+    <string>Show Unit Status</string>
+   </property>
+  </action>
+  <action name="actionSummary">
+   <property name="text">
+    <string>Summary</string>
+   </property>
+   <property name="toolTip">
+    <string>Game Summary</string>
+   </property>
+  </action>
+  <action name="actionJkjjk">
+   <property name="text">
+    <string>jkjjk</string>
+   </property>
+  </action>
+  <action name="actionD">
+   <property name="text">
+    <string>D</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
