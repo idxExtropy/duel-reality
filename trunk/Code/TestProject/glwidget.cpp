@@ -211,7 +211,7 @@ void GLWidget::paintGL()
             if (mapGrid[i][j].isSelected && mapGrid[i][j].isUnit)
             {
                 // Draw information header.
-                qglColor(Qt::black);
+                glColor4f( 0.0f, 0.0f, 0.0f, 0.8f );
                 glBegin (GL_QUADS);
                     glVertex3f (15, GLWidget::height() - 20, 0.0);
                     glVertex3f (15 + 250, GLWidget::height() - 20, 0.0);
@@ -225,7 +225,9 @@ void GLWidget::paintGL()
                 int vLoc = GLWidget::height() - 40;
 
                 // Unit name.
-                renderText(30, vLoc, 0.0, mapGrid[i][j].unit.name.c_str());
+                QFont nameFont = GLWidget::font();
+                nameFont.setBold(true);
+                renderText(30, vLoc, 0.0, mapGrid[i][j].unit.name.c_str(), nameFont);
                 vLoc -= 15;
 
                 // Unit hit points.
