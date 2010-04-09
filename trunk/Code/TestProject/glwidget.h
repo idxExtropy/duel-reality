@@ -62,13 +62,14 @@ class GLWidget : public QGLWidget
         void timerEvent(QTimerEvent *event);
         void resizeGL(int width, int height);
         bool updateUnit(characterUnit unit);
-        bool drawGridBox(int cellFromLeft, int cellFromBottom, bool isSelected);
+        bool drawGridBox(int cellFromLeft, int cellFromBottom);
     
         // Content data.
         characterUnit   unit[MAX_UNITS];
         battleMap       map;
         GLfloat statusWidth, fullWidth, fullHeight, cellWidth, cellHeight;
         QImage bkImage, glBkImage;
+        point mouseClick;
 
         // Effect values.
         int selectedBorder;
