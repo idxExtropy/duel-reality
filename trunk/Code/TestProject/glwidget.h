@@ -19,7 +19,7 @@ class battleMap
         string  mapFilename;
         int     cellsWide;
         int     cellsTall;
-        float   gridHeight;
+        float   gridHeight; // Ratio of grid to header.
 };
 
 class characterUnit
@@ -52,7 +52,7 @@ class GLWidget : public QGLWidget
 {
     public:
         GLWidget();
-        void debug_GenerateContent();
+        void unitTest_GenerateContent();
     
     protected:
         void initializeGL();
@@ -64,10 +64,14 @@ class GLWidget : public QGLWidget
         bool updateUnit(characterUnit unit);
         bool drawGridBox(int cellFromLeft, int cellFromBottom, bool isSelected);
     
+        // Content data.
         characterUnit   unit[MAX_UNITS];
         battleMap       map;
         GLfloat statusWidth, fullWidth, fullHeight, cellWidth, cellHeight;
         QImage bkImage, glBkImage;
+
+        // Effect values.
+        int selectedBorder;
     
     private:
 };

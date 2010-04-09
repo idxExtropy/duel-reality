@@ -8,21 +8,22 @@
 ///////////////////////////////////////////////////////////////////////////////
 GLWidget::GLWidget()
 {
+    selectedBorder = 1;
     startTimer( TIMER_INTERVAL );
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-//	Function Name:	debug_GenerateContent()
+//	Function Name:	unitTest_GenerateContent()
 //	Description:	Add content for unit testing.
 //	Modified:	03/02/2010
 //	Author:		Tom Calloway
 ///////////////////////////////////////////////////////////////////////////////
-void GLWidget::debug_GenerateContent()
+void GLWidget::unitTest_GenerateContent()
 {
     // Select a battle map.
-    map.mapFilename = "backgrounds/grass.png";
-    map.cellsTall = 5;
-    map.cellsWide = 7;
+    map.mapFilename = "backgrounds/grassnight.png";
+    map.cellsTall = 7;
+    map.cellsWide = 9;
     map.gridHeight = 0.55;
 
     // Create a new unit (for gl debug purposes).
@@ -112,7 +113,7 @@ void GLWidget::debug_GenerateContent()
 ///////////////////////////////////////////////////////////////////////////////
 void GLWidget::initializeGL()
 {
-    debug_GenerateContent();
+    unitTest_GenerateContent();
 
     // Load a background image (debug).
     bkImage.load(map.mapFilename.c_str());
@@ -196,14 +197,14 @@ bool GLWidget::drawGridBox(int cellFromLeft, int cellFromBottom, bool isSelected
     int padding = 3;
     if (isSelected)
     {
-        int lineWidth = 2;
-        glLineWidth(lineWidth);
+        if( selectedBorder == 2 )   selectedBorder = 1;
+        else                        selectedBorder = 2;
+        glLineWidth(selectedBorder);
         glColor4f( 0.4f, 0.0f, 0.0f, 0.8f );
     }
     else
     {
-        int lineWidth = 1;
-        glLineWidth(lineWidth);
+        glLineWidth( 1 );
         glColor4f( 0.4f, 0.4f, 0.4f, 0.8f );
     }
 
