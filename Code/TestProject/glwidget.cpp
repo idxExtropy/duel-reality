@@ -27,6 +27,7 @@ void GLWidget::unitTest_GenerateContent()
     map.gridHeight = 0.55;
 
     // Create a new unit (for gl debug purposes).
+    unit[0].name = "Wizard";
     unit[0].actionTime = 10;
     unit[0].actionRate = 150;
     unit[0].hitPoints = 80;
@@ -39,6 +40,7 @@ void GLWidget::unitTest_GenerateContent()
     unit[0].faceLeft = false;
 
     // Create a new unit (for gl debug purposes).
+    unit[1].name = "Monk";
     unit[1].actionTime = 10;
     unit[1].actionRate = 200;
     unit[1].hitPoints = 40;
@@ -51,6 +53,7 @@ void GLWidget::unitTest_GenerateContent()
     unit[1].faceLeft = false;
 
     // Create a new unit (for gl debug purposes).
+    unit[2].name = "Bard";
     unit[2].actionTime = 40;
     unit[2].actionRate = 100;
     unit[2].hitPoints = 10;
@@ -63,6 +66,7 @@ void GLWidget::unitTest_GenerateContent()
     unit[2].faceLeft = false;
 
     // Create a new unit (for gl debug purposes).
+    unit[3].name = "Desert Soldier";
     unit[3].actionTime = 40;
     unit[3].actionRate = 100;
     unit[3].hitPoints = 10;
@@ -75,6 +79,7 @@ void GLWidget::unitTest_GenerateContent()
     unit[3].faceLeft = true;
 
     // Create a new unit (for gl debug purposes).
+    unit[4].name = "Merchant";
     unit[4].actionTime = 40;
     unit[4].actionRate = 100;
     unit[4].hitPoints = 10;
@@ -87,6 +92,7 @@ void GLWidget::unitTest_GenerateContent()
     unit[4].faceLeft = true;
 
     // Create a new unit (for gl debug purposes).
+    unit[5].name = "Priestess";
     unit[5].actionTime = 40;
     unit[5].actionRate = 100;
     unit[5].hitPoints = 10;
@@ -115,11 +121,14 @@ void GLWidget::initializeGL()
 {
     unitTest_GenerateContent();
 
+    initGrid();
+
     // Load a background image (debug).
     bkImage.load(map.mapFilename.c_str());
     bkImage = bkImage.scaled(GLWidget::width(), GLWidget::height(), Qt::KeepAspectRatio, Qt::SmoothTransformation );
     glBkImage = QGLWidget::convertToGLFormat(bkImage);
 
+    // Setup OpenGL values for appropriate graphics.
     glShadeModel(GL_SMOOTH);						// Enable Smooth Shading
     glClearColor(0.0f, 0.0f, 0.0f, 0.5f);				// Black Background
     glClearDepth(1.0f);							// Depth Buffer Setup
@@ -128,6 +137,29 @@ void GLWidget::initializeGL()
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);			// Type Of Blending To Use
 
     return;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//	Function Name:	initGrid()
+//	Description:
+//	Modified:	04/09/2010
+//	Author:		Tom Calloway
+///////////////////////////////////////////////////////////////////////////////
+void GLWidget::initGrid()
+{
+    for (int i = 0; i < MAX_GRID_DIMENSION; i++)
+    {
+        for (int j = 0; j < MAX_GRID_DIMENSION; j++)
+        {
+            mapGrid[i][j].isUnit = false;
+            mapGrid[i][j].isSelected = false;
+
+            mapGrid[i][j].cellWidth = fullWidth / map.cellsWide;
+            mapGrid[i][j].cellHeight = fullHeight / map.cellsTall;
+            mapGrid[i][j].bottomEdge = i * cellHeight;
+            mapGrid[i][j].leftEdge = j * cellWidth;
+        }
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -144,37 +176,101 @@ void GLWidget::paintGL()
     // Draw the background.
     glDrawPixels(glBkImage.width(), glBkImage.height(), GL_RGBA, GL_UNSIGNED_BYTE, glBkImage.bits());
     
-    // Draw the grid.
-    for (int i = 0; i < map.cellsWide; i++)
+    for (int i = 0; i < map.cellsTall; i++)
     {
-        for (int j = 0; j < map.cellsTall; j++)
+        for (int j = 0; j < map.cellsWide; j++)
         {
-            if (i == 1 && j == 1)
-            {
-                drawGridBox(i, j);
-            }
-            else
-            {
-                drawGridBox(i, j);
-            }
+            // Draw the grid.
+            drawGridBox(i, j);
+
+            // Assume no unit at the beginning.
+            mapGrid[i][j].isUnit = false;
         }
     }
 
-    // Draw the units.
     for (int i = 0; i < MAX_UNITS; i++)
     {
+        // Draw the units.
         updateUnit(unit[i]);
+
+        mapGrid[unit[i].vLocation][unit[i].hLocation].unit = unit[i];
+        mapGrid[unit[i].vLocation][unit[i].hLocation].isUnit = true;
+
+        // Update the action time (unitTest).
         if (unit[i].actionTime >= 100)
         {
-            //killTimer(1);
             unit[i].actionTime = 0;
         }
         unit[i].actionTime += 0.005 * unit[i].actionRate;
     }
 
-    // Draw the header graphics.
-    qglColor(Qt::white);
-    renderText(20, fullHeight + 150, 0.0, "Header graphics coming soon...");
+    for (int i = 0; i < map.cellsTall; i++)
+    {
+        for (int j = 0; j < map.cellsWide; j++)
+        {
+            if (mapGrid[i][j].isSelected && mapGrid[i][j].isUnit)
+            {
+                // Draw information header.
+                qglColor(Qt::black);
+                glBegin (GL_QUADS);
+                    glVertex3f (15, GLWidget::height() - 20, 0.0);
+                    glVertex3f (15 + 250, GLWidget::height() - 20, 0.0);
+                    glVertex3f (15 + 250, GLWidget::height() - 20 - 100, 0.0);
+                    glVertex3f (15, GLWidget::height() - 20 - 100, 0.0);
+                glEnd();
+
+                qglColor(Qt::white);
+                char *tmpString = (char*)malloc(256);
+                string displayString = "";
+                int vLoc = GLWidget::height() - 40;
+
+                // Unit name.
+                renderText(30, vLoc, 0.0, mapGrid[i][j].unit.name.c_str());
+                vLoc -= 15;
+
+                // Unit hit points.
+                itoa(mapGrid[i][j].unit.hitPoints, tmpString, 10);
+                displayString = "Hit Points: ";
+                displayString.append(tmpString);
+                renderText(30, vLoc, 0.0, displayString.c_str());
+                vLoc -= 15;
+
+                // Unit attack power.
+                itoa(mapGrid[i][j].unit.attackPower, tmpString, 10);
+                displayString = "Attack Power: ";
+                displayString.append(tmpString);
+                renderText(30, vLoc, 0.0, displayString.c_str());
+                vLoc -= 15;
+            }
+        }
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//	Function Name:	isGridBoxSelected()
+//	Description:	Draw the requested grid box.
+//                      Call this fuction in a loop to get full grid.
+//                      If 'isSelected' is true, the box is red.
+//	Modified:	03/02/2010
+//	Author:		Tom Calloway
+///////////////////////////////////////////////////////////////////////////////
+bool GLWidget::isGridBoxSelected(int i, int j)
+{
+    if (mouseClick.hLoc > mapGrid[i][j].leftEdge && mouseClick.hLoc < mapGrid[i][j].leftEdge + cellWidth)
+    {
+        if (mouseClick.vLoc > mapGrid[i][j].bottomEdge && mouseClick.vLoc < mapGrid[i][j].bottomEdge + cellHeight)
+        {
+            return (true);
+        }
+        else
+        {
+            return (false);
+        }
+    }
+    else
+    {
+        return (false);
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -185,26 +281,14 @@ void GLWidget::paintGL()
 //	Modified:	03/02/2010
 //	Author:		Tom Calloway
 ///////////////////////////////////////////////////////////////////////////////
-bool GLWidget::drawGridBox(int cellFromLeft, int cellFromBottom)
+bool GLWidget::drawGridBox(int i, int j)
 {
-    // Define full (average) cell dimensions.
-    bool isSelected = false;
-    float cellWidth = fullWidth / map.cellsWide;
-    float cellHeight = fullHeight / map.cellsTall;
-    float leftEdge = cellFromLeft * cellWidth;
-    float bottomEdge = cellFromBottom * cellHeight;
-
-    if (mouseClick.hLoc > leftEdge && mouseClick.hLoc < leftEdge + cellWidth)
-    {
-        if (mouseClick.vLoc > bottomEdge && mouseClick.vLoc < bottomEdge + cellHeight)
-        {
-            isSelected = true;
-        }
-    }
+    // Find out whether or not the current grid is selected.
+    mapGrid[i][j].isSelected = isGridBoxSelected(i, j);
 
     // Cell border style.
     int padding = 3;
-    if (isSelected)
+    if (mapGrid[i][j].isSelected)
     {
         if( selectedBorder == 2 )   selectedBorder = 1;
         else                        selectedBorder = 2;
@@ -219,14 +303,14 @@ bool GLWidget::drawGridBox(int cellFromLeft, int cellFromBottom)
 
     // Define corner locations (without perspective).
     point ulLoc, urLoc, blLoc, brLoc;
-    blLoc.hLoc = leftEdge + padding;
-    blLoc.vLoc = bottomEdge + padding;
-    brLoc.hLoc = leftEdge + cellWidth - padding;
-    brLoc.vLoc = bottomEdge + padding;
-    ulLoc.hLoc = leftEdge + padding;
-    ulLoc.vLoc = bottomEdge + cellHeight - padding;
-    urLoc.hLoc = leftEdge + cellWidth - padding;
-    urLoc.vLoc = bottomEdge + cellHeight - padding;
+    blLoc.hLoc = mapGrid[i][j].leftEdge + padding;
+    blLoc.vLoc = mapGrid[i][j].bottomEdge + padding;
+    brLoc.hLoc = mapGrid[i][j].leftEdge + cellWidth - padding;
+    brLoc.vLoc = mapGrid[i][j].bottomEdge + padding;
+    ulLoc.hLoc = mapGrid[i][j].leftEdge + padding;
+    ulLoc.vLoc = mapGrid[i][j].bottomEdge + cellHeight - padding;
+    urLoc.hLoc = mapGrid[i][j].leftEdge + cellWidth - padding;
+    urLoc.vLoc = mapGrid[i][j].bottomEdge + cellHeight - padding;
 
     glRotatef(-5, 1.0, 0.0, 0.0);
     glBegin(GL_LINES);
@@ -434,6 +518,12 @@ void GLWidget::resizeGL(int width, int height)
     cellWidth = fullWidth / map.cellsWide;
     cellHeight = fullHeight / map.cellsTall;
 
+    mouseClick.hLoc = 0;
+    mouseClick.vLoc = 0;
+
+    // Reset grid locations and dimensions.
+    initGrid();
+    
     // Setup the 2d perspective.
     glViewport(0, 0, width, height);
     glMatrixMode (GL_PROJECTION);
