@@ -151,11 +151,11 @@ void GLWidget::paintGL()
         {
             if (i == 1 && j == 1)
             {
-                drawGridBox(i, j, true);
+                drawGridBox(i, j);
             }
             else
             {
-                drawGridBox(i, j, false);
+                drawGridBox(i, j);
             }
         }
     }
@@ -185,13 +185,22 @@ void GLWidget::paintGL()
 //	Modified:	03/02/2010
 //	Author:		Tom Calloway
 ///////////////////////////////////////////////////////////////////////////////
-bool GLWidget::drawGridBox(int cellFromLeft, int cellFromBottom, bool isSelected)
+bool GLWidget::drawGridBox(int cellFromLeft, int cellFromBottom)
 {
     // Define full (average) cell dimensions.
+    bool isSelected = false;
     float cellWidth = fullWidth / map.cellsWide;
     float cellHeight = fullHeight / map.cellsTall;
     float leftEdge = cellFromLeft * cellWidth;
-    float bottomEdge = cellFromBottom * cellHeight;// - (cellHeight * 1.2);
+    float bottomEdge = cellFromBottom * cellHeight;
+
+    if (mouseClick.hLoc > leftEdge && mouseClick.hLoc < leftEdge + cellWidth)
+    {
+        if (mouseClick.vLoc > bottomEdge && mouseClick.vLoc < bottomEdge + cellHeight)
+        {
+            isSelected = true;
+        }
+    }
 
     // Cell border style.
     int padding = 3;
@@ -431,12 +440,6 @@ void GLWidget::resizeGL(int width, int height)
     glLoadIdentity();
     glOrtho(0, width, 0, height, -1000, 1000);
 
-    // Use a 3d perspective.
-    //float aspectRatio = width / height;
-    //float viewPortSize = width * height;
-    //gluPerspective( 90, aspectRation, 1, 10000 );
-    //gluLookAt( width/2, height/2, viewPortSize/850, width/2, height/2, 0, 0.0, 1.0, 0.0);
-
     glMatrixMode (GL_MODELVIEW);
     glLoadIdentity();
 
@@ -459,9 +462,17 @@ void GLWidget::timerEvent(QTimerEvent *event)
     updateGL();
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//	Function Name:	mousePressEvent()
+//	Description:	Capture a user mouse click.
+//	Modified:	04/09/2010
+//	Author:		Tom Calloway
+///////////////////////////////////////////////////////////////////////////////
 void GLWidget::mousePressEvent(QMouseEvent *event)
 {
     // Proces mouse events for rotate/move inside 3D scene
+    mouseClick.hLoc = event->x();
+    mouseClick.vLoc = (fullHeight / map.gridHeight) - event->y();
 }
 
 void GLWidget::mouseMoveEvent(QMouseEvent *event)
