@@ -1,7 +1,6 @@
-
+/////blah
 #include <stdlib.h>
 #include <qtimer.h>
-
 #include <gameDoc.h>
 //others
 
@@ -13,66 +12,65 @@ gameDoc::gameDoc(QWidget* parent)		//constructor
 {
 	mPlayerDevice[0] = INPUT_MOUSE;
 	mPlayerDevice[1] = INPUT_AI;
-	mLevel = 0;				// will get loaded with selected or iterated
-
+	mLevel = 0;				
 	mTimer = new QTimer();
 	connect(mTimer, SIGNAL (timeout()),	//connect timeer to AI movement
 	this, SLOT(AiMove);
 }
 
-gameDoc::~gameDoc()
+gameDoc::~gameDoc()				//destructor
 {
 	delete mBoard;
 	delete mTimer;
 }
 
-void gameDoc::initDocument(gameView* view)
+void gameDoc::initDocument(gameView* view)		//initialize doc
 {
 mBoard = new board();
-endGame();
+endBattle();
 
-connect(this, SIGNAL(signalGameOver()),
-	view, SLOT(gameOver()));
+//connect(this, SIGNAL(signalGameOver()),
+//	view, SLOT(gameOver()));
 
-connect(mBoard, SIGNAL(signalsetPiece(int, int, int)),
-	view, SLOT(setUnit(int, int, int)));
+//connect(mBoard, SIGNAL(signalsetPiece(int, int, int)),
+//	view, SLOT(setUnit(int, int, int)));
 
-connect(mBoard, SIGNAL(signalMove(int int int)),
-	view, SLOT(markMove(int, int, int)));
+//connect(mBoard, SIGNAL(signalMove(int int int)),
+//	view, SLOT(markMove(int, int, int)));
 
-connect(this, SIGNAL(signalAIInfo(int, QMemArray<int>)),
-	view, SLOT(int, QMemeArray<int>)));
+//connect(this, SIGNAL(signalAIInfo(int, QMemArray<int>)),
+//	view, SLOT(int, QMemeArray<int>)));
 }
 
-void gameDoc::startGame();
+void gameDoc::startBattle();
 {
-	endGame();		//clear old
+	endBattle();		//clear old
 	
 	mBoard->setRunning(true);
-	mBoard->setNextPlayer(Player1);		//Player 1 always starts, else set to random?, possuble replace w/ player ID
+	mBoard->setNextPlayer(Player1);		//Player 1 always starts
 	emit signalNewMove();
 }
 
-void gameDoc::endGame()			//removes all pieces form board
+void gameDoc::endBattle()			//removes all pieces form board
 {
 	mTimer->stop();
 	mBoard->resetBoard();
 }
 
 
-bool gmaeDoc::isRunning()
+bool gmaeDoc::isRunning()			//checks to see if battle is running
 {
 	return mBoard->isRunning();
 
 }
 
 
-int gameDoc::nextPlayer();
+int gameDoc::nextPlayer();			//load next player
 {
 	return mBoard->nextPlayer();
 }
 
-bool gameDoc::isMouseInput()
+bool gameDoc::isMouseInput()			
 {	
 	if(!isRunning()) {return false;}
 	if(mPlayerDevice[nextPlayer()-PLAYER_1]==INPUT_MOUSE){return true;}
@@ -109,7 +107,7 @@ bool gameDoc::isValidMove(int px,int py)		//checks validity of move
 void gameDoc::startAiMove()
 	{
 	int px,py;
-	myAI ai(mBoard);			//creates AI!!!! :) LOL OMG 1111 DPS LFG 25 VOA 5600GS!!!
+	myAI ai(mBoard);			//creates AI
 	ai.setLevel(mLevel);
 	bool result = ai.getMove (px,py);
 	if (result) {movePlayer(px,py);}
@@ -117,8 +115,11 @@ void gameDoc::startAiMove()
 	QMemArray<int> values = ai.moveValues();
 	emit signalAIInfo(value, values);
 
-	if (mBoard->isGameOver() emit SignalGameOver();
+	if (mBoard->isGameOver())
+	{ 
+		emit SignalGameOver();
 	}
+}
 
 
 

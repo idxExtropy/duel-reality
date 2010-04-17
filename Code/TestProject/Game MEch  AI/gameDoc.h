@@ -1,4 +1,4 @@
-/*JOSH KILGORE*/
+//////blah*JOSH KILGORE*/
 //BASIC AI DOCUMENT gameDoc.h
 //V 0.1
 
@@ -29,7 +29,7 @@ public:
 	~gameDoc	//Destructor;
 	void initDocument(gameView* view); 	//initialize doc obj - makes connections
 	void setLevel(int Level) {mLevel = level;}	//sets game level
-	void startGame();			//initializr board, pieces, player
+	void startBattle();			//initializr board, pieces, player
 	void endBattle();			//removes pieces from board
 	bool isRunning();			// is game running?
 	bool isValidMove(int px, int py);	//determines if a move is valid

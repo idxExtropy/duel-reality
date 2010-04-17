@@ -13,23 +13,24 @@
 #include <qcanvas.h>
 #include <qobject.h>
 
-class Board.h : public Qobject   ///board func!!
+
+class Board:public QObject   ///board func!!
 {
 	Q_Object
 	
 	public: 
 		Board();
+		void copy(Board* board); 		
 		void resetBoard();
-		void copy(Board* board); //future interface to DB
 		bool isRunning() {return mRunning;}
 		void setRunning(bool run) {mRunning = run;} // sets to game run or not. 
 		int isNextPlayer() {return mNextPlayer; } //whose turn
-		void setnext Player(int player) {mNextPlayer = player;} //sets next player
+		void setnextPlayer(int player) {mNextPlayer = player;} //sets next player
 		bool movePlayer (int px, int py);  //moves player // returns T if valid
 		int isGameOver(); //checks game status
-		bool isValid Move(int px, int py);  //checks valid moves
-		void setPiece(int x, int y, int player) //***SETS PIECE AT COORDINATE AND PLAYER ASSIGNED TO!!!!!//
-		int getPiece(int x, int y); // gets piece - tie to mouse click
+		bool isValidMove(int px, int py);  //checks valid moves
+                void setPiece(int x, int y, int player); //***SETS PIECE AT COORDINATE AND PLAYER ASSIGNED TO!!!!!//
+		int getPiece(int x, int y); // 
 	signals: 
 
 		void signalSetPiece(int x,int y,int player);
@@ -37,14 +38,13 @@ class Board.h : public Qobject   ///board func!!
 
 	protected:
 		void switchPlayer();  //switches between players
-		void addMove Counter(int amount) {mMoveCounter+=amount;}
-//delete later - can i turn into action points ??
+                void addMoveCounter(int amount) {mMoveCounter+=amount;}
 		long random(long max);  //large random #
 
 	private:
 		QmemArray<char> mBoard;
 		bool mRunning; 
-		int mNextPlayert;
+		int mNextPlayer;
 		int mMoveCounter;
 };
 #endif
