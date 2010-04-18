@@ -48,7 +48,8 @@ private:
     //QHBoxLayout *horizontalLayout;
     //QMenuBar *menuBar;
     QMenu *menuGame;
-    QToolBar *toolBar;
+    QToolBar *gameToolBar;
+    QToolBar *actionToolBar;
     //QStatusBar *statusBar;
 };
 
