@@ -61,7 +61,7 @@
      actionExitGame->setIcon(QIcon("icons/exit.png"));
      actionExitGame->setShortcut(tr("Ctrl+X"));
      actionExitGame->setStatusTip(tr("Exit the game"));
-     //connect(actionExitGame, SIGNAL(triggered()), this, SLOT(close()));
+     connect(actionExitGame, SIGNAL(triggered()), this, SLOT(close()));
 
      actionAttack = new QAction(tr("Ctrl+A"), this);
      actionAttack->setIcon(QIcon("icons/attack.png"));
@@ -87,9 +87,16 @@
 
  void MainWindow::createToolBars()
  {
-     toolBar = addToolBar(tr("&Toolbar"));
-     toolBar->addAction(actionAttack);
-     toolBar->addAction(actionMove);
+     gameToolBar = addToolBar(tr("&Game"));
+     gameToolBar->setMovable(false);
+     gameToolBar->addAction(actionNewGame);
+     gameToolBar->addAction(actionLoadGame);
+     gameToolBar->addAction(actionSaveGame);
+
+     actionToolBar = addToolBar(tr("&Action"));
+     actionToolBar->setMovable(false);
+     actionToolBar->addAction(actionAttack);
+     actionToolBar->addAction(actionMove);
  }
 /*
  void MainWindow::createStatusBar()
