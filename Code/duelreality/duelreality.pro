@@ -3,7 +3,10 @@ QT += opengl \
     script \
     phonon
 HEADERS += mainwindow.h \
-    glwidget.h
+    glwidget.h \
+    ui_usernamedialog.h \
+    usernamedialog.h
 SOURCES += mainwindow.cpp \
     glwidget.cpp \
-    main.cpp
+    main.cpp \
+    usernamedialog.cpp

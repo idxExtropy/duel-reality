@@ -4,13 +4,12 @@
 #include <QMainWindow>
 #include <QtOpenGL>
 
-//#include "glwidget.h"
 
+// Forward declarations
 class QAction;
-//class QMenuBar;
 class QMenu;
+class UserNameDialog;
 class GLWidget;
-//class UserNameDialog;
 
 class MainWindow : public QMainWindow
 {
@@ -23,7 +22,7 @@ protected:
     void closeEvent(QCloseEvent *event);
 
 private slots:
-    //void newGame();
+    void newGame();
     //void loadGame();
     //bool exitGame();
     //bool saveGame();
@@ -32,11 +31,12 @@ private:
     void createActions();
     void createMenus();
     void createToolBars();
-    //void createStatusBar();
+    void createStatusBar();
 
     GLWidget *glWidget;
-    //UserNameDialog *userNameDialog;
+    UserNameDialog *userNameDialog;
 
+    // Actions and associated menus & toolbars
     QAction *actionNewGame;
     QAction *actionLoadGame;
     QAction *actionSaveGame;
@@ -44,13 +44,9 @@ private:
     QAction *actionAttack;
     QAction *actionMove;
     QWidget *centralWidget;
-    //QHBoxLayout *horizontalLayout_2;
-    //QHBoxLayout *horizontalLayout;
-    //QMenuBar *menuBar;
     QMenu *menuGame;
     QToolBar *gameToolBar;
     QToolBar *actionToolBar;
-    //QStatusBar *statusBar;
 };
 
 #endif // MAINWINDOW_H
