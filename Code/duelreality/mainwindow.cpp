@@ -6,10 +6,12 @@
 
 MainWindow::MainWindow()
 {
+    // Set central widget
     glWidget = new GLWidget;
     setCentralWidget(glWidget);
     resize(720, 540);
 
+    // Manage window size
     QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     sizePolicy.setHorizontalStretch(0);
     sizePolicy.setVerticalStretch(0);
@@ -17,13 +19,21 @@ MainWindow::MainWindow()
     setSizePolicy(sizePolicy);
     setMinimumSize(QSize(720, 540));
 
+    // Create actions, menus, toolbars and status bars
     createActions();
     createMenus();
     createToolBars();
     createStatusBar();
 
+    // Initialize background sound
+    soundBkgnd = new QSound("sounds/crazy.wav");
+    soundBkgnd->setLoops(-1);
+    soundBkgnd->play();
+
+    // Initialize dialogs
     userNameDialog = 0;
 
+    // Set window icon
     setWindowIcon(QIcon("icons/logo.png"));
 }
 
