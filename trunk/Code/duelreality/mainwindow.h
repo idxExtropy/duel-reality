@@ -36,6 +36,8 @@ private:
     GLWidget *glWidget;
     UserNameDialog *userNameDialog;
 
+    QSound *soundBkgnd;
+
     // Actions and associated menus & toolbars
     QAction *actionNewGame;
     QAction *actionLoadGame;
