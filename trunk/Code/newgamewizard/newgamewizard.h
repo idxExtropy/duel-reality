@@ -3,9 +3,11 @@
 
 #include <QWizard>
 
+class QCheckBox;
 class QLabel;
 class QLineEdit;
 class QComboBox;
+class QRadioButton;
 class QPushButton;
 
 class NewGameWizard : public QWizard
@@ -16,8 +18,9 @@ public:
     enum {  Page_Intro,
             Page_CreatePlayer,
             Page_LoadPlayer,
-            Page_RecruitUnits,
-            Page_SelectMap };
+            //Page_RecruitUnits,
+            //Page_SelectMap,
+            Page_Conclusion };
 
     NewGameWizard(QWidget *parent = 0);
 
@@ -35,7 +38,9 @@ public:
     int nextId() const;
 
 private:
-    QLabel  *topLabel;
+    QLabel          *topLabel;
+    QRadioButton    *newPlayerRadioButton;
+    QRadioButton    *returningPlayerRadioButton;
 };
 
 class CreatePlayerPage : public QWizardPage
@@ -62,10 +67,11 @@ public:
     int nextId() const;
 
 private:
-    QLabel      *playNameLabel;
+    QLabel      *playerNameLabel;
     QComboBox   *playerNameComboBox;
 };
 
+/*
 class RecruitUnitsPage : public QWizardPage
 {
     Q_OBJECT
@@ -102,6 +108,26 @@ public:
 
 private:
     QLabel  *mapLabel;
+};
+*/
+
+class ConclusionPage : public QWizardPage
+{
+    Q_OBJECT
+
+public:
+    ConclusionPage(QWidget *parent = 0);
+
+    //void initializePage();
+    int nextId() const;
+    //void setVisible(bool visible);
+
+private slots:
+    //void printButtonClicked();
+
+private:
+    QLabel *bottomLabel;
+    //QCheckBox *agreeCheckBox;
 };
 
 #endif // NEWGAMEWIZARD_H
