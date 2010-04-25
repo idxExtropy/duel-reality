@@ -4,8 +4,5 @@
 TARGET = newgamewizard
 TEMPLATE = app
 SOURCES += main.cpp \
-    mainwindow.cpp \
     newgamewizard.cpp
-HEADERS += mainwindow.h \
-    newgamewizard.h
-FORMS += mainwindow.ui
+HEADERS += newgamewizard.h
