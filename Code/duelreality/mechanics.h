@@ -19,6 +19,7 @@ public:
         void moveLEFT(unit a);
         void moveRIGHT(unit a);
         void Move(unit unittomove);
+        void initiate();
         //bool isValidMove(jmap a, int targetx, int targety);
         //bool isOccupied(jmap a, int b, int c);
 
