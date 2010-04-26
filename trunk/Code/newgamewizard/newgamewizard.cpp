@@ -1,10 +1,13 @@
 #include <QtGui>
 
+//#include "test_db.h"
 #include "newgamewizard.h"
 
 NewGameWizard::NewGameWizard(QWidget *parent)
     : QWizard(parent)
 {
+    test_GenerateSprites();
+
     // Set New Game dialog pages
     setPage(Page_Intro, new IntroPage);
     setPage(Page_CreatePlayer, new CreatePlayerPage);
@@ -62,6 +65,33 @@ void NewGameWizard::showHelp()
     QMessageBox::information(this, tr("New Game Help"), message);
 
     lastHelpMessage = message;
+}
+
+void NewGameWizard::test_GenerateSprites()
+{
+    sprites[0].name = "Wizard";
+    sprites[0].image.load("sprites/wizard.png");
+    sprites[0].AP = 8;
+    sprites[0].HP = 8;
+    sprites[0].range = 8;
+
+    sprites[1].name = "Monk";
+    sprites[1].image.load("sprites/buddhist.png");
+    sprites[1].AP = 6;
+    sprites[1].HP = 6;
+    sprites[1].range = 6;
+
+    sprites[2].name = "Bard";
+    sprites[2].image.load("sprites/bard.png");
+    sprites[2].AP = 4;
+    sprites[2].HP = 4;
+    sprites[2].range = 4;
+
+    sprites[3].name = "Desert Soldier";
+    sprites[3].image.load("sprites/desertsoldier.png");
+    sprites[3].AP = 4;
+    sprites[3].HP = 4;
+    sprites[3].range = 4;
 }
 
 
@@ -142,6 +172,19 @@ int LoadPlayerPage::nextId() const
     //return NewGameWizard::Page_RecruitUnits;
     return NewGameWizard::Page_Conclusion;
 }
+
+void RecruitUnitsPage::nextSpritePushButtonClicked()
+{
+    spriteIndex = (spriteIndex + 1) % MAX_SPRITES;
+}
+
+
+void RecruitUnitsPage::prevSpritePushButtonClicked()
+{
+    spriteIndex = (spriteIndex + MAX_SPRITES - 1) % MAX_SPRITES;
+    spriteLabel->setPixmap();
+}
+
 
 ConclusionPage::ConclusionPage(QWidget *parent)
     : QWizardPage(parent)

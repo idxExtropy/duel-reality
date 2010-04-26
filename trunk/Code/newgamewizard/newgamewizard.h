@@ -3,6 +3,10 @@
 
 #include <QWizard>
 
+#include "test_db.h"
+
+static const int    MAX_SPRITES = 4;
+
 class QCheckBox;
 class QLabel;
 class QLineEdit;
@@ -23,6 +27,10 @@ public:
             Page_Conclusion };
 
     NewGameWizard(QWidget *parent = 0);
+    void test_GenerateSprites();
+
+protected:
+    Sprite  sprites[MAX_SPRITES];
 
 private slots:
     void    showHelp();
@@ -71,7 +79,7 @@ private:
     QComboBox   *playerNameComboBox;
 };
 
-/*
+
 class RecruitUnitsPage : public QWizardPage
 {
     Q_OBJECT
@@ -80,6 +88,10 @@ public:
     RecruitUnitsPage(QWidget *parent = 0);
 
     int nextId() const;
+
+private slots:
+    void nextSpritePushButtonClicked();
+    void prevSpritePushButtonClicked();
 
 private:
     QLabel      *spriteLabel;
@@ -109,7 +121,6 @@ public:
 private:
     QLabel  *mapLabel;
 };
-*/
 
 class ConclusionPage : public QWizardPage
 {
