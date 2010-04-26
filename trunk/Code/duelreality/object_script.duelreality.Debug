@@ -1,0 +1,12 @@
+INPUT(
+./debug\mainwindow.o
+./debug\glwidget.o
+./debug\main.o
+./debug\usernamedialog.o
+./debug\unit.o
+./debug\player.o
+./debug\jmap.o
+./debug\mechanics.o
+./debug\moc_mainwindow.o
+./debug\moc_usernamedialog.o
+);
