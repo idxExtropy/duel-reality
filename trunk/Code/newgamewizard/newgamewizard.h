@@ -22,15 +22,11 @@ public:
     enum {  Page_Intro,
             Page_CreatePlayer,
             Page_LoadPlayer,
-            //Page_RecruitUnits,
+            Page_RecruitUnits,
             //Page_SelectMap,
             Page_Conclusion };
 
     NewGameWizard(QWidget *parent = 0);
-    void test_GenerateSprites();
-
-protected:
-    Sprite  sprites[MAX_SPRITES];
 
 private slots:
     void    showHelp();
@@ -88,12 +84,17 @@ public:
     RecruitUnitsPage(QWidget *parent = 0);
 
     int nextId() const;
+    void test_GenerateSprites();
+
+protected:
+    Sprite  sprites[MAX_SPRITES];
 
 private slots:
     void nextSpritePushButtonClicked();
     void prevSpritePushButtonClicked();
 
 private:
+    int         spriteIndex;
     QLabel      *spriteLabel;
     QPushButton *nextSpritePushButton;
     QPushButton *prevSpritePushButton;
@@ -105,10 +106,10 @@ private:
     QLabel      *spriteAPValue;
     QLabel      *spriteHPValue;
     QLabel      *spriteRangeValue;
-    QPushButton *recruitPushButton;
-    QLabel      *unitLabel;
+    //QPushButton *recruitPushButton;
+    //QLabel      *unitLabel;
 };
-
+/*
 class SelectMapPage : public QWizardPage
 {
     Q_OBJECT
@@ -120,7 +121,7 @@ public:
 
 private:
     QLabel  *mapLabel;
-};
+};*/
 
 class ConclusionPage : public QWizardPage
 {

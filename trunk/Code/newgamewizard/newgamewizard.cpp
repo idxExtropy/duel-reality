@@ -6,13 +6,11 @@
 NewGameWizard::NewGameWizard(QWidget *parent)
     : QWizard(parent)
 {
-    test_GenerateSprites();
-
     // Set New Game dialog pages
     setPage(Page_Intro, new IntroPage);
     setPage(Page_CreatePlayer, new CreatePlayerPage);
     setPage(Page_LoadPlayer, new LoadPlayerPage);
-    //setPage(Page_RecruitUnits, new RecruitUnitsPage);
+    setPage(Page_RecruitUnits, new RecruitUnitsPage);
     //setPage(Page_SelectMap, new SelectMapPage);
     setPage(Page_Conclusion, new ConclusionPage);
 
@@ -67,33 +65,6 @@ void NewGameWizard::showHelp()
     lastHelpMessage = message;
 }
 
-void NewGameWizard::test_GenerateSprites()
-{
-    sprites[0].name = "Wizard";
-    sprites[0].image.load("sprites/wizard.png");
-    sprites[0].AP = 8;
-    sprites[0].HP = 8;
-    sprites[0].range = 8;
-
-    sprites[1].name = "Monk";
-    sprites[1].image.load("sprites/buddhist.png");
-    sprites[1].AP = 6;
-    sprites[1].HP = 6;
-    sprites[1].range = 6;
-
-    sprites[2].name = "Bard";
-    sprites[2].image.load("sprites/bard.png");
-    sprites[2].AP = 4;
-    sprites[2].HP = 4;
-    sprites[2].range = 4;
-
-    sprites[3].name = "Desert Soldier";
-    sprites[3].image.load("sprites/desertsoldier.png");
-    sprites[3].AP = 4;
-    sprites[3].HP = 4;
-    sprites[3].range = 4;
-}
-
 
 IntroPage::IntroPage(QWidget *parent)
     : QWizardPage(parent)
@@ -146,7 +117,7 @@ CreatePlayerPage::CreatePlayerPage(QWidget *parent)
 int CreatePlayerPage::nextId() const
 {
     //return NewGameWizard::Page_RecruitUnits;
-    return NewGameWizard::Page_Conclusion;
+    return NewGameWizard::Page_RecruitUnits;
 }
 
 LoadPlayerPage::LoadPlayerPage(QWidget *parent)
@@ -170,8 +141,95 @@ LoadPlayerPage::LoadPlayerPage(QWidget *parent)
 int LoadPlayerPage::nextId() const
 {
     //return NewGameWizard::Page_RecruitUnits;
-    return NewGameWizard::Page_Conclusion;
+    return NewGameWizard::Page_RecruitUnits;
 }
+
+RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
+    : QWizardPage(parent)
+{
+    spriteIndex = 0;
+
+    test_GenerateSprites();
+
+    setTitle(tr("Recruit Units"));
+    setSubTitle(tr("Recruit player units."));
+
+    spriteLabel = new QLabel(this);
+    spriteLabel->setGeometry(QRect(335, 140, 51, 111));
+    spriteLabel->setPixmap(sprites[0].pixMap);
+
+    spriteName = new QLabel(tr("Name:"));
+    spriteNameValue = new QLabel(this);
+    spriteNameValue->setText(sprites[0].name);
+
+    spriteAP = new QLabel(tr("AP:"));
+    spriteAPValue = new QLabel(this);
+    spriteAPValue->setText(QString::number(sprites[0].AP));
+
+    spriteHP = new QLabel(tr("HP:"));
+    spriteHPValue = new QLabel(this);
+    spriteHPValue->setText(QString::number(sprites[0].HP));
+
+    spriteRange = new QLabel(tr("Range:"));
+    spriteRangeValue = new QLabel(this);
+    spriteRangeValue->setText(QString::number(sprites[0].range));
+
+    nextSpritePushButton = new QPushButton(this);
+    prevSpritePushButton = new QPushButton(this);
+
+    QGridLayout *statsLayout = new QGridLayout;
+    statsLayout->addWidget(spriteName, 0, 0);
+    statsLayout->addWidget(spriteNameValue, 0, 1);
+    statsLayout->addWidget(spriteAP, 1, 0);
+    statsLayout->addWidget(spriteAPValue, 1, 1);
+    statsLayout->addWidget(spriteHP, 2, 0);
+    statsLayout->addWidget(spriteHPValue, 2, 1);
+    statsLayout->addWidget(spriteRange, 3, 0);
+    statsLayout->addWidget(spriteRangeValue, 3, 1);
+
+    QHBoxLayout *buttonsLayout = new QHBoxLayout;
+    buttonsLayout->addWidget(nextSpritePushButton);
+    buttonsLayout->addWidget(prevSpritePushButton);
+
+    QVBoxLayout *layout = new QVBoxLayout;
+    layout->addWidget(spriteLabel);
+    layout->addLayout(statsLayout);
+    layout->addLayout(buttonsLayout);
+    setLayout(layout);
+
+    connect(nextSpritePushButton, SIGNAL(clicked()), this, SLOT(nextSpritePushButtonClicked()));
+    connect(prevSpritePushButton, SIGNAL(clicked()), this, SLOT(prevSpritePushButtonClicked()));
+
+    //recruitPushButton = new QPushButton(this);
+}
+
+void RecruitUnitsPage::test_GenerateSprites()
+{
+    sprites[0].name = "Wizard";
+    sprites[0].pixMap.load("sprites/wizard.png");
+    sprites[0].AP = 8;
+    sprites[0].HP = 8;
+    sprites[0].range = 8;
+
+    sprites[1].name = "Monk";
+    sprites[1].pixMap.load("sprites/buddhist.png");
+    sprites[1].AP = 6;
+    sprites[1].HP = 6;
+    sprites[1].range = 6;
+
+    sprites[2].name = "Bard";
+    sprites[2].pixMap.load("sprites/bard.png");
+    sprites[2].AP = 4;
+    sprites[2].HP = 4;
+    sprites[2].range = 4;
+
+    sprites[3].name = "Desert Soldier";
+    sprites[3].pixMap.load("sprites/desertsoldier.png");
+    sprites[3].AP = 4;
+    sprites[3].HP = 4;
+    sprites[3].range = 4;
+}
+
 
 void RecruitUnitsPage::nextSpritePushButtonClicked()
 {
@@ -182,9 +240,15 @@ void RecruitUnitsPage::nextSpritePushButtonClicked()
 void RecruitUnitsPage::prevSpritePushButtonClicked()
 {
     spriteIndex = (spriteIndex + MAX_SPRITES - 1) % MAX_SPRITES;
-    spriteLabel->setPixmap();
+    //spriteLabel->setPixmap();
 }
 
+
+int RecruitUnitsPage::nextId() const
+{
+    //return NewGameWizard::Page_RecruitUnits;
+    return NewGameWizard::Page_Conclusion;
+}
 
 ConclusionPage::ConclusionPage(QWidget *parent)
     : QWizardPage(parent)
