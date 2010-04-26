@@ -157,6 +157,7 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
     spriteLabel = new QLabel(this);
     spriteLabel->setGeometry(QRect(335, 140, 51, 111));
     spriteLabel->setPixmap(sprites[0].pixMap);
+    //spriteLabel->setMask(sprites[0].pixMap.mask());
 
     spriteName = new QLabel(tr("Name:"));
     spriteNameValue = new QLabel(this);
@@ -174,8 +175,8 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
     spriteRangeValue = new QLabel(this);
     spriteRangeValue->setText(QString::number(sprites[0].range));
 
-    nextSpritePushButton = new QPushButton(this);
-    prevSpritePushButton = new QPushButton(this);
+    nextSpritePushButton = new QPushButton(tr("&Next"), this);
+    prevSpritePushButton = new QPushButton(tr("&Previous"), this);
 
     QGridLayout *statsLayout = new QGridLayout;
     statsLayout->addWidget(spriteName, 0, 0);
@@ -188,8 +189,8 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
     statsLayout->addWidget(spriteRangeValue, 3, 1);
 
     QHBoxLayout *buttonsLayout = new QHBoxLayout;
-    buttonsLayout->addWidget(nextSpritePushButton);
     buttonsLayout->addWidget(prevSpritePushButton);
+    buttonsLayout->addWidget(nextSpritePushButton);
 
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(spriteLabel);
@@ -234,6 +235,12 @@ void RecruitUnitsPage::test_GenerateSprites()
 void RecruitUnitsPage::nextSpritePushButtonClicked()
 {
     spriteIndex = (spriteIndex + 1) % MAX_SPRITES;
+
+    spriteLabel->setPixmap(sprites[spriteIndex].pixMap);
+    spriteNameValue->setText(sprites[spriteIndex].name);
+    spriteAPValue->setText(QString::number(sprites[spriteIndex].AP));
+    spriteHPValue->setText(QString::number(sprites[spriteIndex].HP));
+    spriteRangeValue->setText(QString::number(sprites[spriteIndex].range));
 }
 
 
@@ -241,6 +248,11 @@ void RecruitUnitsPage::prevSpritePushButtonClicked()
 {
     spriteIndex = (spriteIndex + MAX_SPRITES - 1) % MAX_SPRITES;
     //spriteLabel->setPixmap();
+    spriteLabel->setPixmap(sprites[spriteIndex].pixMap);
+    spriteNameValue->setText(sprites[spriteIndex].name);
+    spriteAPValue->setText(QString::number(sprites[spriteIndex].AP));
+    spriteHPValue->setText(QString::number(sprites[spriteIndex].HP));
+    spriteRangeValue->setText(QString::number(sprites[spriteIndex].range));
 }
 
 
