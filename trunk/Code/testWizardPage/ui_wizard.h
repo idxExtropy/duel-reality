@@ -1,5 +1,5 @@
 /********************************************************************************
-** Form generated from reading UI file 'wizardpage.ui'
+** Form generated from reading UI file 'wizard.ui'
 **
 ** Created: Tue Apr 27 15:59:44 2010
 **      by: Qt User Interface Compiler version 4.6.2
@@ -7,8 +7,8 @@
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef UI_WIZARDPAGE_H
-#define UI_WIZARDPAGE_H
+#ifndef UI_WIZARD_H
+#define UI_WIZARD_H
 
 #include <QtCore/QVariant>
 #include <QtGui/QAction>
@@ -23,14 +23,16 @@
 #include <QtGui/QSpacerItem>
 #include <QtGui/QVBoxLayout>
 #include <QtGui/QWidget>
+#include <QtGui/QWizard>
 #include <QtGui/QWizardPage>
 
 QT_BEGIN_NAMESPACE
 
-class Ui_WizardPage
+class Ui_Wizard
 {
 public:
-    QWidget *widget;
+    QWizardPage *wizardPage1;
+    QWidget *layoutWidget;
     QHBoxLayout *mainLayout;
     QGroupBox *spriteBox;
     QGridLayout *spriteBoxLayout;
@@ -77,19 +79,22 @@ public:
     QVBoxLayout *unitRejectLayout4;
     QLabel *unitName4;
     QPushButton *rejectButton4;
+    QWizardPage *wizardPage2;
 
-    void setupUi(QWizardPage *WizardPage)
+    void setupUi(QWizard *Wizard)
     {
-        if (WizardPage->objectName().isEmpty())
-            WizardPage->setObjectName(QString::fromUtf8("WizardPage"));
-        WizardPage->resize(400, 300);
-        widget = new QWidget(WizardPage);
-        widget->setObjectName(QString::fromUtf8("widget"));
-        widget->setGeometry(QRect(40, 10, 322, 251));
-        mainLayout = new QHBoxLayout(widget);
+        if (Wizard->objectName().isEmpty())
+            Wizard->setObjectName(QString::fromUtf8("Wizard"));
+        Wizard->resize(400, 300);
+        wizardPage1 = new QWizardPage();
+        wizardPage1->setObjectName(QString::fromUtf8("wizardPage1"));
+        layoutWidget = new QWidget(wizardPage1);
+        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
+        layoutWidget->setGeometry(QRect(30, 0, 322, 251));
+        mainLayout = new QHBoxLayout(layoutWidget);
         mainLayout->setObjectName(QString::fromUtf8("mainLayout"));
         mainLayout->setContentsMargins(0, 0, 0, 0);
-        spriteBox = new QGroupBox(widget);
+        spriteBox = new QGroupBox(layoutWidget);
         spriteBox->setObjectName(QString::fromUtf8("spriteBox"));
         spriteBoxLayout = new QGridLayout(spriteBox);
         spriteBoxLayout->setObjectName(QString::fromUtf8("spriteBoxLayout"));
@@ -202,7 +207,7 @@ public:
 
         mainLayout->addWidget(spriteBox);
 
-        unitsBox = new QGroupBox(widget);
+        unitsBox = new QGroupBox(layoutWidget);
         unitsBox->setObjectName(QString::fromUtf8("unitsBox"));
         unitBoxLayout = new QGridLayout(unitsBox);
         unitBoxLayout->setObjectName(QString::fromUtf8("unitBoxLayout"));
@@ -321,49 +326,53 @@ public:
 
         mainLayout->addWidget(unitsBox);
 
+        Wizard->addPage(wizardPage1);
+        wizardPage2 = new QWizardPage();
+        wizardPage2->setObjectName(QString::fromUtf8("wizardPage2"));
+        Wizard->addPage(wizardPage2);
 
-        retranslateUi(WizardPage);
+        retranslateUi(Wizard);
 
-        QMetaObject::connectSlotsByName(WizardPage);
+        QMetaObject::connectSlotsByName(Wizard);
     } // setupUi
 
-    void retranslateUi(QWizardPage *WizardPage)
+    void retranslateUi(QWizard *Wizard)
     {
-        WizardPage->setWindowTitle(QApplication::translate("WizardPage", "WizardPage", 0, QApplication::UnicodeUTF8));
-        spriteBox->setTitle(QApplication::translate("WizardPage", "&Available Units", 0, QApplication::UnicodeUTF8));
-        prevSpritePushButton->setText(QApplication::translate("WizardPage", "<<", 0, QApplication::UnicodeUTF8));
+        Wizard->setWindowTitle(QApplication::translate("Wizard", "Wizard", 0, QApplication::UnicodeUTF8));
+        spriteBox->setTitle(QApplication::translate("Wizard", "&Available Units", 0, QApplication::UnicodeUTF8));
+        prevSpritePushButton->setText(QApplication::translate("Wizard", "<<", 0, QApplication::UnicodeUTF8));
         spriteImage->setText(QString());
-        nextSpritePushButton->setText(QApplication::translate("WizardPage", ">>", 0, QApplication::UnicodeUTF8));
-        spriteName->setText(QApplication::translate("WizardPage", "Name:", 0, QApplication::UnicodeUTF8));
-        spriteNameVal->setText(QApplication::translate("WizardPage", "NameVal", 0, QApplication::UnicodeUTF8));
-        spriteAP->setText(QApplication::translate("WizardPage", "AP:", 0, QApplication::UnicodeUTF8));
-        spriteAPVal->setText(QApplication::translate("WizardPage", "APVal", 0, QApplication::UnicodeUTF8));
-        spriteHP->setText(QApplication::translate("WizardPage", "HP:", 0, QApplication::UnicodeUTF8));
-        spriteHPVal->setText(QApplication::translate("WizardPage", "HPVal", 0, QApplication::UnicodeUTF8));
-        spriteRange->setText(QApplication::translate("WizardPage", "Range:", 0, QApplication::UnicodeUTF8));
-        spriteRangeVal->setText(QApplication::translate("WizardPage", "RangeVal", 0, QApplication::UnicodeUTF8));
-        recruitPushButton->setText(QApplication::translate("WizardPage", "Recruit", 0, QApplication::UnicodeUTF8));
-        unitsBox->setTitle(QApplication::translate("WizardPage", "&Player Units", 0, QApplication::UnicodeUTF8));
+        nextSpritePushButton->setText(QApplication::translate("Wizard", ">>", 0, QApplication::UnicodeUTF8));
+        spriteName->setText(QApplication::translate("Wizard", "Name:", 0, QApplication::UnicodeUTF8));
+        spriteNameVal->setText(QApplication::translate("Wizard", "NameVal", 0, QApplication::UnicodeUTF8));
+        spriteAP->setText(QApplication::translate("Wizard", "AP:", 0, QApplication::UnicodeUTF8));
+        spriteAPVal->setText(QApplication::translate("Wizard", "APVal", 0, QApplication::UnicodeUTF8));
+        spriteHP->setText(QApplication::translate("Wizard", "HP:", 0, QApplication::UnicodeUTF8));
+        spriteHPVal->setText(QApplication::translate("Wizard", "HPVal", 0, QApplication::UnicodeUTF8));
+        spriteRange->setText(QApplication::translate("Wizard", "Range:", 0, QApplication::UnicodeUTF8));
+        spriteRangeVal->setText(QApplication::translate("Wizard", "RangeVal", 0, QApplication::UnicodeUTF8));
+        recruitPushButton->setText(QApplication::translate("Wizard", "Recruit", 0, QApplication::UnicodeUTF8));
+        unitsBox->setTitle(QApplication::translate("Wizard", "&Player Units", 0, QApplication::UnicodeUTF8));
         unitImage1->setText(QString());
-        unitName1->setText(QApplication::translate("WizardPage", "Unit 1", 0, QApplication::UnicodeUTF8));
-        rejectButton1->setText(QApplication::translate("WizardPage", "Reject", 0, QApplication::UnicodeUTF8));
+        unitName1->setText(QApplication::translate("Wizard", "Unit 1", 0, QApplication::UnicodeUTF8));
+        rejectButton1->setText(QApplication::translate("Wizard", "Reject", 0, QApplication::UnicodeUTF8));
         unitImage2->setText(QString());
-        unitName2->setText(QApplication::translate("WizardPage", "Unit 2", 0, QApplication::UnicodeUTF8));
-        rejectButton2->setText(QApplication::translate("WizardPage", "Reject", 0, QApplication::UnicodeUTF8));
+        unitName2->setText(QApplication::translate("Wizard", "Unit 2", 0, QApplication::UnicodeUTF8));
+        rejectButton2->setText(QApplication::translate("Wizard", "Reject", 0, QApplication::UnicodeUTF8));
         unitImage3->setText(QString());
-        unitName3->setText(QApplication::translate("WizardPage", "Unit 3", 0, QApplication::UnicodeUTF8));
-        rejectButton3->setText(QApplication::translate("WizardPage", "Reject", 0, QApplication::UnicodeUTF8));
+        unitName3->setText(QApplication::translate("Wizard", "Unit 3", 0, QApplication::UnicodeUTF8));
+        rejectButton3->setText(QApplication::translate("Wizard", "Reject", 0, QApplication::UnicodeUTF8));
         unitImage4->setText(QString());
-        unitName4->setText(QApplication::translate("WizardPage", "Unit 4", 0, QApplication::UnicodeUTF8));
-        rejectButton4->setText(QApplication::translate("WizardPage", "Reject", 0, QApplication::UnicodeUTF8));
+        unitName4->setText(QApplication::translate("Wizard", "Unit 4", 0, QApplication::UnicodeUTF8));
+        rejectButton4->setText(QApplication::translate("Wizard", "Reject", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };
 
 namespace Ui {
-    class WizardPage: public Ui_WizardPage {};
+    class Wizard: public Ui_Wizard {};
 } // namespace Ui
 
 QT_END_NAMESPACE
 
-#endif // UI_WIZARDPAGE_H
+#endif // UI_WIZARD_H

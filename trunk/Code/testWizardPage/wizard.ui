@@ -1,12 +1,396 @@
-<ui version="4.0" >
-<class>Wizard</class>
-<widget class="QWizard" name="Wizard" >
-<property name="geometry" >
-<rect><x>0</x><y>0</y><width>400</width><height>300</height></rect>
-</property>
-<property name="windowTitle" >
-<string>Wizard</string>
-</property>
-<widget class="QWizardPage" name="wizardPage1" /><widget class="QWizardPage" name="wizardPage2" />
-</widget>
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Wizard</class>
+ <widget class="QWizard" name="Wizard">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Wizard</string>
+  </property>
+  <widget class="QWizardPage" name="wizardPage1">
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>0</y>
+      <width>322</width>
+      <height>251</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="mainLayout">
+     <item>
+      <widget class="QGroupBox" name="spriteBox">
+       <property name="title">
+        <string>&amp;Available Units</string>
+       </property>
+       <layout class="QGridLayout" name="spriteBoxLayout">
+        <item row="0" column="0">
+         <layout class="QVBoxLayout" name="leftLayout">
+          <item>
+           <layout class="QHBoxLayout" name="leftTopLayout">
+            <item>
+             <widget class="QPushButton" name="prevSpritePushButton">
+              <property name="maximumSize">
+               <size>
+                <width>31</width>
+                <height>23</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>&lt;&lt;</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="spriteImage">
+              <property name="maximumSize">
+               <size>
+                <width>71</width>
+                <height>101</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="pixmap">
+               <pixmap>debug/sprites/desertsoldier.png</pixmap>
+              </property>
+              <property name="scaledContents">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="nextSpritePushButton">
+              <property name="maximumSize">
+               <size>
+                <width>31</width>
+                <height>23</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>&gt;&gt;</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="leftMidLayout">
+            <item>
+             <spacer name="hLeftSpacerSpriteStats">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>18</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <layout class="QGridLayout" name="spriteStatsLayout">
+              <item row="0" column="0">
+               <widget class="QLabel" name="spriteName">
+                <property name="text">
+                 <string>Name:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLabel" name="spriteNameVal">
+                <property name="text">
+                 <string>NameVal</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="spriteAP">
+                <property name="text">
+                 <string>AP:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QLabel" name="spriteAPVal">
+                <property name="text">
+                 <string>APVal</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="spriteHP">
+                <property name="text">
+                 <string>HP:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QLabel" name="spriteHPVal">
+                <property name="text">
+                 <string>HPVal</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="spriteRange">
+                <property name="text">
+                 <string>Range:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QLabel" name="spriteRangeVal">
+                <property name="text">
+                 <string>RangeVal</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <spacer name="hRightSpacerSpriteStats">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>18</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="leftBotLayout">
+            <item>
+             <spacer name="hLeftSpacerRecruit">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>28</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="recruitPushButton">
+              <property name="text">
+               <string>Recruit</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="hRightSpacerRecruit">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>28</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="unitsBox">
+       <property name="title">
+        <string>&amp;Player Units</string>
+       </property>
+       <layout class="QGridLayout" name="unitBoxLayout">
+        <item row="0" column="0">
+         <layout class="QHBoxLayout" name="rightUnitLayout1">
+          <item>
+           <widget class="QLabel" name="unitImage1">
+            <property name="maximumSize">
+             <size>
+              <width>41</width>
+              <height>41</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="pixmap">
+             <pixmap>debug/sprites/blank.PNG</pixmap>
+            </property>
+            <property name="scaledContents">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="unitRejectLayout1">
+            <item>
+             <widget class="QLabel" name="unitName1">
+              <property name="text">
+               <string>Unit 1</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="rejectButton1">
+              <property name="text">
+               <string>Reject</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+        <item row="1" column="0">
+         <layout class="QHBoxLayout" name="rightUnitLayout2">
+          <item>
+           <widget class="QLabel" name="unitImage2">
+            <property name="maximumSize">
+             <size>
+              <width>41</width>
+              <height>41</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="pixmap">
+             <pixmap>debug/sprites/blank.PNG</pixmap>
+            </property>
+            <property name="scaledContents">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="unitRejectLayout2">
+            <item>
+             <widget class="QLabel" name="unitName2">
+              <property name="text">
+               <string>Unit 2</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="rejectButton2">
+              <property name="text">
+               <string>Reject</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+        <item row="2" column="0">
+         <layout class="QHBoxLayout" name="rightUnitLayout3">
+          <item>
+           <widget class="QLabel" name="unitImage3">
+            <property name="maximumSize">
+             <size>
+              <width>41</width>
+              <height>41</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="pixmap">
+             <pixmap>debug/sprites/blank.PNG</pixmap>
+            </property>
+            <property name="scaledContents">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="unitRejectLayout3">
+            <item>
+             <widget class="QLabel" name="unitName3">
+              <property name="text">
+               <string>Unit 3</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="rejectButton3">
+              <property name="text">
+               <string>Reject</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+        <item row="3" column="0">
+         <layout class="QHBoxLayout" name="rightUnitLayout4">
+          <item>
+           <widget class="QLabel" name="unitImage4">
+            <property name="maximumSize">
+             <size>
+              <width>41</width>
+              <height>41</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="pixmap">
+             <pixmap>debug/sprites/blank.PNG</pixmap>
+            </property>
+            <property name="scaledContents">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="unitRejectLayout4">
+            <item>
+             <widget class="QLabel" name="unitName4">
+              <property name="text">
+               <string>Unit 4</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="rejectButton4">
+              <property name="text">
+               <string>Reject</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QWizardPage" name="wizardPage2"/>
+ </widget>
+ <resources/>
+ <connections/>
 </ui>

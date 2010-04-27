@@ -1,3 +1,5 @@
-FORMS += wizardpage.ui
+FORMS += wizardpage.ui \
+    wizard.ui
 SOURCES += main.cpp
-HEADERS += ui_wizardpage.h
+HEADERS += ui_wizardpage.h \
+    ui_wizard.h
