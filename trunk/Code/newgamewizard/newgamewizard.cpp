@@ -212,114 +212,100 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
     spriteNameVal->setText(sprites[0].name);
     spriteStatsLayout->addWidget(spriteNameVal, 0, 1, 1, 1);
 
-    spriteAP = new QLabel(tr("AP:"));
-    spriteAPValue = new QLabel(this);
-    spriteAPValue->setText(QString::number(sprites[0].AP));
-
-    spriteHP = new QLabel(tr("HP:"));
-    spriteHPValue = new QLabel(this);
-    spriteHPValue->setText(QString::number(sprites[0].HP));
-
-    spriteRange = new QLabel(tr("Range:"));
-    spriteRangeValue = new QLabel(this);
-    spriteRangeValue->setText(QString::number(sprites[0].range));
-
+    //spriteAP = new QLabel(tr("AP:"));
+    spriteAP = new QLabel(spriteBox);
+    spriteAP->setObjectName(QString::fromUtf8("spriteAP"));
+    spriteStatsLayout->addWidget(spriteAP, 1, 0, 1, 1);
     
+    //spriteAPValue = new QLabel(this);
+    spriteAPVal = new QLabel(spriteBox);
+    spriteAPVal->setObjectName(QString::fromUtf8("spriteAPVal"));
+    spriteAPVal->setText(QString::number(sprites[0].AP));
+    spriteStatsLayout->addWidget(spriteAPVal, 1, 1, 1, 1);
+
+    //spriteHP = new QLabel(tr("HP:"));
+    spriteHP = new QLabel(spriteBox);
+    spriteHP->setObjectName(QString::fromUtf8("spriteHP"));
+    spriteStatsLayout->addWidget(spriteHP, 2, 0, 1, 1);
     
-    recruitPushButton = new QPushButton(tr("&Recruit"), this);
+    //spriteHPValue = new QLabel(this);
+    spriteHPVal = new QLabel(spriteBox);
+    spriteHPVal->setObjectName(QString::fromUtf8("spriteHPVal"));
+    spriteHPVal->setText(QString::number(sprites[0].HP));
+    spriteStatsLayout->addWidget(spriteHPVal, 2, 1, 1, 1);
+
+    //spriteRange = new QLabel(tr("Range:"));
+    spriteRange = new QLabel(spriteBox);
+    spriteRange->setObjectName(QString::fromUtf8("spriteRange"));
+    spriteStatsLayout->addWidget(spriteRange, 3, 0, 1, 1);
+
+    //spriteRangeValue = new QLabel(this);
+    spriteRangeVal = new QLabel(spriteBox);
+    spriteRangeVal->setObjectName(QString::fromUtf8("spriteRangeVal"));
+    spriteRangeVal->setText(QString::number(sprites[0].range));
+    spriteStatsLayout->addWidget(spriteRangeVal, 3, 1, 1, 1);
+    leftMidLayout->addLayout(spriteStatsLayout);
+
+    QSpacerItem *hRightSpacerSpriteStats = new QSpacerItem(18, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+    leftMidLayout->addItem(hRightSpacerSpriteStats);
+    leftLayout->addLayout(leftMidLayout);
+
+    QHBoxLayout *leftBotLayout = new QHBoxLayout;
+    leftBotLayout->setObjectName(QString::fromUtf8("leftBotLayout"));
+
+    QSpacerItem *hLeftSpacerRecruit = new QSpacerItem(28, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+    leftBotLayout->addItem(hLeftSpacerRecruit);
+
+    recruitPushButton = new QPushButton(spriteBox);
     recruitPushButton->setObjectName(QString::fromUtf8("recruitPushButton"));
+    leftBotLayout->addWidget(recruitPushButton);
 
-    QGridLayout *statsLayout = new QGridLayout;
-    statsLayout->setObjectName(QString::fromUtf8("statsLayout"));
-    statsLayout->addWidget(spriteName, 0, 0);
-    statsLayout->addWidget(spriteNameValue, 0, 1);
-    statsLayout->addWidget(spriteAP, 1, 0);
-    statsLayout->addWidget(spriteAPValue, 1, 1);
-    statsLayout->addWidget(spriteHP, 2, 0);
-    statsLayout->addWidget(spriteHPValue, 2, 1);
-    statsLayout->addWidget(spriteRange, 3, 0);
-    statsLayout->addWidget(spriteRangeValue, 3, 1);
+    QSpacerItem *hRightSpacerRecruit = new QSpacerItem(28, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+    leftBotLayout->addItem(hRightSpacerRecruit);
+    leftLayout->addLayout(leftBotLayout);
+    spriteBoxLayout->addLayout(leftLayout, 0, 0, 1, 1);
+    mainLayout->addWidget(spriteBox);
 
-    QHBoxLayout *leftMidRightLayout = new QHBoxLayout;
-    leftMidRightLayout->addLayout(statsLayout);
-    leftMidRightLayout->addStretch();
-
+    QGroupBox *unitsBox = new QGroupBox;
+    unitsBox->setObjectName(QString::fromUtf8("unitsBox"));
     
+    QGridLayout *unitBoxLayout = new QGridLayout(unitsBox);
+    unitBoxLayout->setObjectName(QString::fromUtf8("unitBoxLayout"));
 
-    //QGridLayout *spriteLayout = new QGridLayout;
-    QHBoxLayout *spriteLayout = new QHBoxLayout;
-    spriteLayout->setSpacing(6);
-    spriteLayout->setObjectName(QString::fromUtf8("spriteLayout"));
-    //spriteLayout->addWidget(prevSpritePushButton, 0, 0, 1, 1);
-    spriteLayout->addWidget(prevSpritePushButton);
-    //spriteLayout->addWidget(spriteLabel, 0, 1, 1, 1);
-    spriteLayout->addWidget(spriteLabel);
-    //spriteLayout->addWidget(nextSpritePushButton, 0, 2, 1, 1);
-    spriteLayout->addWidget(nextSpritePushButton);
-    spriteLayout->addStretch();
-
-    QSpacerItem *hSpacer_1 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-    QSpacerItem *hSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-    QHBoxLayout *midLeftLayout = new QHBoxLayout;
-    midLeftLayout->setSpacing(6);
-    midLeftLayout->setObjectName(QString::fromUtf8("midLeftLayout"));
-    midLeftLayout->addItem(hSpacer_1);
-    midLeftLayout->addWidget(recruitPushButton);
-    midLeftLayout->addItem(hSpacer_2);
-    midLeftLayout->addStretch();
-
-    QVBoxLayout *topLeftLayout = new QVBoxLayout;
-    topLeftLayout->addLayout(spriteLayout);
-    topLeftLayout->addLayout(midLeftLayout);
-
-    QVBoxLayout *leftLayout = new QVBoxLayout;
-    leftLayout->setSpacing(6);
-    leftLayout->setContentsMargins(11, 11, 11, 11);
-    leftLayout->setObjectName(QString::fromUtf8("leftLayout"));
-    leftLayout->setContentsMargins(0, 0, 0, 0);
-    leftLayout->addLayout(topLeftLayout);
-    //leftLayout->addLayout(spriteLayout);
-    //leftLayout->addLayout(midLeftLayout);
-    leftLayout->addLayout(leftMidRightLayout);
-    leftLayout->addStretch();
-
-    QVBoxLayout *rightLayout = new QVBoxLayout;
+    //QVBoxLayout *rightLayout = new QVBoxLayout;
 
     for (i = 0; i < MAX_UNITS; i++)
     {
-        QFrame *frame = new QFrame(this);
-        //frame->setGeometry(QRect(290, 100, 69, 124));
-        frame->setFrameShape(QFrame::StyledPanel);
-        frame->setFrameShadow(QFrame::Raised);
+        QHBoxLayout *rightUnitLayout = new QHBoxLayout();
+        //rightUnitLayout->setObjectName(QString::fromUtf8("rightUnitLayout1"));
+        QLabel *unitImage = new QLabel(unitsBox);
+        //unitImage->setObjectName(QString::fromUtf8("unitImage1"));
+        unitImage->setMaximumSize(QSize(41, 41));
+        unitImage->setPixmap(QPixmap(QString::fromUtf8("debug/sprites/blank.PNG")));
+        unitImage->setScaledContents(true);
+        rightUnitLayout->addWidget(unitImage);
 
-        QGridLayout *gridLayout = new QGridLayout(frame);
+        QVBoxLayout *unitRejectLayout = new QVBoxLayout;
+        //unitRejectLayout->setObjectName(QString::fromUtf8("unitRejectLayout1"));
+        QLabel *unitName = new QLabel(unitsBox);
+        //unitName->setObjectName(QString::fromUtf8("unitName1"));
+        unitRejectLayout->addWidget(unitName);
 
-        QLabel *unitLabel = new QLabel(frame);
-        unitLabel->setPixmap(QPixmap(QString::fromUtf8("sprites/blank.png")));
-        unitLabel->setScaledContents(true);
-        unitsLabel << unitLabel;
-        gridLayout->addWidget(unitsLabel[i], 0, 0, 1, 1);
-        //QPushButton *blah = new QPushButton;
-        //unitLabel->setGeometry(QRect(335, 140, 51, 111));
-        rightLayout->addWidget(frame);
-        //rightLayout->addWidget(blah);
-        //unitsLabel << unitLabel;
+        QPushButton *rejectButton = new QPushButton(unitsBox);
+        //rejectButton->setObjectName(QString::fromUtf8("rejectButton"));
+        unitRejectLayout->addWidget(rejectButton);
+        rightUnitLayout->addLayout(unitRejectLayout);
+        unitBoxLayout->addLayout(rightUnitLayout, i, 0, 1, 1);
     }
 
-    i = 0;
-
-    
-    
-    mainLayout->addLayout(leftLayout);
-    mainLayout->addLayout(rightLayout);
+    mainLayout->addWidget(unitsBox);
     setLayout(mainLayout);
 
+    i = 0;
+    
     connect(nextSpritePushButton, SIGNAL(clicked()), this, SLOT(nextSpritePushButtonClicked()));
     connect(prevSpritePushButton, SIGNAL(clicked()), this, SLOT(prevSpritePushButtonClicked()));
     connect(recruitPushButton, SIGNAL(clicked()), this, SLOT(recruitPushButtonClicked()));
-
-    //recruitPushButton = new QPushButton(this);
 }
 
 void RecruitUnitsPage::test_GenerateSprites()
