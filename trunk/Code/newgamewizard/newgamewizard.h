@@ -93,6 +93,7 @@ protected:
 private slots:
     void nextSpritePushButtonClicked();
     void prevSpritePushButtonClicked();
+    void recruitPushButtonClicked();
 
 private:
     int         i;
