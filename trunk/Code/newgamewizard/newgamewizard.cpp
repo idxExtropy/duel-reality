@@ -291,11 +291,15 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
         //unitName->setObjectName(QString::fromUtf8("unitName1"));
         unitRejectLayout->addWidget(unitName);
 
-        QPushButton *rejectButton = new QPushButton(unitsBox);
-        //rejectButton->setObjectName(QString::fromUtf8("rejectButton"));
-        unitRejectLayout->addWidget(rejectButton);
+        QPushButton *rejectPushButton = new QPushButton(unitsBox);
+        //rejectPushButton->setObjectName(QString::fromUtf8("rejectPushButton"));
+        unitRejectLayout->addWidget(rejectPushButton);
         rightUnitLayout->addLayout(unitRejectLayout);
         unitBoxLayout->addLayout(rightUnitLayout, i, 0, 1, 1);
+
+        unitImageList << unitImage;
+        unitNameList << unitName;
+        rejectPushButtonList << rejectPushButton;
     }
 
     mainLayout->addWidget(unitsBox);
@@ -363,7 +367,7 @@ void RecruitUnitsPage::recruitPushButtonClicked()
 {
     if (i < MAX_UNITS)
     {
-        unitsLabel[i]->setPixmap(*(spriteLabel->pixmap()));;
+        unitImageList[i]->setPixmap(*(spriteLabel->pixmap()));;
         i++;
     }
 

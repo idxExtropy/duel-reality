@@ -110,9 +110,9 @@ private:
     QLabel                  *spriteHPVal;
     QLabel                  *spriteRangeVal;
     QPushButton             *recruitPushButton;
-    QList<QLabel *>         unitImages;
-    QList<QLabel *>         unitNames;
-    QList<QPushButton *>    rejectPushButtons;
+    QList<QLabel *>         unitImageList;
+    QList<QLabel *>         unitNameList;
+    QList<QPushButton *>    rejectPushButtonList;
     //QLabel<MAX_UNITS, QWidget *>    unitsLabel;
     //QLabel      unitsLabel[MAX_UNITS];
 };
