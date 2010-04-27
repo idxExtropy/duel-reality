@@ -6,6 +6,7 @@
 #include "test_db.h"
 
 static const int    MAX_SPRITES = 4;
+static const int    MAX_UNITS = 4;
 
 class QCheckBox;
 class QLabel;
@@ -94,6 +95,7 @@ private slots:
     void prevSpritePushButtonClicked();
 
 private:
+    int         i;
     int         spriteIndex;
     QLabel      *spriteLabel;
     QPushButton *nextSpritePushButton;
@@ -106,8 +108,10 @@ private:
     QLabel      *spriteAPValue;
     QLabel      *spriteHPValue;
     QLabel      *spriteRangeValue;
-    //QPushButton *recruitPushButton;
-    //QLabel      *unitLabel;
+    QPushButton *recruitPushButton;
+    QList<QLabel *>   unitsLabel;
+    //QLabel<MAX_UNITS, QWidget *>    unitsLabel;
+    //QLabel      unitsLabel[MAX_UNITS];
 };
 /*
 class SelectMapPage : public QWizardPage

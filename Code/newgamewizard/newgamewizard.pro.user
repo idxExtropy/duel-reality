@@ -77,75 +77,47 @@
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Debug</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList">
-    <value type="QString">ALDEC_LICENSE_FILE=27009@FRENZY;C:\Program Files\Aldec\Active-HDL 8.1\DAT\license.dat</value>
     <value type="QString">ALLUSERSPROFILE=C:\Documents and Settings\All Users</value>
-    <value type="QString">APPDATA=C:\Documents and Settings\oatueyi\Application Data</value>
-    <value type="QString">CLASSPATH=.;C:\Program Files\Java\jre6\lib\ext\QTJava.zip</value>
+    <value type="QString">APPDATA=C:\Documents and Settings\obi\Application Data</value>
+    <value type="QString">CLASSPATH=.;C:\Program Files\QuickTime\QTSystem\QTJava.zip</value>
     <value type="QString">COMMONPROGRAMFILES=C:\Program Files\Common Files</value>
-    <value type="QString">COMPUTERNAME=SILVERBOLT</value>
+    <value type="QString">COMPUTERNAME=OPTIMUS-PRIME</value>
     <value type="QString">COMSPEC=C:\WINDOWS\system32\cmd.exe</value>
-    <value type="QString">EPD_ARCH=win32</value>
-    <value type="QString">EPD_HSSD=hssd</value>
-    <value type="QString">EPD_LOCAL=C:\Documents and Settings\oatueyi\Application Data\mgc\2004</value>
-    <value type="QString">EPD_ROOT=c:\mentorgraphics\2004</value>
-    <value type="QString">EPD_START=start</value>
-    <value type="QString">EPD_STARTBAT=start /b /wait</value>
-    <value type="QString">EPD_VLPERL_BIN=c:\mentorgraphics\2004\common\win32\perl\bin\mswin32-x86</value>
-    <value type="QString">EPD_WV=wv</value>
     <value type="QString">FP_NO_HOST_CHECK=NO</value>
-    <value type="QString">HOME=c:/emacs-21.3</value>
     <value type="QString">HOMEDRIVE=C:</value>
-    <value type="QString">HOMEPATH=\Documents and Settings\oatueyi</value>
-    <value type="QString">LMC_HOME=C:\Xilinx\10.1\ISE\smartmodel\nt\installed_nt</value>
-    <value type="QString">LM_LICENSE_FILE=1717@FRENZY</value>
-    <value type="QString">LOGONSERVER=\\FS01</value>
-    <value type="QString">MLM_LICENSE_FILE=C:\MATLAB701\bin\win32\LICENSE.lic</value>
-    <value type="QString">NUMBER_OF_PROCESSORS=2</value>
+    <value type="QString">HOMEPATH=\Documents and Settings\obi</value>
+    <value type="QString">LOGONSERVER=\\OPTIMUS-PRIME</value>
+    <value type="QString">NUMBER_OF_PROCESSORS=4</value>
     <value type="QString">OS=Windows_NT</value>
-    <value type="QString">PATH=C:\Qt\2010.02.1\mingw\bin;C:\Qt\2010.02.1\qt\bin;C:\Xilinx\10.1\EDK\bin\nt;C:\Xilinx\10.1\EDK\lib\nt;C:\Xilinx\10.1\ISE\bin\nt;C:\Xilinx\10.1\ISE\lib\nt;C:\Xilinx\10.1\ISE\smartmodel\nt\installed_nt\lib\pcnt.lib;C:\Program Files\Pervasive Software\PSQL\bin\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\Program Files\Common Files\Roxio Shared\DLLShared\;C:\Program Files\Common Files\Roxio Shared\9.0\DLLShared\;c:\Program Files\Microsoft SQL Server\90\Tools\binn\;C:\Program Files\Common Files\Autodesk Shared\;C:\Program Files\Aldec\Active-HDL 8.1\BIN;C:\Program Files\TortoiseSVN\bin;C:\Xilinx\10.1\ChipScope\bin\nt;C:\Quixilica\\software\bin;c:\altera\81\quartus\bin;C:\EMP\;C:\TASM\BIN\;C:\UML\MicroII\Labs\;C:\Program Files\QuickTime\QTSystem\;;C:\WINDOWS\system32\WindowsPowerShell\v1.0;C:\IBM\ppc440gx-kit\bin;c:\mentorgraphics\2004\common\win32\bin;c:\mentorgraphics\2004\common\win32\lib;C:\EMP\;C:\TASM\BIN\;C:\UML\MicroII\Labs\</value>
-    <value type="QString">PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.PSC1</value>
+    <value type="QString">PATH=C:\Qt\2010.02.1\mingw\bin;C:\Qt\2010.02.1\qt\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\Program Files\QuickTime\QTSystem\;C:\Program Files\TortoiseSVN\bin;C:\Qt\2010.02.1\mingw\bin;C:\Qt\2010.02.1\bin;C:\Qt\2010.02.1\qt\bin;C:\Qt\2010.02.1\mingw\mingw32\bin</value>
+    <value type="QString">PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH</value>
     <value type="QString">PROCESSOR_ARCHITECTURE=x86</value>
-    <value type="QString">PROCESSOR_IDENTIFIER=x86 Family 6 Model 23 Stepping 6, GenuineIntel</value>
+    <value type="QString">PROCESSOR_IDENTIFIER=x86 Family 6 Model 15 Stepping 11, GenuineIntel</value>
     <value type="QString">PROCESSOR_LEVEL=6</value>
-    <value type="QString">PROCESSOR_REVISION=1706</value>
+    <value type="QString">PROCESSOR_REVISION=0f0b</value>
     <value type="QString">PROGRAMFILES=C:\Program Files</value>
-    <value type="QString">PSMODULEPATH=C:\WINDOWS\system32\WindowsPowerShell\v1.0\Modules\</value>
     <value type="QString">QTDIR=C:/Qt/2010.02.1/qt</value>
-    <value type="QString">QTJAVA=C:\Program Files\Java\jre6\lib\ext\QTJava.zip</value>
-    <value type="QString">QUADBIN=c:\mentorgraphics\2004\hssd\analysis\exec\nt_4</value>
-    <value type="QString">QUADHOME=c:\mentorgraphics\2004\hssd\analysis</value>
-    <value type="QString">QUARTUS_ROOTDIR=c:\altera\81\quartus</value>
-    <value type="QString">QUIXILICA=C:\Quixilica\</value>
-    <value type="QString">ROXIOCENTRAL=C:\Program Files\Common Files\Roxio Shared\9.0\Roxio Central33\</value>
-    <value type="QString">SDD_COMMON_BIN=c:\mentorgraphics\2004\common\win32\bin</value>
-    <value type="QString">SDD_HOME=c:\mentorgraphics\2004</value>
-    <value type="QString">SDD_LOCAL=C:\Documents and Settings\oatueyi\Application Data\mgc\2004</value>
-    <value type="QString">SDD_PLATFORM=win32</value>
-    <value type="QString">SDD_VERSION=2004</value>
+    <value type="QString">QTJAVA=C:\Program Files\QuickTime\QTSystem\QTJava.zip</value>
     <value type="QString">SESSIONNAME=Console</value>
     <value type="QString">SYSTEMDRIVE=C:</value>
     <value type="QString">SYSTEMROOT=C:\WINDOWS</value>
-    <value type="QString">TEMP=C:\DOCUME~1\oatueyi\LOCALS~1\Temp</value>
-    <value type="QString">TMP=C:\DOCUME~1\oatueyi\LOCALS~1\Temp</value>
-    <value type="QString">USERDNSDOMAIN=TEK.LOCAL</value>
-    <value type="QString">USERDOMAIN=TEK</value>
-    <value type="QString">USERNAME=oatueyi</value>
-    <value type="QString">USERPROFILE=C:\Documents and Settings\oatueyi</value>
+    <value type="QString">TEMP=C:\DOCUME~1\obi\LOCALS~1\Temp</value>
+    <value type="QString">TMP=C:\DOCUME~1\obi\LOCALS~1\Temp</value>
+    <value type="QString">USERDOMAIN=OPTIMUS-PRIME</value>
+    <value type="QString">USERNAME=obi</value>
+    <value type="QString">USERPROFILE=C:\Documents and Settings\obi</value>
     <value type="QString">VS90COMNTOOLS=C:\Program Files\Microsoft Visual Studio 9.0\Common7\Tools\</value>
-    <value type="QString">WDIR=C:\Documents and Settings\oatueyi\My Documents\Program Files\Mentor\WDIR\;c:\mentorgraphics\2004\standard</value>
     <value type="QString">WINDIR=C:\WINDOWS</value>
-    <value type="QString">XILINX=C:\Xilinx\10.1\ISE</value>
-    <value type="QString">XILINX_EDK=C:\Xilinx\10.1\EDK</value>
    </valuelist>
    <valuelist key="abstractProcess.arguments" type="QVariantList">
-    <value type="QString">C:/UML/SWEngr/Code/newgamewizard/newgamewizard.pro</value>
+    <value type="QString">R:/UML/SWEngr/Spring10/Project/Code/newgamewizard/newgamewizard.pro</value>
     <value type="QString">-spec</value>
     <value type="QString">win32-g++</value>
     <value type="QString">-r</value>
    </valuelist>
    <value key="abstractProcess.command" type="QString">c:/qt/2010.02.1/qt/bin/qmake.exe</value>
-   <value key="abstractProcess.enabled" type="bool">false</value>
-   <value key="abstractProcess.workingDirectory" type="QString">C:/UML/SWEngr/Code/newgamewizard</value>
+   <value key="abstractProcess.enabled" type="bool">true</value>
+   <value key="abstractProcess.workingDirectory" type="QString">R:/UML/SWEngr/Spring10/Project/Code/newgamewizard</value>
   </valuemap>
  </data>
  <data>
@@ -153,65 +125,37 @@
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Debug</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList">
-    <value type="QString">ALDEC_LICENSE_FILE=27009@FRENZY;C:\Program Files\Aldec\Active-HDL 8.1\DAT\license.dat</value>
     <value type="QString">ALLUSERSPROFILE=C:\Documents and Settings\All Users</value>
-    <value type="QString">APPDATA=C:\Documents and Settings\oatueyi\Application Data</value>
-    <value type="QString">CLASSPATH=.;C:\Program Files\Java\jre6\lib\ext\QTJava.zip</value>
+    <value type="QString">APPDATA=C:\Documents and Settings\obi\Application Data</value>
+    <value type="QString">CLASSPATH=.;C:\Program Files\QuickTime\QTSystem\QTJava.zip</value>
     <value type="QString">COMMONPROGRAMFILES=C:\Program Files\Common Files</value>
-    <value type="QString">COMPUTERNAME=SILVERBOLT</value>
+    <value type="QString">COMPUTERNAME=OPTIMUS-PRIME</value>
     <value type="QString">COMSPEC=C:\WINDOWS\system32\cmd.exe</value>
-    <value type="QString">EPD_ARCH=win32</value>
-    <value type="QString">EPD_HSSD=hssd</value>
-    <value type="QString">EPD_LOCAL=C:\Documents and Settings\oatueyi\Application Data\mgc\2004</value>
-    <value type="QString">EPD_ROOT=c:\mentorgraphics\2004</value>
-    <value type="QString">EPD_START=start</value>
-    <value type="QString">EPD_STARTBAT=start /b /wait</value>
-    <value type="QString">EPD_VLPERL_BIN=c:\mentorgraphics\2004\common\win32\perl\bin\mswin32-x86</value>
-    <value type="QString">EPD_WV=wv</value>
     <value type="QString">FP_NO_HOST_CHECK=NO</value>
-    <value type="QString">HOME=c:/emacs-21.3</value>
     <value type="QString">HOMEDRIVE=C:</value>
-    <value type="QString">HOMEPATH=\Documents and Settings\oatueyi</value>
-    <value type="QString">LMC_HOME=C:\Xilinx\10.1\ISE\smartmodel\nt\installed_nt</value>
-    <value type="QString">LM_LICENSE_FILE=1717@FRENZY</value>
-    <value type="QString">LOGONSERVER=\\FS01</value>
-    <value type="QString">MLM_LICENSE_FILE=C:\MATLAB701\bin\win32\LICENSE.lic</value>
-    <value type="QString">NUMBER_OF_PROCESSORS=2</value>
+    <value type="QString">HOMEPATH=\Documents and Settings\obi</value>
+    <value type="QString">LOGONSERVER=\\OPTIMUS-PRIME</value>
+    <value type="QString">NUMBER_OF_PROCESSORS=4</value>
     <value type="QString">OS=Windows_NT</value>
-    <value type="QString">PATH=C:\Qt\2010.02.1\mingw\bin;C:\Qt\2010.02.1\qt\bin;C:\Xilinx\10.1\EDK\bin\nt;C:\Xilinx\10.1\EDK\lib\nt;C:\Xilinx\10.1\ISE\bin\nt;C:\Xilinx\10.1\ISE\lib\nt;C:\Xilinx\10.1\ISE\smartmodel\nt\installed_nt\lib\pcnt.lib;C:\Program Files\Pervasive Software\PSQL\bin\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\Program Files\Common Files\Roxio Shared\DLLShared\;C:\Program Files\Common Files\Roxio Shared\9.0\DLLShared\;c:\Program Files\Microsoft SQL Server\90\Tools\binn\;C:\Program Files\Common Files\Autodesk Shared\;C:\Program Files\Aldec\Active-HDL 8.1\BIN;C:\Program Files\TortoiseSVN\bin;C:\Xilinx\10.1\ChipScope\bin\nt;C:\Quixilica\\software\bin;c:\altera\81\quartus\bin;C:\EMP\;C:\TASM\BIN\;C:\UML\MicroII\Labs\;C:\Program Files\QuickTime\QTSystem\;;C:\WINDOWS\system32\WindowsPowerShell\v1.0;C:\IBM\ppc440gx-kit\bin;c:\mentorgraphics\2004\common\win32\bin;c:\mentorgraphics\2004\common\win32\lib;C:\EMP\;C:\TASM\BIN\;C:\UML\MicroII\Labs\</value>
-    <value type="QString">PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.PSC1</value>
+    <value type="QString">PATH=C:\Qt\2010.02.1\mingw\bin;C:\Qt\2010.02.1\qt\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\Program Files\QuickTime\QTSystem\;C:\Program Files\TortoiseSVN\bin;C:\Qt\2010.02.1\mingw\bin;C:\Qt\2010.02.1\bin;C:\Qt\2010.02.1\qt\bin;C:\Qt\2010.02.1\mingw\mingw32\bin</value>
+    <value type="QString">PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH</value>
     <value type="QString">PROCESSOR_ARCHITECTURE=x86</value>
-    <value type="QString">PROCESSOR_IDENTIFIER=x86 Family 6 Model 23 Stepping 6, GenuineIntel</value>
+    <value type="QString">PROCESSOR_IDENTIFIER=x86 Family 6 Model 15 Stepping 11, GenuineIntel</value>
     <value type="QString">PROCESSOR_LEVEL=6</value>
-    <value type="QString">PROCESSOR_REVISION=1706</value>
+    <value type="QString">PROCESSOR_REVISION=0f0b</value>
     <value type="QString">PROGRAMFILES=C:\Program Files</value>
-    <value type="QString">PSMODULEPATH=C:\WINDOWS\system32\WindowsPowerShell\v1.0\Modules\</value>
     <value type="QString">QTDIR=C:/Qt/2010.02.1/qt</value>
-    <value type="QString">QTJAVA=C:\Program Files\Java\jre6\lib\ext\QTJava.zip</value>
-    <value type="QString">QUADBIN=c:\mentorgraphics\2004\hssd\analysis\exec\nt_4</value>
-    <value type="QString">QUADHOME=c:\mentorgraphics\2004\hssd\analysis</value>
-    <value type="QString">QUARTUS_ROOTDIR=c:\altera\81\quartus</value>
-    <value type="QString">QUIXILICA=C:\Quixilica\</value>
-    <value type="QString">ROXIOCENTRAL=C:\Program Files\Common Files\Roxio Shared\9.0\Roxio Central33\</value>
-    <value type="QString">SDD_COMMON_BIN=c:\mentorgraphics\2004\common\win32\bin</value>
-    <value type="QString">SDD_HOME=c:\mentorgraphics\2004</value>
-    <value type="QString">SDD_LOCAL=C:\Documents and Settings\oatueyi\Application Data\mgc\2004</value>
-    <value type="QString">SDD_PLATFORM=win32</value>
-    <value type="QString">SDD_VERSION=2004</value>
+    <value type="QString">QTJAVA=C:\Program Files\QuickTime\QTSystem\QTJava.zip</value>
     <value type="QString">SESSIONNAME=Console</value>
     <value type="QString">SYSTEMDRIVE=C:</value>
     <value type="QString">SYSTEMROOT=C:\WINDOWS</value>
-    <value type="QString">TEMP=C:\DOCUME~1\oatueyi\LOCALS~1\Temp</value>
-    <value type="QString">TMP=C:\DOCUME~1\oatueyi\LOCALS~1\Temp</value>
-    <value type="QString">USERDNSDOMAIN=TEK.LOCAL</value>
-    <value type="QString">USERDOMAIN=TEK</value>
-    <value type="QString">USERNAME=oatueyi</value>
-    <value type="QString">USERPROFILE=C:\Documents and Settings\oatueyi</value>
+    <value type="QString">TEMP=C:\DOCUME~1\obi\LOCALS~1\Temp</value>
+    <value type="QString">TMP=C:\DOCUME~1\obi\LOCALS~1\Temp</value>
+    <value type="QString">USERDOMAIN=OPTIMUS-PRIME</value>
+    <value type="QString">USERNAME=obi</value>
+    <value type="QString">USERPROFILE=C:\Documents and Settings\obi</value>
     <value type="QString">VS90COMNTOOLS=C:\Program Files\Microsoft Visual Studio 9.0\Common7\Tools\</value>
-    <value type="QString">WDIR=C:\Documents and Settings\oatueyi\My Documents\Program Files\Mentor\WDIR\;c:\mentorgraphics\2004\standard</value>
     <value type="QString">WINDIR=C:\WINDOWS</value>
-    <value type="QString">XILINX=C:\Xilinx\10.1\ISE</value>
-    <value type="QString">XILINX_EDK=C:\Xilinx\10.1\EDK</value>
    </valuelist>
    <value key="abstractProcess.IgnoreReturnValue" type="bool">false</value>
    <valuelist key="abstractProcess.arguments" type="QVariantList">
@@ -219,7 +163,7 @@
    </valuelist>
    <value key="abstractProcess.command" type="QString">C:/Qt/2010.02.1/mingw/bin/mingw32-make.exe</value>
    <value key="abstractProcess.enabled" type="bool">true</value>
-   <value key="abstractProcess.workingDirectory" type="QString">C:/UML/SWEngr/Code/newgamewizard</value>
+   <value key="abstractProcess.workingDirectory" type="QString">R:/UML/SWEngr/Spring10/Project/Code/newgamewizard</value>
   </valuemap>
  </data>
  <data>
