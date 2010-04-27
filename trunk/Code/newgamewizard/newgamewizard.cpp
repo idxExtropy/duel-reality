@@ -155,13 +155,62 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
     setTitle(tr("Recruit Units"));
     setSubTitle(tr("Recruit player units."));
 
-    spriteLabel = new QLabel(this);
-    //spriteLabel->setGeometry(QRect(335, 140, 51, 111));
-    spriteLabel->setPixmap(sprites[0].pixMap);
+    QHBoxLayout *mainLayout = new QHBoxLayout;
+    mainLayout->setObjectName(QString::fromUtf8("mainLayout"));
+    mainLayout->setContentsMargins(0, 0, 0, 0);
 
-    spriteName = new QLabel(tr("Name:"));
-    spriteNameValue = new QLabel(this);
-    spriteNameValue->setText(sprites[0].name);
+    QGroupBox *spriteBox = new QGroupBox;
+    spriteBox->setObjectName(QString::fromUtf8("spriteBox"));
+    
+    QGridLayout *spriteBoxLayout = new QGridLayout(spriteBox);
+    spriteBoxLayout->setObjectName(QString::fromUtf8("spriteBoxLayout"));
+
+    QVBoxLayout *leftLayout = new QVBoxLayout;
+    leftLayout->setObjectName(QString::fromUtf8("leftLayout"));
+    
+    QHBoxLayout *leftTopLayout = new QHBoxLayout;
+    leftTopLayout->setObjectName(QString::fromUtf8("leftTopLayout"));
+
+    prevSpritePushButton = new QPushButton(spriteBox);
+    prevSpritePushButton->setObjectName(QString::fromUtf8("prevSpritePushButton"));
+    prevSpritePushButton->setMaximumSize(QSize(31, 23));
+    leftTopLayout->addWidget(prevSpritePushButton);
+
+    spriteImage = new QLabel(spriteBox);
+    spriteImage->setObjectName(QString::fromUtf8("spriteImage"));
+    spriteImage->setMaximumSize(QSize(71, 101));
+    //spriteImage->setPixmap(QPixmap(QString::fromUtf8("debug/sprites/desertsoldier.png")));
+    spriteImage->setScaledContents(true);
+    leftTopLayout->addWidget(spriteImage);
+
+    nextSpritePushButton = new QPushButton(spriteBox);
+    nextSpritePushButton->setObjectName(QString::fromUtf8("nextSpritePushButton"));
+    nextSpritePushButton->setMaximumSize(QSize(31, 23));
+    leftTopLayout->addWidget(nextSpritePushButton);
+    leftLayout->addLayout(leftTopLayout);
+
+    QHBoxLayout *leftMidLayout = new QHBoxLayout;
+    leftMidLayout->setObjectName(QString::fromUtf8("leftMidLayout"));
+    QSpacerItem *hLeftSpacerSpriteStats = new QSpacerItem(18, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+    leftMidLayout->addItem(hLeftSpacerSpriteStats);
+
+    QGridLayout *spriteStatsLayout = new QGridLayout;
+    spriteStatsLayout->setObjectName(QString::fromUtf8("spriteStatsLayout"));
+
+    //spriteLabel = new QLabel(this);
+    //spriteLabel->setGeometry(QRect(335, 140, 51, 111));
+    //spriteLabel->setPixmap(sprites[0].pixMap);
+
+    //spriteName = new QLabel(tr("Name:"));
+    spriteName = new QLabel(spriteBox);
+    spriteName->setObjectName(QString::fromUtf8("spriteName"));
+    spriteStatsLayout->addWidget(spriteName, 0, 0, 1, 1);
+    
+    //spriteNameValue = new QLabel(this);
+    spriteNameVal = new QLabel(spriteBox);
+    spriteNameVal->setObjectName(QString::fromUtf8("spriteNameVal"));
+    spriteNameVal->setText(sprites[0].name);
+    spriteStatsLayout->addWidget(spriteNameVal, 0, 1, 1, 1);
 
     spriteAP = new QLabel(tr("AP:"));
     spriteAPValue = new QLabel(this);
@@ -175,10 +224,8 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
     spriteRangeValue = new QLabel(this);
     spriteRangeValue->setText(QString::number(sprites[0].range));
 
-    nextSpritePushButton = new QPushButton(tr("&Next"), this);
-    nextSpritePushButton->setObjectName(QString::fromUtf8("nextSpritePushButton"));
-    prevSpritePushButton = new QPushButton(tr("&Previous"), this);
-    prevSpritePushButton->setObjectName(QString::fromUtf8("prevSpritePushButton"));
+    
+    
     recruitPushButton = new QPushButton(tr("&Recruit"), this);
     recruitPushButton->setObjectName(QString::fromUtf8("recruitPushButton"));
 
@@ -197,6 +244,7 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
     leftMidRightLayout->addLayout(statsLayout);
     leftMidRightLayout->addStretch();
 
+    
 
     //QGridLayout *spriteLayout = new QGridLayout;
     QHBoxLayout *spriteLayout = new QHBoxLayout;
@@ -261,7 +309,8 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
 
     i = 0;
 
-    QHBoxLayout *mainLayout = new QHBoxLayout;
+    
+    
     mainLayout->addLayout(leftLayout);
     mainLayout->addLayout(rightLayout);
     setLayout(mainLayout);

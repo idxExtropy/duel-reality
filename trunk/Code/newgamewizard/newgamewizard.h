@@ -98,7 +98,7 @@ private slots:
 private:
     int         i;
     int         spriteIndex;
-    QLabel      *spriteLabel;
+    QLabel      *spriteImage;
     QPushButton *nextSpritePushButton;
     QPushButton *prevSpritePushButton;
     QLabel      *spriteName;
