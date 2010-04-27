@@ -96,21 +96,23 @@ private slots:
     void recruitPushButtonClicked();
 
 private:
-    int         i;
-    int         spriteIndex;
-    QLabel      *spriteImage;
-    QPushButton *nextSpritePushButton;
-    QPushButton *prevSpritePushButton;
-    QLabel      *spriteName;
-    QLabel      *spriteAP;
-    QLabel      *spriteHP;
-    QLabel      *spriteRange;
-    QLabel      *spriteNameValue;
-    QLabel      *spriteAPValue;
-    QLabel      *spriteHPValue;
-    QLabel      *spriteRangeValue;
-    QPushButton *recruitPushButton;
-    QList<QLabel *>   unitsLabel;
+    int                     i;
+    int                     spriteIndex;
+    QLabel                  *spriteImage;
+    QPushButton             *nextSpritePushButton;
+    QPushButton             *prevSpritePushButton;
+    QLabel                  *spriteName;
+    QLabel                  *spriteAP;
+    QLabel                  *spriteHP;
+    QLabel                  *spriteRange;
+    QLabel                  *spriteNameVal;
+    QLabel                  *spriteAPVal;
+    QLabel                  *spriteHPVal;
+    QLabel                  *spriteRangeVal;
+    QPushButton             *recruitPushButton;
+    QList<QLabel *>         unitImages;
+    QList<QLabel *>         unitNames;
+    QList<QPushButton *>    rejectPushButtons;
     //QLabel<MAX_UNITS, QWidget *>    unitsLabel;
     //QLabel      unitsLabel[MAX_UNITS];
 };
