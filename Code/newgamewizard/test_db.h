@@ -9,7 +9,6 @@ class Sprite
 {
 public:
     QString name;
-    //QImage  image;
     QPixmap pixMap;
     int     AP;
     int     HP;
