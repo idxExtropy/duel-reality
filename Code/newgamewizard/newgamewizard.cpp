@@ -198,12 +198,17 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
     leftMidRightLayout->addStretch();
 
 
-    QGridLayout *spriteLayout = new QGridLayout;
+    //QGridLayout *spriteLayout = new QGridLayout;
+    QHBoxLayout *spriteLayout = new QHBoxLayout;
     spriteLayout->setSpacing(6);
     spriteLayout->setObjectName(QString::fromUtf8("spriteLayout"));
-    spriteLayout->addWidget(prevSpritePushButton, 0, 0, 1, 1);
-    spriteLayout->addWidget(spriteLabel, 0, 1, 1, 1);
-    spriteLayout->addWidget(nextSpritePushButton, 0, 2, 1, 1);
+    //spriteLayout->addWidget(prevSpritePushButton, 0, 0, 1, 1);
+    spriteLayout->addWidget(prevSpritePushButton);
+    //spriteLayout->addWidget(spriteLabel, 0, 1, 1, 1);
+    spriteLayout->addWidget(spriteLabel);
+    //spriteLayout->addWidget(nextSpritePushButton, 0, 2, 1, 1);
+    spriteLayout->addWidget(nextSpritePushButton);
+    spriteLayout->addStretch();
 
     QSpacerItem *hSpacer_1 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
     QSpacerItem *hSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
@@ -214,14 +219,20 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
     midLeftLayout->addItem(hSpacer_1);
     midLeftLayout->addWidget(recruitPushButton);
     midLeftLayout->addItem(hSpacer_2);
+    midLeftLayout->addStretch();
+
+    QVBoxLayout *topLeftLayout = new QVBoxLayout;
+    topLeftLayout->addLayout(spriteLayout);
+    topLeftLayout->addLayout(midLeftLayout);
 
     QVBoxLayout *leftLayout = new QVBoxLayout;
     leftLayout->setSpacing(6);
     leftLayout->setContentsMargins(11, 11, 11, 11);
     leftLayout->setObjectName(QString::fromUtf8("leftLayout"));
     leftLayout->setContentsMargins(0, 0, 0, 0);
-    leftLayout->addLayout(spriteLayout);
-    leftLayout->addLayout(midLeftLayout);
+    leftLayout->addLayout(topLeftLayout);
+    //leftLayout->addLayout(spriteLayout);
+    //leftLayout->addLayout(midLeftLayout);
     leftLayout->addLayout(leftMidRightLayout);
     leftLayout->addStretch();
 
@@ -239,13 +250,16 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
         QLabel *unitLabel = new QLabel(frame);
         unitLabel->setPixmap(QPixmap(QString::fromUtf8("sprites/blank.png")));
         unitLabel->setScaledContents(true);
-        gridLayout->addWidget(unitLabel, 0, 0, 1, 1);
+        unitsLabel << unitLabel;
+        gridLayout->addWidget(unitsLabel[i], 0, 0, 1, 1);
         //QPushButton *blah = new QPushButton;
         //unitLabel->setGeometry(QRect(335, 140, 51, 111));
         rightLayout->addWidget(frame);
         //rightLayout->addWidget(blah);
-        unitsLabel << unitLabel;
+        //unitsLabel << unitLabel;
     }
+
+    i = 0;
 
     QHBoxLayout *mainLayout = new QHBoxLayout;
     mainLayout->addLayout(leftLayout);
@@ -254,6 +268,7 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
 
     connect(nextSpritePushButton, SIGNAL(clicked()), this, SLOT(nextSpritePushButtonClicked()));
     connect(prevSpritePushButton, SIGNAL(clicked()), this, SLOT(prevSpritePushButtonClicked()));
+    connect(recruitPushButton, SIGNAL(clicked()), this, SLOT(recruitPushButtonClicked()));
 
     //recruitPushButton = new QPushButton(this);
 }
@@ -309,6 +324,15 @@ void RecruitUnitsPage::prevSpritePushButtonClicked()
     spriteRangeValue->setText(QString::number(sprites[spriteIndex].range));
 }
 
+void RecruitUnitsPage::recruitPushButtonClicked()
+{
+    if (i < MAX_UNITS)
+    {
+        unitsLabel[i]->setPixmap(*(spriteLabel->pixmap()));;
+        i++;
+    }
+
+}
 
 int RecruitUnitsPage::nextId() const
 {
