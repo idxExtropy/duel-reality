@@ -91,16 +91,16 @@ protected:
     Sprite  sprites[MAX_SPRITES];
 
 private slots:
-    void nextSpritePushButtonClicked();
-    void prevSpritePushButtonClicked();
-    void recruitPushButtonClicked();
+    void nextSpriteButtonClicked();
+    void prevSpriteButtonClicked();
+    void recruitButtonClicked();
 
 private:
     int                     i;
     int                     spriteIndex;
     QLabel                  *spriteImage;
-    QPushButton             *nextSpritePushButton;
-    QPushButton             *prevSpritePushButton;
+    QPushButton             *nextSpriteButton;
+    QPushButton             *prevSpriteButton;
     QLabel                  *spriteName;
     QLabel                  *spriteAP;
     QLabel                  *spriteHP;
@@ -109,10 +109,10 @@ private:
     QLabel                  *spriteAPVal;
     QLabel                  *spriteHPVal;
     QLabel                  *spriteRangeVal;
-    QPushButton             *recruitPushButton;
+    QPushButton             *recruitButton;
     QList<QLabel *>         unitImageList;
     QList<QLabel *>         unitNameList;
-    QList<QPushButton *>    rejectPushButtonList;
+    QList<QPushButton *>    rejectButtonList;
     //QLabel<MAX_UNITS, QWidget *>    unitsLabel;
     //QLabel      unitsLabel[MAX_UNITS];
 };
