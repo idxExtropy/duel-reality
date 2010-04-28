@@ -171,10 +171,10 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
     QHBoxLayout *leftTopLayout = new QHBoxLayout;
     leftTopLayout->setObjectName(QString::fromUtf8("leftTopLayout"));
 
-    prevSpritePushButton = new QPushButton(tr("<<"), spriteBox);
-    prevSpritePushButton->setObjectName(QString::fromUtf8("prevSpritePushButton"));
-    prevSpritePushButton->setMaximumSize(QSize(31, 23));
-    leftTopLayout->addWidget(prevSpritePushButton);
+    prevSpriteButton = new QPushButton(tr("<<"), spriteBox);
+    prevSpriteButton->setObjectName(QString::fromUtf8("prevSpriteButton"));
+    prevSpriteButton->setMaximumSize(QSize(31, 23));
+    leftTopLayout->addWidget(prevSpriteButton);
 
     spriteImage = new QLabel(spriteBox);
     spriteImage->setObjectName(QString::fromUtf8("spriteImage"));
@@ -185,10 +185,10 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
     spriteImage->setScaledContents(true);
     leftTopLayout->addWidget(spriteImage);
 
-    nextSpritePushButton = new QPushButton(tr(">>"), spriteBox);
-    nextSpritePushButton->setObjectName(QString::fromUtf8("nextSpritePushButton"));
-    nextSpritePushButton->setMaximumSize(QSize(31, 23));
-    leftTopLayout->addWidget(nextSpritePushButton);
+    nextSpriteButton = new QPushButton(tr(">>"), spriteBox);
+    nextSpriteButton->setObjectName(QString::fromUtf8("nextSpriteButton"));
+    nextSpriteButton->setMaximumSize(QSize(31, 23));
+    leftTopLayout->addWidget(nextSpriteButton);
     leftLayout->addLayout(leftTopLayout);
 
     QHBoxLayout *leftMidLayout = new QHBoxLayout;
@@ -258,9 +258,9 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
     QSpacerItem *hLeftSpacerRecruit = new QSpacerItem(28, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
     leftBotLayout->addItem(hLeftSpacerRecruit);
 
-    recruitPushButton = new QPushButton(tr("&Recruit"), spriteBox);
-    recruitPushButton->setObjectName(QString::fromUtf8("recruitPushButton"));
-    leftBotLayout->addWidget(recruitPushButton);
+    recruitButton = new QPushButton(tr("&Recruit"), spriteBox);
+    recruitButton->setObjectName(QString::fromUtf8("recruitButton"));
+    leftBotLayout->addWidget(recruitButton);
 
     QSpacerItem *hRightSpacerRecruit = new QSpacerItem(28, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
     leftBotLayout->addItem(hRightSpacerRecruit);
@@ -294,15 +294,15 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
         //unitName->setObjectName(QString::fromUtf8("unitName1"));
         unitRejectLayout->addWidget(unitName);
 
-        QPushButton *rejectPushButton = new QPushButton(tr("Reject"), unitsBox);
+        QPushButton *rejectButton = new QPushButton(tr("Reject"), unitsBox);
         //rejectPushButton->setObjectName(QString::fromUtf8("rejectPushButton"));
-        unitRejectLayout->addWidget(rejectPushButton);
+        unitRejectLayout->addWidget(rejectButton);
         rightUnitLayout->addLayout(unitRejectLayout);
         unitBoxLayout->addLayout(rightUnitLayout, i, 0, 1, 1);
 
         unitImageList << unitImage;
         unitNameList << unitName;
-        rejectPushButtonList << rejectPushButton;
+        rejectButtonList << rejectButton;
     }
 
     mainLayout->addWidget(unitsBox);
@@ -310,9 +310,9 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
 
     i = 0;
     
-    connect(nextSpritePushButton, SIGNAL(clicked()), this, SLOT(nextSpritePushButtonClicked()));
-    connect(prevSpritePushButton, SIGNAL(clicked()), this, SLOT(prevSpritePushButtonClicked()));
-    connect(recruitPushButton, SIGNAL(clicked()), this, SLOT(recruitPushButtonClicked()));
+    connect(nextSpriteButton, SIGNAL(clicked()), this, SLOT(nextSpriteButtonClicked()));
+    connect(prevSpriteButton, SIGNAL(clicked()), this, SLOT(prevSpriteButtonClicked()));
+    connect(recruitButton, SIGNAL(clicked()), this, SLOT(recruitButtonClicked()));
 }
 
 void RecruitUnitsPage::test_GenerateSprites()
@@ -343,7 +343,7 @@ void RecruitUnitsPage::test_GenerateSprites()
 }
 
 
-void RecruitUnitsPage::nextSpritePushButtonClicked()
+void RecruitUnitsPage::nextSpriteButtonClicked()
 {
     spriteIndex = (spriteIndex + 1) % MAX_SPRITES;
 
@@ -355,7 +355,7 @@ void RecruitUnitsPage::nextSpritePushButtonClicked()
 }
 
 
-void RecruitUnitsPage::prevSpritePushButtonClicked()
+void RecruitUnitsPage::prevSpriteButtonClicked()
 {
     spriteIndex = (spriteIndex + MAX_SPRITES - 1) % MAX_SPRITES;
     //spriteLabel->setPixmap();
@@ -366,11 +366,12 @@ void RecruitUnitsPage::prevSpritePushButtonClicked()
     spriteRangeVal->setText(QString::number(sprites[spriteIndex].range));
 }
 
-void RecruitUnitsPage::recruitPushButtonClicked()
+void RecruitUnitsPage::recruitButtonClicked()
 {
     if (i < MAX_UNITS)
     {
         unitImageList[i]->setPixmap(*(spriteImage->pixmap()));;
+        unitNameList[i]->setText(spriteNameVal->text());
         i++;
     }
 

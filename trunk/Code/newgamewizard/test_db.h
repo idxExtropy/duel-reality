@@ -5,6 +5,7 @@
 
 class QImage;
 
+
 class Sprite
 {
 public:
@@ -14,5 +15,18 @@ public:
     int     HP;
     int     range;
 };
+
+/*
+Class Unit
+{
+public:
+    bool    isAlive;
+    QString name;
+    QPixmap pixmap;
+    int     AP;
+    int     HP;
+    int     range;
+};
+*/
 
 #endif // TEST_DB_H
