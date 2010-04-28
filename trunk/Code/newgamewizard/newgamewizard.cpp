@@ -36,29 +36,29 @@ void NewGameWizard::showHelp()
     switch (currentId())
     {
     case Page_Intro:
-        message = tr("Select if you are a returning player or a new player.");
+        message = tr("Indicate if you are a returning player or a new player");
         break;
     case Page_CreatePlayer:
-        message = tr("Create a new player name.");
+        message = tr("The player name will be associated with the games you save");
         break;
     case Page_LoadPlayer:
-        message = tr("Select from existing player names.");
+        message = tr("The drop-down menu is a list of all the players in the database");
         break;
-    /*case Page_RecruitUnits:
-        message = tr("Recruit units from available sprites.");
+    case Page_RecruitUnits:
+        message = tr("From the available units, recruit up to 4 units for your team");
         break;
-    case Page_SelectMap:
-        message = tr("Select map.");
+    /*case Page_SelectMap:
+        message = tr("Select a desired battle map");
         break;*/
     case Page_Conclusion:
-        message = tr("Conclusion.");
+        message = tr("The battle resumes after this");
         break;
     default:
-        message = tr("This help is likely not to be of any help.");
+        message = tr("This help is likely not to be of any help :-(");
     }
 
     if (lastHelpMessage == message)
-        message = tr("Blah blah blah.");
+        message = tr("That's all the help you're getting!!");
 
     QMessageBox::information(this, tr("New Game Help"), message);
 
@@ -72,7 +72,7 @@ IntroPage::IntroPage(QWidget *parent)
     setTitle(tr("Introduction"));
     //setPixmap(QWizard::WatermarkPixmap, QPixmap(":/images/watermark.png"));
 
-    topLabel = new QLabel(tr("This dialog takes you through the options for a new game."));
+    topLabel = new QLabel(tr("This dialog takes you through the options for a new game"));
     topLabel->setWordWrap(true);
 
     // Initialize radio buttons
@@ -100,7 +100,7 @@ CreatePlayerPage::CreatePlayerPage(QWidget *parent)
     : QWizardPage(parent)
 {
     setTitle(tr("Create Player"));
-    setSubTitle(tr("Enter new player name."));
+    setSubTitle(tr("Type a new player name"));
 
     playerNameLabel = new QLabel(tr("&Player Name:"));
     playerNameLineEdit = new QLineEdit;
@@ -124,7 +124,7 @@ LoadPlayerPage::LoadPlayerPage(QWidget *parent)
     : QWizardPage(parent)
 {
     setTitle(tr("Load Player."));
-    setSubTitle(tr("Select player name from drop down menu."));
+    setSubTitle(tr("Select player name from drop-down menu"));
 
     playerNameLabel = new QLabel(tr("&Player Name:"));
 
@@ -153,7 +153,7 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
     test_GenerateSprites();
 
     setTitle(tr("Recruit Units"));
-    setSubTitle(tr("Recruit player units."));
+    setSubTitle(tr("Recruit units for battle"));
 
     QHBoxLayout *mainLayout = new QHBoxLayout;
     mainLayout->setObjectName(QString::fromUtf8("mainLayout"));
@@ -389,7 +389,7 @@ ConclusionPage::ConclusionPage(QWidget *parent)
     //setPixmap(QWizard::WatermarkPixmap, QPixmap(":/images/watermark.png"));
 
     bottomLabel = new QLabel;
-    bottomLabel = new QLabel(tr("You have completed the New Game options."));
+    bottomLabel = new QLabel(tr("You have completed the New Game options"));
     bottomLabel->setWordWrap(true);
 
     //agreeCheckBox = new QCheckBox(tr("I agree to the terms of the license"));
