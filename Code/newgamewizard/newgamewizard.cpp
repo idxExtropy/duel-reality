@@ -178,6 +178,7 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
 
     spriteImage = new QLabel(spriteBox);
     spriteImage->setObjectName(QString::fromUtf8("spriteImage"));
+    spriteImage->setMinimumSize(QSize(71, 101));
     spriteImage->setMaximumSize(QSize(71, 101));
     spriteImage->setPixmap(sprites[0].pixMap);
     //spriteImage->setPixmap(QPixmap(QString::fromUtf8("debug/sprites/desertsoldier.png")));
@@ -282,6 +283,7 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
         QLabel *unitImage = new QLabel(unitsBox);
         //unitImage->setObjectName(QString::fromUtf8("unitImage1"));
         unitImage->setMaximumSize(QSize(41, 41));
+        unitImage->setMinimumSize(QSize(41, 41));
         unitImage->setPixmap(QPixmap(QString::fromUtf8("sprites/blank.PNG")));
         unitImage->setScaledContents(true);
         rightUnitLayout->addWidget(unitImage);
