@@ -94,6 +94,11 @@ private slots:
     void nextSpriteButtonClicked();
     void prevSpriteButtonClicked();
     void recruitButtonClicked();
+    void rejectButton0Clicked();
+    void rejectButton1Clicked();
+    void rejectButton2Clicked();
+    void rejectButton3Clicked();
+    void rejectButtonAnyClicked(int index);
 
 private:
     int                     i;
@@ -113,6 +118,7 @@ private:
     QList<QLabel *>         unitImageList;
     QList<QLabel *>         unitNameList;
     QList<QPushButton *>    rejectButtonList;
+    bool                    isAlive[MAX_UNITS];
     //QLabel<MAX_UNITS, QWidget *>    unitsLabel;
     //QLabel      unitsLabel[MAX_UNITS];
 };
