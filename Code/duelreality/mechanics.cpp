@@ -1,5 +1,6 @@
 #include "mechanics.h"
 #include "player.h"
+
 #define BOARDHEIGHT 7
 #define BOARDWIDTH 10
 
@@ -21,18 +22,18 @@ mechanics::~mechanics(void)
 void mechanics::moveUP(unit a)
 {
         cout<<a.name<<" ";
-        cout<<"old position: " <<a.hLocation<<", " <<a.vLocation<<'\n';
+     //   cout<<"old position: " <<a.hLocation<<", " <<a.vLocation<<'\n';
         if(a.vLocation==BOARDHEIGHT)
         {
-        cout<< "can't move there no move made\n";
+     //   cout<< "can't move there no move made\n";
         mechanics::Move(a);
         }
         else
         {
         a.vLocation+=1;
-        cout<<"new position: " <<a.hLocation<<", " <<a.vLocation<<'\n';
+     //   cout<<"new position: " <<a.hLocation<<", " <<a.vLocation<<'\n';
         a.actionPoints-=a.movementRate;
-        cout<<"you have "<<a.actionPoints<<" actionpoints\n";
+     //   cout<<"you have "<<a.actionPoints<<" actionpoints\n";
         }
 
 }
@@ -46,19 +47,19 @@ void mechanics::moveUP(unit a)
 /////////////////////////////////////////////////////////
 void mechanics::moveDOWN(unit a)
 {
-        cout<<a.name<<" ";
-        cout<<"old position: " <<a.hLocation<<", " <<a.vLocation<<'\n';
+  //      cout<<a.name<<" ";
+ //       cout<<"old position: " <<a.hLocation<<", " <<a.vLocation<<'\n';
         if(a.vLocation==0)
         {
-        cout<< "can't move there no move made\n";
+//        cout<< "can't move there no move made\n";
         mechanics::Move(a);
         }
         else
         {
         a.vLocation-=1;
-        cout<<"new position: " <<a.hLocation<<", " <<a.vLocation<<'\n';
+ //       cout<<"new position: " <<a.hLocation<<", " <<a.vLocation<<'\n';
         a.actionPoints-=a.movementRate;
-        cout<<"you have "<<a.actionPoints<<" actionpoints\n";
+//        cout<<"you have "<<a.actionPoints<<" actionpoints\n";
         }
 
 }
@@ -73,19 +74,19 @@ void mechanics::moveDOWN(unit a)
 
 void mechanics::moveRIGHT(unit a)
 {
-        cout<<a.name<<" ";
-        cout<<"old position: " <<a.hLocation<<", " <<a.vLocation<<'\n';
+   //     cout<<a.name<<" ";
+   //     cout<<"old position: " <<a.hLocation<<", " <<a.vLocation<<'\n';
         if(a.hLocation==BOARDWIDTH)
         {
-                cout<< "can't move there no move made\n";
+  //              cout<< "can't move there no move made\n";
                 mechanics::Move(a);
         }
         else
         {
         a.hLocation+=1;
-        cout<<"new position: " <<a.hLocation<<", " <<a.vLocation<<'\n';
+  //      cout<<"new position: " <<a.hLocation<<", " <<a.vLocation<<'\n';
         a.actionPoints-=a.movementRate;
-        cout<<"you have "<<a.actionPoints<<" actionpoints\n";
+  //      cout<<"you have "<<a.actionPoints<<" actionpoints\n";
         }
 
 }
@@ -99,19 +100,19 @@ void mechanics::moveRIGHT(unit a)
 /////////////////////////////////////////////////////////
 void mechanics::moveLEFT(unit a)
 {
-        cout<<a.name<<" ";
-        cout<<"old position: " <<a.hLocation<<", " <<a.vLocation<<'\n';
+   //     cout<<a.name<<" ";
+   //     cout<<"old position: " <<a.hLocation<<", " <<a.vLocation<<'\n';
         if(a.hLocation==0)
         {
-        cout<< "can't move there no move made\n";
+ //       cout<< "can't move there no move made\n";
         mechanics::Move(a);
         }
         else
         {
         a.hLocation-=1;
-        cout<<"new position: " <<a.hLocation<<", " <<a.vLocation<<'\n';
+//        cout<<"new position: " <<a.hLocation<<", " <<a.vLocation<<'\n';
         a.actionPoints-=a.movementRate;
-        cout<<"you have "<<a.actionPoints<<" actionpoints\n";
+ //       cout<<"you have "<<a.actionPoints<<" actionpoints\n";
         }
 
 }
@@ -127,16 +128,16 @@ void mechanics::moveLEFT(unit a)
 void mechanics:: Move(unit unittomove)
 {
         int direction;
-        cout<<"you have "<<unittomove.actionPoints<<" actionpoints\n";
-        cout<<"you are moving: "<<unittomove.name<<" currently at " <<unittomove.hLocation<<", " <<unittomove.vLocation<<'\n';
-        cout<<"pick a direction:(1-4) 1-> UP, 2->DOWN, 3-> right, 4-> LEFT:\n";
+   //     cout<<"you have "<<unittomove.actionPoints<<" actionpoints\n";
+   //     cout<<"you are moving: "<<unittomove.name<<" currently at " <<unittomove.hLocation<<", " <<unittomove.vLocation<<'\n';
+  //      cout<<"pick a direction:(1-4) 1-> UP, 2->DOWN, 3-> right, 4-> LEFT:\n";
         cin>>direction;
         switch (direction)
         {
         case 1:
                 {
                         mechanics::moveUP(unittomove);
-                        cout<<"test: reflect new position?"<<unittomove.hLocation<<", " <<unittomove.vLocation<<'\n';
+      //                  cout<<"test: reflect new position?"<<unittomove.hLocation<<", " <<unittomove.vLocation<<'\n';
                         break;
                 }
         case 2:
@@ -156,35 +157,90 @@ void mechanics:: Move(unit unittomove)
                 }
         default:
                 {
-                        cout<<"invalid move, no temporal rifts for you! try again";
+    //                    cout<<"invalid move, no temporal rifts for you! try again";
                         mechanics::Move(unittomove);
                 }
         }//switch
 }//Move()
 
-/*
-bool mechanics::isValidMove(jmap a, int targetx, int targety)
-{
-        if(isOccupied(map a, targetx,targety))
-        {
-                return false;
-        }
-        else return true;
-}
-*/
-/*
-bool mechanics::isOccupied(jmap a, int b, int c)
-{
-        for(int x=0; x<= BOARDWIDTH; x++)
-        {
-                for(int y=0; y<=BOARDHEIGHT; y++)
-                {
-                        if (a.mapGrid[x][y]==)
-}
-*/
-using namespace std;
-unit team[4];
 
+/////////////////////////////////////////////////////////////////////////////
+//
+//JOSH KILGORE
+//mechanics::isValidMove
+// Determines if target x,y is a valid move from current x,y
+//Requires 4 checks: istarget square occupied? is there sufficient AP? is the move diagonal? is the move within range?
+//INPUTS: X Y location///make UNIT?
+//OUTPUT T/F
+///////////////////////////////////////////////////////////////////////////////
+bool mechanics::isValidMove(unit a, int targetx, int targety)
+{
+   // if(mechanics::isOccupied(targetx,targety))
+     //   {
+            if(isSufficientAP(a.actionPoints, a.movementRate))
+            {
+                if((a.vLocation==targety)||(a.hLocation==targetx))  //NO DIAGONALS
+                {
+                    if((abs(a.vLocation-targety)<=1)&&(abs(a.hLocation-targetx)<=1))  //WITHIN RANGE - FOR RIGHT NOW SET TO 1
+                    {
+                        return true;
+                    }
+                }
+
+    //    }
+        }
+            return false;
+ }
+/*
+/////////////////////////////////////////////////////////////////////////////
+//
+//JOSH KILGORE
+//mechanics::isOccupied()
+// Determines if a gridbox is occupied
+//INPUTS: X Y location
+//OUTPUT T/F
+///////////////////////////////////////////////////////////////////////////////
+bool mechanics::isOccupied(int x, int y)
+{
+   if (mapGrid[x][y].isUnit)
+    {
+       return true;
+    }
+   else return false;
+}
+
+*/
+
+void mechanics::attack(unit a, unit target)
+{
+    if(a.team!=target.team)
+    {
+         if(isSufficientAP(a.actionPoints, a.movementRate))
+         {
+           if(isValidAttack(a,target))
+        {
+            target.hitPoints-=a.attackPower;
+            a.actionPoints-=a.movementRate;
+
+        }
+    }
+    }
+}
+
+bool mechanics::isValidAttack(unit a, unit target)
+{
+
+
+        if((a.vLocation==target.vLocation)||(a.hLocation==target.hLocation))  //NO DIAGONALS
+        {
+            if((abs(a.vLocation-target.vLocation)<=a.attackRange)&&(abs(a.hLocation-target.hLocation)<=a.attackRange))  //WITHIN RANGE
+            {
+                return true;
+            }
+        }
+    return false;
+}
+/*
 void mechanics::initiate()
 {
 
@@ -210,4 +266,21 @@ void mechanics::initiate()
         newMap.locationUpdate(team);
 
 
+}
+*/
+/////////////////////////////////////////////////////////////////////////////
+//
+//JOSH KILGORE
+//mechanics::isSufficientAP
+// Tests if there are sufficient Action Points to do a desired action
+//INPUTS: unit's Action Points, Movement Rate
+//OUTPUT T/F
+///////////////////////////////////////////////////////////////////////////////
+bool mechanics::isSufficientAP(int AP, int moveRate)
+{
+    if(AP>=moveRate)
+    {
+        return true;
+    }
+    else return false;              //SUFFICIENT ACTION POINTS
 }
