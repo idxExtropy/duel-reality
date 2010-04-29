@@ -12,10 +12,10 @@ class User
 class Sprite
 {
 public:
-    //QString name;
-    string  name;
-    string  spriteFileName;
-    //QPixmap pixMap;
+    QString name;
+    //string  name;
+    //string  spriteFileName;
+    QPixmap pixMap;
     int     AP;
     int     HP;
     int     range;
@@ -24,14 +24,17 @@ public:
 
 /*---------------- F u n c t i o n    P r o t o t y p e s ----------------*/
 
-int GetSpriteCount(void);           // Returns total number of sprite data entries
-string GetSpriteName(int index);    // Returns sprite name in entry index
-Sprite GetSpriteData(string name);  // Returns sprite data for associated sprite name
+int GetSpriteCount(void);                   // Returns total number of sprite data entries
+QString GetSpriteName(int index);           // Returns sprite name in entry index
+Sprite GetSpriteData(QString &spriteName);  // Returns sprite data for associated sprite name
 
-User CreateUserData(string name);   // Creates user player data
-int GetUserCount(void);             // Returns total number of user player data entries
-string GetUserName(int index);      // Returns user player name in entry index
-User GetUserData(string name);      // Returns user player data for associate user player name
+User CreateUserData(QString &userName);     // Creates user player data
+int GetUserCount(void);                     // Returns total number of user player data entries
+QString GetUserName(int index);             // Returns user player name in entry index
+User GetUserData(QString &userName);        // Returns user player data for associate user player name
+
+void SaveUserUnits(QString &userName, Unit *units);     // Saves array of units in user player data
+Units *LoadUserUnits(QString &userName);                // Loads array of units from user player data
 
 
 #endif // TEST_DB_H
