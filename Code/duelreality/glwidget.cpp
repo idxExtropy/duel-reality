@@ -21,10 +21,10 @@ GLWidget::GLWidget()
 void GLWidget::unitTest_GenerateContent()
 {
     // Select a battle map.
-    map.mapFilename = "backgrounds/grassnight.png";
-    map.cellsTall = 7;
+    map.mapFilename = "backgrounds/grass.png";
+    map.cellsTall = 6;
     map.cellsWide = 9;
-    map.gridHeight = 0.55;
+    map.gridHeight = 0.58;
 
     // Create a new unit (for gl debug purposes).
     unit[0].name = "Wizard";
@@ -36,7 +36,9 @@ void GLWidget::unitTest_GenerateContent()
     unit[0].mask_image.load("sprites/mask_wizard.png");
     unit[0].status = UNIT_OK;
     unit[0].vLocation = 1;
-    unit[0].hLocation = 1;
+    unit[0].hLocation = 2;
+    unit[0].attackPower = 8;
+    unit[0].attackRange = 3;
     unit[0].faceLeft = false;
 
     // Create a new unit (for gl debug purposes).
@@ -48,8 +50,10 @@ void GLWidget::unitTest_GenerateContent()
     unit[1].image.load("sprites/buddhist.png");
     unit[1].mask_image.load("sprites/mask_buddhist.png");
     unit[1].status = UNIT_OK;
-    unit[1].vLocation = 0;
+    unit[1].vLocation = 2;
     unit[1].hLocation = 1;
+    unit[1].attackPower = 8;
+    unit[1].attackRange = 3;
     unit[1].faceLeft = false;
 
     // Create a new unit (for gl debug purposes).
@@ -61,8 +65,10 @@ void GLWidget::unitTest_GenerateContent()
     unit[2].image.load("sprites/bard.png");
     unit[2].mask_image.load("sprites/mask_bard.png");
     unit[2].status = UNIT_OK;
-    unit[2].vLocation = 2;
+    unit[2].vLocation = 3;
     unit[2].hLocation = 2;
+    unit[2].attackPower = 8;
+    unit[2].attackRange = 3;
     unit[2].faceLeft = false;
 
     // Create a new unit (for gl debug purposes).
@@ -76,6 +82,8 @@ void GLWidget::unitTest_GenerateContent()
     unit[3].status = UNIT_OK;
     unit[3].vLocation = 3;
     unit[3].hLocation = 5;
+    unit[3].attackPower = 8;
+    unit[3].attackRange = 3;
     unit[3].faceLeft = true;
 
     // Create a new unit (for gl debug purposes).
@@ -89,6 +97,8 @@ void GLWidget::unitTest_GenerateContent()
     unit[4].status = UNIT_OK;
     unit[4].vLocation = 2;
     unit[4].hLocation = 5;
+    unit[4].attackPower = 8;
+    unit[4].attackRange = 3;
     unit[4].faceLeft = true;
 
     // Create a new unit (for gl debug purposes).
@@ -102,6 +112,8 @@ void GLWidget::unitTest_GenerateContent()
     unit[5].status = UNIT_OK;
     unit[5].vLocation = 1;
     unit[5].hLocation = 6;
+    unit[5].attackPower = 8;
+    unit[5].attackRange = 3;
     unit[5].faceLeft = true;
 
     for (int i = 6; i < MAX_UNITS; i++)
@@ -234,6 +246,9 @@ void GLWidget::paintGL()
                 itoa(mapGrid[i][j].unit.hitPoints, tmpString, 10);
                 displayString = "Hit Points: ";
                 displayString.append(tmpString);
+                displayString.append(" / ");
+                itoa(mapGrid[i][j].unit.totalHitPoints, tmpString, 10);
+                displayString.append(tmpString);
                 renderText(30, vLoc, 0.0, displayString.c_str());
                 vLoc -= 15;
 
@@ -241,6 +256,21 @@ void GLWidget::paintGL()
                 itoa(mapGrid[i][j].unit.attackPower, tmpString, 10);
                 displayString = "Attack Power: ";
                 displayString.append(tmpString);
+                renderText(30, vLoc, 0.0, displayString.c_str());
+                vLoc -= 15;
+
+                // Unit attack range.
+                itoa(mapGrid[i][j].unit.attackRange, tmpString, 10);
+                displayString = "Attack Range: ";
+                displayString.append(tmpString);
+                renderText(30, vLoc, 0.0, displayString.c_str());
+                vLoc -= 15;
+
+                // Unit action time.
+                itoa(mapGrid[i][j].unit.actionTime, tmpString, 10);
+                displayString = "Action Time: ";
+                displayString.append(tmpString);
+                displayString.append("%");
                 renderText(30, vLoc, 0.0, displayString.c_str());
                 vLoc -= 15;
             }
