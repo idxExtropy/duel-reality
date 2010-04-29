@@ -308,11 +308,15 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
     mainLayout->addWidget(unitsBox);
     setLayout(mainLayout);
 
-    i = 0;
+    //i = 0;
     
     connect(nextSpriteButton, SIGNAL(clicked()), this, SLOT(nextSpriteButtonClicked()));
     connect(prevSpriteButton, SIGNAL(clicked()), this, SLOT(prevSpriteButtonClicked()));
     connect(recruitButton, SIGNAL(clicked()), this, SLOT(recruitButtonClicked()));
+    connect(rejectButtonList[0], SIGNAL(clicked()), this, SLOT(rejectButton0Clicked()));
+    connect(rejectButtonList[1], SIGNAL(clicked()), this, SLOT(rejectButton1Clicked()));
+    connect(rejectButtonList[2], SIGNAL(clicked()), this, SLOT(rejectButton2Clicked()));
+    connect(rejectButtonList[3], SIGNAL(clicked()), this, SLOT(rejectButton3Clicked()));
 }
 
 void RecruitUnitsPage::test_GenerateSprites()
@@ -368,14 +372,48 @@ void RecruitUnitsPage::prevSpriteButtonClicked()
 
 void RecruitUnitsPage::recruitButtonClicked()
 {
-    if (i < MAX_UNITS)
+    for (i = 0; i < MAX_UNITS; i++)
     {
-        unitImageList[i]->setPixmap(*(spriteImage->pixmap()));;
-        unitNameList[i]->setText(spriteNameVal->text());
-        i++;
+        if (!isAlive[i])
+        {
+            unitImageList[i]->setPixmap(*(spriteImage->pixmap()));;
+            unitNameList[i]->setText(spriteNameVal->text());
+            isAlive[i] = true;
+            break;
+        }
     }
-
 }
+
+void RecruitUnitsPage::rejectButton0Clicked()
+{
+    rejectButtonAnyClicked(0);
+}
+
+void RecruitUnitsPage::rejectButton1Clicked()
+{
+    rejectButtonAnyClicked(1);
+}
+
+void RecruitUnitsPage::rejectButton2Clicked()
+{
+    rejectButtonAnyClicked(2);
+}
+
+void RecruitUnitsPage::rejectButton3Clicked()
+{
+    rejectButtonAnyClicked(3);
+}
+
+void RecruitUnitsPage::rejectButtonAnyClicked(int index)
+{
+    if (isAlive[index])
+    {
+        unitImageList[index]->setPixmap(QPixmap(QString::fromUtf8("sprites/blank.PNG")));
+        unitNameList[index]->setText("Unit");
+        isAlive[index] = false;
+    }
+}
+
 
 int RecruitUnitsPage::nextId() const
 {
