@@ -3,10 +3,8 @@
 
 #include <QWizard>
 
+#include "globals.h"
 #include "test_db.h"
-
-static const int    MAX_SPRITES = 4;
-static const int    MAX_UNITS = 4;
 
 class QCheckBox;
 class QLabel;
@@ -119,8 +117,6 @@ private:
     QList<QLabel *>         unitNameList;
     QList<QPushButton *>    rejectButtonList;
     bool                    isAlive[MAX_UNITS];
-    //QLabel<MAX_UNITS, QWidget *>    unitsLabel;
-    //QLabel      unitsLabel[MAX_UNITS];
 };
 /*
 class SelectMapPage : public QWizardPage
@@ -152,7 +148,6 @@ private slots:
 
 private:
     QLabel *bottomLabel;
-    //QCheckBox *agreeCheckBox;
 };
 
 #endif // NEWGAMEWIZARD_H

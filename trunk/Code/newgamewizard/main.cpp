@@ -1,5 +1,4 @@
 #include <QtGui/QApplication>
-//#include "mainwindow.h"
 
 #include "newgamewizard.h"
 
