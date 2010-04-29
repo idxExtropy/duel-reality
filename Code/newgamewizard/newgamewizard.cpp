@@ -1,6 +1,5 @@
 #include <QtGui>
 
-//#include "test_db.h"
 #include "newgamewizard.h"
 
 NewGameWizard::NewGameWizard(QWidget *parent)
@@ -126,7 +125,7 @@ LoadPlayerPage::LoadPlayerPage(QWidget *parent)
     setTitle(tr("Load Player."));
     setSubTitle(tr("Select player name from drop-down menu"));
 
-    playerNameLabel = new QLabel(tr("&Player Name:"));
+    playerNameLabel = new QLabel(tr("Player Name:"));
 
     playerNameComboBox = new QComboBox;
     playerNameComboBox->addItem(tr("Blah1"));

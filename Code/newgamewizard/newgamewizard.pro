@@ -7,4 +7,5 @@ SOURCES += main.cpp \
     newgamewizard.cpp
 HEADERS += newgamewizard.h \
     test_db.h \
-    test_db.h
+    test_db.h \
+    globals.h
