@@ -29,7 +29,8 @@ class QImage;
 class characterUnit
 {
 public:
-    string  name;               // Unit name
+    QString name;               // Unit name
+    //string name;               // Unit name
     bool    faceLeft;           // Unit orientation
     int     vLocation;          // Unit vertical location
     int     hLocation;          // Unit horizontal location
@@ -60,7 +61,8 @@ public:
 class User : public Player
 {
 public:
-    string  playerName;         // Player name
+    QString playerName;         // Player name
+    //string  playerName;         // Player name
     int     experiencePoints;   // Player experience points
 };
 
