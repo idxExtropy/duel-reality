@@ -4,7 +4,8 @@
 TARGET = newgamewizard
 TEMPLATE = app
 SOURCES += main.cpp \
-    newgamewizard.cpp
+    newgamewizard.cpp \
+    test_db.cpp
 HEADERS += newgamewizard.h \
     test_db.h \
     test_db.h \

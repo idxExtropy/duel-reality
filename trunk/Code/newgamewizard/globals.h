@@ -3,6 +3,13 @@
 
 
 /*---------------- I n c l u d e s ----------------*/
+#include <QList>
+#include <QString>
+#include <QPixmap>
+#include <QImage>
+
+#include <iostream>
+using std::cout;
 
 #include <string>
 using std::string;
@@ -21,12 +28,10 @@ static const int    AI_UNIT = 2;        // Indicates unit is associated with AI
 
 /*---------------- C l a s s    d e c l a r a t i o n s ----------------*/
 
-class QImage;
-
 
 /*---------------- C l a s s    d e f i n i t i o n s ----------------*/
 
-class characterUnit
+class Unit
 {
 public:
     QString name;               // Unit name
@@ -42,6 +47,7 @@ public:
     int     attackRange;
     int     attackPower;
     int     status;             // Unit status
+    QPixmap pixMap;
     QImage  image;              // Associated unit image
     QImage  mask_image;         // Associate unit mask image
     int     team;               // Unit's associated team
@@ -54,7 +60,7 @@ public:
 class Player
 {
 public:
-    characterUnit   units[MAX_UNITS];   // Player units
+    Unit   units[MAX_UNITS];   // Player units
 };
 
 
