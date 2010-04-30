@@ -2,15 +2,8 @@
 #include "test_db.h"
 
 
-//Sprite  testSprites[4];
-//User    testUsers[3];
-//Unit    testUnits[3];
-
-
 Database::Database()
 {
-    cout << "Database constructor ...\n";
-
     dummySprite = new Sprite;
     dummyUser = new User;
     dummyUnits = new Unit[MAX_UNITS];
@@ -21,7 +14,7 @@ Database::Database()
 
 Database::~Database()
 {
-    cout << "Database destructor ...\n";
+    ;
 }
 
 void Database::addSprite(Sprite *sprite)
@@ -55,14 +48,28 @@ Sprite Database::loadSprite(QString &spriteName)
 
 
 //User Database::addUser(QString &userName)
-void Database::addUser(QString &userName)
+/*void Database::addUser(QString &userName)
 {
     User *newUser;
     
     newUser->name = userName;
     userList << newUser;
-    
-    //return *userList.last();
+}
+*/
+
+void Database::addUser(User *user)
+{
+    userList << user;
+}
+
+
+void Database::saveUser(QString &userName, User *user)
+{
+    int i;
+
+    for (i = 0; i < userList.count(); i++)
+        if (userList[i]->name == userName)
+            *userList[i] = *user;
 }
 
 
@@ -153,66 +160,78 @@ void Database::generateSprites()
 
 void Database::testGenerateUsers()
 {
-    User    testUsers[4];
+    int     NUM_TEST_USERS = 3;
+    User    testUsers[NUM_TEST_USERS];
+    int     i;
 
-    addUser("Tom");
-    testUsers[0].playerName = ;
-    testUsers[0].experiencePoints = 2;
-    testUsers[0].units[0].status = UNIT_OK;
-
-    units[0].name = "Wizard";
-    units[0].attackPower = 2;
-    units[0].hitPoints = 2;
-    units[0].attackRange = 2;
-
-
-}
-
-
-/*
-
-void TestGenerateUsers(void)
-{
-    testUsers[0].playerName = "Tom";
-    testUsers[0].experiencePoints = 2;
-    testUsers[0].units[0].status = UNIT_OK;
-
-    units[0].name = "Wizard";
-    units[0].attackPower = 2;
-    units[0].hitPoints = 2;
-    units[0].attackRange = 2;
-    SaveUserUnits(units[0].name, &units);*/
     
-    /*testUsers[0].units[0].name = "Wizard";
+    testUsers[0].name = "Tom";
+    testUsers[0].experiencePoints = 2;
+    
+    testUsers[0].units[0].status = UNIT_OK;
+    testUsers[0].units[0].name = "Wizard";
+    testUsers[0].units[0].pixMap.load("sprites/wizard.png");
     testUsers[0].units[0].attackPower = 2;
     testUsers[0].units[0].hitPoints = 2;
-    testUsers[0].units[0].attackRange = 2;*/
-/*
-    testUsers[1].playerName = "Dick";
+    testUsers[0].units[0].attackRange = 2;
+
+    testUsers[0].units[1].status = NO_UNIT;
+    testUsers[0].units[2].status = NO_UNIT;
+    testUsers[0].units[3].status = NO_UNIT;
+
+    
+    testUsers[1].name = "Dick";
     testUsers[1].experiencePoints = 4;
+    
     testUsers[1].units[0].status = UNIT_OK;
     testUsers[1].units[0].name = "Monk";
+    testUsers[1].units[0].pixMap.load("sprites/buddhist.png");
     testUsers[1].units[0].attackPower = 4;
     testUsers[1].units[0].hitPoints = 4;
     testUsers[1].units[0].attackRange = 4;
+    
     testUsers[1].units[2].status = UNIT_OK;
     testUsers[1].units[2].name = "Desert Soldier";
+    testUsers[1].units[2].pixMap.load("sprites/desertsoldier.png");
     testUsers[1].units[2].attackPower = 6;
     testUsers[1].units[2].hitPoints = 6;
     testUsers[1].units[2].attackRange = 6;
 
-    testUsers[2].playerName = "Harry";
+    testUsers[1].units[1].status = NO_UNIT;
+    testUsers[1].units[3].status = NO_UNIT;
+
+    
+    testUsers[2].name = "Harry";
     testUsers[2].experiencePoints = 4;
+    
     testUsers[2].units[0].status = UNIT_OK;
     testUsers[2].units[0].name = "Bard";
+    testUsers[2].units[0].pixMap.load("sprites/bard.png");
     testUsers[2].units[0].attackPower = 2;
     testUsers[2].units[0].hitPoints = 4;
     testUsers[2].units[0].attackRange = 6;
+    
     testUsers[2].units[1].status = UNIT_OK;
     testUsers[2].units[1].name = "Wizard";
+    testUsers[2].units[1].pixMap.load("sprites/wizard.png");
     testUsers[2].units[1].attackPower = 6;
     testUsers[2].units[1].hitPoints = 4;
     testUsers[2].units[1].attackRange = 2;    
-    testUsers[2].units[0].status = UNIT_DEAD;
+    
+    testUsers[2].units[2].status = UNIT_DEAD;
+    testUsers[2].units[2].name = "Monk";
+    testUsers[2].units[2].pixMap.load("sprites/buddhist.png");
+    testUsers[2].units[2].attackPower = 5;
+    testUsers[2].units[2].hitPoints = 5;
+    testUsers[2].units[2].attackRange = 5;
+
+    testUsers[2].units[3].status = UNIT_DEAD;
+    testUsers[2].units[3].name = "Priestess";
+    testUsers[2].units[3].pixMap.load("sprites/priestess.png");
+    testUsers[2].units[3].attackPower = 5;
+    testUsers[2].units[3].hitPoints = 5;
+    testUsers[2].units[3].attackRange = 5;
+    
+    for (i = 0; i < NUM_TEST_USERS; i ++)
+        addUser(&testUsers[i]);
 }
-*/
