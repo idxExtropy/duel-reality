@@ -155,6 +155,7 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
 
     // Initialize test database
     //db = new Database;
+    //Database db;
 
     setTitle(tr("Recruit Units"));
     setSubTitle(tr("Recruit units for battle"));
@@ -184,7 +185,7 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
     spriteImage->setObjectName(QString::fromUtf8("spriteImage"));
     spriteImage->setMinimumSize(QSize(71, 101));
     spriteImage->setMaximumSize(QSize(71, 101));
-    spriteImage->setPixmap(db->spritePixMap(0));
+    spriteImage->setPixmap(db.spritePixMap(0));
     spriteImage->setScaledContents(true);
     leftTopLayout->addWidget(spriteImage);
 
@@ -214,7 +215,7 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
     //spriteNameValue = new QLabel(this);
     spriteNameVal = new QLabel(spriteBox);
     spriteNameVal->setObjectName(QString::fromUtf8("spriteNameVal"));
-    spriteNameVal->setText(db->spriteName(0));
+    spriteNameVal->setText(db.spriteName(0));
     spriteStatsLayout->addWidget(spriteNameVal, 0, 1, 1, 1);
 
     //spriteAP = new QLabel(tr("AP:"));
@@ -225,7 +226,7 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
     //spriteAPValue = new QLabel(this);
     spriteAPVal = new QLabel(spriteBox);
     spriteAPVal->setObjectName(QString::fromUtf8("spriteAPVal"));
-    spriteAPVal->setText(QString::number(db->spriteAP(0)));
+    spriteAPVal->setText(QString::number(db.spriteAP(0)));
     spriteStatsLayout->addWidget(spriteAPVal, 1, 1, 1, 1);
 
     //spriteHP = new QLabel(tr("HP:"));
@@ -236,7 +237,7 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
     //spriteHPValue = new QLabel(this);
     spriteHPVal = new QLabel(spriteBox);
     spriteHPVal->setObjectName(QString::fromUtf8("spriteHPVal"));
-    spriteHPVal->setText(QString::number(db->spriteHP(0)));
+    spriteHPVal->setText(QString::number(db.spriteHP(0)));
     spriteStatsLayout->addWidget(spriteHPVal, 2, 1, 1, 1);
 
     //spriteRange = new QLabel(tr("Range:"));
@@ -247,7 +248,7 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
     //spriteRangeValue = new QLabel(this);
     spriteRangeVal = new QLabel(spriteBox);
     spriteRangeVal->setObjectName(QString::fromUtf8("spriteRangeVal"));
-    spriteRangeVal->setText(QString::number(db->spriteRange(0)));
+    spriteRangeVal->setText(QString::number(db.spriteRange(0)));
     spriteStatsLayout->addWidget(spriteRangeVal, 3, 1, 1, 1);
     leftMidLayout->addLayout(spriteStatsLayout);
 
@@ -354,23 +355,23 @@ void RecruitUnitsPage::nextSpriteButtonClicked()
 {
     spriteIndex = (spriteIndex + 1) % MAX_SPRITES;
 
-    spriteImage->setPixmap(sprites[spriteIndex].pixMap);
-    spriteNameVal->setText(sprites[spriteIndex].name);
-    spriteAPVal->setText(QString::number(sprites[spriteIndex].AP));
-    spriteHPVal->setText(QString::number(sprites[spriteIndex].HP));
-    spriteRangeVal->setText(QString::number(sprites[spriteIndex].range));
+    spriteImage->setPixmap(db.spritePixMap(spriteIndex));
+    spriteNameVal->setText(db.spriteName(spriteIndex));
+    spriteAPVal->setText(QString::number(db.spriteAP(spriteIndex)));
+    spriteHPVal->setText(QString::number(db.spriteHP(spriteIndex)));
+    spriteRangeVal->setText(QString::number(db.spriteRange(spriteIndex)));
 }
 
 
 void RecruitUnitsPage::prevSpriteButtonClicked()
 {
     spriteIndex = (spriteIndex + MAX_SPRITES - 1) % MAX_SPRITES;
-    //spriteLabel->setPixmap();
-    spriteImage->setPixmap(sprites[spriteIndex].pixMap);
-    spriteNameVal->setText(sprites[spriteIndex].name);
-    spriteAPVal->setText(QString::number(sprites[spriteIndex].AP));
-    spriteHPVal->setText(QString::number(sprites[spriteIndex].HP));
-    spriteRangeVal->setText(QString::number(sprites[spriteIndex].range));
+
+    spriteImage->setPixmap(db.spritePixMap(spriteIndex));
+    spriteNameVal->setText(db.spriteName(spriteIndex));
+    spriteAPVal->setText(QString::number(db.spriteAP(spriteIndex)));
+    spriteHPVal->setText(QString::number(db.spriteHP(spriteIndex)));
+    spriteRangeVal->setText(QString::number(db.spriteRange(spriteIndex)));
 }
 
 void RecruitUnitsPage::recruitButtonClicked()

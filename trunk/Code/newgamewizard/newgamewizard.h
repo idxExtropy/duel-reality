@@ -86,7 +86,7 @@ public:
     void test_GenerateSprites();
 
 protected:
-    Sprite  sprites[MAX_SPRITES];
+    //Sprite  sprites[MAX_SPRITES];
 
 private slots:
     void nextSpriteButtonClicked();
@@ -117,7 +117,7 @@ private:
     QList<QLabel *>         unitNameList;
     QList<QPushButton *>    rejectButtonList;
     bool                    isAlive[MAX_UNITS];
-    //Database                *db;
+    Database                db;
 };
 /*
 class SelectMapPage : public QWizardPage

@@ -61,7 +61,7 @@ protected:
 };
 
 
-extern Database *db;
+//extern Database *db;
 
 
 #endif // TEST_DB_H
