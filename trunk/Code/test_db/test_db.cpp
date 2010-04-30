@@ -8,6 +8,8 @@ Database::Database()
     dummyUser = new User;
     dummyUnits = new Unit[MAX_UNITS];
 
+    spriteList = new QList<Sprite>;
+
     generateSprites();
     testGenerateUsers();
 }
