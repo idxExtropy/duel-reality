@@ -117,6 +117,7 @@ private:
     QList<QLabel *>         unitNameList;
     QList<QPushButton *>    rejectButtonList;
     bool                    isAlive[MAX_UNITS];
+    //Database                *db;
 };
 /*
 class SelectMapPage : public QWizardPage

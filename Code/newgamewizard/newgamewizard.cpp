@@ -1,5 +1,7 @@
 #include <QtGui>
 
+#include "globals.h"
+#include "test_db.h"
 #include "newgamewizard.h"
 
 NewGameWizard::NewGameWizard(QWidget *parent)
@@ -147,9 +149,12 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
     : QWizardPage(parent)
 {
     i = 0;
-    spriteIndex = 0;
+    //spriteIndex = 0;
 
-    test_GenerateSprites();
+    //test_GenerateSprites();
+
+    // Initialize test database
+    //db = new Database;
 
     setTitle(tr("Recruit Units"));
     setSubTitle(tr("Recruit units for battle"));
@@ -179,8 +184,7 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
     spriteImage->setObjectName(QString::fromUtf8("spriteImage"));
     spriteImage->setMinimumSize(QSize(71, 101));
     spriteImage->setMaximumSize(QSize(71, 101));
-    spriteImage->setPixmap(sprites[0].pixMap);
-    //spriteImage->setPixmap(QPixmap(QString::fromUtf8("debug/sprites/desertsoldier.png")));
+    spriteImage->setPixmap(db->spritePixMap(0));
     spriteImage->setScaledContents(true);
     leftTopLayout->addWidget(spriteImage);
 
@@ -210,7 +214,7 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
     //spriteNameValue = new QLabel(this);
     spriteNameVal = new QLabel(spriteBox);
     spriteNameVal->setObjectName(QString::fromUtf8("spriteNameVal"));
-    spriteNameVal->setText(sprites[0].name);
+    spriteNameVal->setText(db->spriteName(0));
     spriteStatsLayout->addWidget(spriteNameVal, 0, 1, 1, 1);
 
     //spriteAP = new QLabel(tr("AP:"));
@@ -221,7 +225,7 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
     //spriteAPValue = new QLabel(this);
     spriteAPVal = new QLabel(spriteBox);
     spriteAPVal->setObjectName(QString::fromUtf8("spriteAPVal"));
-    spriteAPVal->setText(QString::number(sprites[0].AP));
+    spriteAPVal->setText(QString::number(db->spriteAP(0)));
     spriteStatsLayout->addWidget(spriteAPVal, 1, 1, 1, 1);
 
     //spriteHP = new QLabel(tr("HP:"));
@@ -232,7 +236,7 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
     //spriteHPValue = new QLabel(this);
     spriteHPVal = new QLabel(spriteBox);
     spriteHPVal->setObjectName(QString::fromUtf8("spriteHPVal"));
-    spriteHPVal->setText(QString::number(sprites[0].HP));
+    spriteHPVal->setText(QString::number(db->spriteHP(0)));
     spriteStatsLayout->addWidget(spriteHPVal, 2, 1, 1, 1);
 
     //spriteRange = new QLabel(tr("Range:"));
@@ -243,7 +247,7 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
     //spriteRangeValue = new QLabel(this);
     spriteRangeVal = new QLabel(spriteBox);
     spriteRangeVal->setObjectName(QString::fromUtf8("spriteRangeVal"));
-    spriteRangeVal->setText(QString::number(sprites[0].range));
+    spriteRangeVal->setText(QString::number(db->spriteRange(0)));
     spriteStatsLayout->addWidget(spriteRangeVal, 3, 1, 1, 1);
     leftMidLayout->addLayout(spriteStatsLayout);
 
@@ -318,7 +322,7 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
     connect(rejectButtonList[3], SIGNAL(clicked()), this, SLOT(rejectButton3Clicked()));
 }
 
-void RecruitUnitsPage::test_GenerateSprites()
+/*void RecruitUnitsPage::test_GenerateSprites()
 {
     sprites[0].name = "Wizard";
     sprites[0].pixMap.load("sprites/wizard.png");
@@ -344,7 +348,7 @@ void RecruitUnitsPage::test_GenerateSprites()
     sprites[3].HP = 4;
     sprites[3].range = 4;
 }
-
+*/
 
 void RecruitUnitsPage::nextSpriteButtonClicked()
 {
