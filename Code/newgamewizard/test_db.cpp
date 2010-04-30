@@ -2,7 +2,7 @@
 #include "test_db.h"
 
 
-Database *db;
+//Database *db;
 
 
 Database::Database()
@@ -150,7 +150,7 @@ Unit *Database::loadUnits(QString &userName)
 void Database::generateSprites()
 {
     int i;
-    Sprite testSprites[MAX_SPRITES];
+    Sprite* testSprites = new Sprite[MAX_SPRITES];
 
     testSprites[0].name = "Wizard";
     testSprites[0].pixMap.load("sprites/wizard.png");
@@ -184,7 +184,7 @@ void Database::generateSprites()
 void Database::testGenerateUsers()
 {
     int     NUM_TEST_USERS = 3;
-    User    testUsers[NUM_TEST_USERS];
+    User*   testUsers = new User[NUM_TEST_USERS];
     int     i;
 
     
