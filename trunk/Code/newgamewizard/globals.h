@@ -61,8 +61,8 @@ public:
 class User : public Player
 {
 public:
-    QString playerName;         // Player name
-    //string  playerName;         // Player name
+    QString name;               // Player name
+    //string  playerName;       // Player name
     int     experiencePoints;   // Player experience points
 };
 

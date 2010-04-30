@@ -7,6 +7,111 @@ User    testUsers[3];
 Unit    testUnits[3];
 
 
+Database::Database();
+{
+    //totalSprites = new int;
+    //totalSprites = 0;
+    
+    //totalUsers = new int;
+    //totalUsers = 0;
+
+    dummySprite = new Sprite;
+    dummyUser = new User;
+    dummyUnits = new characterUnit[MAX_UNITS];
+
+    spriteList = new QList<Sprite>;
+    userList = new QList<User>;
+    unitList = new QList<characterUnit>;
+}
+    
+
+int Database::spriteCount()
+{
+    return spriteList->count();
+}
+
+
+QString Database::spriteName(int index)
+{
+    return spriteList[index]->name;
+}
+
+
+Sprite Database::loadSprite(QString &spriteName)
+{
+    int i;
+
+    for (i = 0; i < spriteList.count(); i++)
+        if (spriteList[i]->name == spriteName)
+            return spriteList[i];
+
+    return dummySprite;
+}
+
+
+User Database::addUser(QString &userName)
+{
+    newUser = new User;
+    
+    newUser->name = userName;
+    userList << newUser;
+    
+    return userList->last();
+}
+
+
+int Database::userCount()
+{
+    return userList->count();
+}
+
+
+QString Database::userName(int index)
+{
+    return userList[index]->name;
+}
+
+
+Sprite Database::loadUser(QString &userName)
+{
+    int i;
+
+    for (i = 0; i < UserList->count(); i++)
+        if (userList[i]->name == userName)
+            return userList[i];
+
+    return dummyUser;
+}
+
+
+void Database::saveUnits(QString &userName, Unit *units)
+{
+    int i;
+    int j;
+
+    for (i = 0; i < userList->count(); i++)
+    {
+        if (userList[i]->name == userName)
+        {
+            for (j = 0; j < MAX_UNITS; j++)
+                userList[i]->units[j] = units[j];
+        }
+    }
+}
+
+
+Units *Database::loadUnits(QString &userName)
+{
+    int i;
+
+    for (i = 0; i < UserList->count(); i++)
+        if (userList[i]->name == userName)
+            return &(userList[i]->units[0]);
+
+    return &(dummyUnit[0]);
+}
+
+
 void TestGenerateSprites(void)
 {
     testSprites[0].name = "Wizard";
@@ -78,56 +183,4 @@ void TestGenerateUsers(void)
     testUsers[2].units[1].hitPoints = 4;
     testUsers[2].units[1].attackRange = 2;    
     testUsers[2].units[0].status = UNIT_DEAD;
-}
-
-
-int GetSpriteCount(void)
-{
-    return 4;
-}
-
-string GetSpriteName(int index)
-{
-    return testSprites[index].name;
-}
-
-
-Sprite GetSpriteData(string name)
-{
-    int i;
-    
-    for (i = 0; i < 4; i++)
-        if (testSprites[i].name == name)
-            return testSprites[i];
-}
-
-
-User CreateUserData(string name)
-{
-    User user;
-
-    user.playerName = name;
-    return user;
-}
-
-
-int GetUserCount(void)
-{
-    return 3;
-}
-
-
-string GetUserName(int index)
-{
-    return testUsers[index].playerName;
-}
-
-
-User GetUserData(string name)
-{
-    int i;
-    
-    for (i = 0; i < 3; i++)
-        if (testUsers[i].name == name)
-            return testUsers[i];
 }
