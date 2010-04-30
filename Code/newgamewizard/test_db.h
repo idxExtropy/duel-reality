@@ -22,19 +22,38 @@ public:
 };
 
 
-/*---------------- F u n c t i o n    P r o t o t y p e s ----------------*/
+class Database
+{
+    public:
+        Database();
+        ~Database();
 
-int GetSpriteCount(void);                   // Returns total number of sprite data entries
-QString GetSpriteName(int index);           // Returns sprite name in entry index
-Sprite GetSpriteData(QString &spriteName);  // Returns sprite data for associated sprite name
+        void generateSprites();
+        void testGenerateUsers();
+        
+        int spriteCount() const {return i_sprite};      // Returns total number of sprite data entries
+        QString spriteName(int index) {return ;                  // Returns sprite name in entry index
+        Sprite loadSprite(QString &spriteName);         // Returns sprite data for associated sprite name
 
-User CreateUserData(QString &userName);     // Creates user player data
-int GetUserCount(void);                     // Returns total number of user player data entries
-QString GetUserName(int index);             // Returns user player name in entry index
-User GetUserData(QString &userName);        // Returns user player data for associate user player name
+        User addUser(QString &userName);                // Creates user player data
+        int userCount() const {return i_user};          // Returns total number of user player data entries
+        QString userName(int index);                    // Returns user player name in entry index
+        User loadUser(QString &userName);               // Returns user player data for associate user player name
+        void saveUnits(QString &userName, Unit *units); // Saves array of units in user player data
+        Units *loadUnits(QString &userName);             // Loads array of units from user player data
 
-void SaveUserUnits(QString &userName, Unit *units);     // Saves array of units in user player data
-Units *LoadUserUnits(QString &userName);                // Loads array of units from user player data
+    //private:
+        //void setUserName(QString &userName)
+
+
+
+    protected:
+        //int                     totalSprites;
+        //int                     totalUsers;
+        QList<Sprite>           *spriteList;
+        QList<User>             *userList;
+        QList<characterUnit>    *unitList;
+}
 
 
 #endif // TEST_DB_H
