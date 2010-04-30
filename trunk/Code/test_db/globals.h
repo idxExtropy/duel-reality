@@ -47,6 +47,7 @@ public:
     int     attackRange;
     int     attackPower;
     int     status;             // Unit status
+    QPixmap pixMap;
     QImage  image;              // Associated unit image
     QImage  mask_image;         // Associate unit mask image
     int     team;               // Unit's associated team
