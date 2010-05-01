@@ -23,6 +23,7 @@ protected:
 
 private slots:
     void newGame();
+    void about();
     //void loadGame();
     //bool exitGame();
     //bool saveGame();
@@ -39,16 +40,18 @@ private:
     QSound *soundBkgnd;
 
     // Actions and associated menus & toolbars
-    QAction *actionNewGame;
-    QAction *actionLoadGame;
-    QAction *actionSaveGame;
-    QAction *actionExitGame;
-    QAction *actionAttack;
-    QAction *actionMove;
-    QWidget *centralWidget;
-    QMenu *menuGame;
-    QToolBar *gameToolBar;
-    QToolBar *actionToolBar;
+    QAction     *actionNewGame;
+    QAction     *actionLoadGame;
+    QAction     *actionSaveGame;
+    QAction     *actionExitGame;
+    QAction     *actionAttack;
+    QAction     *actionMove;
+    QAction     *actionAbout;
+    QWidget     *centralWidget;
+    QMenu       *menuGame;
+    QMenu       *menuHelp;
+    QToolBar    *gameToolBar;
+    QToolBar    *actionToolBar;
 };
 
 #endif // MAINWINDOW_H

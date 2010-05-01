@@ -78,6 +78,11 @@ void MainWindow::createActions()
     actionMove->setShortcut(tr("Ctrl+M"));
     actionMove->setStatusTip(tr("Move unit"));
     //connect(actionMove, SIGNAL(triggered()), this, SLOT(move()));
+
+    actionAbout = new QAction(tr("&About"), this);
+    //actionAbout->setShortcut();
+    actionAbout->setStatusTip(tr("Provides information about the game"));
+    connect(actionAbout, SIGNAL(triggered()), this, SLOT(about()));
 }
 
 void MainWindow::createMenus()
@@ -88,6 +93,9 @@ void MainWindow::createMenus()
     menuGame->addAction(actionSaveGame);
     menuGame->addSeparator();
     menuGame->addAction(actionExitGame);
+
+    menuHelp = menuBar()->addMenu(tr("&Help"));
+    menuHelp->addAction(actionAbout);
 }
 
 void MainWindow::createToolBars()
@@ -120,4 +128,15 @@ void MainWindow::newGame()
     userNameDialog->show();
     userNameDialog->raise();
     userNameDialog->activateWindow();
+}
+
+void MainWindow::about()
+{
+    QMessageBox::about(this, tr("About Duel Reality"),
+                       tr("<h2>Duel Reality 1.0</h2>"
+                          "<p>Copyright &copy; 2010 Team Gold Inc."
+                          "<p>Duel Reality is a turn-based strategy game. "
+                          "It is a design project for the "
+                          "Software Engineering course, 16.553, "
+                          "at University of Massachusetss, Lowell."));
 }
