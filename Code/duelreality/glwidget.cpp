@@ -45,7 +45,7 @@ void GLWidget::unitTest_GenerateContent()
     unit[1].name = "Monk";
     unit[1].actionTime = 10;
     unit[1].actionRate = 200;
-    unit[1].hitPoints = 40;
+    unit[1].hitPoints = 67;
     unit[1].totalHitPoints = 100;
     unit[1].image.load("sprites/buddhist.png");
     unit[1].mask_image.load("sprites/mask_buddhist.png");
@@ -75,7 +75,7 @@ void GLWidget::unitTest_GenerateContent()
     unit[3].name = "Desert Soldier";
     unit[3].actionTime = 40;
     unit[3].actionRate = 100;
-    unit[3].hitPoints = 10;
+    unit[3].hitPoints = 30;
     unit[3].totalHitPoints = 100;
     unit[3].image.load("sprites/desertsoldier.png");
     unit[3].mask_image.load("sprites/mask_desertsoldier.png");
@@ -90,12 +90,12 @@ void GLWidget::unitTest_GenerateContent()
     unit[4].name = "Merchant";
     unit[4].actionTime = 40;
     unit[4].actionRate = 100;
-    unit[4].hitPoints = 10;
+    unit[4].hitPoints = 22;
     unit[4].totalHitPoints = 100;
     unit[4].image.load("sprites/merchant.png");
     unit[4].mask_image.load("sprites/mask_merchant.png");
     unit[4].status = UNIT_OK;
-    unit[4].vLocation = 2;
+    unit[4].vLocation = 1;
     unit[4].hLocation = 5;
     unit[4].attackPower = 8;
     unit[4].attackRange = 3;
@@ -110,8 +110,8 @@ void GLWidget::unitTest_GenerateContent()
     unit[5].image.load("sprites/priestess.png");
     unit[5].mask_image.load("sprites/mask_priestess.png");
     unit[5].status = UNIT_OK;
-    unit[5].vLocation = 1;
-    unit[5].hLocation = 6;
+    unit[5].vLocation = 4;
+    unit[5].hLocation = 7;
     unit[5].attackPower = 8;
     unit[5].attackRange = 3;
     unit[5].faceLeft = true;
