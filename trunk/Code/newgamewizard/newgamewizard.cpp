@@ -4,6 +4,8 @@
 #include "test_db.h"
 #include "newgamewizard.h"
 
+QString NewGameWizard::playerName;
+
 NewGameWizard::NewGameWizard(QWidget *parent)
     : QWizard(parent)
 {
@@ -27,6 +29,11 @@ NewGameWizard::NewGameWizard(QWidget *parent)
     setWindowIcon(QIcon("icons/logo.png"));
     //setPixmap(QWizard::LogoPixmap, QPixmap("icons/logo.png"));
     setWindowTitle(tr("New Game"));
+}
+
+void NewGameWizard::setPlayerName(const QString &userName)
+{
+    NewGameWizard::playerName = userName;
 }
 
 void NewGameWizard::showHelp()
@@ -113,6 +120,14 @@ CreatePlayerPage::CreatePlayerPage(QWidget *parent)
     //layout->addWidget(playerNameLabel, 1, 0);
     //layout->addWidget(playerNameLineEdit, 1, 1);
     setLayout(layout);
+
+    registerField("player.name*", playerNameLineEdit);
+    connect(playerNameLineEdit, SIGNAL(textChanged(const QString &)), this, SLOT(playerNameCreated(const QString &)));
+}
+
+void CreatePlayerPage::playerNameCreated(const QString &userName)
+{
+    NewGameWizard::setPlayerName(playerNameLineEdit->text());
 }
 
 int CreatePlayerPage::nextId() const
@@ -124,19 +139,37 @@ int CreatePlayerPage::nextId() const
 LoadPlayerPage::LoadPlayerPage(QWidget *parent)
     : QWizardPage(parent)
 {
+    int i;
+
     setTitle(tr("Load Player."));
     setSubTitle(tr("Select player name from drop-down menu"));
 
     playerNameLabel = new QLabel(tr("Player Name:"));
 
     playerNameComboBox = new QComboBox;
-    playerNameComboBox->addItem(tr("Blah1"));
-    playerNameComboBox->addItem(tr("Blah2"));
+
+    for (i = 0; i < db.userCount(); i++)
+        userNames << db.userName(i);
+
+    userNames.sort();
+
+    for (i = 0; i < userNames.count(); i++)
+        playerNameComboBox->addItem(userNames.at(i));
+
+    //playerNameComboBox->addItem(tr("Blah1"));
+    //playerNameComboBox->addItem(tr("Blah2"));
 
     QGridLayout *layout = new QGridLayout;
     layout->addWidget(playerNameLabel, 0, 0);
     layout->addWidget(playerNameComboBox, 0, 1);
     setLayout(layout);
+
+    connect(playerNameComboBox, SIGNAL(activated(int)), this, SLOT(playerNameChanged(int)));
+}
+
+void LoadPlayerPage::playerNameChanged(int index)
+{
+    NewGameWizard::setPlayerName(userNames.at(index));
 }
 
 int LoadPlayerPage::nextId() const
@@ -149,7 +182,7 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
     : QWizardPage(parent)
 {
     i = 0;
-    //spriteIndex = 0;
+    spriteIndex = 0;
 
     //test_GenerateSprites();
 
