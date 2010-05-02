@@ -47,8 +47,8 @@ public:
     int userCount();                                // Returns total number of user player data entries
     QString userName(int index) const;                    // Returns user player name in entry index
     User loadUser(const QString &userName);               // Returns user player data for associate user player name
-    //void saveUnits(QString &userName, QList<Unit> units); // Saves array of units in user player data
-    //QList<Unit> loadUnits(QString &userName);            // Loads array of units from user player data
+    void saveUnits(QString &userName, QList<Unit> units); // Saves array of units in user player data
+    QList<Unit> loadUnits(QString &userName);            // Loads array of units from user player data
 
 private:
     static QList<Sprite> spriteList;

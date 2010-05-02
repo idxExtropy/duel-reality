@@ -30,6 +30,26 @@ NewGameWizard::NewGameWizard(QWidget *parent)
     setWindowIcon(QIcon("icons/logo.png"));
     //setPixmap(QWizard::LogoPixmap, QPixmap("icons/logo.png"));
     setWindowTitle(tr("New Game"));
+
+    connect(button(NextButton), SIGNAL(clicked()), this, SLOT(nextButtonClicked()));
+}
+
+void NewGameWizard::nextButtonClicked()
+{
+    int i;
+
+    switch (currentId())
+    {
+    // Creater new user if non-existent
+    case Page_RecruitUnits:
+        for (i = 0; i < db.userCount(); i++)
+        {
+            if (db.userName(i) == NewGameWizard::playerName)
+                return;
+        }
+        db.addUser(NewGameWizard::playerName);
+        break;
+    }
 }
 
 
@@ -127,6 +147,13 @@ CreatePlayerPage::CreatePlayerPage(QWidget *parent)
     registerField("player.name*", playerNameLineEdit);
     //connect(playerNameLineEdit, SIGNAL(textChanged(QString &)), this, SLOT(playerNameCreated(QString &)));
     connect(playerNameLineEdit, SIGNAL(textChanged(const QString &)), this, SLOT(playerNameCreated(const QString &)));
+    //connect(QWizard::NextButton, SIGNAL(clicked()), this, SLOT(nextButtonClicked()));
+    //connect(NewGameWizard::button(NewGameWizard::NextButton), SIGNAL(clicked()), this, SLOT(nextButtonClicked()));
+}
+
+void CreatePlayerPage::nextButtonClicked()
+{
+
 }
 
 void CreatePlayerPage::playerNameCreated(const QString &userName)
@@ -135,6 +162,7 @@ void CreatePlayerPage::playerNameCreated(const QString &userName)
     //db.addUser(userName);
     //NewGameWizard::tempUser = db.loadUser(userName);
     NewGameWizard::setPlayerName(playerNameLineEdit->text());
+    //db.addUser(userName);
 }
 
 int CreatePlayerPage::nextId() const
@@ -172,6 +200,7 @@ LoadPlayerPage::LoadPlayerPage(QWidget *parent)
     setLayout(layout);
 
     connect(playerNameComboBox, SIGNAL(activated(int)), this, SLOT(playerNameChanged(int)));
+    connect(playerNameComboBox, SIGNAL(activated(int)), this, SLOT(playerNameChanged2(int)));
 }
 
 void LoadPlayerPage::playerNameChanged(int index)
@@ -179,6 +208,13 @@ void LoadPlayerPage::playerNameChanged(int index)
     //NewGameWizard::tempUser = db.loadUser(userNames.at(index));
     NewGameWizard::setPlayerName(userNames.at(index));
 }
+
+
+void LoadPlayerPage::playerNameChanged2(int index)
+{
+    //NewGameWizard::tempUser = db.loadUser(userNames.at(index));
+}
+
 
 int LoadPlayerPage::nextId() const
 {
@@ -421,16 +457,21 @@ void RecruitUnitsPage::recruitButtonClicked()
     {
         if (!isAlive[i])
         {
+            QList<Unit> tempUnits = db.loadUnits(NewGameWizard::playerName);
+            
             unitImageList[i]->setPixmap(*(spriteImage->pixmap()));
             unitNameList[i]->setText(spriteNameVal->text());
             isAlive[i] = true;
-/*
+
             //NewGameWizard::tempUser.units[i].pixMap.load((*(spriteImage->pixmap())));
-            NewGameWizard::tempUser.units[i].pixMap.operator =((*(spriteImage->pixmap())));
+            tempUnits[i].pixMap.operator =((*(spriteImage->pixmap())));
             //NewGameWizard::tempUser.units[i].image.load((*(spriteImage->pixmap())));
-            NewGameWizard::tempUser.units[i].image.operator =((spriteImage->pixmap()->toImage()));
-            NewGameWizard::tempUser.units[i].name = spriteNameVal->text();
-            NewGameWizard::tempUser.units[i].status = UNIT_OK; */
+            tempUnits[i].image.operator =((spriteImage->pixmap()->toImage()));
+            tempUnits[i].name = spriteNameVal->text();
+            tempUnits[i].status = UNIT_OK;
+
+            db.saveUnits(NewGameWizard::playerName, tempUnits);
+
             break;
         }
     }
