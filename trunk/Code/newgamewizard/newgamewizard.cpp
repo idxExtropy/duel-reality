@@ -15,7 +15,8 @@ NewGameWizard::NewGameWizard(QWidget *parent)
     setPage(Page_CreatePlayer, new CreatePlayerPage);
     setPage(Page_LoadPlayer, new LoadPlayerPage);
     setPage(Page_RecruitUnits, new RecruitUnitsPage);
-    //setPage(Page_SelectMap, new SelectMapPage);
+    setPage(Page_SelectMode, new SelectModePage);
+    setPage(Page_SelectMap, new SelectMapPage);
     setPage(Page_Conclusion, new ConclusionPage);
 
     // Set start page
@@ -81,9 +82,12 @@ void NewGameWizard::showHelp()
     case Page_RecruitUnits:
         message = tr("From the available units, recruit up to 4 units for your team");
         break;
-    /*case Page_SelectMap:
-        message = tr("Select a desired battle map");
-        break;*/
+    case Page_SelectMode:
+        message = tr("In campaign mode, levels and maps are predetermined");
+        break;
+    case Page_SelectMap:
+        message = tr("Select a desired map for freestyle mode battle");
+        break;
     case Page_Conclusion:
         message = tr("The battle resumes after this");
         break;
@@ -461,8 +465,164 @@ void RecruitUnitsPage::rejectButtonAnyClicked(int index)
 
 int RecruitUnitsPage::nextId() const
 {
+    return NewGameWizard::Page_SelectMode;
+}
+
+
+SelectModePage::SelectModePage(QWidget *parent)
+    : QWizardPage(parent)
+{
+    setTitle(tr("Game Mode"));
+    setSubTitle(tr("Select the game mode"));
+
+    // Initialize radio buttons
+    campaignModeRadioButton = new QRadioButton(tr("&Campaign Mode"));
+    freePlayModeRadioButton = new QRadioButton(tr("&Free Play Mode"));
+    campaignModeRadioButton->setChecked(true);
+
+    QVBoxLayout *layout = new QVBoxLayout;
+    //layout->addWidget(topLabel);
+    layout->addWidget(campaignModeRadioButton);
+    layout->addWidget(freePlayModeRadioButton);
+    setLayout(layout);
+}
+
+
+int SelectModePage::nextId() const
+{
+    if (freePlayModeRadioButton->isChecked())
+        return NewGameWizard::Page_SelectMap;
+    else
+        return NewGameWizard::Page_Conclusion;
+}
+
+
+SelectMapPage::SelectMapPage(QWidget *parent)
+    : QWizardPage(parent)
+{
+    mapIndex = 0;
+
+    setTitle(tr("Select Map"));
+    setSubTitle(tr("Select desired battle map"));
+
+    QHBoxLayout *mainLayout = new QHBoxLayout;
+    mainLayout->setObjectName(QString::fromUtf8("mainLayout"));
+    mainLayout->setContentsMargins(0, 0, 0, 0);
+
+    QGroupBox *mapBox = new QGroupBox(tr("&Available Maps"));
+    mapBox->setObjectName(QString::fromUtf8("mapBox"));
+    
+    QGridLayout *mapBoxLayout = new QGridLayout(mapBox);
+    mapBoxLayout->setObjectName(QString::fromUtf8("mapBoxLayout"));
+
+    QVBoxLayout *leftLayout = new QVBoxLayout;
+    leftLayout->setObjectName(QString::fromUtf8("leftLayout"));
+    
+    QHBoxLayout *leftTopLayout = new QHBoxLayout;
+    leftTopLayout->setObjectName(QString::fromUtf8("leftTopLayout"));
+
+    prevMapButton = new QPushButton(tr("<<"), mapBox);
+    prevMapButton->setObjectName(QString::fromUtf8("prevMapButton"));
+    prevMapButton->setMaximumSize(QSize(31, 23));
+    leftTopLayout->addWidget(prevMapButton);
+
+    mapFileName = db.mapFileName(0);
+
+    mapImage = new QLabel(mapBox);
+    mapImage->setObjectName(QString::fromUtf8("mapImage"));
+    mapImage->setMinimumSize(QSize(191, 101));
+    mapImage->setMaximumSize(QSize(191, 101));
+    mapImage->setPixmap(db.mapFileName(0));
+    mapImage->setScaledContents(true);
+    leftTopLayout->addWidget(mapImage);
+
+    nextMapButton = new QPushButton(tr(">>"), mapBox);
+    nextMapButton->setObjectName(QString::fromUtf8("nextMapButton"));
+    nextMapButton->setMaximumSize(QSize(31, 23));
+    leftTopLayout->addWidget(nextMapButton);
+    leftLayout->addLayout(leftTopLayout);
+
+    QHBoxLayout *leftMidLayout = new QHBoxLayout;
+    leftMidLayout->setObjectName(QString::fromUtf8("leftMidLayout"));
+    
+    QSpacerItem *hLeftSpacerMapStats = new QSpacerItem(18, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+    leftMidLayout->addItem(hLeftSpacerMapStats);
+
+    QGridLayout *mapStatsLayout = new QGridLayout;
+    mapStatsLayout->setObjectName(QString::fromUtf8("mapStatsLayout"));
+
+    mapName = new QLabel(tr("Name:"), mapBox);
+    mapName->setObjectName(QString::fromUtf8("mapName"));
+    mapStatsLayout->addWidget(mapName, 0, 0, 1, 1);
+    
+    mapNameVal = new QLabel(mapBox);
+    mapNameVal->setObjectName(QString::fromUtf8("mapNameVal"));
+    mapNameVal->setText(db.mapName(0));
+    mapStatsLayout->addWidget(mapNameVal, 0, 1, 1, 1);
+    leftMidLayout->addLayout(mapStatsLayout);
+
+    QSpacerItem *hRightSpacerMapStats = new QSpacerItem(18, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+    leftMidLayout->addItem(hRightSpacerMapStats);
+    leftLayout->addLayout(leftMidLayout);
+
+    QHBoxLayout *leftBotLayout = new QHBoxLayout;
+    leftBotLayout->setObjectName(QString::fromUtf8("leftBotLayout"));
+
+    QSpacerItem *hLeftSpacerSelect = new QSpacerItem(28, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+    leftBotLayout->addItem(hLeftSpacerSelect);
+
+    selectButton = new QPushButton(tr("&Select"), mapBox);
+    selectButton->setObjectName(QString::fromUtf8("selectButton"));
+    leftBotLayout->addWidget(selectButton);
+
+    QSpacerItem *hRightSpacerSelect = new QSpacerItem(28, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+    leftBotLayout->addItem(hRightSpacerSelect);
+    leftLayout->addLayout(leftBotLayout);
+    mapBoxLayout->addLayout(leftLayout, 0, 0, 1, 1);
+    mainLayout->addWidget(mapBox);
+    setLayout(mainLayout);
+
+    connect(nextMapButton, SIGNAL(clicked()), this, SLOT(nextMapButtonClicked()));
+    connect(prevMapButton, SIGNAL(clicked()), this, SLOT(prevMapButtonClicked()));
+    connect(selectButton, SIGNAL(clicked()), this, SLOT(selectButtonClicked()));
+}
+
+void SelectMapPage::nextMapButtonClicked()
+{
+    mapIndex = (mapIndex + 1) % db.mapCount();
+
+    mapFileName = db.mapFileName(mapIndex);
+
+    mapImage->setPixmap(QPixmap(db.mapFileName(mapIndex)));
+    mapNameVal->setText(db.mapName(mapIndex));
+}
+
+
+void SelectMapPage::prevMapButtonClicked()
+{
+    mapIndex = (mapIndex + db.mapCount() - 1) % db.mapCount();
+
+    mapFileName = db.mapFileName(mapIndex);
+
+    mapImage->setPixmap(QPixmap(db.mapFileName(mapIndex)));
+    mapNameVal->setText(db.mapName(mapIndex));
+}
+
+
+void SelectMapPage::selectButtonClicked()
+{
+    BattleMap map;
+
+    map.fileName = mapFileName;
+    db.saveMap(NewGameWizard::playerName, map);
+}
+
+
+int SelectMapPage::nextId() const
+{
     return NewGameWizard::Page_Conclusion;
 }
+
 
 ConclusionPage::ConclusionPage(QWidget *parent)
     : QWizardPage(parent)
@@ -483,6 +643,7 @@ ConclusionPage::ConclusionPage(QWidget *parent)
     //layout->addWidget(agreeCheckBox);
     setLayout(layout);
 }
+
 
 int ConclusionPage::nextId() const
 {
