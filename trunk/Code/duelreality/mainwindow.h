@@ -8,8 +8,9 @@
 // Forward declarations
 class QAction;
 class QMenu;
-class UserNameDialog;
+//class UserNameDialog;
 class GLWidget;
+class NewGameWizard;
 
 class MainWindow : public QMainWindow
 {
@@ -20,6 +21,9 @@ public:
 
 protected:
     void closeEvent(QCloseEvent *event);
+
+signals:
+    void    newGameComplete();
 
 private slots:
     void newGame();
@@ -35,9 +39,11 @@ private:
     void createStatusBar();
 
     GLWidget *glWidget;
-    UserNameDialog *userNameDialog;
+    //UserNameDialog *userNameDialog;
+    //NewGameWizard   *newgamewizard;
 
-    QSound *soundBkgnd;
+    QSound  *soundBkgnd;
+    QSound  *soundBattleStart;
 
     // Actions and associated menus & toolbars
     QAction     *actionNewGame;

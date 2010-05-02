@@ -7,6 +7,9 @@ INPUT(
 ./release\player.o
 ./release\jmap.o
 ./release\mechanics.o
+./release\test_db.o
+./release\newgamewizard.o
 ./release\moc_mainwindow.o
 ./release\moc_usernamedialog.o
+./release\moc_newgamewizard.o
 );
