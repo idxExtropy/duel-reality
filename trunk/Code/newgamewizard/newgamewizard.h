@@ -70,7 +70,6 @@ public:
 private slots:
     //void playerNameCreated(QString &);
     void playerNameCreated(const QString &);
-    void nextButtonClicked();
 
 private:
     QLabel      *playerNameLabel;
@@ -89,7 +88,6 @@ public:
 
 private slots:
     void playerNameChanged(int);
-    void playerNameChanged2(int);
 
 private:
     QLabel      *playerNameLabel;
