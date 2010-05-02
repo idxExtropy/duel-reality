@@ -31,6 +31,7 @@ NewGameWizard::NewGameWizard(QWidget *parent)
     //setPixmap(QWizard::LogoPixmap, QPixmap("icons/logo.png"));
     setWindowTitle(tr("New Game"));
 
+    // Check for logic execution each time next button is clicked
     connect(button(NextButton), SIGNAL(clicked()), this, SLOT(nextButtonClicked()));
 }
 
@@ -40,13 +41,15 @@ void NewGameWizard::nextButtonClicked()
 
     switch (currentId())
     {
-    // Creater new user if non-existent
+    // Before units can be recruited, create new user if non-existent
     case Page_RecruitUnits:
         for (i = 0; i < db.userCount(); i++)
         {
+            // Do nothing if user exists
             if (db.userName(i) == NewGameWizard::playerName)
                 return;
         }
+        // Otherwise add new user to database
         db.addUser(NewGameWizard::playerName);
         break;
     }
@@ -144,32 +147,24 @@ CreatePlayerPage::CreatePlayerPage(QWidget *parent)
     //layout->addWidget(playerNameLineEdit, 1, 1);
     setLayout(layout);
 
+    // Automatically enables next button only if user name is entered
     registerField("player.name*", playerNameLineEdit);
-    //connect(playerNameLineEdit, SIGNAL(textChanged(QString &)), this, SLOT(playerNameCreated(QString &)));
+
     connect(playerNameLineEdit, SIGNAL(textChanged(const QString &)), this, SLOT(playerNameCreated(const QString &)));
-    //connect(QWizard::NextButton, SIGNAL(clicked()), this, SLOT(nextButtonClicked()));
-    //connect(NewGameWizard::button(NewGameWizard::NextButton), SIGNAL(clicked()), this, SLOT(nextButtonClicked()));
 }
 
-void CreatePlayerPage::nextButtonClicked()
-{
-
-}
 
 void CreatePlayerPage::playerNameCreated(const QString &userName)
-//void CreatePlayerPage::playerNameCreated(QString &userName)
 {
-    //db.addUser(userName);
-    //NewGameWizard::tempUser = db.loadUser(userName);
     NewGameWizard::setPlayerName(playerNameLineEdit->text());
-    //db.addUser(userName);
 }
+
 
 int CreatePlayerPage::nextId() const
 {
-    //return NewGameWizard::Page_RecruitUnits;
     return NewGameWizard::Page_RecruitUnits;
 }
+
 
 LoadPlayerPage::LoadPlayerPage(QWidget *parent)
     : QWizardPage(parent)
@@ -200,39 +195,25 @@ LoadPlayerPage::LoadPlayerPage(QWidget *parent)
     setLayout(layout);
 
     connect(playerNameComboBox, SIGNAL(activated(int)), this, SLOT(playerNameChanged(int)));
-    connect(playerNameComboBox, SIGNAL(activated(int)), this, SLOT(playerNameChanged2(int)));
 }
 
 void LoadPlayerPage::playerNameChanged(int index)
 {
-    //NewGameWizard::tempUser = db.loadUser(userNames.at(index));
     NewGameWizard::setPlayerName(userNames.at(index));
-}
-
-
-void LoadPlayerPage::playerNameChanged2(int index)
-{
-    //NewGameWizard::tempUser = db.loadUser(userNames.at(index));
 }
 
 
 int LoadPlayerPage::nextId() const
 {
-    //return NewGameWizard::Page_RecruitUnits;
     return NewGameWizard::Page_RecruitUnits;
 }
+
 
 RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
     : QWizardPage(parent)
 {
     i = 0;
     spriteIndex = 0;
-
-    //test_GenerateSprites();
-
-    // Initialize test database
-    //db = new Database;
-    //Database db;
 
     setTitle(tr("Recruit Units"));
     setSubTitle(tr("Recruit units for battle"));
@@ -280,49 +261,37 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
     QGridLayout *spriteStatsLayout = new QGridLayout;
     spriteStatsLayout->setObjectName(QString::fromUtf8("spriteStatsLayout"));
 
-    //spriteLabel = new QLabel(this);
-    //spriteLabel->setGeometry(QRect(335, 140, 51, 111));
-    //spriteLabel->setPixmap(sprites[0].pixMap);
-
-    //spriteName = new QLabel(tr("Name:"));
     spriteName = new QLabel(tr("Name:"), spriteBox);
     spriteName->setObjectName(QString::fromUtf8("spriteName"));
     spriteStatsLayout->addWidget(spriteName, 0, 0, 1, 1);
     
-    //spriteNameValue = new QLabel(this);
     spriteNameVal = new QLabel(spriteBox);
     spriteNameVal->setObjectName(QString::fromUtf8("spriteNameVal"));
     spriteNameVal->setText(db.spriteName(0));
     spriteStatsLayout->addWidget(spriteNameVal, 0, 1, 1, 1);
 
-    //spriteAP = new QLabel(tr("AP:"));
     spriteAP = new QLabel(tr("AP:"), spriteBox);
     spriteAP->setObjectName(QString::fromUtf8("spriteAP"));
     spriteStatsLayout->addWidget(spriteAP, 1, 0, 1, 1);
     
-    //spriteAPValue = new QLabel(this);
     spriteAPVal = new QLabel(spriteBox);
     spriteAPVal->setObjectName(QString::fromUtf8("spriteAPVal"));
     spriteAPVal->setText(QString::number(db.spriteAP(0)));
     spriteStatsLayout->addWidget(spriteAPVal, 1, 1, 1, 1);
 
-    //spriteHP = new QLabel(tr("HP:"));
     spriteHP = new QLabel(tr("HP:"), spriteBox);
     spriteHP->setObjectName(QString::fromUtf8("spriteHP"));
     spriteStatsLayout->addWidget(spriteHP, 2, 0, 1, 1);
     
-    //spriteHPValue = new QLabel(this);
     spriteHPVal = new QLabel(spriteBox);
     spriteHPVal->setObjectName(QString::fromUtf8("spriteHPVal"));
     spriteHPVal->setText(QString::number(db.spriteHP(0)));
     spriteStatsLayout->addWidget(spriteHPVal, 2, 1, 1, 1);
 
-    //spriteRange = new QLabel(tr("Range:"));
     spriteRange = new QLabel(tr("Range:"), spriteBox);
     spriteRange->setObjectName(QString::fromUtf8("spriteRange"));
     spriteStatsLayout->addWidget(spriteRange, 3, 0, 1, 1);
 
-    //spriteRangeValue = new QLabel(this);
     spriteRangeVal = new QLabel(spriteBox);
     spriteRangeVal->setObjectName(QString::fromUtf8("spriteRangeVal"));
     spriteRangeVal->setText(QString::number(db.spriteRange(0)));
@@ -355,14 +324,13 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
     QGridLayout *unitBoxLayout = new QGridLayout(unitsBox);
     unitBoxLayout->setObjectName(QString::fromUtf8("unitBoxLayout"));
 
-    //QVBoxLayout *rightLayout = new QVBoxLayout;
-
+    // Iteratively fill Player Units section
     for (i = 0; i < MAX_UNITS; i++)
     {
         QHBoxLayout *rightUnitLayout = new QHBoxLayout();
-        //rightUnitLayout->setObjectName(QString::fromUtf8("rightUnitLayout1"));
+        
         QLabel *unitImage = new QLabel(unitsBox);
-        //unitImage->setObjectName(QString::fromUtf8("unitImage1"));
+        
         unitImage->setMaximumSize(QSize(41, 41));
         unitImage->setMinimumSize(QSize(41, 41));
         unitImage->setPixmap(QPixmap(QString::fromUtf8("sprites/blank.PNG")));
@@ -370,13 +338,13 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
         rightUnitLayout->addWidget(unitImage);
 
         QVBoxLayout *unitRejectLayout = new QVBoxLayout;
-        //unitRejectLayout->setObjectName(QString::fromUtf8("unitRejectLayout1"));
+        
         QLabel *unitName = new QLabel(tr("Unit"), unitsBox);
-        //unitName->setObjectName(QString::fromUtf8("unitName1"));
+        
         unitRejectLayout->addWidget(unitName);
 
         QPushButton *rejectButton = new QPushButton(tr("Reject"), unitsBox);
-        //rejectPushButton->setObjectName(QString::fromUtf8("rejectPushButton"));
+        
         unitRejectLayout->addWidget(rejectButton);
         rightUnitLayout->addLayout(unitRejectLayout);
         unitBoxLayout->addLayout(rightUnitLayout, i, 0, 1, 1);
@@ -388,8 +356,6 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
 
     mainLayout->addWidget(unitsBox);
     setLayout(mainLayout);
-
-    //i = 0;
     
     connect(nextSpriteButton, SIGNAL(clicked()), this, SLOT(nextSpriteButtonClicked()));
     connect(prevSpriteButton, SIGNAL(clicked()), this, SLOT(prevSpriteButtonClicked()));
@@ -400,33 +366,6 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
     connect(rejectButtonList[3], SIGNAL(clicked()), this, SLOT(rejectButton3Clicked()));
 }
 
-/*void RecruitUnitsPage::test_GenerateSprites()
-{
-    sprites[0].name = "Wizard";
-    sprites[0].pixMap.load("sprites/wizard.png");
-    sprites[0].AP = 8;
-    sprites[0].HP = 8;
-    sprites[0].range = 8;
-
-    sprites[1].name = "Monk";
-    sprites[1].pixMap.load("sprites/buddhist.png");
-    sprites[1].AP = 6;
-    sprites[1].HP = 6;
-    sprites[1].range = 6;
-
-    sprites[2].name = "Bard";
-    sprites[2].pixMap.load("sprites/bard.png");
-    sprites[2].AP = 4;
-    sprites[2].HP = 4;
-    sprites[2].range = 4;
-
-    sprites[3].name = "Desert Soldier";
-    sprites[3].pixMap.load("sprites/desertsoldier.png");
-    sprites[3].AP = 4;
-    sprites[3].HP = 4;
-    sprites[3].range = 4;
-}
-*/
 
 void RecruitUnitsPage::nextSpriteButtonClicked()
 {
@@ -451,21 +390,23 @@ void RecruitUnitsPage::prevSpriteButtonClicked()
     spriteRangeVal->setText(QString::number(db.spriteRange(spriteIndex)));
 }
 
+
 void RecruitUnitsPage::recruitButtonClicked()
 {
+    // Check if there is an available unit slot and fill it with current sprite
     for (i = 0; i < MAX_UNITS; i++)
     {
         if (!isAlive[i])
         {
-            QList<Unit> tempUnits = db.loadUnits(NewGameWizard::playerName);
-            
+            // Fill open slot in Player Units section
             unitImageList[i]->setPixmap(*(spriteImage->pixmap()));
             unitNameList[i]->setText(spriteNameVal->text());
             isAlive[i] = true;
 
-            //NewGameWizard::tempUser.units[i].pixMap.load((*(spriteImage->pixmap())));
+            // Get copy of units from database and update it
+            QList<Unit> tempUnits = db.loadUnits(NewGameWizard::playerName);
+
             tempUnits[i].pixMap.operator =((*(spriteImage->pixmap())));
-            //NewGameWizard::tempUser.units[i].image.load((*(spriteImage->pixmap())));
             tempUnits[i].image.operator =((spriteImage->pixmap()->toImage()));
             tempUnits[i].name = spriteNameVal->text();
             tempUnits[i].status = UNIT_OK;
@@ -504,17 +445,22 @@ void RecruitUnitsPage::rejectButtonAnyClicked(int index)
         unitImageList[index]->setPixmap(QPixmap(QString::fromUtf8("sprites/blank.PNG")));
         unitNameList[index]->setText("Unit");
         isAlive[index] = false;
-/*
-        NewGameWizard::tempUser.units[index].pixMap.load(QString::fromUtf8("sprites/blank.PNG"));
-        NewGameWizard::tempUser.units[index].name = "Unit";
-        NewGameWizard::tempUser.units[index].status = UNIT_OK;NewGameWizard::tempUser.units[i].status = NO_UNIT;*/
+
+        // Get copy of units from database and update it
+        QList<Unit> tempUnits = db.loadUnits(NewGameWizard::playerName);
+
+        //tempUnits[i].pixMap.operator =((*(spriteImage->pixmap())));
+        //tempUnits[i].image.operator =((spriteImage->pixmap()->toImage()));
+        //tempUnits[i].name = spriteNameVal->text();
+        tempUnits[i].status = NO_UNIT;
+
+        db.saveUnits(NewGameWizard::playerName, tempUnits);
     }
 }
 
 
 int RecruitUnitsPage::nextId() const
 {
-    //return NewGameWizard::Page_RecruitUnits;
     return NewGameWizard::Page_Conclusion;
 }
 
