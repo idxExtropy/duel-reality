@@ -57,6 +57,17 @@ public:
 };
 
 
+class BattleMap
+{
+public:
+    QString name;
+    QString fileName;
+    int     cellsWide;
+    int     cellsTall;
+    float   gridHeight; // Ratio of grid to header.
+};
+
+
 class Player
 {
 public:
@@ -70,7 +81,9 @@ public:
     QString name;               // Player name
     //string  playerName;       // Player name
     int     experiencePoints;   // Player experience points
+    BattleMap   map;
 };
+
 
 
 #endif // GLOBALS_H

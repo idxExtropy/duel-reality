@@ -3,13 +3,14 @@
 
 
 //Database *db;
-
-QList<Sprite> Database::spriteList;
-QList<User>   Database::userList;
-QList<Unit>   Database::unitList;
+QList<BattleMap>    Database::mapList;
+QList<Sprite>       Database::spriteList;
+QList<User>         Database::userList;
+QList<Unit>         Database::unitList;
 
 Database::Database()
 {
+    generateMaps();
     generateSprites();
     testGenerateUsers();
 }
@@ -19,9 +20,51 @@ Database::~Database()
     ;
 }
 
+void Database::addMap(BattleMap map)
+{
+    Database::mapList << map;
+}
+
+
+BattleMap Database::loadMap(QString &mapName)
+{
+    int i;
+
+    for (i = 0; i < mapList.count(); i++)
+        if (mapList[i].name == mapName)
+            return mapList[i];
+
+    return dummyMap;
+}
+
+int Database::mapCount()
+{
+    return Database::mapList.count();
+}
+
+
+QString Database::mapName(int index) const
+{
+    return Database::mapList[index].name;
+}
+
+QString Database::mapFileName(int index) const
+{
+    return Database::mapList[index].fileName;
+}
+
 void Database::addSprite(Sprite sprite)
 {
     Database::spriteList << sprite;
+}
+
+void Database::saveMap(QString &userName, BattleMap map)
+{
+    int i;
+
+    for (i = 0; i < userList.count(); i++)
+        if (userList[i].name == userName)
+            userList[i].map = map;
 }
 
 
@@ -192,15 +235,51 @@ void Database::generateSprites()
 }
 
 
+void Database::generateMaps()
+{
+    if (Database::mapList.count() == 0)
+    {
+        int         i;
+        int         NUM_TEST_MAPS = 4;
+        BattleMap   testMaps[NUM_TEST_MAPS];
+
+        testMaps[0].name = "Grass";
+        testMaps[0].fileName = "backgrounds/grass.png";
+        testMaps[0].cellsWide = 6;
+        testMaps[0].cellsTall = 9;
+        testMaps[0].gridHeight = 0.58;
+
+        testMaps[1].name = "Beach";
+        testMaps[1].fileName = "backgrounds/beach.png";
+        testMaps[1].cellsWide = 6;
+        testMaps[1].cellsTall = 9;
+        testMaps[1].gridHeight = 0.58;
+
+        testMaps[2].name = "Snow";
+        testMaps[2].fileName = "backgrounds/snow.png";
+        testMaps[2].cellsWide = 6;
+        testMaps[2].cellsTall = 9;
+        testMaps[2].gridHeight = 0.58;
+
+        testMaps[3].name = "Plains";
+        testMaps[3].fileName = "backgrounds/plains.png";
+        testMaps[3].cellsWide = 6;
+        testMaps[3].cellsTall = 9;
+        testMaps[3].gridHeight = 0.58;
+
+        for (i = 0; i < NUM_TEST_MAPS; i++)
+            addMap(testMaps[i]);
+    }
+}
+
+
 void Database::testGenerateUsers()
 {
     if (Database::userList.count() == 0)
     {
-        int     NUM_TEST_USERS = 3;
-        //User*   testUsers = new User[NUM_TEST_USERS];
-        User testUsers[MAX_SPRITES];
         int     i;
-
+        int     NUM_TEST_USERS = 3;
+        User    testUsers[NUM_TEST_USERS];
 
         testUsers[0].name = "Tom";
         testUsers[0].experiencePoints = 2;

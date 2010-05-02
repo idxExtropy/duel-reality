@@ -5,6 +5,7 @@
 /*---------------- C l a s s    d e c l a r a t i o n s ----------------*/
 
 class User;
+class Map;
 
 
 /*---------------- C l a s s    d e f i n i t i o n s ----------------*/
@@ -28,9 +29,16 @@ public:
     Database();
     ~Database();
 
-    void generateSprites();
-    void testGenerateUsers();
+    void    generateMaps();
+    void    generateSprites();
+    void    testGenerateUsers();
 
+    void        addMap(BattleMap map);
+    //BattleMap   loadMap(QString &mapName);
+    int     mapCount();
+    QString mapName(int index) const;
+    QString mapFileName(int index) const;
+    
     void addSprite(Sprite sprite);        // Creates user player data
     int spriteCount();                              // Returns total number of sprite data entries
     QString spriteName(int index) const;                  // Returns sprite name in entry index
@@ -49,14 +57,18 @@ public:
     User loadUser(const QString &userName);               // Returns user player data for associate user player name
     void saveUnits(QString &userName, QList<Unit> units); // Saves array of units in user player data
     QList<Unit> loadUnits(QString &userName);            // Loads array of units from user player data
+    void    saveMap(QString &userName, BattleMap map);
+    BattleMap   loadMap(QString &mapName);
 
 private:
-    static QList<Sprite> spriteList;
-    static QList<User>   userList;
-    static QList<Unit>   unitList;
+    static QList<BattleMap> mapList;
+    static QList<Sprite>    spriteList;
+    static QList<User>      userList;
+    static QList<Unit>      unitList;
 
-    Sprite  dummySprite;
-    User    dummyUser;
+    BattleMap   dummyMap;
+    Sprite      dummySprite;
+    User        dummyUser;
     QList<Unit>    dummyUnitsList;
 };
 

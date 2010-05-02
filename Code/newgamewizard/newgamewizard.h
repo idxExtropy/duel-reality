@@ -22,7 +22,8 @@ public:
             Page_CreatePlayer,
             Page_LoadPlayer,
             Page_RecruitUnits,
-            //Page_SelectMap,
+            Page_SelectMode,
+            Page_SelectMap,
             Page_Conclusion };
 
     NewGameWizard(QWidget *parent = 0);
@@ -105,7 +106,7 @@ public:
     RecruitUnitsPage(QWidget *parent = 0);
 
     int nextId() const;
-    void test_GenerateSprites();
+    //void test_GenerateSprites();
 
 protected:
     //Sprite  sprites[MAX_SPRITES];
@@ -141,7 +142,24 @@ private:
     bool                    isAlive[MAX_UNITS];
     Database                db;
 };
-/*
+
+
+class SelectModePage : public QWizardPage
+{
+    Q_OBJECT
+
+public:
+    SelectModePage(QWidget *parent = 0);
+
+    int nextId() const;
+
+private:
+    //QLabel          *topLabel;
+    QRadioButton    *campaignModeRadioButton;
+    QRadioButton    *freePlayModeRadioButton;
+};
+
+
 class SelectMapPage : public QWizardPage
 {
     Q_OBJECT
@@ -151,9 +169,22 @@ public:
 
     int nextId() const;
 
+private slots:
+    void nextMapButtonClicked();
+    void prevMapButtonClicked();
+    void selectButtonClicked();
+    
 private:
-    QLabel  *mapLabel;
-};*/
+    int         mapIndex;
+    QString     mapFileName;
+    QLabel      *mapImage;
+    QPushButton *nextMapButton;
+    QPushButton *prevMapButton;
+    QLabel      *mapName;
+    QLabel      *mapNameVal;
+    QPushButton *selectButton;
+    Database    db;
+};
 
 class ConclusionPage : public QWizardPage
 {
