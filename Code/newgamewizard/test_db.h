@@ -31,7 +31,7 @@ public:
     void generateSprites();
     void testGenerateUsers();
 
-    void addSprite(Sprite *sprite);        // Creates user player data
+    void addSprite(Sprite sprite);        // Creates user player data
     int spriteCount();                              // Returns total number of sprite data entries
     QString spriteName(int index) const;                  // Returns sprite name in entry index
     const QPixmap spritePixMap(int index) const;
@@ -40,24 +40,23 @@ public:
     const int spriteRange(int index) const;
     Sprite loadSprite(QString &spriteName);         // Returns sprite data for associated sprite name
 
-    //User addUser(QString &userName);                // Creates user player data
-    //void addUser(QString &userName);                // Creates user player data
-    void addUser(User *user);                // Creates user player data
-    void saveUser(QString &userName, User *user);
+
+    void addUser(User user);                // Creates user player data
+    void saveUser(QString &userName, User user);
     int userCount();                                // Returns total number of user player data entries
     QString userName(int index) const;                    // Returns user player name in entry index
     User loadUser(QString &userName);               // Returns user player data for associate user player name
-    void saveUnits(QString &userName, Unit *units); // Saves array of units in user player data
-    Unit *loadUnits(QString &userName);            // Loads array of units from user player data
+    void saveUnits(QString &userName, QList<Unit> units); // Saves array of units in user player data
+    QList<Unit> loadUnits(QString &userName);            // Loads array of units from user player data
 
-protected:
-    QList<Sprite *> spriteList;
-    QList<User *>   userList;
-    QList<Unit *>   unitList;
+private:
+    static QList<Sprite> spriteList;
+    static QList<User>   userList;
+    static QList<Unit>   unitList;
 
-    Sprite  *dummySprite;
-    User    *dummyUser;
-    Unit    *dummyUnits;
+    Sprite  dummySprite;
+    User    dummyUser;
+    QList<Unit>    dummyUnitsList;
 };
 
 

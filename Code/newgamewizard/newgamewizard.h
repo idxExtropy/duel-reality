@@ -27,6 +27,11 @@ public:
 
     NewGameWizard(QWidget *parent = 0);
 
+    static void setPlayerName(const QString &userName);
+
+private:
+    static QString playerName;
+
 private slots:
     void    showHelp();
 };
@@ -55,6 +60,9 @@ public:
 
     int nextId() const;
 
+private slots:
+    void playerNameCreated(const QString &);
+
 private:
     QLabel      *playerNameLabel;
     QLineEdit   *playerNameLineEdit;
@@ -69,9 +77,14 @@ public:
 
     int nextId() const;
 
+private slots:
+    void playerNameChanged(int);
+
 private:
     QLabel      *playerNameLabel;
     QComboBox   *playerNameComboBox;
+    Database    db;
+    QStringList userNames;
 };
 
 
