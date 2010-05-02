@@ -69,15 +69,14 @@ Sprite Database::loadSprite(QString &spriteName)
 }
 
 
-//User Database::addUser(QString &userName)
-/*void Database::addUser(QString &userName)
+void Database::addUser(QString &userName)
 {
-    User *newUser;
+    User newUser;
     
-    newUser->name = userName;
-    userList << newUser;
+    newUser.name = userName;
+    Database::userList << newUser;
 }
-*/
+
 
 void Database::addUser(User user)
 {
@@ -107,7 +106,7 @@ QString Database::userName(int index) const
 }
 
 
-User Database::loadUser(QString &userName)
+User Database::loadUser(const QString &userName)
 {
     int i;
 
@@ -118,7 +117,7 @@ User Database::loadUser(QString &userName)
     return dummyUser;
 }
 
-
+/*
 void Database::saveUnits(QString &userName, QList<Unit> units)
 {
     int i;
@@ -153,7 +152,7 @@ QList<Unit> Database::loadUnits(QString &userName)
     }
     return dummyUnitsList;
 }
-
+*/
 
 void Database::generateSprites()
 {

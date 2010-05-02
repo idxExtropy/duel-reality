@@ -30,7 +30,8 @@ public:
     static void setPlayerName(const QString &userName);
 
 private:
-    static QString playerName;
+    static QString  playerName;
+    //static User     tempUser;
 
 private slots:
     void    showHelp();
@@ -61,11 +62,13 @@ public:
     int nextId() const;
 
 private slots:
+    //void playerNameCreated(QString &);
     void playerNameCreated(const QString &);
 
 private:
     QLabel      *playerNameLabel;
     QLineEdit   *playerNameLineEdit;
+    Database    db;
 };
 
 class LoadPlayerPage : public QWizardPage

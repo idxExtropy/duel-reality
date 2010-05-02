@@ -5,6 +5,7 @@
 #include "newgamewizard.h"
 
 QString NewGameWizard::playerName;
+//User    NewGameWizard::tempUser;
 
 NewGameWizard::NewGameWizard(QWidget *parent)
     : QWizard(parent)
@@ -31,10 +32,12 @@ NewGameWizard::NewGameWizard(QWidget *parent)
     setWindowTitle(tr("New Game"));
 }
 
+
 void NewGameWizard::setPlayerName(const QString &userName)
 {
     NewGameWizard::playerName = userName;
 }
+
 
 void NewGameWizard::showHelp()
 {
@@ -122,11 +125,15 @@ CreatePlayerPage::CreatePlayerPage(QWidget *parent)
     setLayout(layout);
 
     registerField("player.name*", playerNameLineEdit);
+    //connect(playerNameLineEdit, SIGNAL(textChanged(QString &)), this, SLOT(playerNameCreated(QString &)));
     connect(playerNameLineEdit, SIGNAL(textChanged(const QString &)), this, SLOT(playerNameCreated(const QString &)));
 }
 
 void CreatePlayerPage::playerNameCreated(const QString &userName)
+//void CreatePlayerPage::playerNameCreated(QString &userName)
 {
+    //db.addUser(userName);
+    //NewGameWizard::tempUser = db.loadUser(userName);
     NewGameWizard::setPlayerName(playerNameLineEdit->text());
 }
 
@@ -169,6 +176,7 @@ LoadPlayerPage::LoadPlayerPage(QWidget *parent)
 
 void LoadPlayerPage::playerNameChanged(int index)
 {
+    //NewGameWizard::tempUser = db.loadUser(userNames.at(index));
     NewGameWizard::setPlayerName(userNames.at(index));
 }
 
@@ -413,9 +421,16 @@ void RecruitUnitsPage::recruitButtonClicked()
     {
         if (!isAlive[i])
         {
-            unitImageList[i]->setPixmap(*(spriteImage->pixmap()));;
+            unitImageList[i]->setPixmap(*(spriteImage->pixmap()));
             unitNameList[i]->setText(spriteNameVal->text());
             isAlive[i] = true;
+/*
+            //NewGameWizard::tempUser.units[i].pixMap.load((*(spriteImage->pixmap())));
+            NewGameWizard::tempUser.units[i].pixMap.operator =((*(spriteImage->pixmap())));
+            //NewGameWizard::tempUser.units[i].image.load((*(spriteImage->pixmap())));
+            NewGameWizard::tempUser.units[i].image.operator =((spriteImage->pixmap()->toImage()));
+            NewGameWizard::tempUser.units[i].name = spriteNameVal->text();
+            NewGameWizard::tempUser.units[i].status = UNIT_OK; */
             break;
         }
     }
@@ -448,6 +463,10 @@ void RecruitUnitsPage::rejectButtonAnyClicked(int index)
         unitImageList[index]->setPixmap(QPixmap(QString::fromUtf8("sprites/blank.PNG")));
         unitNameList[index]->setText("Unit");
         isAlive[index] = false;
+/*
+        NewGameWizard::tempUser.units[index].pixMap.load(QString::fromUtf8("sprites/blank.PNG"));
+        NewGameWizard::tempUser.units[index].name = "Unit";
+        NewGameWizard::tempUser.units[index].status = UNIT_OK;NewGameWizard::tempUser.units[i].status = NO_UNIT;*/
     }
 }
 
