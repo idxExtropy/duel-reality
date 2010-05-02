@@ -9,7 +9,10 @@ HEADERS += mainwindow.h \
     unit.h \
     player.h \
     jmap.h \
-    mechanics.h
+    mechanics.h \
+    test_db.h \
+    newgamewizard.h \
+    globals.h
 SOURCES += mainwindow.cpp \
     glwidget.cpp \
     main.cpp \
@@ -17,4 +20,6 @@ SOURCES += mainwindow.cpp \
     unit.cpp \
     player.cpp \
     jmap.cpp \
-    mechanics.cpp
+    mechanics.cpp \
+    test_db.cpp \
+    newgamewizard.cpp

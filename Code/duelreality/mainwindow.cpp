@@ -2,7 +2,8 @@
 
 #include "mainwindow.h"
 #include "glwidget.h"
-#include "usernamedialog.h"
+//#include "usernamedialog.h"
+#include "newgamewizard.h"
 
 MainWindow::MainWindow()
 {
@@ -31,7 +32,8 @@ MainWindow::MainWindow()
     soundBkgnd->play();
 
     // Initialize dialogs
-    userNameDialog = 0;
+    //userNameDialog = 0;
+    //newgamewizard = 0;
 
     // Set window icon
     setWindowIcon(QIcon("icons/logo.png"));
@@ -119,15 +121,18 @@ void MainWindow::createStatusBar()
 
 void MainWindow::newGame()
 {
-    if (!userNameDialog)
-    {
-        userNameDialog = new UserNameDialog(this);
-        //connect(userNameDialog, SIGNAL(sendUserName()), )
-    }
+    NewGameWizard *newgamewizard = new NewGameWizard(this);
 
-    userNameDialog->show();
-    userNameDialog->raise();
-    userNameDialog->activateWindow();
+    if (newgamewizard->exec())
+    {
+        soundBkgnd->stop();
+
+        soundBattleStart = new QSound("sounds/trumpet.wav");
+        soundBattleStart->play();
+
+        emit newGameComplete();
+    }
+    delete newgamewizard;
 }
 
 void MainWindow::about()
