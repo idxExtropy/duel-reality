@@ -42,12 +42,13 @@ public:
 
 
     void addUser(User user);                // Creates user player data
+    void addUser(QString &userName);
     void saveUser(QString &userName, User user);
     int userCount();                                // Returns total number of user player data entries
     QString userName(int index) const;                    // Returns user player name in entry index
-    User loadUser(QString &userName);               // Returns user player data for associate user player name
-    void saveUnits(QString &userName, QList<Unit> units); // Saves array of units in user player data
-    QList<Unit> loadUnits(QString &userName);            // Loads array of units from user player data
+    User loadUser(const QString &userName);               // Returns user player data for associate user player name
+    //void saveUnits(QString &userName, QList<Unit> units); // Saves array of units in user player data
+    //QList<Unit> loadUnits(QString &userName);            // Loads array of units from user player data
 
 private:
     static QList<Sprite> spriteList;
