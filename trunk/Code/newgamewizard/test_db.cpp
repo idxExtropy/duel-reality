@@ -117,7 +117,7 @@ User Database::loadUser(const QString &userName)
     return dummyUser;
 }
 
-/*
+
 void Database::saveUnits(QString &userName, QList<Unit> units)
 {
     int i;
@@ -152,7 +152,7 @@ QList<Unit> Database::loadUnits(QString &userName)
     }
     return dummyUnitsList;
 }
-*/
+
 
 void Database::generateSprites()
 {

@@ -29,12 +29,18 @@ public:
 
     static void setPlayerName(const QString &userName);
 
-private:
-    static QString  playerName;
     //static User     tempUser;
+
+//private:
+    static QString  playerName;
 
 private slots:
     void    showHelp();
+    void    nextButtonClicked();
+
+private:
+    Database    db;
+    int         prevIdBeforeNext;
 };
 
 class IntroPage : public QWizardPage
@@ -64,6 +70,7 @@ public:
 private slots:
     //void playerNameCreated(QString &);
     void playerNameCreated(const QString &);
+    void nextButtonClicked();
 
 private:
     QLabel      *playerNameLabel;
@@ -82,6 +89,7 @@ public:
 
 private slots:
     void playerNameChanged(int);
+    void playerNameChanged2(int);
 
 private:
     QLabel      *playerNameLabel;
