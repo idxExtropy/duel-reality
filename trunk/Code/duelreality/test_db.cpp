@@ -170,7 +170,7 @@ void Database::saveUnits(QString &userName, QList<Unit> units)
     {
         if (userList[i].name == userName)
         {
-            for (j = 0; j < MAX_UNITS1; j++)
+            for (j = 0; j < MAX_TEAM_UNITS; j++)
                 userList[i].units[j] = units[j];
         }
     }
@@ -187,7 +187,7 @@ QList<Unit> Database::loadUnits(QString &userName)
     {
         if (userList[i].name == userName)
         {
-            for (j = 0; j < MAX_UNITS1; j++)
+            for (j = 0; j < MAX_TEAM_UNITS; j++)
                 units << userList[i].units[j];
 
             return units;

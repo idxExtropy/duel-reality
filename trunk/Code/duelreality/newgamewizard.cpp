@@ -330,7 +330,7 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
     unitBoxLayout->setObjectName(QString::fromUtf8("unitBoxLayout"));
 
     // Iteratively fill Player Units section
-    for (i = 0; i < MAX_UNITS1; i++)
+    for (i = 0; i < MAX_TEAM_UNITS; i++)
     {
         QHBoxLayout *rightUnitLayout = new QHBoxLayout();
         
@@ -399,7 +399,7 @@ void RecruitUnitsPage::prevSpriteButtonClicked()
 void RecruitUnitsPage::recruitButtonClicked()
 {
     // Check if there is an available unit slot and fill it with current sprite
-    for (i = 0; i < MAX_UNITS1; i++)
+    for (i = 0; i < MAX_TEAM_UNITS; i++)
     {
         if (!isAlive[i])
         {

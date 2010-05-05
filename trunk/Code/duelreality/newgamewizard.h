@@ -139,7 +139,7 @@ private:
     QList<QLabel *>         unitImageList;
     QList<QLabel *>         unitNameList;
     QList<QPushButton *>    rejectButtonList;
-    bool                    isAlive[MAX_UNITS1];
+    bool                    isAlive[MAX_TEAM_UNITS];
     Database                db;
 };
 
