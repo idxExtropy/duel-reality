@@ -21,7 +21,7 @@ GLWidget::GLWidget()
 void GLWidget::unitTest_GenerateContent()
 {
     // Select a battle map.
-    map.mapFilename = "backgrounds/grass.png";
+    map.fileName = "backgrounds/grass.png";
     map.cellsTall = 6;
     map.cellsWide = 9;
     map.gridHeight = 0.58;
@@ -136,7 +136,7 @@ void GLWidget::initializeGL()
     initGrid();
 
     // Load a background image (debug).
-    bkImage.load(map.mapFilename.c_str());
+    bkImage.load(map.fileName);
     bkImage = bkImage.scaled(GLWidget::width(), GLWidget::height(), Qt::KeepAspectRatio, Qt::SmoothTransformation );
     glBkImage = QGLWidget::convertToGLFormat(bkImage);
 
@@ -239,7 +239,7 @@ void GLWidget::paintGL()
                 // Unit name.
                 QFont nameFont = GLWidget::font();
                 nameFont.setBold(true);
-                renderText(30, vLoc, 0.0, mapGrid[i][j].unit.name.c_str(), nameFont);
+                renderText(30, vLoc, 0.0, mapGrid[i][j].unit.name, nameFont);
                 vLoc -= 15;
 
                 // Unit hit points.
@@ -373,7 +373,7 @@ bool GLWidget::drawGridBox(int i, int j)
 //	Modified:	03/02/2010
 //	Author:		Tom Calloway
 ///////////////////////////////////////////////////////////////////////////////
-bool GLWidget::updateUnit(characterUnit myUnit)
+bool GLWidget::updateUnit(Unit myUnit)
 {
     if (myUnit.status == NO_UNIT)
     {
@@ -568,7 +568,7 @@ void GLWidget::resizeGL(int width, int height)
     updateGL();
 
     // Reload and resize the background image.
-    bkImage.load(map.mapFilename.c_str());
+    bkImage.load(map.fileName);
     bkImage = bkImage.scaled(GLWidget::width(), GLWidget::height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
     glBkImage = QGLWidget::convertToGLFormat(bkImage);
 }
