@@ -8,9 +8,6 @@
 
 using namespace std;
 
-static const int NO_UNIT = 0;
-static const int UNIT_DEAD = 1;
-static const int UNIT_OK = 2;
 static const int MAX_UNITS = 10;
 static const int TIMER_INTERVAL = 100;
 static const int MAX_GRID_DIMENSION = 100;
