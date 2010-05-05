@@ -3,13 +3,11 @@ INPUT(
 ./debug\glwidget.o
 ./debug\main.o
 ./debug\usernamedialog.o
-./debug\unit.o
-./debug\player.o
-./debug\jmap.o
-./debug\mechanics.o
 ./debug\test_db.o
 ./debug\newgamewizard.o
+./debug\mechanics.o
 ./debug\moc_mainwindow.o
 ./debug\moc_usernamedialog.o
 ./debug\moc_newgamewizard.o
+./debug\moc_mechanics.o
 );
