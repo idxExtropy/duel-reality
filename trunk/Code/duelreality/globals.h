@@ -19,11 +19,11 @@ using std::string;
 
 static const int    MAX_SPRITES = 4;
 static const int    MAX_TEAM_UNITS = 4;      // Maximum number of units per player
-//static const int    NO_UNIT = 0;        // Unit status (unit doesn't exist)
-//static const int    UNIT_DEAD = 1;      // Unit status (unit is dead)
-//static const int    UNIT_OK = 2;        // Unit status (unit is alive)
-//static const int    USER_UNIT = 1;      // Indicates unit is associated with user
-//static const int    AI_UNIT = 2;        // Indicates unit is associated with AI
+static const int    NO_UNIT = 0;        // Unit status (unit doesn't exist)
+static const int    UNIT_DEAD = 1;      // Unit status (unit is dead)
+static const int    UNIT_OK = 2;        // Unit status (unit is alive)
+static const int    USER_UNIT = 1;      // Indicates unit is associated with user
+static const int    AI_UNIT = 2;        // Indicates unit is associated with AI
 
 
 /*---------------- C l a s s    d e c l a r a t i o n s ----------------*/
