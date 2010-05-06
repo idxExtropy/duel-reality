@@ -8,6 +8,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 GLWidget::GLWidget()
 {
+    isPaused = false;
     selectedBorder = 1;
     startTimer( TIMER_INTERVAL );
 }
@@ -182,6 +183,24 @@ void GLWidget::initGrid()
 ///////////////////////////////////////////////////////////////////////////////
 void GLWidget::paintGL()
 {
+    for (int i = 0; i < MAX_UNITS; i++)
+    {
+        // Update the action time (unitTest).
+        if (unit[i].actionTime >= 100)
+        {
+            if (unit[i].actionTime == 100)
+            {
+                // The unit is ready to go, so pause the game.
+                isPaused = true;
+                break;
+            }
+
+            // Reset the action time.
+            unit[i].actionTime = 0;
+        }
+        unit[i].actionTime += 0.005 * unit[i].actionRate;
+    }
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
 
@@ -205,15 +224,9 @@ void GLWidget::paintGL()
         // Draw the units.
         updateUnit(unit[i]);
 
+        // Make sure the map is up to date.
         mapGrid[unit[i].vLocation][unit[i].hLocation].unit = unit[i];
         mapGrid[unit[i].vLocation][unit[i].hLocation].isUnit = true;
-
-        // Update the action time (unitTest).
-        if (unit[i].actionTime >= 100)
-        {
-            unit[i].actionTime = 0;
-        }
-        unit[i].actionTime += 0.005 * unit[i].actionRate;
     }
 
     for (int i = 0; i < map.cellsTall; i++)
@@ -524,7 +537,7 @@ bool GLWidget::updateUnit(Unit myUnit)
         glVertex3f( rightEdge + statusWidth, bottomEdge + cellHeight/2 * actionTime, 0.0f );	//Top Right
         glVertex3f( rightEdge + statusWidth, bottomEdge, 0.0f );	// Bottom Right
         glVertex3f( rightEdge, bottomEdge, 0.0f );	// Bottom Left
-    glEnd();
+        glEnd();
 
     return (true);
 }
