@@ -2,12 +2,17 @@
 #define MAXTEAMS 2
 #define MAXUNITS 3
 #define PLAYER1 1
+#define UNIT_DEAD 0
 
 mechanics::mechanics(QObject *parent) :
     QObject(parent)
 {
 }
 
+mechanics::~mechanics()
+{
+
+}
 
 
 void mechanics::move(Unit a, int targetx, int targety)
@@ -132,5 +137,42 @@ void mechanics::endTurn()
 //
 
 
+int mechanics::isGameOver(Unit a[4])
+{
+    int deadcount=0;
+    for(int i=0;i<=MAXTEAMS;i++)
+    {
+        for (int j=0;j<=MAXUNITS;j++)
+        {
+            if (a[j].team==1)
+            {
+                if(a[j].status==UNIT_DEAD)
+                {
+                    deadcount++;
+                }
+                if (deadcount ==4)
+                {    //emit SignalP2Win()
+              return 2;
+                }
+            }
 
+            if (a[j].team==2)
+            {
+                if(a[j].status==UNIT_DEAD)
+                {
+                    deadcount++;
+                }
+                if (deadcount ==4)
+                {    //emit SignalP1Win()
+                return 1;
+                }
+            }
+            else
+                deadcount=0;
+                return 0;
+
+
+        }
+    }
+}
 
