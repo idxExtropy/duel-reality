@@ -19,6 +19,7 @@ public:
     Unit unit;
 
     bool isSelected;
+    bool isPending;
     float cellWidth;
     float cellHeight;
     float leftEdge;
@@ -59,7 +60,7 @@ protected:
     gridBox mapGrid[MAX_GRID_DIMENSION][MAX_GRID_DIMENSION];
 
     // Effect values.
-    bool isPaused;
+    bool isPending;
     int selectedBorder;
 
 private:
