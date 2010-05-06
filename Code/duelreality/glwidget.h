@@ -59,6 +59,7 @@ protected:
     gridBox mapGrid[MAX_GRID_DIMENSION][MAX_GRID_DIMENSION];
 
     // Effect values.
+    bool isPaused;
     int selectedBorder;
 
 private:

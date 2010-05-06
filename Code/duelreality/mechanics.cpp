@@ -44,6 +44,7 @@ if(!mechanics::isOccupied(targetx, targety))
         return false;
 
 }
+return (false);
 }
 
 
@@ -69,7 +70,7 @@ bool mechanics::isSufficientAP(Unit a)
 
 Unit mechanics::getUnit(int x, int y)
 {
-Unit Unit[4];
+   Unit Unit[4];
    if(1)//(mapGrid[x][y].isUnit)
     {
         for(int i=0;i<=MAXTEAMS;i++)
@@ -88,6 +89,7 @@ Unit Unit[4];
                 }
         }
     }
+   return Unit[0];
 }
 
 ////////////////////////////////////////////
@@ -98,17 +100,19 @@ Unit Unit[4];
 Unit mechanics::setFocus(int x, int y)
 {
     int Player=1;
-        if (Player==PLAYER1)
-        {
-                if (1) //(mapGrid[x][y].isSelected && mapGrid[x][y].isunit)
+    Unit a;
+    if (Player==PLAYER1)
+    {
+            if (1) //(mapGrid[x][y].isSelected && mapGrid[x][y].isunit)
+            {
+                a=mechanics::getUnit(x,y);
+                if(a.team==PLAYER1&&a.status==UNIT_OK)
                 {
-                Unit a=mechanics::getUnit(x,y);
-                        if(a.team==PLAYER1&&a.status==UNIT_OK)
-                        {
-                        return a;
-                        }
+                    return (a);
                 }
-        }
+            }
+    }
+    return (a);
 }
 
 //executes when passed ENDTURN SIGNAL
@@ -174,5 +178,6 @@ int mechanics::isGameOver(Unit a[4])
 
         }
     }
+    return 0;
 }
 
