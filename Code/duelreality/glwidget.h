@@ -5,6 +5,7 @@
 #include <QtOpenGL>
 #include <string>
 #include "globals.h"
+#include "mechanics.h"
 
 using namespace std;
 
