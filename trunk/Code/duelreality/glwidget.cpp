@@ -8,7 +8,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 GLWidget::GLWidget()
 {
-    isPaused = false;
+    isPending = false;
     selectedBorder = 1;
     startTimer( TIMER_INTERVAL );
 }
@@ -121,6 +121,7 @@ void GLWidget::unitTest_GenerateContent()
     {
         // Tell OpenGL whether or not the unit exists.
         unit[i].status = NO_UNIT;
+        unit[i].isPending = false;
     }
 }
 
@@ -191,7 +192,9 @@ void GLWidget::paintGL()
             if (unit[i].actionTime == 100)
             {
                 // The unit is ready to go, so pause the game.
-                isPaused = true;
+                isPending = true;
+                mapGrid[unit[i].hLocation][unit[i].vLocation].isPending = true;
+                unit[i].isPending = true;
                 break;
             }
 
@@ -227,6 +230,61 @@ void GLWidget::paintGL()
         // Make sure the map is up to date.
         mapGrid[unit[i].vLocation][unit[i].hLocation].unit = unit[i];
         mapGrid[unit[i].vLocation][unit[i].hLocation].isUnit = true;
+
+        if (unit[i].isPending)
+        {
+            // Draw information header.
+            glColor4f( 0.0f, 0.0f, 0.2f, 0.8f );
+            glBegin (GL_QUADS);
+                glVertex3f (15, GLWidget::height() - 20, 0.0);
+                glVertex3f (15 + 250, GLWidget::height() - 20, 0.0);
+                glVertex3f (15 + 250, GLWidget::height() - 20 - 100, 0.0);
+                glVertex3f (15, GLWidget::height() - 20 - 100, 0.0);
+            glEnd();
+
+            qglColor(Qt::white);
+            char *tmpString = (char*)malloc(256);
+            string displayString = "";
+            int vLoc = GLWidget::height() - 40;
+
+            // Unit name.
+            QFont nameFont = GLWidget::font();
+            nameFont.setBold(true);
+            renderText (30, vLoc, 0.0, unit[i].name, nameFont);
+            vLoc -= 15;
+
+            // Unit hit points.
+            itoa(unit[i].hitPoints, tmpString, 10);
+            displayString = "Hit Points: ";
+            displayString.append(tmpString);
+            displayString.append(" / ");
+            itoa(unit[i].totalHitPoints, tmpString, 10);
+            displayString.append(tmpString);
+            renderText (30, vLoc, 0.0, displayString.c_str());
+            vLoc -= 15;
+
+            // Unit attack power.
+            itoa(unit[i].attackPower, tmpString, 10);
+            displayString = "Attack Power: ";
+            displayString.append(tmpString);
+            renderText (30, vLoc, 0.0, displayString.c_str());
+            vLoc -= 15;
+
+            // Unit attack range.
+            itoa(unit[i].attackRange, tmpString, 10);
+            displayString = "Attack Range: ";
+            displayString.append(tmpString);
+            renderText (30, vLoc, 0.0, displayString.c_str());
+            vLoc -= 15;
+
+            // Unit action time.
+            itoa(unit[i].actionTime, tmpString, 10);
+            displayString = "Action Time: ";
+            displayString.append(tmpString);
+            displayString.append("%");
+            renderText (30, vLoc, 0.0, displayString.c_str());
+            vLoc -= 15;
+        }
     }
 
     for (int i = 0; i < map.cellsTall; i++)
@@ -236,12 +294,12 @@ void GLWidget::paintGL()
             if (mapGrid[i][j].isSelected && mapGrid[i][j].isUnit)
             {
                 // Draw information header.
-                glColor4f( 0.0f, 0.0f, 0.0f, 0.8f );
+                glColor4f( 0.2f, 0.0f, 0.0f, 0.8f );
                 glBegin (GL_QUADS);
-                    glVertex3f (15, GLWidget::height() - 20, 0.0);
-                    glVertex3f (15 + 250, GLWidget::height() - 20, 0.0);
-                    glVertex3f (15 + 250, GLWidget::height() - 20 - 100, 0.0);
-                    glVertex3f (15, GLWidget::height() - 20 - 100, 0.0);
+                    glVertex3f (GLWidget::width() - 265, GLWidget::height() - 20, 0.0);
+                    glVertex3f (GLWidget::width() - 15, GLWidget::height() - 20, 0.0);
+                    glVertex3f (GLWidget::width() - 15, GLWidget::height() - 20 - 100, 0.0);
+                    glVertex3f (GLWidget::width() - 265, GLWidget::height() - 20 - 100, 0.0);
                 glEnd();
 
                 qglColor(Qt::white);
@@ -252,7 +310,7 @@ void GLWidget::paintGL()
                 // Unit name.
                 QFont nameFont = GLWidget::font();
                 nameFont.setBold(true);
-                renderText(30, vLoc, 0.0, mapGrid[i][j].unit.name, nameFont);
+                renderText (GLWidget::width() - 250, vLoc, 0.0, mapGrid[i][j].unit.name, nameFont);
                 vLoc -= 15;
 
                 // Unit hit points.
@@ -262,21 +320,21 @@ void GLWidget::paintGL()
                 displayString.append(" / ");
                 itoa(mapGrid[i][j].unit.totalHitPoints, tmpString, 10);
                 displayString.append(tmpString);
-                renderText(30, vLoc, 0.0, displayString.c_str());
+                renderText (GLWidget::width() - 250, vLoc, 0.0, displayString.c_str());
                 vLoc -= 15;
 
                 // Unit attack power.
                 itoa(mapGrid[i][j].unit.attackPower, tmpString, 10);
                 displayString = "Attack Power: ";
                 displayString.append(tmpString);
-                renderText(30, vLoc, 0.0, displayString.c_str());
+                renderText (GLWidget::width() - 250, vLoc, 0.0, displayString.c_str());
                 vLoc -= 15;
 
                 // Unit attack range.
                 itoa(mapGrid[i][j].unit.attackRange, tmpString, 10);
                 displayString = "Attack Range: ";
                 displayString.append(tmpString);
-                renderText(30, vLoc, 0.0, displayString.c_str());
+                renderText (GLWidget::width() - 250, vLoc, 0.0, displayString.c_str());
                 vLoc -= 15;
 
                 // Unit action time.
@@ -284,7 +342,7 @@ void GLWidget::paintGL()
                 displayString = "Action Time: ";
                 displayString.append(tmpString);
                 displayString.append("%");
-                renderText(30, vLoc, 0.0, displayString.c_str());
+                renderText (GLWidget::width() - 250, vLoc, 0.0, displayString.c_str());
                 vLoc -= 15;
             }
         }
@@ -344,6 +402,11 @@ bool GLWidget::drawGridBox(int i, int j)
     {
         glLineWidth( 1 );
         glColor4f( 0.4f, 0.4f, 0.4f, 0.8f );
+    }
+
+    if (mapGrid[i][j].unit.isPending)
+    {
+        glColor4f( 0.0f, 0.0f, 0.2f, 0.8f );
     }
 
     // Define corner locations (without perspective).

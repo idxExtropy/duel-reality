@@ -54,6 +54,7 @@ public:
     int     actionPoints;
     int     totalActionPoints;
     int     unitWorth;          // Amount of XP awarded for killing unit
+    int     isPending;
 };
 
 
