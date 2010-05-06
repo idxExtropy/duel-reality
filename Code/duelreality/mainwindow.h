@@ -19,6 +19,9 @@ class MainWindow : public QMainWindow
 public:
     MainWindow();
 
+    static bool isActiveBattle;
+    static bool isPlayerTurn;
+
 protected:
     void closeEvent(QCloseEvent *event);
 

@@ -5,6 +5,12 @@
 //#include "usernamedialog.h"
 #include "newgamewizard.h"
 
+
+// Set initial conditions of public static variables
+bool MainWindow::isActiveBattle = false;
+bool MainWindow::isPlayerTurn = false;
+
+
 MainWindow::MainWindow()
 {
     // Set central widget
@@ -50,35 +56,41 @@ void MainWindow::createActions()
     actionNewGame->setIcon(QIcon("icons/filenew.png"));
     actionNewGame->setShortcut(QKeySequence::New);
     actionNewGame->setStatusTip(tr("Start a new game"));
+    actionNewGame->setEnabled(!MainWindow::isActiveBattle);
     connect(actionNewGame, SIGNAL(triggered()), this, SLOT(newGame()));
 
     actionLoadGame = new QAction(tr("&Load Game"), this);
     actionLoadGame->setIcon(QIcon("icons/fileopen.png"));
     actionLoadGame->setShortcut(tr("Ctrl+L"));
     actionLoadGame->setStatusTip(tr("Load a saved game"));
+    actionLoadGame->setEnabled(!MainWindow::isActiveBattle);
     //connect(actionLoadGame, SIGNAL(triggered()), this, SLOT(loadGame()));
 
     actionSaveGame = new QAction(tr("&Save Game"), this);
     actionSaveGame->setIcon(QIcon("icons/filesave.png"));
     actionSaveGame->setShortcut(QKeySequence::Save);
     actionSaveGame->setStatusTip(tr("Save a game"));
+    actionSaveGame->setEnabled(MainWindow::isActiveBattle);
     //connect(actionSaveGame, SIGNAL(triggered()), this, SLOT(saveGame()));
 
     actionExitGame = new QAction(tr("E&xit Game"), this);
     actionExitGame->setIcon(QIcon("icons/exit.png"));
     actionExitGame->setShortcut(tr("Ctrl+X"));
     actionExitGame->setStatusTip(tr("Exit the game"));
+    actionExitGame->setEnabled(MainWindow::isActiveBattle && MainWindow::isPlayerTurn);
     connect(actionExitGame, SIGNAL(triggered()), this, SLOT(close()));
 
     actionAttack = new QAction(tr("Ctrl+A"), this);
     actionAttack->setIcon(QIcon("icons/attack.png"));
     actionAttack->setShortcut(tr("Attack"));
     actionAttack->setStatusTip(tr("Attack opponent"));
+    actionAttack->setEnabled(MainWindow::isActiveBattle && MainWindow::isPlayerTurn);
     //connect(actionAttack, SIGNAL(triggered()), this, SLOT(attack()));
 
     actionMove = new QAction(tr("&Move"), this);
     actionMove->setShortcut(tr("Ctrl+M"));
     actionMove->setStatusTip(tr("Move unit"));
+    actionMove->setEnabled(MainWindow::isActiveBattle && MainWindow::isPlayerTurn);
     //connect(actionMove, SIGNAL(triggered()), this, SLOT(move()));
 
     actionAbout = new QAction(tr("&About"), this);
