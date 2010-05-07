@@ -10,7 +10,7 @@ GLWidget::GLWidget()
 {
     isPending = false;
     selectedBorder = 1;
-    startTimer( TIMER_INTERVAL );
+    startTimer( GL_TIMER_INTERVAL );
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -22,10 +22,10 @@ GLWidget::GLWidget()
 void GLWidget::unitTest_GenerateContent()
 {
     // Select a battle map.
-    map.fileName = "backgrounds/grass.png";
-    map.cellsTall = 6;
-    map.cellsWide = 9;
-    map.gridHeight = 0.58;
+    battleMap.fileName = "backgrounds/grass.png";
+    battleMap.cellsTall = 6;
+    battleMap.cellsWide = 9;
+    battleMap.gridHeight = 0.58;
 
     // Create a new unit (for gl debug purposes).
     unit[0].name = "Wizard";
@@ -117,7 +117,7 @@ void GLWidget::unitTest_GenerateContent()
     unit[5].attackRange = 3;
     unit[5].faceLeft = true;
 
-    for (int i = 6; i < MAX_UNITS; i++)
+    for (int i = 6; i < MAX_MAP_UNITS; i++)
     {
         // Tell OpenGL whether or not the unit exists.
         unit[i].status = NO_UNIT;
@@ -138,7 +138,7 @@ void GLWidget::initializeGL()
     initGrid();
 
     // Load a background image (debug).
-    bkImage.load(map.fileName);
+    bkImage.load(battleMap.fileName);
     bkImage = bkImage.scaled(GLWidget::width(), GLWidget::height(), Qt::KeepAspectRatio, Qt::SmoothTransformation );
     glBkImage = QGLWidget::convertToGLFormat(bkImage);
 
@@ -165,13 +165,13 @@ void GLWidget::initGrid()
     {
         for (int j = 0; j < MAX_GRID_DIMENSION; j++)
         {
-            mapGrid[i][j].isUnit = false;
-            mapGrid[i][j].isSelected = false;
+            battleMap.grid[i][j].isUnit = false;
+            battleMap.grid[i][j].isSelected = false;
 
-            mapGrid[i][j].cellWidth = fullWidth / map.cellsWide;
-            mapGrid[i][j].cellHeight = fullHeight / map.cellsTall;
-            mapGrid[i][j].bottomEdge = i * cellHeight;
-            mapGrid[i][j].leftEdge = j * cellWidth;
+            battleMap.grid[i][j].cellWidth = fullWidth / battleMap.cellsWide;
+            battleMap.grid[i][j].cellHeight = fullHeight / battleMap.cellsTall;
+            battleMap.grid[i][j].bottomEdge = i * cellHeight;
+            battleMap.grid[i][j].leftEdge = j * cellWidth;
         }
     }
 }
@@ -184,24 +184,27 @@ void GLWidget::initGrid()
 ///////////////////////////////////////////////////////////////////////////////
 void GLWidget::paintGL()
 {
-    for (int i = 0; i < MAX_UNITS; i++)
+    if (!isPending)
     {
-        // Update the action time (unitTest).
-        if (unit[i].actionTime >= 100)
+        for (int i = 0; i < MAX_MAP_UNITS; i++)
         {
-            if (unit[i].actionTime == 100)
+            // Update the action time (unitTest).
+            if (unit[i].actionTime >= 100)
             {
-                // The unit is ready to go, so pause the game.
-                isPending = true;
-                mapGrid[unit[i].hLocation][unit[i].vLocation].isPending = true;
-                unit[i].isPending = true;
-                break;
-            }
+                if (unit[i].actionTime == 100)
+                {
+                    // The unit is ready to go, so pause the game.
+                    isPending = true;
+                    battleMap.grid[unit[i].hLocation][unit[i].vLocation].unit.isPending = true;
+                    unit[i].isPending = true;
+                    break;
+                }
 
-            // Reset the action time.
-            unit[i].actionTime = 0;
+                // Reset the action time.
+                unit[i].actionTime = 0;
+            }
+            unit[i].actionTime += 0.005 * unit[i].actionRate;
         }
-        unit[i].actionTime += 0.005 * unit[i].actionRate;
     }
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -210,26 +213,26 @@ void GLWidget::paintGL()
     // Draw the background.
     glDrawPixels(glBkImage.width(), glBkImage.height(), GL_RGBA, GL_UNSIGNED_BYTE, glBkImage.bits());
     
-    for (int i = 0; i < map.cellsTall; i++)
+    for (int i = 0; i < battleMap.cellsTall; i++)
     {
-        for (int j = 0; j < map.cellsWide; j++)
+        for (int j = 0; j < battleMap.cellsWide; j++)
         {
             // Draw the grid.
             drawGridBox(i, j);
 
             // Assume no unit at the beginning.
-            mapGrid[i][j].isUnit = false;
+            battleMap.grid[i][j].isUnit = false;
         }
     }
 
-    for (int i = 0; i < MAX_UNITS; i++)
+    for (int i = 0; i < MAX_MAP_UNITS; i++)
     {
         // Draw the units.
         updateUnit(unit[i]);
 
         // Make sure the map is up to date.
-        mapGrid[unit[i].vLocation][unit[i].hLocation].unit = unit[i];
-        mapGrid[unit[i].vLocation][unit[i].hLocation].isUnit = true;
+        battleMap.grid[unit[i].vLocation][unit[i].hLocation].unit = unit[i];
+        battleMap.grid[unit[i].vLocation][unit[i].hLocation].isUnit = true;
 
         if (unit[i].isPending)
         {
@@ -287,11 +290,11 @@ void GLWidget::paintGL()
         }
     }
 
-    for (int i = 0; i < map.cellsTall; i++)
+    for (int i = 0; i < battleMap.cellsTall; i++)
     {
-        for (int j = 0; j < map.cellsWide; j++)
+        for (int j = 0; j < battleMap.cellsWide; j++)
         {
-            if (mapGrid[i][j].isSelected && mapGrid[i][j].isUnit)
+            if (battleMap.grid[i][j].isSelected && battleMap.grid[i][j].isUnit)
             {
                 // Draw information header.
                 glColor4f( 0.2f, 0.0f, 0.0f, 0.8f );
@@ -310,35 +313,35 @@ void GLWidget::paintGL()
                 // Unit name.
                 QFont nameFont = GLWidget::font();
                 nameFont.setBold(true);
-                renderText (GLWidget::width() - 250, vLoc, 0.0, mapGrid[i][j].unit.name, nameFont);
+                renderText (GLWidget::width() - 250, vLoc, 0.0, battleMap.grid[i][j].unit.name, nameFont);
                 vLoc -= 15;
 
                 // Unit hit points.
-                itoa(mapGrid[i][j].unit.hitPoints, tmpString, 10);
+                itoa(battleMap.grid[i][j].unit.hitPoints, tmpString, 10);
                 displayString = "Hit Points: ";
                 displayString.append(tmpString);
                 displayString.append(" / ");
-                itoa(mapGrid[i][j].unit.totalHitPoints, tmpString, 10);
+                itoa(battleMap.grid[i][j].unit.totalHitPoints, tmpString, 10);
                 displayString.append(tmpString);
                 renderText (GLWidget::width() - 250, vLoc, 0.0, displayString.c_str());
                 vLoc -= 15;
 
                 // Unit attack power.
-                itoa(mapGrid[i][j].unit.attackPower, tmpString, 10);
+                itoa(battleMap.grid[i][j].unit.attackPower, tmpString, 10);
                 displayString = "Attack Power: ";
                 displayString.append(tmpString);
                 renderText (GLWidget::width() - 250, vLoc, 0.0, displayString.c_str());
                 vLoc -= 15;
 
                 // Unit attack range.
-                itoa(mapGrid[i][j].unit.attackRange, tmpString, 10);
+                itoa(battleMap.grid[i][j].unit.attackRange, tmpString, 10);
                 displayString = "Attack Range: ";
                 displayString.append(tmpString);
                 renderText (GLWidget::width() - 250, vLoc, 0.0, displayString.c_str());
                 vLoc -= 15;
 
                 // Unit action time.
-                itoa(mapGrid[i][j].unit.actionTime, tmpString, 10);
+                itoa(battleMap.grid[i][j].unit.actionTime, tmpString, 10);
                 displayString = "Action Time: ";
                 displayString.append(tmpString);
                 displayString.append("%");
@@ -359,9 +362,9 @@ void GLWidget::paintGL()
 ///////////////////////////////////////////////////////////////////////////////
 bool GLWidget::isGridBoxSelected(int i, int j)
 {
-    if (mouseClick.hLoc > mapGrid[i][j].leftEdge && mouseClick.hLoc < mapGrid[i][j].leftEdge + cellWidth)
+    if (mouseClick.hLoc > battleMap.grid[i][j].leftEdge && mouseClick.hLoc < battleMap.grid[i][j].leftEdge + cellWidth)
     {
-        if (mouseClick.vLoc > mapGrid[i][j].bottomEdge && mouseClick.vLoc < mapGrid[i][j].bottomEdge + cellHeight)
+        if (mouseClick.vLoc > battleMap.grid[i][j].bottomEdge && mouseClick.vLoc < battleMap.grid[i][j].bottomEdge + cellHeight)
         {
             return (true);
         }
@@ -387,11 +390,11 @@ bool GLWidget::isGridBoxSelected(int i, int j)
 bool GLWidget::drawGridBox(int i, int j)
 {
     // Find out whether or not the current grid is selected.
-    mapGrid[i][j].isSelected = isGridBoxSelected(i, j);
+    battleMap.grid[i][j].isSelected = isGridBoxSelected(i, j);
 
     // Cell border style.
     int padding = 3;
-    if (mapGrid[i][j].isSelected)
+    if (battleMap.grid[i][j].isSelected)
     {
         if( selectedBorder == 2 )   selectedBorder = 1;
         else                        selectedBorder = 2;
@@ -404,21 +407,21 @@ bool GLWidget::drawGridBox(int i, int j)
         glColor4f( 0.4f, 0.4f, 0.4f, 0.8f );
     }
 
-    if (mapGrid[i][j].unit.isPending)
+    if (battleMap.grid[i][j].unit.isPending)
     {
         glColor4f( 0.0f, 0.0f, 0.2f, 0.8f );
     }
 
     // Define corner locations (without perspective).
     point ulLoc, urLoc, blLoc, brLoc;
-    blLoc.hLoc = mapGrid[i][j].leftEdge + padding;
-    blLoc.vLoc = mapGrid[i][j].bottomEdge + padding;
-    brLoc.hLoc = mapGrid[i][j].leftEdge + cellWidth - padding;
-    brLoc.vLoc = mapGrid[i][j].bottomEdge + padding;
-    ulLoc.hLoc = mapGrid[i][j].leftEdge + padding;
-    ulLoc.vLoc = mapGrid[i][j].bottomEdge + cellHeight - padding;
-    urLoc.hLoc = mapGrid[i][j].leftEdge + cellWidth - padding;
-    urLoc.vLoc = mapGrid[i][j].bottomEdge + cellHeight - padding;
+    blLoc.hLoc = battleMap.grid[i][j].leftEdge + padding;
+    blLoc.vLoc = battleMap.grid[i][j].bottomEdge + padding;
+    brLoc.hLoc = battleMap.grid[i][j].leftEdge + cellWidth - padding;
+    brLoc.vLoc = battleMap.grid[i][j].bottomEdge + padding;
+    ulLoc.hLoc = battleMap.grid[i][j].leftEdge + padding;
+    ulLoc.vLoc = battleMap.grid[i][j].bottomEdge + cellHeight - padding;
+    urLoc.hLoc = battleMap.grid[i][j].leftEdge + cellWidth - padding;
+    urLoc.vLoc = battleMap.grid[i][j].bottomEdge + cellHeight - padding;
 
     glRotatef(-5, 1.0, 0.0, 0.0);
     glBegin(GL_LINES);
@@ -621,10 +624,10 @@ void GLWidget::resizeGL(int width, int height)
 
     // (Re)Calculate the OpenGL object dimensions.
     fullWidth = width;
-    fullHeight = height * map.gridHeight;
-    statusWidth = (fullWidth / map.cellsWide) * 0.1f;
-    cellWidth = fullWidth / map.cellsWide;
-    cellHeight = fullHeight / map.cellsTall;
+    fullHeight = height * battleMap.gridHeight;
+    statusWidth = (fullWidth / battleMap.cellsWide) * 0.1f;
+    cellWidth = fullWidth / battleMap.cellsWide;
+    cellHeight = fullHeight / battleMap.cellsTall;
 
     mouseClick.hLoc = 0;
     mouseClick.vLoc = 0;
@@ -644,7 +647,7 @@ void GLWidget::resizeGL(int width, int height)
     updateGL();
 
     // Reload and resize the background image.
-    bkImage.load(map.fileName);
+    bkImage.load(battleMap.fileName);
     bkImage = bkImage.scaled(GLWidget::width(), GLWidget::height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
     glBkImage = QGLWidget::convertToGLFormat(bkImage);
 }
@@ -670,7 +673,7 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
 {
     // Proces mouse events for rotate/move inside 3D scene
     mouseClick.hLoc = event->x();
-    mouseClick.vLoc = (fullHeight / map.gridHeight) - event->y();
+    mouseClick.vLoc = (fullHeight / battleMap.gridHeight) - event->y();
 }
 
 void GLWidget::mouseMoveEvent(QMouseEvent *event)

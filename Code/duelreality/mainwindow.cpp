@@ -6,11 +6,9 @@
 #include "newgamewizard.h"
 #include "mechanics.h"
 
-
 // Set initial conditions of public static variables
 bool MainWindow::isActiveBattle = false;
 bool MainWindow::isPlayerTurn = false;
-
 
 MainWindow::MainWindow()
 {
