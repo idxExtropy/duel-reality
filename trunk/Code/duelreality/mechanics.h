@@ -5,7 +5,7 @@
 #include <QWidget>
 #include <QTimer>
 #include <QString>
-#include "glwidget.h"
+#include "GLWidget.h"
 
 class Unit;
 class test_db;
@@ -23,26 +23,26 @@ public:
     void startBattle();
 
 signals:
-// signalP1wins();
-// signalP2wins();
-void signalSwitchPlayer();
-// signalMoveDone();
-// signalAttackDone();
-// signalError();
-// signalStartAI();
-void signalBattleStart();
+ void signalP1wins();
+ void signalP2wins();
+ void signalSwitchPlayer();
+ void signalMoveDone();
+ void signalAttackDone();
+ void signalError();
+ void signalStartAI();
+ void signalBattleStart();
 
 
 public slots:
- //void move(unit *a, int x, int y);
- //void attack(unit *a, int x int y);
+ void move(Unit *Focus, int x, int y);
+ //void attack();
  //void endTurn(int player);
 
 
 private:
 //    void move(Unit a, int targetx, int targety);
 //    bool isValidMove(Unit a, int targetx, int targety);
-//    bool isOccupied(int x, int y);
+   bool isOccupied(int x, int y);
 //    bool isSufficientAP(Unit a);
 //
    int nextPlayer() {return iNextplayer;}
@@ -52,7 +52,7 @@ private:
 //    //void startTurn(Unit team[4]);
 //    void endTurn();
 //    int isGameOver(Unit a[4]);
-//    Unit *UnitPointer;
+    Unit *UnitPointer;
     bool gamerunning;
     int iNextplayer;
     bool battleRunning;

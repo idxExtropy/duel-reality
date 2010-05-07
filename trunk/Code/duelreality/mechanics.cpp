@@ -3,6 +3,7 @@
 #define PLAYER1 1
 
 
+
 mechanics::mechanics(QObject *parent) :
     QObject(parent)
 {
@@ -33,17 +34,17 @@ void mechanics::startBattle()
 
 
 //
-//void mechanics::move(Unit a, int targetx, int targety)
-//{
-//    UnitPointer=new Unit;
-//    *UnitPointer = a;
-//        if(isValidMove(a, targetx, targety))
-//        {
-//         a.hLocation=targetx;
-//        a.vLocation=targety;
-//        }
-//
-//}
+void mechanics::move(Unit *UnitPointer, int targetx, int targety)
+{
+    Unit a = *UnitPointer;
+
+      //  if(isValidMove(a, targetx, targety))
+        //{
+        a.hLocation=targetx;
+        a.vLocation=targety;
+        //}
+
+}
 //
 //bool mechanics::isValidMove(Unit a, int targetx, int targety)
 //{
@@ -70,7 +71,7 @@ void mechanics::startBattle()
 //bool mechanics::isOccupied(int x, int y)
 //{
 //
-//        if (mapGrid[x][y].isunit)
+//    if (GLWidget::mapGrid[x][y].isunit)
 //        {
 //        return (true);
 //        }
@@ -91,7 +92,7 @@ void mechanics::startBattle()
 //Unit mechanics::getUnit(int x, int y, Unit *UnitRetreived)
 //{
 //   Unit Unit[4];
-//   if(1)//(mapGrid[x][y].isUnit)
+//   if(mechanics::isOccupied(x,y))
 //    {
 //        for(int i=0;i<=MAXTEAMS;i++)
 //        {
