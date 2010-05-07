@@ -49,22 +49,23 @@ private:
 
     // Modules from other team members
     QWidget     *centralWidget;
-    //Mechnics *mechanics;
-    //Database *db;
+    //Mechnics    *mechanics;
+    //Database    *db;
 
-    QSound  *soundBkgnd;
-    QSound  *soundBattleStart;
+    // Action sounds
+    QSound  *soundBkgnd;        // Played when not in battle
+    QSound  *soundBattleStart;  // Played at start of battle
 
     // Action items
-    QAction     *actionNewGame;
-    QAction     *actionLoadGame;
-    QAction     *actionSaveGame;
-    QAction     *actionExitGame;
-    QAction     *turnIndicator;
-    QAction     *actionAttack;
-    QAction     *actionMove;
-    QAction     *actionAbout;
-    QAction     *actionEndTurn;
+    QAction     *actionNewGame;     // Triggered to start new game
+    QAction     *actionLoadGame;    // Triggered to load new game
+    QAction     *actionSaveGame;    // Triggered to save game
+    QAction     *actionExitGame;    // Triggered to exit game
+    QAction     *turnIndicator;     // Indicates player turn (not implemented as an action)
+    QAction     *actionAttack;      // Triggered to attack opponent
+    QAction     *actionMove;        // Triggered to move unit
+    QAction     *actionAbout;       // Triggered to open About dialog
+    QAction     *actionEndTurn;     // Triggered to end user turn
 
     // Menu items
     QMenu       *menuGame;      // Game menu
