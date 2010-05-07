@@ -10,6 +10,9 @@
 bool MainWindow::isActiveBattle = false;
 bool MainWindow::isPlayerTurn = false;
 
+// Global classes.
+GLWidget *glWidget;
+
 MainWindow::MainWindow()
 {
     // Set central widget

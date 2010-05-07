@@ -22,6 +22,7 @@ public:
     GLWidget();
     void    unitTest_GenerateContent();
     Map     battleMap;
+    Unit    unit[MAX_MAP_UNITS];
 
 protected:
     // Functions.
@@ -40,7 +41,6 @@ protected:
     GLfloat statusWidth, fullWidth, fullHeight, cellWidth, cellHeight;
     QImage  bkImage, glBkImage;
     point   mouseClick;
-    Unit    unit[MAX_MAP_UNITS];
     
     // Effect information.
     bool isPending;
