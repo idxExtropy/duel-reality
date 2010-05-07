@@ -64,7 +64,6 @@ private:
     void createToolBars();
     void createStatusBar();
 
-    GLWidget *glWidget;
     //UserNameDialog *userNameDialog;
     //NewGameWizard   *newgamewizard;
 

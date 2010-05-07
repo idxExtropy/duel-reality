@@ -2,6 +2,8 @@
 #define MAXTEAMS 2
 #define PLAYER1 1
 
+// Global classes.
+extern GLWidget *glWidget;
 
 //constructor
 mechanics::mechanics(QObject *parent) :
