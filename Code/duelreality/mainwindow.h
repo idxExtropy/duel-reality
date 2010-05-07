@@ -11,6 +11,24 @@ class QMenu;
 //class UserNameDialog;
 class GLWidget;
 class NewGameWizard;
+class QPainter;
+
+/*
+class Indicator : public QWidget
+{
+    Q_OBJECT
+
+public:
+    Indicator();
+    ~Indicator();
+
+protected:
+    void paintEvent(QPaintEvent *);
+
+private slots:
+    void indicatorAsserted();
+};
+*/
 
 class MainWindow : public QMainWindow
 {
@@ -34,9 +52,14 @@ private slots:
     //void loadGame();
     //bool exitGame();
     //bool saveGame();
+    void setActiveBattleFlag();
+    void resetActiveBattleFlag();
+    void setPlayerTurnFlag();
+    void resetPlayerTurnFlag();
 
 private:
     void createActions();
+    //void createIndicators();
     void createMenus();
     void createToolBars();
     void createStatusBar();
@@ -56,6 +79,10 @@ private:
     QAction     *actionAttack;
     QAction     *actionMove;
     QAction     *actionAbout;
+    QAction     *actionEndTurn;
+
+    //Indicator   *turnIndicator;
+
     QWidget     *centralWidget;
     QMenu       *menuGame;
     QMenu       *menuHelp;
