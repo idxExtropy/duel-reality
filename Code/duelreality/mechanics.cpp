@@ -40,28 +40,30 @@ void mechanics::endBattle()
     setBattleRunning(false);
 }
 //////////////////////////////////////////////////////MOVE///////////////////////////////////////
+//////////////////////////////////////////////////////MOVE///////////////////////////////////////
 //Move Function, from Slot Move
 void mechanics::move(Unit *UnitPointer, int targetx, int targety)
 {
-    Unit a = *UnitPointer;
 
-        if(isValidMove(a, targetx, targety))
+
+        if(isValidMove(UnitPointer->actionPoints, UnitPointer->movementRate, UnitPointer->hLocation, UnitPointer->vLocation, targetx, targety))
         {
-        a.hLocation=targetx;
-        a.vLocation=targety;
+        UnitPointer->hLocation=targetx;
+        UnitPointer->vLocation=targety;
+        UnitPointer->actionPoints-=UnitPointer->movementRate;
         }
 
 }
 //Determines Whether a move is valid
-bool mechanics::isValidMove(Unit a, int targetx, int targety)
+bool mechanics::isValidMove(int actionpoints, int moverate, int hLoc, int vLoc,int targetx,int targety)
 {
-//if(!mechanics::isOccupied(targetx, targety))
-      //  {
-        if (isSufficientAP(a))
+if(!mechanics::isOccupied(targetx, targety))
         {
-                if((a.vLocation==targety)||(a.hLocation==targetx))
+        if (isSufficientAP(actionpoints, moverate))
+        {
+                if((vLoc==targety)||(hLoc==targetx))
                 {
-                        if(((abs(a.vLocation-targety))<=1)&&((abs(a.hLocation-targetx))<=1))
+                        if(((abs(vLoc-targety))<=1)&&((abs(hLoc-targetx))<=1))
                         {
                         return (true);
                         }
@@ -70,25 +72,26 @@ bool mechanics::isValidMove(Unit a, int targetx, int targety)
         }
         return (false);
 
-//}
-//return (false);
 }
-//
-// //Determines if a space is occupied
-//bool mechanics::isOccupied(int x, int y)
-//{
-//
-//    if (GLWidget::mapGrid[x][y].isunit)
-//        {
-//        return (true);
-//        }
-//        else return false;
-//}
-//
-//Returns whether Unit has wnough Action Points to Move
-bool mechanics::isSufficientAP(Unit a)
+return (false);
+}
+
+ //Determines if a space is occupied
+bool mechanics::isOccupied(int x, int y)  ///DOUBLECHECK
 {
-        if(a.actionPoints>=a.movementRate)
+
+    if (glWidget->battleMap.gridCell[x][y].isUnit)
+        {
+        return (true);
+        }
+       else return false;
+
+}
+
+//Returns whether Unit has wnough Action Points to Move/act
+bool mechanics::isSufficientAP(int a, int b)
+{
+        if(a>=b)
         {
         return true;
         }

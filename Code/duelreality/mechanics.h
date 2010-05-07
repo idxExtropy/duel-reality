@@ -9,7 +9,7 @@
 
 class Unit;
 class test_db;
-
+//class GLWidget;
 class mechanics : public QObject
 {
 Q_OBJECT
@@ -43,9 +43,9 @@ public slots:
 
 private:
 
-    bool isValidMove(Unit a, int targetx, int targety);
+    bool isValidMove(int actionpoints, int moverate, int hLoc, int vLoc,int targetx,int targety);
     bool isOccupied(int x, int y);
-    bool isSufficientAP(Unit a);
+    bool isSufficientAP(int a, int b);
    int nextPlayer() {return iNextplayer;}
    void setNextPlayer(int player){iNextplayer=player;}
    bool isUnitAt(int x, int y, Unit *UnitRetrieved);
