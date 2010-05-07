@@ -76,12 +76,11 @@ private:
     QAction     *actionLoadGame;
     QAction     *actionSaveGame;
     QAction     *actionExitGame;
+    QAction      *turnIndicator;
     QAction     *actionAttack;
     QAction     *actionMove;
     QAction     *actionAbout;
     QAction     *actionEndTurn;
-
-    //Indicator   *turnIndicator;
 
     QWidget     *centralWidget;
     QMenu       *menuGame;
