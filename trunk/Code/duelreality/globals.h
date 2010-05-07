@@ -1,7 +1,6 @@
 #ifndef GLOBALS_H
 #define GLOBALS_H
 
-
 /*---------------- I n c l u d e s ----------------*/
 #include <QList>
 #include <QString>
@@ -24,7 +23,9 @@ static const int    UNIT_DEAD = 1;      // Unit status (unit is dead)
 static const int    UNIT_OK = 2;        // Unit status (unit is alive)
 static const int    USER_UNIT = 1;      // Indicates unit is associated with user
 static const int    AI_UNIT = 2;        // Indicates unit is associated with AI
-
+static const int    MAX_MAP_UNITS = 10;
+static const int    GL_TIMER_INTERVAL = 100;
+static const int    MAX_GRID_DIMENSION = 20;
 
 /*---------------- C l a s s    d e c l a r a t i o n s ----------------*/
 
@@ -35,7 +36,6 @@ class Unit
 {
 public:
     QString name;               // Unit name
-    //string name;               // Unit name
     bool    faceLeft;           // Unit orientation
     int     vLocation;          // Unit vertical location
     int     hLocation;          // Unit horizontal location
@@ -57,6 +57,17 @@ public:
     int     isPending;
 };
 
+class gridBox
+{
+public:
+    Unit unit;
+    bool isUnit;
+    bool isSelected;
+    float cellWidth;
+    float cellHeight;
+    float leftEdge;
+    float bottomEdge;
+};
 
 class Map
 {
@@ -66,8 +77,9 @@ public:
     int     cellsWide;
     int     cellsTall;
     float   gridHeight; // Ratio of grid to header.
-};
 
+    gridBox  grid[MAX_GRID_DIMENSION][MAX_GRID_DIMENSION];
+};
 
 class Player
 {
@@ -84,7 +96,5 @@ public:
     int     experiencePoints;   // Player experience points
     Map   map;
 };
-
-
 
 #endif // GLOBALS_H

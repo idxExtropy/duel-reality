@@ -9,24 +9,6 @@
 
 using namespace std;
 
-static const int MAX_UNITS = 10;
-static const int TIMER_INTERVAL = 100;
-static const int MAX_GRID_DIMENSION = 100;
-
-class gridBox
-{
-public:
-    bool isUnit;
-    Unit unit;
-
-    bool isSelected;
-    bool isPending;
-    float cellWidth;
-    float cellHeight;
-    float leftEdge;
-    float bottomEdge;
-};
-
 class point
 {
 public:
@@ -38,9 +20,11 @@ class GLWidget : public QGLWidget
 {
 public:
     GLWidget();
-    void unitTest_GenerateContent();
+    void    unitTest_GenerateContent();
+    Map     battleMap;
 
 protected:
+    // Functions.
     void initializeGL();
     void paintGL();
     void mousePressEvent(QMouseEvent *event);
@@ -52,15 +36,13 @@ protected:
     bool isGridBoxSelected(int cellFromBottom, int cellFromLeft);
     void initGrid();
 
-    // Content data.
-    Unit    unit[MAX_UNITS];
-    Map     map;
+    // Content information.
     GLfloat statusWidth, fullWidth, fullHeight, cellWidth, cellHeight;
-    QImage bkImage, glBkImage;
-    point mouseClick;
-    gridBox mapGrid[MAX_GRID_DIMENSION][MAX_GRID_DIMENSION];
-
-    // Effect values.
+    QImage  bkImage, glBkImage;
+    point   mouseClick;
+    Unit    unit[MAX_MAP_UNITS];
+    
+    // Effect information.
     bool isPending;
     int selectedBorder;
 
