@@ -6,10 +6,6 @@
 #include "newgamewizard.h"
 #include "mechanics.h"
 
-// Set initial conditions of public static variables
-bool MainWindow::isActiveBattle = false;
-bool MainWindow::isPlayerTurn = false;
-
 // Global classes.
 GLWidget *glWidget;
 
@@ -30,19 +26,21 @@ MainWindow::MainWindow()
 
     // Create actions, menus, toolbars and status bars
     createActions();
-    //createIndicators();
     createMenus();
     createToolBars();
     createStatusBar();
+
+    // Create test actions & toolbars
+    createTestTools();
+
+    emit isBattleMode(false);
+    emit isGameCfgMode(true);
+    emit isUserTurn(false);
 
     // Initialize background sound
     soundBkgnd = new QSound("sounds/crazy.wav");
     soundBkgnd->setLoops(-1);
     soundBkgnd->play();
-
-    // Initialize dialogs
-    //userNameDialog = 0;
-    //newgamewizard = 0;
 
     // Set window icon
     setWindowIcon(QIcon("icons/logo.png"));
@@ -53,34 +51,59 @@ void MainWindow::closeEvent(QCloseEvent *event)
     event->accept();
 }
 
+
+void MainWindow::createTestTools()
+{
+    actionTestSignalBattleStart = new QAction(tr("&Battle Start Test Signal"), this);
+    actionTestSignalBattleStart->setIcon(QIcon("icons/basketball.png"));
+    connect(actionTestSignalBattleStart, SIGNAL(triggered()), this, SLOT(onBattleStart()));
+
+    actionTestSignalBattleEnd = new QAction(tr("&Battle End Test Signal"), this);
+    actionTestSignalBattleEnd->setIcon(QIcon("icons/skullandbones.png"));
+    connect(actionTestSignalBattleEnd, SIGNAL(triggered()), this, SLOT(onBattleEnd()));
+
+    actionTestSignalUserTurnStart = new QAction(tr("&User Turn Test Signal"), this);
+    actionTestSignalUserTurnStart->setIcon(QIcon("icons/babyboy.png"));
+    connect(actionTestSignalUserTurnStart, SIGNAL(triggered()), this, SLOT(onUserTurn()));
+
+    testToolBar = addToolBar(tr("&Test"));
+    testToolBar->setMovable(false);
+    testToolBar->addAction(actionTestSignalBattleStart);
+    testToolBar->addAction(actionTestSignalBattleEnd);
+    testToolBar->addAction(actionTestSignalUserTurnStart);
+}
+
+
 void MainWindow::createActions()
 {
     actionNewGame = new QAction(tr("&New Game"), this);
     actionNewGame->setIcon(QIcon("icons/filenew.png"));
     actionNewGame->setShortcut(QKeySequence::New);
     actionNewGame->setStatusTip(tr("Start a new game"));
-    actionNewGame->setEnabled(!MainWindow::isActiveBattle);
+    connect(this, SIGNAL(isGameCfgMode(bool)), actionNewGame, SLOT(setEnabled(bool)));
     connect(actionNewGame, SIGNAL(triggered()), this, SLOT(newGame()));
 
     actionLoadGame = new QAction(tr("&Load Game"), this);
     actionLoadGame->setIcon(QIcon("icons/fileopen.png"));
     actionLoadGame->setShortcut(tr("Ctrl+L"));
     actionLoadGame->setStatusTip(tr("Load a saved game"));
-    actionLoadGame->setEnabled(!MainWindow::isActiveBattle);
+    //actionLoadGame->setEnabled(!MainWindow::isActiveBattle);
+    connect(this, SIGNAL(isGameCfgMode(bool)), actionLoadGame, SLOT(setEnabled(bool)));
     //connect(actionLoadGame, SIGNAL(triggered()), this, SLOT(loadGame()));
 
     actionSaveGame = new QAction(tr("&Save Game"), this);
     actionSaveGame->setIcon(QIcon("icons/filesave.png"));
     actionSaveGame->setShortcut(QKeySequence::Save);
     actionSaveGame->setStatusTip(tr("Save a game"));
-    actionSaveGame->setEnabled(MainWindow::isActiveBattle);
+    //actionSaveGame->setEnabled(MainWindow::isActiveBattle);
+    connect(this, SIGNAL(isBattleMode(bool)), actionSaveGame, SLOT(setEnabled(bool)));
     //connect(actionSaveGame, SIGNAL(triggered()), this, SLOT(saveGame()));
 
     actionExitGame = new QAction(tr("E&xit Game"), this);
     actionExitGame->setIcon(QIcon("icons/exit.png"));
     actionExitGame->setShortcut(tr("Ctrl+X"));
     actionExitGame->setStatusTip(tr("Exit the game"));
-    actionExitGame->setEnabled(MainWindow::isActiveBattle && MainWindow::isPlayerTurn);
+    //actionExitGame->setEnabled(MainWindow::isActiveBattle && MainWindow::isPlayerTurn);
     connect(actionExitGame, SIGNAL(triggered()), this, SLOT(close()));
 
     actionAbout = new QAction(tr("&About"), this);
@@ -90,40 +113,62 @@ void MainWindow::createActions()
 
     turnIndicator = new QAction(tr("&Turn Signal"), this);
     turnIndicator->setIcon(QIcon("icons/redcircle.png"));
-    turnIndicator->setStatusTip(tr("Not your turn"));
+    turnIndicator->setStatusTip(tr("Computer's turn to play"));
 
     actionAttack = new QAction(tr("&Attack"), this);
     actionAttack->setIcon(QIcon("icons/attack.png"));
     actionAttack->setShortcut(tr("Ctrl+A"));
     actionAttack->setStatusTip(tr("Attack opponent"));
-    actionAttack->setEnabled(MainWindow::isActiveBattle && MainWindow::isPlayerTurn);
+    connect(this, SIGNAL(isBattleMode(bool)), actionAttack, SLOT(setEnabled(bool)));
+    //actionAttack->setEnabled(MainWindow::isActiveBattle && MainWindow::isPlayerTurn);
     //connect(actionAttack, SIGNAL(triggered()), this, SLOT(attack()));
 
     actionMove = new QAction(tr("&Move"), this);
     actionMove->setIcon(QIcon("icons/rightarrow.png"));
     actionMove->setShortcut(tr("Ctrl+M"));
     actionMove->setStatusTip(tr("Move unit"));
-    actionMove->setEnabled(MainWindow::isActiveBattle && MainWindow::isPlayerTurn);
+    connect(this, SIGNAL(isBattleMode(bool)), actionMove, SLOT(setEnabled(bool)));
+    //actionMove->setEnabled(MainWindow::isActiveBattle && MainWindow::isPlayerTurn);
     //connect(actionMove, SIGNAL(triggered()), this, SLOT(move()));
 
     actionEndTurn = new QAction(tr("&End Turn"), this);
     actionEndTurn->setIcon(QIcon("icons/endturn.png"));
     actionEndTurn->setShortcut(tr("Ctrl+T"));
     actionEndTurn->setStatusTip(tr("End Turn"));
-    actionEndTurn->setEnabled(MainWindow::isActiveBattle && MainWindow::isPlayerTurn);
+    connect(this, SIGNAL(isBattleMode(bool)), actionEndTurn, SLOT(setEnabled(bool)));
+    connect(actionEndTurn, SIGNAL(triggered()), this, SLOT(endTurnClicked()));
+    //actionEndTurn->setEnabled(MainWindow::isActiveBattle && MainWindow::isPlayerTurn);
 }
 
-/*
-void MainWindow::createIndicators()
+void MainWindow::onBattleStart()
 {
-    turnIndicator = new QLabel(this);
-    turnIndicator->setObjectName(QString::fromUtf8("turnIndicator"));
-    //spriteImage->setMinimumSize(QSize(71, 101));
-    //spriteImage->setMaximumSize(QSize(71, 101));
-    //spriteImage->setScaledContents(true);
-    turnIndicator->setPixmap(QPixmap(QString::fromUtf8("sprites/redcircle.png")));
+    emit isBattleMode(true);
+    emit isGameCfgMode(false);
 }
-*/
+
+
+void MainWindow::onBattleEnd()
+{
+    emit isBattleMode(false);
+    emit isGameCfgMode(true);
+}
+
+
+void MainWindow::onUserTurn()
+{
+    turnIndicator->setStatusTip(tr("Your turn to play"));
+    turnIndicator->setIcon(QIcon("icons/greencircle.png"));
+    emit isUserTurn(true);
+}
+
+
+void MainWindow::endTurnClicked()
+{
+    turnIndicator->setStatusTip(tr("Computer's turn to play"));
+    turnIndicator->setIcon(QIcon("icons/redcircle.png"));
+    emit isUserTurn(false);
+    emit signalUserTurnEnd();
+}
 
 void MainWindow::createMenus()
 {
@@ -170,7 +215,7 @@ void MainWindow::newGame()
         soundBattleStart = new QSound("sounds/trumpet.wav");
         soundBattleStart->play();
 
-        emit newGameComplete();
+        emit signalGameCfgComplete();
     }
     delete newgamewizard;
 }
@@ -184,26 +229,4 @@ void MainWindow::about()
                           "It is a design project for the "
                           "Software Engineering course, 16.553, "
                           "at University of Massachusetss, Lowell."));
-}
-
-
-void MainWindow::setActiveBattleFlag()
-{
-    MainWindow::isActiveBattle = true;
-}
-
-
-void MainWindow::resetActiveBattleFlag()
-{
-    MainWindow::isActiveBattle = false;
-}
-
-void MainWindow::setPlayerTurnFlag()
-{
-    MainWindow::isPlayerTurn = true;
-}
-
-void MainWindow::resetPlayerTurnFlag()
-{
-    MainWindow::isPlayerTurn = false;
 }
