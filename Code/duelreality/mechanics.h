@@ -21,41 +21,44 @@ public:
     bool isBattle(); //{return battleRunning;}
     void setBattleRunning(bool battle); //{battleRunning = battle;}
     void startBattle();
+    void endBattle();
 
 signals:
- void signalP1wins();
- void signalP2wins();
- void signalSwitchPlayer();
- void signalMoveDone();
- void signalAttackDone();
- void signalError();
- void signalStartAI();
- void signalBattleStart();
+ void signalP1wins();   //signal emited from isGameOVer if P1 Wins
+ void signalP2wins();   //signal emited if P2 Wins
+ void signalSwitchPlayer(); //signal emitted when player switches
+ void signalMoveDone();     //signal emitted when move is complete
+ void signalAttackDone();   //signal emitted when attack is complete
+ void signalError();        //signal emitted on error
+ void signalStartAI();      //signal when AI moves
+ void signalBattleStart();  //signal when battle starts
+
 
 
 public slots:
- void move(Unit *Focus, int x, int y);
- //void attack();
- //void endTurn(int player);
+ void move(Unit *Focus, int x, int y);   //slot for move
+ //void attack(Unit *Focus, Unit *Target);   //slot for attack
+ //void endTurn(int player);            //slot
 
 
 private:
-//    void move(Unit a, int targetx, int targety);
-//    bool isValidMove(Unit a, int targetx, int targety);
-   bool isOccupied(int x, int y);
-//    bool isSufficientAP(Unit a);
-//
+
+    bool isValidMove(Unit a, int targetx, int targety);
+    bool isOccupied(int x, int y);
+    bool isSufficientAP(Unit a);
    int nextPlayer() {return iNextplayer;}
    void setNextPlayer(int player){iNextplayer=player;}
-//    Unit getUnit(int x, int y, Unit *UnitRetrieved);
-//  //  Unit setFocus(int x, int y);
-//    //void startTurn(Unit team[4]);
-//    void endTurn();
-//    int isGameOver(Unit a[4]);
+   bool isUnitAt(int x, int y, Unit *UnitRetrieved);
+   //  //  Unit setFocus(int x, int y);
+   //    //void startTurn(Unit team[4]);
+   //    void endTurn();
+    int isGameOver();
     Unit *UnitPointer;
     bool gamerunning;
     int iNextplayer;
     bool battleRunning;
+    void startAI();
+
 
 };
 
