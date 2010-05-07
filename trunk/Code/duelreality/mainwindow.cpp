@@ -4,12 +4,37 @@
 #include "glwidget.h"
 //#include "usernamedialog.h"
 #include "newgamewizard.h"
+#include "mechanics.h"
 
 
 // Set initial conditions of public static variables
 bool MainWindow::isActiveBattle = false;
 bool MainWindow::isPlayerTurn = false;
 
+/*
+Indicator::Indicator()
+{
+}
+
+Indicator::~Indicator()
+{
+}
+
+void Indicator::indicatorAsserted()
+{
+    this->update();
+}
+
+
+void Indicator::paintEvent(QPaintEvent *)
+{
+    QPainter painter(this);
+    painter.setRenderHint(QPainter::Antialiasing, true);
+    painter.setPen(QPen(Qt::black, 12, Qt::DashDotDotLine, Qt::RoundCap));
+    painter.setBrush(QBrush(Qt::green, Qt::SolidPattern));
+    painter.drawEllipse(80, 80, 400, 240);
+}
+*/
 
 MainWindow::MainWindow()
 {
@@ -28,6 +53,7 @@ MainWindow::MainWindow()
 
     // Create actions, menus, toolbars and status bars
     createActions();
+    //createIndicators();
     createMenus();
     createToolBars();
     createStatusBar();
@@ -80,23 +106,30 @@ void MainWindow::createActions()
     actionExitGame->setEnabled(MainWindow::isActiveBattle && MainWindow::isPlayerTurn);
     connect(actionExitGame, SIGNAL(triggered()), this, SLOT(close()));
 
+    actionAbout = new QAction(tr("&About"), this);
+    //actionAbout->setShortcut();
+    actionAbout->setStatusTip(tr("Provides information about the game"));
+    connect(actionAbout, SIGNAL(triggered()), this, SLOT(about()));
+
     actionAttack = new QAction(tr("Ctrl+A"), this);
     actionAttack->setIcon(QIcon("icons/attack.png"));
-    actionAttack->setShortcut(tr("Attack"));
+    actionAttack->setShortcut(tr("Ctrl+A"));
     actionAttack->setStatusTip(tr("Attack opponent"));
     actionAttack->setEnabled(MainWindow::isActiveBattle && MainWindow::isPlayerTurn);
     //connect(actionAttack, SIGNAL(triggered()), this, SLOT(attack()));
 
     actionMove = new QAction(tr("&Move"), this);
+    actionMove->setIcon(QIcon("icons/rightarrow.png"));
     actionMove->setShortcut(tr("Ctrl+M"));
     actionMove->setStatusTip(tr("Move unit"));
     actionMove->setEnabled(MainWindow::isActiveBattle && MainWindow::isPlayerTurn);
     //connect(actionMove, SIGNAL(triggered()), this, SLOT(move()));
 
-    actionAbout = new QAction(tr("&About"), this);
-    //actionAbout->setShortcut();
-    actionAbout->setStatusTip(tr("Provides information about the game"));
-    connect(actionAbout, SIGNAL(triggered()), this, SLOT(about()));
+    actionEndTurn = new QAction(tr("&End Turn"), this);
+    actionEndTurn->setIcon(QIcon("icons/endturn.png"));
+    actionEndTurn->setShortcut(tr("Ctrl+T"));
+    actionEndTurn->setStatusTip(tr("End Turn"));
+    actionEndTurn->setEnabled(MainWindow::isActiveBattle && MainWindow::isPlayerTurn);
 }
 
 void MainWindow::createMenus()
@@ -122,8 +155,10 @@ void MainWindow::createToolBars()
 
     actionToolBar = addToolBar(tr("&Action"));
     actionToolBar->setMovable(false);
+    //actionToolBar->addWidget(turnIndicator);
     actionToolBar->addAction(actionAttack);
     actionToolBar->addAction(actionMove);
+    actionToolBar->addAction(actionEndTurn);
 }
 
 void MainWindow::createStatusBar()
@@ -156,4 +191,26 @@ void MainWindow::about()
                           "It is a design project for the "
                           "Software Engineering course, 16.553, "
                           "at University of Massachusetss, Lowell."));
+}
+
+
+void MainWindow::setActiveBattleFlag()
+{
+    MainWindow::isActiveBattle = true;
+}
+
+
+void MainWindow::resetActiveBattleFlag()
+{
+    MainWindow::isActiveBattle = false;
+}
+
+void MainWindow::setPlayerTurnFlag()
+{
+    MainWindow::isPlayerTurn = true;
+}
+
+void MainWindow::resetPlayerTurnFlag()
+{
+    MainWindow::isPlayerTurn = false;
 }
