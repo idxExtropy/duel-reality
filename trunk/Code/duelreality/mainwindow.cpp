@@ -11,30 +11,6 @@
 bool MainWindow::isActiveBattle = false;
 bool MainWindow::isPlayerTurn = false;
 
-/*
-Indicator::Indicator()
-{
-}
-
-Indicator::~Indicator()
-{
-}
-
-void Indicator::indicatorAsserted()
-{
-    this->update();
-}
-
-
-void Indicator::paintEvent(QPaintEvent *)
-{
-    QPainter painter(this);
-    painter.setRenderHint(QPainter::Antialiasing, true);
-    painter.setPen(QPen(Qt::black, 12, Qt::DashDotDotLine, Qt::RoundCap));
-    painter.setBrush(QBrush(Qt::green, Qt::SolidPattern));
-    painter.drawEllipse(80, 80, 400, 240);
-}
-*/
 
 MainWindow::MainWindow()
 {
@@ -111,7 +87,11 @@ void MainWindow::createActions()
     actionAbout->setStatusTip(tr("Provides information about the game"));
     connect(actionAbout, SIGNAL(triggered()), this, SLOT(about()));
 
-    actionAttack = new QAction(tr("Ctrl+A"), this);
+    turnIndicator = new QAction(tr("&Turn Signal"), this);
+    turnIndicator->setIcon(QIcon("icons/redcircle.png"));
+    turnIndicator->setStatusTip(tr("Not your turn"));
+
+    actionAttack = new QAction(tr("&Attack"), this);
     actionAttack->setIcon(QIcon("icons/attack.png"));
     actionAttack->setShortcut(tr("Ctrl+A"));
     actionAttack->setStatusTip(tr("Attack opponent"));
@@ -131,6 +111,18 @@ void MainWindow::createActions()
     actionEndTurn->setStatusTip(tr("End Turn"));
     actionEndTurn->setEnabled(MainWindow::isActiveBattle && MainWindow::isPlayerTurn);
 }
+
+/*
+void MainWindow::createIndicators()
+{
+    turnIndicator = new QLabel(this);
+    turnIndicator->setObjectName(QString::fromUtf8("turnIndicator"));
+    //spriteImage->setMinimumSize(QSize(71, 101));
+    //spriteImage->setMaximumSize(QSize(71, 101));
+    //spriteImage->setScaledContents(true);
+    turnIndicator->setPixmap(QPixmap(QString::fromUtf8("sprites/redcircle.png")));
+}
+*/
 
 void MainWindow::createMenus()
 {
@@ -155,7 +147,7 @@ void MainWindow::createToolBars()
 
     actionToolBar = addToolBar(tr("&Action"));
     actionToolBar->setMovable(false);
-    //actionToolBar->addWidget(turnIndicator);
+    actionToolBar->addAction(turnIndicator);
     actionToolBar->addAction(actionAttack);
     actionToolBar->addAction(actionMove);
     actionToolBar->addAction(actionEndTurn);
