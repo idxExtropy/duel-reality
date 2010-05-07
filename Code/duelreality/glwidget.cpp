@@ -165,13 +165,13 @@ void GLWidget::initGrid()
     {
         for (int j = 0; j < MAX_GRID_DIMENSION; j++)
         {
-            battleMap.grid[i][j].isUnit = false;
-            battleMap.grid[i][j].isSelected = false;
+            battleMap.gridCell[i][j].isUnit = false;
+            battleMap.gridCell[i][j].isSelected = false;
 
-            battleMap.grid[i][j].cellWidth = fullWidth / battleMap.cellsWide;
-            battleMap.grid[i][j].cellHeight = fullHeight / battleMap.cellsTall;
-            battleMap.grid[i][j].bottomEdge = i * cellHeight;
-            battleMap.grid[i][j].leftEdge = j * cellWidth;
+            battleMap.gridCell[i][j].cellWidth = fullWidth / battleMap.cellsWide;
+            battleMap.gridCell[i][j].cellHeight = fullHeight / battleMap.cellsTall;
+            battleMap.gridCell[i][j].bottomEdge = i * cellHeight;
+            battleMap.gridCell[i][j].leftEdge = j * cellWidth;
         }
     }
 }
@@ -195,7 +195,7 @@ void GLWidget::paintGL()
                 {
                     // The unit is ready to go, so pause the game.
                     isPending = true;
-                    battleMap.grid[unit[i].hLocation][unit[i].vLocation].unit.isPending = true;
+                    battleMap.gridCell[unit[i].hLocation][unit[i].vLocation].unit.isPending = true;
                     unit[i].isPending = true;
                     break;
                 }
@@ -221,7 +221,7 @@ void GLWidget::paintGL()
             drawGridBox(i, j);
 
             // Assume no unit at the beginning.
-            battleMap.grid[i][j].isUnit = false;
+            battleMap.gridCell[i][j].isUnit = false;
         }
     }
 
@@ -231,8 +231,8 @@ void GLWidget::paintGL()
         updateUnit(unit[i]);
 
         // Make sure the map is up to date.
-        battleMap.grid[unit[i].vLocation][unit[i].hLocation].unit = unit[i];
-        battleMap.grid[unit[i].vLocation][unit[i].hLocation].isUnit = true;
+        battleMap.gridCell[unit[i].vLocation][unit[i].hLocation].unit = unit[i];
+        battleMap.gridCell[unit[i].vLocation][unit[i].hLocation].isUnit = true;
 
         if (unit[i].isPending)
         {
@@ -294,7 +294,7 @@ void GLWidget::paintGL()
     {
         for (int j = 0; j < battleMap.cellsWide; j++)
         {
-            if (battleMap.grid[i][j].isSelected && battleMap.grid[i][j].isUnit)
+            if (battleMap.gridCell[i][j].isSelected && battleMap.gridCell[i][j].isUnit)
             {
                 // Draw information header.
                 glColor4f( 0.2f, 0.0f, 0.0f, 0.8f );
@@ -313,35 +313,35 @@ void GLWidget::paintGL()
                 // Unit name.
                 QFont nameFont = GLWidget::font();
                 nameFont.setBold(true);
-                renderText (GLWidget::width() - 250, vLoc, 0.0, battleMap.grid[i][j].unit.name, nameFont);
+                renderText (GLWidget::width() - 250, vLoc, 0.0, battleMap.gridCell[i][j].unit.name, nameFont);
                 vLoc -= 15;
 
                 // Unit hit points.
-                itoa(battleMap.grid[i][j].unit.hitPoints, tmpString, 10);
+                itoa(battleMap.gridCell[i][j].unit.hitPoints, tmpString, 10);
                 displayString = "Hit Points: ";
                 displayString.append(tmpString);
                 displayString.append(" / ");
-                itoa(battleMap.grid[i][j].unit.totalHitPoints, tmpString, 10);
+                itoa(battleMap.gridCell[i][j].unit.totalHitPoints, tmpString, 10);
                 displayString.append(tmpString);
                 renderText (GLWidget::width() - 250, vLoc, 0.0, displayString.c_str());
                 vLoc -= 15;
 
                 // Unit attack power.
-                itoa(battleMap.grid[i][j].unit.attackPower, tmpString, 10);
+                itoa(battleMap.gridCell[i][j].unit.attackPower, tmpString, 10);
                 displayString = "Attack Power: ";
                 displayString.append(tmpString);
                 renderText (GLWidget::width() - 250, vLoc, 0.0, displayString.c_str());
                 vLoc -= 15;
 
                 // Unit attack range.
-                itoa(battleMap.grid[i][j].unit.attackRange, tmpString, 10);
+                itoa(battleMap.gridCell[i][j].unit.attackRange, tmpString, 10);
                 displayString = "Attack Range: ";
                 displayString.append(tmpString);
                 renderText (GLWidget::width() - 250, vLoc, 0.0, displayString.c_str());
                 vLoc -= 15;
 
                 // Unit action time.
-                itoa(battleMap.grid[i][j].unit.actionTime, tmpString, 10);
+                itoa(battleMap.gridCell[i][j].unit.actionTime, tmpString, 10);
                 displayString = "Action Time: ";
                 displayString.append(tmpString);
                 displayString.append("%");
@@ -362,9 +362,9 @@ void GLWidget::paintGL()
 ///////////////////////////////////////////////////////////////////////////////
 bool GLWidget::isGridBoxSelected(int i, int j)
 {
-    if (mouseClick.hLoc > battleMap.grid[i][j].leftEdge && mouseClick.hLoc < battleMap.grid[i][j].leftEdge + cellWidth)
+    if (mouseClick.hLoc > battleMap.gridCell[i][j].leftEdge && mouseClick.hLoc < battleMap.gridCell[i][j].leftEdge + cellWidth)
     {
-        if (mouseClick.vLoc > battleMap.grid[i][j].bottomEdge && mouseClick.vLoc < battleMap.grid[i][j].bottomEdge + cellHeight)
+        if (mouseClick.vLoc > battleMap.gridCell[i][j].bottomEdge && mouseClick.vLoc < battleMap.gridCell[i][j].bottomEdge + cellHeight)
         {
             return (true);
         }
@@ -390,11 +390,11 @@ bool GLWidget::isGridBoxSelected(int i, int j)
 bool GLWidget::drawGridBox(int i, int j)
 {
     // Find out whether or not the current grid is selected.
-    battleMap.grid[i][j].isSelected = isGridBoxSelected(i, j);
+    battleMap.gridCell[i][j].isSelected = isGridBoxSelected(i, j);
 
     // Cell border style.
     int padding = 3;
-    if (battleMap.grid[i][j].isSelected)
+    if (battleMap.gridCell[i][j].isSelected)
     {
         if( selectedBorder == 2 )   selectedBorder = 1;
         else                        selectedBorder = 2;
@@ -407,21 +407,21 @@ bool GLWidget::drawGridBox(int i, int j)
         glColor4f( 0.4f, 0.4f, 0.4f, 0.8f );
     }
 
-    if (battleMap.grid[i][j].unit.isPending)
+    if (battleMap.gridCell[i][j].unit.isPending)
     {
         glColor4f( 0.0f, 0.0f, 0.2f, 0.8f );
     }
 
     // Define corner locations (without perspective).
     point ulLoc, urLoc, blLoc, brLoc;
-    blLoc.hLoc = battleMap.grid[i][j].leftEdge + padding;
-    blLoc.vLoc = battleMap.grid[i][j].bottomEdge + padding;
-    brLoc.hLoc = battleMap.grid[i][j].leftEdge + cellWidth - padding;
-    brLoc.vLoc = battleMap.grid[i][j].bottomEdge + padding;
-    ulLoc.hLoc = battleMap.grid[i][j].leftEdge + padding;
-    ulLoc.vLoc = battleMap.grid[i][j].bottomEdge + cellHeight - padding;
-    urLoc.hLoc = battleMap.grid[i][j].leftEdge + cellWidth - padding;
-    urLoc.vLoc = battleMap.grid[i][j].bottomEdge + cellHeight - padding;
+    blLoc.hLoc = battleMap.gridCell[i][j].leftEdge + padding;
+    blLoc.vLoc = battleMap.gridCell[i][j].bottomEdge + padding;
+    brLoc.hLoc = battleMap.gridCell[i][j].leftEdge + cellWidth - padding;
+    brLoc.vLoc = battleMap.gridCell[i][j].bottomEdge + padding;
+    ulLoc.hLoc = battleMap.gridCell[i][j].leftEdge + padding;
+    ulLoc.vLoc = battleMap.gridCell[i][j].bottomEdge + cellHeight - padding;
+    urLoc.hLoc = battleMap.gridCell[i][j].leftEdge + cellWidth - padding;
+    urLoc.vLoc = battleMap.gridCell[i][j].bottomEdge + cellHeight - padding;
 
     glRotatef(-5, 1.0, 0.0, 0.0);
     glBegin(GL_LINES);

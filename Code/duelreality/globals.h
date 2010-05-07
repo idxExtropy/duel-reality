@@ -78,7 +78,7 @@ public:
     int     cellsTall;
     float   gridHeight; // Ratio of grid to header.
 
-    gridBox  grid[MAX_GRID_DIMENSION][MAX_GRID_DIMENSION];
+    gridBox  gridCell[MAX_GRID_DIMENSION][MAX_GRID_DIMENSION];
 };
 
 class Player
