@@ -6,6 +6,7 @@
 #include <QTimer>
 #include <QString>
 #include "GLWidget.h"
+#include "test_db.h"
 
 class Unit;
 class test_db;
@@ -25,6 +26,7 @@ public:
     void handleAI();
     void moveUnit();
     void attackUnit();
+    int endBattle(int x);
 
 signals:
  void SignalP1Win();   //signal emited from isGameOVer if P1 Wins
