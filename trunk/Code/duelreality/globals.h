@@ -6,6 +6,7 @@
 #include <QString>
 #include <QPixmap>
 #include <QImage>
+#include <Phonon/MediaObject>
 
 #include <iostream>
 using std::cout;

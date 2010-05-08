@@ -38,9 +38,13 @@ MainWindow::MainWindow()
     emit isUserTurn(false);
 
     // Initialize background sound
-    soundBkgnd = new QSound("sounds/crazy.wav");
-    soundBkgnd->setLoops(-1);
-    soundBkgnd->play();
+    //soundBkgnd = new QSound("sounds/crazy.wav");
+    //soundBkgnd->setLoops(-1);
+    //soundBkgnd->play();
+
+    // Play main theme.
+    Phonon::MediaObject *music = Phonon::createPlayer(Phonon::MusicCategory, Phonon::MediaSource("sounds/Battle_01.mp3"));
+    music->play();
 
     // Set window icon
     setWindowIcon(QIcon("icons/logo.png"));

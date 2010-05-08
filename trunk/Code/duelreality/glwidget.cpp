@@ -193,6 +193,11 @@ void GLWidget::paintGL()
             {
                 if (unit[i].actionTime == 100)
                 {
+                    // Play 'ready' sound.
+                    //soundBkgnd = new QSound("sounds/crazy.wav");
+                    //soundBkgnd->setLoops(-1);
+                    //soundBkgnd->play();
+
                     // The unit is ready to go, so pause the game.
                     isPending = true;
                     battleMap.gridCell[unit[i].hLocation][unit[i].vLocation].unit.isPending = true;
