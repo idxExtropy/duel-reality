@@ -3,6 +3,7 @@
 #include "mainwindow.h"
 #include "glwidget.h"
 #include "newgamewizard.h"
+#include "loadgamewizard.h"
 #include "mechanics.h"
 
 // Global classes.
@@ -91,7 +92,7 @@ void MainWindow::createActions()
     actionLoadGame->setShortcut(tr("Ctrl+L"));
     actionLoadGame->setStatusTip(tr("Load a saved game"));
     connect(this, SIGNAL(isGameCfgMode(bool)), actionLoadGame, SLOT(setEnabled(bool)));
-    //connect(actionLoadGame, SIGNAL(triggered()), this, SLOT(loadGame()));
+    connect(actionLoadGame, SIGNAL(triggered()), this, SLOT(loadGame()));
 
     actionSaveGame = new QAction(tr("&Save Game"), this);
     actionSaveGame->setIcon(QIcon("icons/filesave.png"));
@@ -217,6 +218,22 @@ void MainWindow::newGame()
         emit signalGameCfgComplete();
     }
     delete newgamewizard;
+}
+
+void MainWindow::loadGame()
+{
+    LoadGameWizard *loadgamewizard = new LoadGameWizard(this);
+
+    if (loadgamewizard->exec())
+    {
+        soundBkgnd->stop();
+
+        soundBattleStart = new QSound("sounds/trumpet.wav");
+        soundBattleStart->play();
+
+        emit signalGameCfgComplete();
+    }
+    delete loadgamewizard;
 }
 
 void MainWindow::about()

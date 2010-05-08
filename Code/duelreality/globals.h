@@ -27,6 +27,8 @@ static const int    AI_UNIT = 2;        // Indicates unit is associated with AI
 static const int    MAX_MAP_UNITS = 10;
 static const int    GL_TIMER_INTERVAL = 100;
 static const int    MAX_GRID_DIMENSION = 20;
+static const int    CAMPAIGN_MODE = 1;
+static const int    FREEPLAY_MODE = 2;
 
 /*---------------- C l a s s    d e c l a r a t i o n s ----------------*/
 
@@ -95,8 +97,9 @@ class User : public Player
 {
 public:
     QString name;               // Player name
-    //string  playerName;       // Player name
     int     experiencePoints;   // Player experience points
+    bool    isActive;           // True if player is selected for battle
+    int     gameMode;
     Map   map;
 };
 
