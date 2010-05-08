@@ -1,17 +1,70 @@
 #include "glwidget.h"
 
-///////////////////////////////////////////////////////////////////////////////
-//	Function Name:	GLWidget()
-//	Description:	Class constructor.
-//	Modified:	03/02/2010
-//	Author:		Tom Calloway
-///////////////////////////////////////////////////////////////////////////////
+/*******************************************************
+* GLWidget()
+*
+* Description: Initializes the OpenGL widget and starts
+* the graphics update timer.
+*
+* Inputs: none
+*
+* Outputs: none
+*
+* Return: none
+*******************************************************/
 GLWidget::GLWidget()
 {
+    // Initialize some variables.
     isPending = false;
     isBattle = false;
     selectedBorder = 1;
+    titleIndex = 0;
+    iEventCounter = 0;
+
+    // Set strings for the title screen slide show.
+    backgroundList[0] = "backgrounds/beach.png";
+    backgroundList[1] = "backgrounds/beach2.png";
+    backgroundList[2] = "backgrounds/grass.png";
+    backgroundList[3] = "backgrounds/grassnight.png";
+    backgroundList[4] = "backgrounds/plains.png";
+    backgroundList[5] = "backgrounds/snow.png";
+    backgroundList[6] = "backgrounds/townnight.png";
+
+    // Start the graphics display timer.
     startTimer( GL_TIMER_INTERVAL );
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//	Function Name:	unitTest_GenerateContent()
+//	Description:	Add content for unit testing.
+//	Modified:	03/02/2010
+//	Author:		Tom Calloway
+///////////////////////////////////////////////////////////////////////////////
+void GLWidget::updateTitleScreen()
+{
+    // Clear the display.
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glLoadIdentity();
+
+    if (iEventCounter > GL_TIMER_INTERVAL / (10 / titleTransitionSeconds))
+    {
+        // Next title image.
+        titleIndex++;
+        iEventCounter = 0;
+
+        if (titleIndex > 6)
+        {
+            titleIndex = 0;
+        }
+
+        // Change image if necessary.
+        bkImage.load(backgroundList[titleIndex]);
+        bkImage = bkImage.scaled(GLWidget::width(), GLWidget::height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
+        glBkImage = QGLWidget::convertToGLFormat(bkImage);
+    }
+
+    // Draw the background.
+    glDrawPixels(glBkImage.width(), glBkImage.height(), GL_RGBA, GL_UNSIGNED_BYTE, glBkImage.bits());
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -207,6 +260,7 @@ void GLWidget::paintGL()
 {
     if (!isBattle)
     {
+        updateTitleScreen();
         return;
     }
 
@@ -678,27 +732,43 @@ void GLWidget::resizeGL(int width, int height)
 
     if (!isBattle)
     {
-        return;
+        // Setup the 2d perspective.
+        glViewport(0, 0, width, height);
+        glMatrixMode (GL_PROJECTION);
+        glLoadIdentity();
+        glOrtho(0, width, 0, height, -1000, 1000);
+
+        glMatrixMode (GL_MODELVIEW);
+        glLoadIdentity();
+
+        updateGL();
+
+        // Reload and resize the background image.
+        bkImage.load(backgroundList[titleIndex]);
+        bkImage = bkImage.scaled(GLWidget::width(), GLWidget::height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
+        glBkImage = QGLWidget::convertToGLFormat(bkImage);
     }
+    else
+    {
+        // Reset grid locations and dimensions.
+        initGrid();
 
-    // Reset grid locations and dimensions.
-    initGrid();
-    
-    // Setup the 2d perspective.
-    glViewport(0, 0, width, height);
-    glMatrixMode (GL_PROJECTION);
-    glLoadIdentity();
-    glOrtho(0, width, 0, height, -1000, 1000);
+        // Setup the 2d perspective.
+        glViewport(0, 0, width, height);
+        glMatrixMode (GL_PROJECTION);
+        glLoadIdentity();
+        glOrtho(0, width, 0, height, -1000, 1000);
 
-    glMatrixMode (GL_MODELVIEW);
-    glLoadIdentity();
+        glMatrixMode (GL_MODELVIEW);
+        glLoadIdentity();
 
-    updateGL();
+        updateGL();
 
-    // Reload and resize the background image.
-    bkImage.load(battleMap.imageFileName);
-    bkImage = bkImage.scaled(GLWidget::width(), GLWidget::height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
-    glBkImage = QGLWidget::convertToGLFormat(bkImage);
+        // Reload and resize the background image.
+        bkImage.load(battleMap.imageFileName);
+        bkImage = bkImage.scaled(GLWidget::width(), GLWidget::height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
+        glBkImage = QGLWidget::convertToGLFormat(bkImage);
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -709,6 +779,10 @@ void GLWidget::resizeGL(int width, int height)
 ///////////////////////////////////////////////////////////////////////////////
 void GLWidget::timerEvent(QTimerEvent *event)
 {
+    // Update event counter.
+    iEventCounter++;
+
+    // Redraw the graphics window.
     updateGL();
 }
 
