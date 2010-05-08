@@ -26,6 +26,8 @@ public:
     GLWidget();
     void unitTest_GenerateContent();
     void moveUnit(int vLocPrev, int hLocPrev, int vLocNext, int hLocNext);
+    void hitUnit(int vLoc, int hLoc, int damage, int vAttackerLoc, int hAttackerLoc);
+    void killUnit(int vLoc, int hLoc, int vAttackerLoc, int hAttackerLoc);
 
     bool    isBattle;
     Map     battleMap;

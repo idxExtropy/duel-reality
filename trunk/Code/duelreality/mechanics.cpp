@@ -24,8 +24,8 @@ void mechanics::handleAI()
         {
             if (glWidget->battleMap.gridCell[i][j].unit->isPending && glWidget->battleMap.gridCell[i][j].unit->team == AI_UNIT)
             {
+                // Dummy movement for now...
                 glWidget->moveUnit(i,j,i+1,j-1);
-                glWidget->battleMap.gridCell[i][j].unit->hitPoints -= 10;
             }
         }
     }
@@ -40,6 +40,7 @@ void mechanics::moveUnit()
         {
             if (glWidget->battleMap.gridCell[i][j].isSelected)
             {
+                // Get the selected cell.
                 vLocNext = i;
                 hLocNext = j;
             }
@@ -52,9 +53,39 @@ void mechanics::moveUnit()
         {
             if (glWidget->battleMap.gridCell[i][j].unit->isPending)
             {
-
+                // Move to the selected cell.
                 glWidget->moveUnit(i,j,vLocNext,hLocNext);
                 return;
+            }
+        }
+    }
+}
+
+void mechanics::attackUnit()
+{
+    int vAttackerLoc = 0, hAttackerLoc = 0, damage = 0;
+
+    for (int i = 0; i < glWidget->battleMap.cellsTall; i++)
+    {
+        for (int j = 0; j < glWidget->battleMap.cellsWide; j++)
+        {
+            if (glWidget->battleMap.gridCell[i][j].unit->isPending)
+            {
+                // Get the upcoming attack power and location.
+                damage = glWidget->battleMap.gridCell[i][j].unit->attackPower;
+                vAttackerLoc = glWidget->battleMap.gridCell[i][j].unit->vLocation;
+                hAttackerLoc = glWidget->battleMap.gridCell[i][j].unit->hLocation;
+            }
+        }
+    }
+
+    for (int i = 0; i < glWidget->battleMap.cellsTall; i++)
+    {
+        for (int j = 0; j < glWidget->battleMap.cellsWide; j++)
+        {
+            if (glWidget->battleMap.gridCell[i][j].isSelected)
+            {
+                glWidget->hitUnit(i,j,damage,vAttackerLoc,hAttackerLoc);
             }
         }
     }
