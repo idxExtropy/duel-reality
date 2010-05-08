@@ -29,6 +29,7 @@ signals:
     void isBattleMode(bool);        // True if game is in battle mode; false otherwise
     void isGameCfgMode(bool);       // True if game is in config mode; false otherwise
     void isUserTurn(bool);          // True is user's turn; false otherwise
+    void signalmove();
 
 public slots:
     void onBattleStart();   // Disables game config user interactions

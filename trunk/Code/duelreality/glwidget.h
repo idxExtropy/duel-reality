@@ -30,6 +30,7 @@ public:
     Unit    unit[MAX_MAP_UNITS];
     QString backgroundList[7];
     Phonon::MediaObject *music;
+    bool isPending;
 
 protected:
     // Functions.
@@ -56,7 +57,7 @@ protected:
     point   mouseClick;
     
     // Effect information.
-    bool isPending;
+
     int selectedBorder;
 
 private:

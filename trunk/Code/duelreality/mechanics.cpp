@@ -25,6 +25,10 @@ void mechanics::handleAI()
             if (glWidget->battleMap.gridCell[i][j].unit->isPending)
             {
                 glWidget->battleMap.gridCell[i][j].unit->vLocation++;
+                glWidget->battleMap.gridCell[i][j].unit->actionTime=0;
+                glWidget->battleMap.gridCell[i][j].unit->hitPoints-=10;
+                glWidget->battleMap.gridCell[i][j].unit->isPending=false;
+                glWidget->isPending=false;
             }
         }
     }
@@ -59,14 +63,15 @@ void mechanics::endBattle()
 //Move Function, from Slot Move
 void mechanics::move()
 {
-        mechanics::getPending();
-        mechanics::getGridCellSelected();
-        if(isValidMove(FocusUnit->actionPoints, FocusUnit->movementRate, FocusUnit->hLocation, FocusUnit->vLocation, targetx, targety))
-        {
-        FocusUnit->hLocation=targetx;
-        FocusUnit->vLocation=targety;
-        FocusUnit->actionPoints-=FocusUnit->movementRate;
-        }
+    glWidget->unit[2].vLocation=0;
+//        mechanics::getPending();
+//        mechanics::getGridCellSelected();
+//        if(isValidMove(FocusUnit->actionPoints, FocusUnit->movementRate, FocusUnit->hLocation, FocusUnit->vLocation, targetx, targety))
+//        {
+//        FocusUnit->hLocation=targetx;
+//        FocusUnit->vLocation=targety;
+//        FocusUnit->actionPoints-=FocusUnit->movementRate;
+//        }
 }
 
 //Determines Whether a move is valid
