@@ -24,13 +24,16 @@ class GLWidget : public QGLWidget
 {
 public:
     GLWidget();
-    void    unitTest_GenerateContent();
+    void unitTest_GenerateContent();
+    void moveUnit(int vLocPrev, int hLocPrev, int vLocNext, int hLocNext);
+
     bool    isBattle;
     Map     battleMap;
     Unit    unit[MAX_MAP_UNITS];
     QString backgroundList[7];
     Phonon::MediaObject *music;
-    bool isPending;
+    bool    isPending;
+
 
 protected:
     // Functions.
