@@ -101,8 +101,8 @@ void mechanics::attack()
 {
     mechanics::getPending();
     mechanics::getGridCellSelected();
-    Unit a= mechanics::getUnit(targetx,targety);
-    Unit *Target = &a;
+    Unit *a= mechanics::getUnit(targetx,targety);
+    Unit *Target = a;
 
         if(isValidAttack(FocusUnit->actionPoints, FocusUnit->movementRate, FocusUnit->hLocation, FocusUnit->vLocation, FocusUnit->attackRange, targetx, targety))
         {
@@ -143,9 +143,9 @@ bool mechanics::getPending()
     {
         for(int y=0;y<=glWidget->battleMap.cellsWide;y++)
         {
-          if(glWidget->battleMap.gridCell[x][y].unit.isPending)
+          if(glWidget->battleMap.gridCell[x][y].unit->isPending)
           {
-          FocusUnit=&glWidget->battleMap.gridCell[x][y].unit;
+          FocusUnit=glWidget->battleMap.gridCell[x][y].unit;
           return true;
           }
           return (false);
@@ -153,7 +153,7 @@ bool mechanics::getPending()
     }return (false);
 }
 
-Unit mechanics::getUnit(int x, int y)
+Unit *mechanics::getUnit(int x, int y)
      {
         return glWidget->battleMap.gridCell[y][x].unit;    //vLoc, HLoc order in glwidget.cpp
      }
@@ -205,7 +205,7 @@ bool mechanics::isGameOver()
     {
      for(int y=0;y<=glWidget->battleMap.cellsWide;y++)
      {
-           if(glWidget->battleMap.gridCell[x][y].unit.status==UNIT_DEAD&&glWidget->battleMap.gridCell[x][y].unit.team==USER_UNIT)
+           if(glWidget->battleMap.gridCell[x][y].unit->status==UNIT_DEAD&&glWidget->battleMap.gridCell[x][y].unit->team==USER_UNIT)
            {
                     deadcount++;
                 if (deadcount ==4)
@@ -216,7 +216,7 @@ bool mechanics::isGameOver()
                 }
             }
 
-            if (glWidget->battleMap.gridCell[x][y].unit.status==UNIT_DEAD&&glWidget->battleMap.gridCell[x][y].unit.team==AI_UNIT)
+            if (glWidget->battleMap.gridCell[x][y].unit->status==UNIT_DEAD&&glWidget->battleMap.gridCell[x][y].unit->team==AI_UNIT)
             {
                     deadcount++;
                 if (deadcount ==4)

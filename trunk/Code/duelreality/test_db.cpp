@@ -50,7 +50,7 @@ QString Database::mapName(int index) const
 
 QString Database::mapFileName(int index) const
 {
-    return Database::mapList[index].fileName;
+    return Database::mapList[index].imageFileName;
 }
 
 void Database::addSprite(Sprite sprite)
@@ -244,25 +244,25 @@ void Database::generateMaps()
         Map   testMaps[NUM_TEST_MAPS];
 
         testMaps[0].name = "Grass";
-        testMaps[0].fileName = "backgrounds/grass.png";
+        testMaps[0].imageFileName = "backgrounds/grass.png";
         testMaps[0].cellsWide = 6;
         testMaps[0].cellsTall = 9;
         testMaps[0].gridHeight = 0.58;
 
         testMaps[1].name = "Beach";
-        testMaps[1].fileName = "backgrounds/beach.png";
+        testMaps[1].imageFileName = "backgrounds/beach.png";
         testMaps[1].cellsWide = 6;
         testMaps[1].cellsTall = 9;
         testMaps[1].gridHeight = 0.58;
 
         testMaps[2].name = "Snow";
-        testMaps[2].fileName = "backgrounds/snow.png";
+        testMaps[2].imageFileName = "backgrounds/snow.png";
         testMaps[2].cellsWide = 6;
         testMaps[2].cellsTall = 9;
         testMaps[2].gridHeight = 0.58;
 
         testMaps[3].name = "Plains";
-        testMaps[3].fileName = "backgrounds/plains.png";
+        testMaps[3].imageFileName = "backgrounds/plains.png";
         testMaps[3].cellsWide = 6;
         testMaps[3].cellsTall = 9;
         testMaps[3].gridHeight = 0.58;

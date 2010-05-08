@@ -43,8 +43,8 @@ MainWindow::MainWindow()
     //soundBkgnd->play();
 
     // Play main theme.
-    Phonon::MediaObject *music = Phonon::createPlayer(Phonon::MusicCategory, Phonon::MediaSource("sounds/Battle_01.mp3"));
-    music->play();
+    glWidget->music = Phonon::createPlayer(Phonon::MusicCategory, Phonon::MediaSource("sounds/MainTheme.mp3"));
+    glWidget->music->play();
 
     // Set window icon
     setWindowIcon(QIcon("icons/logo.png"));
@@ -146,6 +146,7 @@ void MainWindow::createActions()
 
 void MainWindow::onBattleStart()
 {
+    glWidget->unitTest_GenerateContent(); //unitTest
     emit isBattleMode(true);
     emit isGameCfgMode(false);
 }
