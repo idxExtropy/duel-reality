@@ -2,7 +2,6 @@
 
 #include "mainwindow.h"
 #include "glwidget.h"
-//#include "usernamedialog.h"
 #include "newgamewizard.h"
 #include "mechanics.h"
 
@@ -91,7 +90,6 @@ void MainWindow::createActions()
     actionLoadGame->setIcon(QIcon("icons/fileopen.png"));
     actionLoadGame->setShortcut(tr("Ctrl+L"));
     actionLoadGame->setStatusTip(tr("Load a saved game"));
-    //actionLoadGame->setEnabled(!MainWindow::isActiveBattle);
     connect(this, SIGNAL(isGameCfgMode(bool)), actionLoadGame, SLOT(setEnabled(bool)));
     //connect(actionLoadGame, SIGNAL(triggered()), this, SLOT(loadGame()));
 
@@ -99,7 +97,6 @@ void MainWindow::createActions()
     actionSaveGame->setIcon(QIcon("icons/filesave.png"));
     actionSaveGame->setShortcut(QKeySequence::Save);
     actionSaveGame->setStatusTip(tr("Save a game"));
-    //actionSaveGame->setEnabled(MainWindow::isActiveBattle);
     connect(this, SIGNAL(isBattleMode(bool)), actionSaveGame, SLOT(setEnabled(bool)));
     //connect(actionSaveGame, SIGNAL(triggered()), this, SLOT(saveGame()));
 
@@ -107,11 +104,9 @@ void MainWindow::createActions()
     actionExitGame->setIcon(QIcon("icons/exit.png"));
     actionExitGame->setShortcut(tr("Ctrl+X"));
     actionExitGame->setStatusTip(tr("Exit the game"));
-    //actionExitGame->setEnabled(MainWindow::isActiveBattle && MainWindow::isPlayerTurn);
     connect(actionExitGame, SIGNAL(triggered()), this, SLOT(close()));
 
     actionAbout = new QAction(tr("&About"), this);
-    //actionAbout->setShortcut();
     actionAbout->setStatusTip(tr("Provides information about the game"));
     connect(actionAbout, SIGNAL(triggered()), this, SLOT(about()));
 
@@ -124,7 +119,6 @@ void MainWindow::createActions()
     actionAttack->setShortcut(tr("Ctrl+A"));
     actionAttack->setStatusTip(tr("Attack opponent"));
     connect(this, SIGNAL(isBattleMode(bool)), actionAttack, SLOT(setEnabled(bool)));
-    //actionAttack->setEnabled(MainWindow::isActiveBattle && MainWindow::isPlayerTurn);
     //connect(actionAttack, SIGNAL(triggered()), this, SLOT(attack()));
 
     actionMove = new QAction(tr("&Move"), this);
@@ -132,7 +126,6 @@ void MainWindow::createActions()
     actionMove->setShortcut(tr("Ctrl+M"));
     actionMove->setStatusTip(tr("Move unit"));
     connect(this, SIGNAL(isBattleMode(bool)), actionMove, SLOT(setEnabled(bool)));
-    //actionMove->setEnabled(MainWindow::isActiveBattle && MainWindow::isPlayerTurn);
     //connect(actionMove, SIGNAL(triggered()), this, SLOT(move()));
 
     actionEndTurn = new QAction(tr("&End Turn"), this);
@@ -141,7 +134,6 @@ void MainWindow::createActions()
     actionEndTurn->setStatusTip(tr("End Turn"));
     connect(this, SIGNAL(isBattleMode(bool)), actionEndTurn, SLOT(setEnabled(bool)));
     connect(actionEndTurn, SIGNAL(triggered()), this, SLOT(endTurnClicked()));
-    //actionEndTurn->setEnabled(MainWindow::isActiveBattle && MainWindow::isPlayerTurn);
 }
 
 void MainWindow::onBattleStart()
@@ -195,6 +187,7 @@ void MainWindow::createToolBars()
     gameToolBar->addAction(actionNewGame);
     gameToolBar->addAction(actionLoadGame);
     gameToolBar->addAction(actionSaveGame);
+    gameToolBar->addSeparator();
 
     actionToolBar = addToolBar(tr("&Action"));
     actionToolBar->setMovable(false);
@@ -202,6 +195,7 @@ void MainWindow::createToolBars()
     actionToolBar->addAction(actionAttack);
     actionToolBar->addAction(actionMove);
     actionToolBar->addAction(actionEndTurn);
+    actionToolBar->addSeparator();
 }
 
 void MainWindow::createStatusBar()
