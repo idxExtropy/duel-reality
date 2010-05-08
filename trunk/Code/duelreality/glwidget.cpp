@@ -43,6 +43,7 @@ void GLWidget::unitTest_GenerateContent()
     unit[0].attackPower = 8;
     unit[0].attackRange = 3;
     unit[0].faceLeft = false;
+    unit[0].movementRate = 1;
 
     // Create a new unit (for gl debug purposes).
     unit[1].name = "Monk";
@@ -58,6 +59,7 @@ void GLWidget::unitTest_GenerateContent()
     unit[1].attackPower = 8;
     unit[1].attackRange = 3;
     unit[1].faceLeft = false;
+    unit[1].movementRate = 2;
 
     // Create a new unit (for gl debug purposes).
     unit[2].name = "Bard";
@@ -73,6 +75,7 @@ void GLWidget::unitTest_GenerateContent()
     unit[2].attackPower = 8;
     unit[2].attackRange = 3;
     unit[2].faceLeft = false;
+    unit[2].movementRate = 1;
 
     // Create a new unit (for gl debug purposes).
     unit[3].name = "Desert Soldier";
@@ -88,21 +91,23 @@ void GLWidget::unitTest_GenerateContent()
     unit[3].attackPower = 8;
     unit[3].attackRange = 3;
     unit[3].faceLeft = true;
+    unit[3].movementRate = 2;
 
     // Create a new unit (for gl debug purposes).
-    unit[4].name = "Merchant";
+    unit[4].name = "Criminal";
     unit[4].actionTime = 40;
     unit[4].actionRate = 100;
     unit[4].hitPoints = 22;
     unit[4].totalHitPoints = 100;
-    unit[4].image.load("sprites/merchant.png");
-    unit[4].mask_image.load("sprites/mask_merchant.png");
+    unit[4].image.load("sprites/criminal.png");
+    unit[4].mask_image.load("sprites/mask_criminal.png");
     unit[4].status = UNIT_OK;
     unit[4].vLocation = 1;
     unit[4].hLocation = 5;
     unit[4].attackPower = 8;
     unit[4].attackRange = 3;
     unit[4].faceLeft = true;
+    unit[4].movementRate = 2;
 
     // Create a new unit (for gl debug purposes).
     unit[5].name = "Priestess";
@@ -118,6 +123,7 @@ void GLWidget::unitTest_GenerateContent()
     unit[5].attackPower = 8;
     unit[5].attackRange = 3;
     unit[5].faceLeft = true;
+    unit[5].movementRate = 1;
 
     for (int i = 0; i < MAX_MAP_UNITS; i++)
     {
@@ -266,8 +272,8 @@ void GLWidget::paintGL()
                 glBegin (GL_QUADS);
                     glVertex3f (15, GLWidget::height() - 20, 0.0);
                     glVertex3f (15 + 250, GLWidget::height() - 20, 0.0);
-                    glVertex3f (15 + 250, GLWidget::height() - 20 - 100, 0.0);
-                    glVertex3f (15, GLWidget::height() - 20 - 100, 0.0);
+                    glVertex3f (15 + 250, GLWidget::height() - 20 - 110, 0.0);
+                    glVertex3f (15, GLWidget::height() - 20 - 110, 0.0);
                 glEnd();
 
                 qglColor(Qt::white);
@@ -305,6 +311,13 @@ void GLWidget::paintGL()
                 renderText (30, vLoc, 0.0, displayString.c_str());
                 vLoc -= 15;
 
+                // Unit movement rate.
+                itoa(unit[i].movementRate, tmpString, 10);
+                displayString = "Movement Rate: ";
+                displayString.append(tmpString);
+                renderText (30, vLoc, 0.0, displayString.c_str());
+                vLoc -= 15;
+
                 // Unit action time.
                 itoa(unit[i].actionTime, tmpString, 10);
                 displayString = "Action Time: ";
@@ -327,8 +340,8 @@ void GLWidget::paintGL()
                 glBegin (GL_QUADS);
                     glVertex3f (GLWidget::width() - 265, GLWidget::height() - 20, 0.0);
                     glVertex3f (GLWidget::width() - 15, GLWidget::height() - 20, 0.0);
-                    glVertex3f (GLWidget::width() - 15, GLWidget::height() - 20 - 100, 0.0);
-                    glVertex3f (GLWidget::width() - 265, GLWidget::height() - 20 - 100, 0.0);
+                    glVertex3f (GLWidget::width() - 15, GLWidget::height() - 20 - 110, 0.0);
+                    glVertex3f (GLWidget::width() - 265, GLWidget::height() - 20 - 110, 0.0);
                 glEnd();
 
                 qglColor(Qt::white);
@@ -362,6 +375,13 @@ void GLWidget::paintGL()
                 // Unit attack range.
                 itoa(battleMap.gridCell[i][j].unit->attackRange, tmpString, 10);
                 displayString = "Attack Range: ";
+                displayString.append(tmpString);
+                renderText (GLWidget::width() - 250, vLoc, 0.0, displayString.c_str());
+                vLoc -= 15;
+
+                // Unit movement rate.
+                itoa(unit[i].movementRate, tmpString, 10);
+                displayString = "Movement Rate: ";
                 displayString.append(tmpString);
                 renderText (GLWidget::width() - 250, vLoc, 0.0, displayString.c_str());
                 vLoc -= 15;
