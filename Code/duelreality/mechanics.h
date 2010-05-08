@@ -23,6 +23,7 @@ public:
     void startBattle();
     void endBattle();
     void handleAI();
+    void moveUnit();
 
 signals:
  void SignalP1Win();   //signal emited from isGameOVer if P1 Wins
