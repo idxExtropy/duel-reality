@@ -84,6 +84,7 @@ public:
     RecruitUnitsPageL(QWidget *parent = 0);
 
     int nextId() const;
+    void initializePage();
     //void test_GenerateSprites();
 
 protected:

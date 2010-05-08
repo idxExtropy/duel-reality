@@ -149,6 +149,8 @@ LoadPlayerPageL::LoadPlayerPageL(QWidget *parent)
     for (i = 0; i < userNames.count(); i++)
         playerNameComboBox->addItem(userNames.at(i));
 
+    playerNameComboBox->setCurrentIndex(-1);
+
     QGridLayout *layout = new QGridLayout;
     layout->addWidget(playerNameLabel, 0, 0);
     layout->addWidget(playerNameComboBox, 0, 1);
@@ -337,6 +339,21 @@ RecruitUnitsPageL::RecruitUnitsPageL(QWidget *parent)
     connect(rejectButtonList[3], SIGNAL(clicked()), this, SLOT(rejectButton3Clicked()));
 }
 
+void RecruitUnitsPageL::initializePage()
+{
+    int i;
+    QList<Unit> units = db.loadUnits(LoadGameWizard::playerName);
+
+    for (i = 0; i < MAX_TEAM_UNITS; i++)
+    {
+        if (units[i].status)
+        {
+            unitImageList[i]->setPixmap(units[i].imageFileName);
+            unitNameList[i]->setText(units[i].name);
+            isAlive[i] = true;
+        }
+    }
+}
 
 void RecruitUnitsPageL::nextSpriteButtonClicked()
 {

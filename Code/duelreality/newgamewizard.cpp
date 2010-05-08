@@ -188,6 +188,8 @@ LoadPlayerPage::LoadPlayerPage(QWidget *parent)
 
     userNames.sort();
 
+    playerNameComboBox->setCurrentIndex(-1);
+
     for (i = 0; i < userNames.count(); i++)
         playerNameComboBox->addItem(userNames.at(i));
 
