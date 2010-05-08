@@ -517,7 +517,7 @@ bool GLWidget::drawGridBox(int i, int j)
     {
         if (battleMap.gridCell[i][j].unit->isPending)
         {
-            glColor4f( 0.0f, 0.0f, 0.2f, 0.8f );
+            glColor4f( 0.0f, 0.0f, 0.4f, 0.8f );
         }
     }
 
@@ -824,4 +824,8 @@ void GLWidget::moveUnit(int vLocPrev, int hLocPrev, int vLocNext, int hLocNext)
 {
     battleMap.gridCell[vLocPrev][hLocPrev].unit->vLocation = vLocNext;
     battleMap.gridCell[vLocPrev][hLocPrev].unit->hLocation = hLocNext;
+
+    battleMap.gridCell[vLocPrev][hLocPrev].unit->isPending = false;
+    battleMap.gridCell[vLocPrev][hLocPrev].unit->actionTime = 0;
+    isPending = false;
 }

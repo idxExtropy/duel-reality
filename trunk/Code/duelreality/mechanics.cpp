@@ -25,10 +25,7 @@ void mechanics::handleAI()
             if (glWidget->battleMap.gridCell[i][j].unit->isPending && glWidget->battleMap.gridCell[i][j].unit->team == AI_UNIT)
             {
                 glWidget->moveUnit(i,j,i+1,j-1);
-                glWidget->battleMap.gridCell[i][j].unit->actionTime=0;
-                glWidget->battleMap.gridCell[i][j].unit->hitPoints-=10;
-                glWidget->battleMap.gridCell[i][j].unit->isPending=false;
-                glWidget->isPending=false;
+                glWidget->battleMap.gridCell[i][j].unit->hitPoints -= 10;
             }
         }
     }
@@ -57,9 +54,6 @@ void mechanics::moveUnit()
             {
 
                 glWidget->moveUnit(i,j,vLocNext,hLocNext);
-                glWidget->battleMap.gridCell[i][j].unit->isPending=false;
-                glWidget->isPending=false;
-                glWidget->battleMap.gridCell[i][j].unit->actionTime=0;
                 return;
             }
         }
