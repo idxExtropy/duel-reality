@@ -822,11 +822,25 @@ void GLWidget::setBackgroundTrack(QString trackFileName)
 
 void GLWidget::moveUnit(int vLocPrev, int hLocPrev, int vLocNext, int hLocNext)
 {
-    battleMap.gridCell[vLocPrev][hLocPrev].unit->vLocation = vLocNext;
-    battleMap.gridCell[vLocPrev][hLocPrev].unit->hLocation = hLocNext;
+    //battleMap.gridCell[vLocPrev][hLocPrev].unit->vLocation = vLocNext;
+    //battleMap.gridCell[vLocPrev][hLocPrev].unit->hLocation = hLocNext;
 
-    battleMap.gridCell[vLocPrev][hLocPrev].unit->isPending = false;
-    battleMap.gridCell[vLocPrev][hLocPrev].unit->actionTime = 0;
+    //battleMap.gridCell[vLocPrev][hLocPrev].unit->isPending = false;
+    //battleMap.gridCell[vLocPrev][hLocPrev].unit->actionTime = 0;
+    //isPending = false;
+
+    // Update the new cell.
+    battleMap.gridCell[vLocNext][vLocNext].unit = battleMap.gridCell[vLocPrev][hLocPrev].unit;
+    battleMap.gridCell[vLocNext][vLocNext].unit->vLocation = vLocNext;
+    battleMap.gridCell[vLocNext][vLocNext].unit->hLocation = hLocNext;
+    battleMap.gridCell[vLocNext][vLocNext].unit->isPending = false;
+    battleMap.gridCell[vLocNext][vLocNext].unit->actionTime = 0;
+    battleMap.gridCell[vLocNext][vLocNext].isUnit = true;
+
+    // Clear the old cell.
+    battleMap.gridCell[vLocPrev][vLocPrev].unit = new Unit;
+    battleMap.gridCell[vLocPrev][vLocPrev].unit->status = NO_UNIT;
+
     isPending = false;
 }
 
