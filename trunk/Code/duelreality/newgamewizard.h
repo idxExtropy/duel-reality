@@ -122,8 +122,9 @@ private slots:
     void rejectButtonAnyClicked(int index);
 
 private:
-    int                     i;
+    //int                     i;
     int                     spriteIndex;
+    QString                 spriteFileName;
     QLabel                  *spriteImage;
     QPushButton             *nextSpriteButton;
     QPushButton             *prevSpriteButton;

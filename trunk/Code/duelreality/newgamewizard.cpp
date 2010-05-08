@@ -217,8 +217,14 @@ int LoadPlayerPage::nextId() const
 RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
     : QWizardPage(parent)
 {
-    i = 0;
+    int i;
+
+    // Initialize isAlive flag
+    for (i = 0; i < MAX_TEAM_UNITS; i++)
+        isAlive[i] = false;
+
     spriteIndex = 0;
+    spriteFileName = db.spriteFileName(0);
 
     setTitle(tr("Recruit Units"));
     setSubTitle(tr("Recruit units for battle"));
@@ -248,7 +254,7 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
     spriteImage->setObjectName(QString::fromUtf8("spriteImage"));
     spriteImage->setMinimumSize(QSize(71, 101));
     spriteImage->setMaximumSize(QSize(71, 101));
-    spriteImage->setPixmap(db.spritePixMap(0));
+    spriteImage->setPixmap(spriteFileName);
     spriteImage->setScaledContents(true);
     leftTopLayout->addWidget(spriteImage);
 
@@ -375,8 +381,9 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
 void RecruitUnitsPage::nextSpriteButtonClicked()
 {
     spriteIndex = (spriteIndex + 1) % MAX_SPRITES;
+    spriteFileName = db.spriteFileName(spriteIndex);
 
-    spriteImage->setPixmap(db.spritePixMap(spriteIndex));
+    spriteImage->setPixmap(spriteFileName);
     spriteNameVal->setText(db.spriteName(spriteIndex));
     spriteAPVal->setText(QString::number(db.spriteAP(spriteIndex)));
     spriteHPVal->setText(QString::number(db.spriteHP(spriteIndex)));
@@ -387,8 +394,9 @@ void RecruitUnitsPage::nextSpriteButtonClicked()
 void RecruitUnitsPage::prevSpriteButtonClicked()
 {
     spriteIndex = (spriteIndex + MAX_SPRITES - 1) % MAX_SPRITES;
+    spriteFileName = db.spriteFileName(spriteIndex);
 
-    spriteImage->setPixmap(db.spritePixMap(spriteIndex));
+    spriteImage->setPixmap(spriteFileName);
     spriteNameVal->setText(db.spriteName(spriteIndex));
     spriteAPVal->setText(QString::number(db.spriteAP(spriteIndex)));
     spriteHPVal->setText(QString::number(db.spriteHP(spriteIndex)));
@@ -398,27 +406,32 @@ void RecruitUnitsPage::prevSpriteButtonClicked()
 
 void RecruitUnitsPage::recruitButtonClicked()
 {
+    int i;
+
     // Check if there is an available unit slot and fill it with current sprite
     for (i = 0; i < MAX_TEAM_UNITS; i++)
     {
         if (!isAlive[i])
         {
             // Fill open slot in Player Units section
-            unitImageList[i]->setPixmap(*(spriteImage->pixmap()));
+            //unitImageList[i]->setPixmap(*(spriteImage->pixmap()));
+            unitImageList[i]->setPixmap(spriteFileName);
             unitNameList[i]->setText(spriteNameVal->text());
             isAlive[i] = true;
 
             // Get copy of units from database and update it
             QList<Unit> tempUnits = db.loadUnits(NewGameWizard::playerName);
 
-            tempUnits[i].pixMap.operator =((*(spriteImage->pixmap())));
-            tempUnits[i].image.operator =((spriteImage->pixmap()->toImage()));
             tempUnits[i].name = spriteNameVal->text();
+            tempUnits[i].imageFileName = spriteFileName;
+            tempUnits[i].actionPoints = spriteAPVal->text().toInt();
+            tempUnits[i].hitPoints = spriteHPVal->text().toInt();
             tempUnits[i].status = UNIT_OK;
 
             db.saveUnits(NewGameWizard::playerName, tempUnits);
 
-            break;
+            return;
+            //break;
         }
     }
 }
@@ -457,7 +470,7 @@ void RecruitUnitsPage::rejectButtonAnyClicked(int index)
         //tempUnits[i].pixMap.operator =((*(spriteImage->pixmap())));
         //tempUnits[i].image.operator =((spriteImage->pixmap()->toImage()));
         //tempUnits[i].name = spriteNameVal->text();
-        tempUnits[i].status = NO_UNIT;
+        tempUnits[index].status = NO_UNIT;
 
         db.saveUnits(NewGameWizard::playerName, tempUnits);
     }

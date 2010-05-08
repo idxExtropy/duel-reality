@@ -79,10 +79,17 @@ QString Database::spriteName(int index) const
     return Database::spriteList[index].name;
 }
 
+QString Database::spriteFileName(int index) const
+{
+    return Database::spriteList[index].fileName;
+}
+
+/*
 const QPixmap Database::spritePixMap(int index) const
 {
     return Database::spriteList[index].pixMap;
 }
+*/
 
 const int Database::spriteAP(int index) const
 {
@@ -206,25 +213,29 @@ void Database::generateSprites()
         Sprite testSprites[MAX_SPRITES];
 
         testSprites[0].name = "Wizard";
-        testSprites[0].pixMap.load("sprites/wizard.png");
+        //testSprites[0].pixMap.load("sprites/wizard.png");
+        testSprites[0].fileName = "sprites/wizard.png";
         testSprites[0].AP = 8;
         testSprites[0].HP = 8;
         testSprites[0].range = 8;
 
         testSprites[1].name = "Monk";
-        testSprites[1].pixMap.load("sprites/buddhist.png");
+        //testSprites[1].pixMap.load("sprites/buddhist.png");
+        testSprites[1].fileName = "sprites/buddhist.png";
         testSprites[1].AP = 6;
         testSprites[1].HP = 6;
         testSprites[1].range = 6;
 
         testSprites[2].name = "Bard";
-        testSprites[2].pixMap.load("sprites/bard.png");
+        //testSprites[2].pixMap.load("sprites/bard.png");
+        testSprites[2].fileName = "sprites/bard.png";
         testSprites[2].AP = 4;
         testSprites[2].HP = 4;
         testSprites[2].range = 4;
 
         testSprites[3].name = "Desert Soldier";
-        testSprites[3].pixMap.load("sprites/desertsoldier.png");
+        //testSprites[3].pixMap.load("sprites/desertsoldier.png");
+        testSprites[3].fileName = "sprites/desertsoldier.png";
         testSprites[3].AP = 4;
         testSprites[3].HP = 6;
         testSprites[3].range = 8;
@@ -286,7 +297,7 @@ void Database::testGenerateUsers()
 
         testUsers[0].units[0].status = UNIT_OK;
         testUsers[0].units[0].name = "Wizard";
-        testUsers[0].units[0].pixMap.load("sprites/wizard.png");
+        testUsers[0].units[0].imageFileName = "sprites/wizard.png";
         testUsers[0].units[0].attackPower = 2;
         testUsers[0].units[0].hitPoints = 2;
         testUsers[0].units[0].attackRange = 2;
@@ -301,14 +312,14 @@ void Database::testGenerateUsers()
 
         testUsers[1].units[0].status = UNIT_OK;
         testUsers[1].units[0].name = "Monk";
-        testUsers[1].units[0].pixMap.load("sprites/buddhist.png");
+        testUsers[1].units[0].imageFileName = "sprites/buddhist.png";
         testUsers[1].units[0].attackPower = 4;
         testUsers[1].units[0].hitPoints = 4;
         testUsers[1].units[0].attackRange = 4;
 
         testUsers[1].units[2].status = UNIT_OK;
         testUsers[1].units[2].name = "Desert Soldier";
-        testUsers[1].units[2].pixMap.load("sprites/desertsoldier.png");
+        testUsers[1].units[2].imageFileName = "sprites/desertsoldier.png";
         testUsers[1].units[2].attackPower = 6;
         testUsers[1].units[2].hitPoints = 6;
         testUsers[1].units[2].attackRange = 6;
@@ -322,28 +333,28 @@ void Database::testGenerateUsers()
 
         testUsers[2].units[0].status = UNIT_OK;
         testUsers[2].units[0].name = "Bard";
-        testUsers[2].units[0].pixMap.load("sprites/bard.png");
+        testUsers[2].units[0].imageFileName = "sprites/bard.png";
         testUsers[2].units[0].attackPower = 2;
         testUsers[2].units[0].hitPoints = 4;
         testUsers[2].units[0].attackRange = 6;
 
         testUsers[2].units[1].status = UNIT_OK;
         testUsers[2].units[1].name = "Wizard";
-        testUsers[2].units[1].pixMap.load("sprites/wizard.png");
+        testUsers[2].units[1].imageFileName = "sprites/wizard.png";
         testUsers[2].units[1].attackPower = 6;
         testUsers[2].units[1].hitPoints = 4;
         testUsers[2].units[1].attackRange = 2;
 
         testUsers[2].units[2].status = UNIT_DEAD;
         testUsers[2].units[2].name = "Monk";
-        testUsers[2].units[2].pixMap.load("sprites/buddhist.png");
+        testUsers[2].units[2].imageFileName = "sprites/buddhist.png";
         testUsers[2].units[2].attackPower = 5;
         testUsers[2].units[2].hitPoints = 5;
         testUsers[2].units[2].attackRange = 5;
 
         testUsers[2].units[3].status = UNIT_DEAD;
         testUsers[2].units[3].name = "Priestess";
-        testUsers[2].units[3].pixMap.load("sprites/priestess.png");
+        testUsers[2].units[3].imageFileName = "sprites/priestess.png";
         testUsers[2].units[3].attackPower = 5;
         testUsers[2].units[3].hitPoints = 5;
         testUsers[2].units[3].attackRange = 5;
