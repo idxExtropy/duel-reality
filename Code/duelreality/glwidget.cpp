@@ -30,13 +30,13 @@ void GLWidget::unitTest_GenerateContent()
     battleMap.gridHeight = 0.58;
 
     // Create a new unit (for gl debug purposes).
-    unit[0].name = "Wizard";
+    unit[0].name = "Knight";
     unit[0].actionTime = 10;
     unit[0].actionRate = 150;
     unit[0].hitPoints = 80;
     unit[0].totalHitPoints = 100;
-    unit[0].image.load("sprites/wizard.png");
-    unit[0].mask_image.load("sprites/mask_wizard.png");
+    unit[0].image.load("sprites/knight.png");
+    unit[0].mask_image.load("sprites/mask_knight.png");
     unit[0].status = UNIT_OK;
     unit[0].vLocation = 1;
     unit[0].hLocation = 2;
@@ -46,13 +46,13 @@ void GLWidget::unitTest_GenerateContent()
     unit[0].movementRate = 1;
 
     // Create a new unit (for gl debug purposes).
-    unit[1].name = "Monk";
+    unit[1].name = "Crusader";
     unit[1].actionTime = 10;
     unit[1].actionRate = 200;
     unit[1].hitPoints = 67;
     unit[1].totalHitPoints = 100;
-    unit[1].image.load("sprites/buddhist.png");
-    unit[1].mask_image.load("sprites/mask_buddhist.png");
+    unit[1].image.load("sprites/crusader.png");
+    unit[1].mask_image.load("sprites/mask_crusader.png");
     unit[1].status = UNIT_OK;
     unit[1].vLocation = 2;
     unit[1].hLocation = 1;
@@ -62,13 +62,13 @@ void GLWidget::unitTest_GenerateContent()
     unit[1].movementRate = 2;
 
     // Create a new unit (for gl debug purposes).
-    unit[2].name = "Bard";
-    unit[2].actionTime = 40;
-    unit[2].actionRate = 100;
+    unit[2].name = "Thai Boxer";
+    unit[2].actionTime = 60;
+    unit[2].actionRate = 200;
     unit[2].hitPoints = 10;
     unit[2].totalHitPoints = 100;
-    unit[2].image.load("sprites/bard.png");
-    unit[2].mask_image.load("sprites/mask_bard.png");
+    unit[2].image.load("sprites/thaiboxer.png");
+    unit[2].mask_image.load("sprites/mask_thaiboxer.png");
     unit[2].status = UNIT_OK;
     unit[2].vLocation = 3;
     unit[2].hLocation = 2;
@@ -78,13 +78,13 @@ void GLWidget::unitTest_GenerateContent()
     unit[2].movementRate = 1;
 
     // Create a new unit (for gl debug purposes).
-    unit[3].name = "Desert Soldier";
+    unit[3].name = "Assassin";
     unit[3].actionTime = 40;
     unit[3].actionRate = 100;
     unit[3].hitPoints = 30;
     unit[3].totalHitPoints = 100;
-    unit[3].image.load("sprites/desertsoldier.png");
-    unit[3].mask_image.load("sprites/mask_desertsoldier.png");
+    unit[3].image.load("sprites/assassin.png");
+    unit[3].mask_image.load("sprites/mask_assassin.png");
     unit[3].status = UNIT_OK;
     unit[3].vLocation = 3;
     unit[3].hLocation = 5;
@@ -94,13 +94,13 @@ void GLWidget::unitTest_GenerateContent()
     unit[3].movementRate = 2;
 
     // Create a new unit (for gl debug purposes).
-    unit[4].name = "Criminal";
+    unit[4].name = "Berserker";
     unit[4].actionTime = 40;
     unit[4].actionRate = 100;
     unit[4].hitPoints = 22;
     unit[4].totalHitPoints = 100;
-    unit[4].image.load("sprites/criminal.png");
-    unit[4].mask_image.load("sprites/mask_criminal.png");
+    unit[4].image.load("sprites/berserker.png");
+    unit[4].mask_image.load("sprites/mask_berserker.png");
     unit[4].status = UNIT_OK;
     unit[4].vLocation = 1;
     unit[4].hLocation = 5;
@@ -110,13 +110,13 @@ void GLWidget::unitTest_GenerateContent()
     unit[4].movementRate = 2;
 
     // Create a new unit (for gl debug purposes).
-    unit[5].name = "Priestess";
+    unit[5].name = "Valkyrie";
     unit[5].actionTime = 40;
     unit[5].actionRate = 100;
     unit[5].hitPoints = 10;
     unit[5].totalHitPoints = 100;
-    unit[5].image.load("sprites/priestess.png");
-    unit[5].mask_image.load("sprites/mask_priestess.png");
+    unit[5].image.load("sprites/valkyrie.png");
+    unit[5].mask_image.load("sprites/mask_valkyrie.png");
     unit[5].status = UNIT_OK;
     unit[5].vLocation = 4;
     unit[5].hLocation = 7;
@@ -268,7 +268,7 @@ void GLWidget::paintGL()
             if (unit[i].isPending)
             {
                 // Draw information header.
-                glColor4f( 0.0f, 0.0f, 0.2f, 0.8f );
+                glColor4f( 0.0f, 0.0f, 0.2f, 0.9f );
                 glBegin (GL_QUADS);
                     glVertex3f (15, GLWidget::height() - 20, 0.0);
                     glVertex3f (15 + 250, GLWidget::height() - 20, 0.0);
@@ -336,7 +336,7 @@ void GLWidget::paintGL()
             if (battleMap.gridCell[i][j].isSelected && battleMap.gridCell[i][j].isUnit)
             {
                 // Draw information header.
-                glColor4f( 0.2f, 0.0f, 0.0f, 0.8f );
+                glColor4f( 0.2f, 0.0f, 0.0f, 0.9f );
                 glBegin (GL_QUADS);
                     glVertex3f (GLWidget::width() - 265, GLWidget::height() - 20, 0.0);
                     glVertex3f (GLWidget::width() - 15, GLWidget::height() - 20, 0.0);
@@ -380,7 +380,7 @@ void GLWidget::paintGL()
                 vLoc -= 15;
 
                 // Unit movement rate.
-                itoa(unit[i].movementRate, tmpString, 10);
+                itoa(battleMap.gridCell[i][j].unit->movementRate, tmpString, 10);
                 displayString = "Movement Rate: ";
                 displayString.append(tmpString);
                 renderText (GLWidget::width() - 250, vLoc, 0.0, displayString.c_str());
