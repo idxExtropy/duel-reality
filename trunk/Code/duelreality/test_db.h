@@ -51,16 +51,17 @@ public:
     Sprite      loadSprite(QString &spriteName);    // Returns sprite data for associated sprite name
 
 
-    void addUser(User user);                                // Creates user player data
-    void addUser(QString &userName);
-    void saveUser(QString &userName, User user);
-    int userCount();                                        // Returns total number of user player data entries
+    void    addUser(User user);                                // Creates user player data
+    void    addUser(QString &userName);
+    void    saveUser(QString &userName, User user);
+    int     userCount();                                        // Returns total number of user player data entries
+    int     loadXP(QString &userName) const;
     QString userName(int index) const;                      // Returns user player name in entry index
-    User loadUser(const QString &userName);                 // Returns user player data for associate user player name
-    void saveUnits(QString &userName, QList<Unit> units);   // Saves array of units in user player data
+    User    loadUser(const QString &userName);                 // Returns user player data for associate user player name
+    void    saveUnits(QString &userName, QList<Unit> units);   // Saves array of units in user player data
     QList<Unit> loadUnits(QString &userName);               // Loads array of units from user player data
     void    saveMap(QString &userName, Map map);
-    Map   loadMap(QString &mapName);
+    Map     loadMap(QString &mapName);
 
 private:
     static QList<Map> mapList;

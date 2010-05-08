@@ -10,6 +10,7 @@ class QAction;
 class QMenu;
 class GLWidget;
 class NewGameWizard;
+class LoadGameWizard;
 
 
 class MainWindow : public QMainWindow
@@ -35,9 +36,9 @@ public slots:
     void onUserTurn();      // Enables user turn interactions
 
 private slots:
-    void newGame();     // Calls New Game dialogs
-    void about();       // Calls About Game dialogs
-    //void loadGame();    // Calls Load Game dialogs
+    void newGame();         // Calls New Game dialogs
+    void about();           // Calls About Game dialogs
+    void loadGame();        // Calls Load Game dialogs
     //bool exitGame();    // Exits game
     //bool saveGame();    // Calls Save Game dialog    
     void endTurnClicked();  // Disables user turn interactions

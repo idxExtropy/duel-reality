@@ -168,6 +168,19 @@ User Database::loadUser(const QString &userName)
 }
 
 
+
+int Database::loadXP(QString &userName) const
+{
+    int i;
+
+    for (i = 0; i < userList.count(); i++)
+        if (userList[i].name == userName)
+            return userList[i].experiencePoints;
+
+    return 0;
+}
+
+
 void Database::saveUnits(QString &userName, QList<Unit> units)
 {
     int i;

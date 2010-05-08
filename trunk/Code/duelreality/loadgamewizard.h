@@ -1,5 +1,5 @@
-#ifndef NEWGAMEWIZARD_H
-#define NEWGAMEWIZARD_H
+#ifndef LOADGAMEWIZARD_H
+#define LOADGAMEWIZARD_H
 
 #include <QWizard>
 
@@ -13,31 +13,26 @@ class QComboBox;
 class QRadioButton;
 class QPushButton;
 
-class NewGameWizard : public QWizard
+class LoadGameWizard : public QWizard
 {
     Q_OBJECT
 
 public:
     enum {  Page_Intro,
-            Page_CreatePlayer,
             Page_LoadPlayer,
             Page_RecruitUnits,
-            Page_SelectMode,
+            Page_UpgradeUnits,
             Page_SelectMap,
             Page_Conclusion };
 
-    NewGameWizard(QWidget *parent = 0);
+    LoadGameWizard(QWidget *parent = 0);
 
     static void setPlayerName(const QString &userName);
-
-    //static User     tempUser;
-
-//private:
     static QString  playerName;
 
 private slots:
     void    showHelp();
-    void    nextButtonClicked();
+    //void    nextButtonClicked();
 
 private:
     Database    db;
@@ -45,46 +40,28 @@ private:
 };
 
 
-class IntroPage : public QWizardPage
+class IntroPageL : public QWizardPage
 {
     Q_OBJECT
 
 public:
-    IntroPage(QWidget *parent = 0);
+    IntroPageL(QWidget *parent = 0);
 
     int nextId() const;
 
 private:
     QLabel          *topLabel;
-    QRadioButton    *newPlayerRadioButton;
-    QRadioButton    *returningPlayerRadioButton;
+    //QRadioButton    *newPlayerRadioButton;
+    //QRadioButton    *returningPlayerRadioButton;
 };
 
-class CreatePlayerPage : public QWizardPage
+
+class LoadPlayerPageL : public QWizardPage
 {
     Q_OBJECT
 
 public:
-    CreatePlayerPage(QWidget *parent = 0);
-
-    int nextId() const;
-
-private slots:
-    //void playerNameCreated(QString &);
-    void playerNameCreated(const QString &);
-
-private:
-    QLabel      *playerNameLabel;
-    QLineEdit   *playerNameLineEdit;
-    Database    db;
-};
-
-class LoadPlayerPage : public QWizardPage
-{
-    Q_OBJECT
-
-public:
-    LoadPlayerPage(QWidget *parent = 0);
+    LoadPlayerPageL(QWidget *parent = 0);
 
     int nextId() const;
 
@@ -99,12 +76,12 @@ private:
 };
 
 
-class RecruitUnitsPage : public QWizardPage
+class RecruitUnitsPageL : public QWizardPage
 {
     Q_OBJECT
 
 public:
-    RecruitUnitsPage(QWidget *parent = 0);
+    RecruitUnitsPageL(QWidget *parent = 0);
 
     int nextId() const;
     //void test_GenerateSprites();
@@ -145,29 +122,29 @@ private:
     Database                db;
 };
 
-
-class SelectModePage : public QWizardPage
+class UpgradeUnitsPageL : public QWizardPage
 {
     Q_OBJECT
 
 public:
-    SelectModePage(QWidget *parent = 0);
+    UpgradeUnitsPageL(QWidget *parent = 0);
 
     int nextId() const;
 
+private slots:
+    
+
 private:
-    //QLabel          *topLabel;
-    QRadioButton    *campaignModeRadioButton;
-    QRadioButton    *freePlayModeRadioButton;
+    Database    db;
 };
 
 
-class SelectMapPage : public QWizardPage
+class SelectMapPageL : public QWizardPage
 {
     Q_OBJECT
 
 public:
-    SelectMapPage(QWidget *parent = 0);
+    SelectMapPageL(QWidget *parent = 0);
 
     int nextId() const;
 
@@ -188,12 +165,12 @@ private:
     Database    db;
 };
 
-class ConclusionPage : public QWizardPage
+class ConclusionPageL : public QWizardPage
 {
     Q_OBJECT
 
 public:
-    ConclusionPage(QWidget *parent = 0);
+    ConclusionPageL(QWidget *parent = 0);
 
     //void initializePage();
     int nextId() const;
@@ -206,4 +183,4 @@ private:
     QLabel *bottomLabel;
 };
 
-#endif // NEWGAMEWIZARD_H
+#endif // LOADGAMEWIZARD_H

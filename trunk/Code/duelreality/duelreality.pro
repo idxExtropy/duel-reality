@@ -9,11 +9,13 @@ HEADERS += mainwindow.h \
     test_db.h \
     newgamewizard.h \
     globals.h \
-    mechanics.h
+    mechanics.h \
+    loadgamewizard.h
 SOURCES += mainwindow.cpp \
     glwidget.cpp \
     main.cpp \
     usernamedialog.cpp \
     test_db.cpp \
     newgamewizard.cpp \
-    mechanics.cpp
+    mechanics.cpp \
+    loadgamewizard.cpp
