@@ -669,7 +669,7 @@ void GLWidget::resizeGL(int width, int height)
     // (Re)Calculate the OpenGL object dimensions.
     fullWidth = width;
     fullHeight = height * battleMap.gridHeight;
-    statusWidth = (fullWidth / battleMap.cellsWide) * 0.1f;
+    statusWidth = (fullWidth / battleMap.cellsWide) * 0.05f;
     cellWidth = fullWidth / battleMap.cellsWide;
     cellHeight = fullHeight / battleMap.cellsTall;
 
