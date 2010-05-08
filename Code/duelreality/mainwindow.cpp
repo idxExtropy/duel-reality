@@ -123,8 +123,8 @@ void MainWindow::createActions()
     actionMove->setShortcut(tr("Ctrl+M"));
     actionMove->setStatusTip(tr("Move unit"));
     connect(this, SIGNAL(isBattleMode(bool)), actionMove, SLOT(setEnabled(bool)));
-    //connect(actionMove, SIGNAL(triggered()), this, SLOT(move()));
-
+    connect(actionMove, SIGNAL(triggered()), this, SIGNAL(move()));
+connect(this, SIGNAL(signalmove()), mech, SLOT(move()));
     actionEndTurn = new QAction(tr("&End Turn"), this);
     actionEndTurn->setIcon(QIcon("icons/endturn.png"));
     actionEndTurn->setShortcut(tr("Ctrl+T"));
