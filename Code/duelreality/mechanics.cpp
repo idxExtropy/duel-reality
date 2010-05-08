@@ -50,35 +50,7 @@ void mechanics::handleAI()
 
 
 
-void mechanics::attackUnit()
-{
-    int vAttackerLoc = 0, hAttackerLoc = 0, damage = 0;
 
-    for (int i = 0; i < glWidget->battleMap.cellsTall; i++)
-    {
-        for (int j = 0; j < glWidget->battleMap.cellsWide; j++)
-        {
-            if (glWidget->battleMap.gridCell[i][j].unit->isPending)
-            {
-                // Get the upcoming attack power and location.
-                damage = glWidget->battleMap.gridCell[i][j].unit->attackPower;
-                vAttackerLoc = glWidget->battleMap.gridCell[i][j].unit->vLocation;
-                hAttackerLoc = glWidget->battleMap.gridCell[i][j].unit->hLocation;
-            }
-        }
-    }
-
-    for (int i = 0; i < glWidget->battleMap.cellsTall; i++)
-    {
-        for (int j = 0; j < glWidget->battleMap.cellsWide; j++)
-        {
-            if (glWidget->battleMap.gridCell[i][j].isSelected)
-            {
-                glWidget->hitUnit(i,j,damage,vAttackerLoc,hAttackerLoc);
-            }
-        }
-    }
-}
 
 ///////////////////////////////////////////////////BATTLE ACTIVE///////////////////////////
 //Returns whether a battle is active
@@ -138,8 +110,6 @@ void mechanics::moveUnit()
     }
 }
 
-
-
 //Determines Whether a move is valid
 bool mechanics::isValidMove(int vLoc, int hLoc,int vnext,int hnext)
 {
@@ -165,7 +135,6 @@ if(!mechanics::isOccupied(hnext, vnext))
     }
 return (false);
 }
-
 //Determines if a space is occupied
 bool mechanics::isOccupied(int x, int y)  ///DOUBLECHECK
 {
@@ -179,64 +148,82 @@ bool mechanics::isOccupied(int x, int y)  ///DOUBLECHECK
 
 
 ////////////////////////////////////////////////ATTACK////////////////////////////////////////////////
-void mechanics::attack()
+void mechanics::attackUnit()
 {
-    mechanics::getPending();
-    mechanics::getGridCellSelected();
-    Unit *a= mechanics::getUnit(targetx,targety);
-    Unit *Target = a;
+    int vAttackerLoc = 0, hAttackerLoc = 0, damage = 0, range =0;
 
-        if(isValidAttack(FocusUnit->actionPoints, FocusUnit->movementRate, FocusUnit->hLocation, FocusUnit->vLocation, FocusUnit->attackRange, targetx, targety))
+    for (int i = 0; i < glWidget->battleMap.cellsTall; i++)
+    {
+        for (int j = 0; j < glWidget->battleMap.cellsWide; j++)
         {
-        Target->hitPoints-=FocusUnit->attackPower;
-        if(Target->hitPoints<=0)
-          {
-          Target->status= UNIT_DEAD;
+            if (glWidget->battleMap.gridCell[i][j].unit->isPending)
+            {
+                // Get the upcoming attack power and location.
+                damage = glWidget->battleMap.gridCell[i][j].unit->attackPower;
+                vAttackerLoc = glWidget->battleMap.gridCell[i][j].unit->vLocation;
+                hAttackerLoc = glWidget->battleMap.gridCell[i][j].unit->hLocation;
+                range = glWidget->battleMap.gridCell[i][j].unit->attackRange;
             }
-        mechanics::isGameOver();
         }
-
+    }
+    for (int i = 0; i < glWidget->battleMap.cellsTall; i++)
+    {
+        for (int j = 0; j < glWidget->battleMap.cellsWide; j++)
+        {
+            if (glWidget->battleMap.gridCell[i][j].isSelected)
+            {
+           //     if(mechanics::isValidAttack( i,j, range, vAttackerLoc, hAttackerLoc))
+            //    {
+                  if (glWidget->battleMap.gridCell[i][j].unit->hitPoints<=glWidget->battleMap.gridCell[vAttackerLoc][hAttackerLoc].unit->attackPower)
+                  {
+                   glWidget->killUnit(i,j,vAttackerLoc, hAttackerLoc);
+                  }
+                 else glWidget->hitUnit(i,j,damage,vAttackerLoc,hAttackerLoc);
+          //    }
+            }
+        }
+    }
 }
 //Determines Whether an attack is valid
-bool mechanics::isValidAttack(int actionpoints, int moverate, int hLoc, int vLoc, int atkrange, int x, int  y)
+bool mechanics::isValidAttack(int targv, int targh, int atkrange, int atkrv, int  atkrh)
 {
-if(mechanics::isOccupied(x, y))
+if(mechanics::isOccupied(targh, targv))
        {
-
-                if((vLoc==y)||(hLoc==x))
+                if((atkrv==targv)||(atkrh==targh))//no diagonals
                 {
-                        if(((abs(vLoc-y))<=atkrange)&&((abs(hLoc-x))<=atkrange))
+                        if(((abs(atkrv-targv))<=atkrange)&&((abs(atkrh-targh))<=atkrange))
                         {
                         return (true);
                         }
+                        return false;
                 }
                 return(false);
 
-}
-return (false);
+        }
+        return (false);
 }
 ///*
-// if there is a unit with isPending=true, loads FocusUnit pointer to address of that unit - called by move/attack
-bool mechanics::getPending()
-{
-    for(int x=0;x<=glWidget->battleMap.cellsTall;x++)
-    {
-        for(int y=0;y<=glWidget->battleMap.cellsWide;y++)
-        {
-          if(glWidget->battleMap.gridCell[x][y].unit->isPending)
-          {
-          FocusUnit=glWidget->battleMap.gridCell[x][y].unit;
-          return true;
-          }
-          return (false);
-        }
-    }return (false);
-}
-
-Unit *mechanics::getUnit(int x, int y)
-     {
-        return glWidget->battleMap.gridCell[y][x].unit;    //vLoc, HLoc order in glwidget.cpp
-     }
+//// if there is a unit with isPending=true, loads FocusUnit pointer to address of that unit - called by move/attack
+//bool mechanics::getPending()
+//{
+//    for(int x=0;x<=glWidget->battleMap.cellsTall;x++)
+//    {
+//        for(int y=0;y<=glWidget->battleMap.cellsWide;y++)
+//        {
+//          if(glWidget->battleMap.gridCell[x][y].unit->isPending)
+//          {
+//          FocusUnit=glWidget->battleMap.gridCell[x][y].unit;
+//          return true;
+//          }
+//          return (false);
+//        }
+//    }return (false);
+//}
+//
+//Unit *mechanics::getUnit(int x, int y)
+//     {
+//        return glWidget->battleMap.gridCell[y][x].unit;    //vLoc, HLoc order in glwidget.cpp
+//     }
 
 /////////////////////////////////////////////////////////////FOCUS////////////////////
 
@@ -245,25 +232,25 @@ Unit *mechanics::getUnit(int x, int y)
 /////////////////////////////////////////////
 //
 //finds which gridCell is selected, passes coordinates to targetx & target y
-bool mechanics::getGridCellSelected() //2D array of pointers of type gridBox
-{
-    int *ip1 = &targetx;
-    int *ip2 = &targety;
-        for(int x=0;x<=glWidget->battleMap.cellsTall;x++)
-        {
-         for(int y=0;y<=glWidget->battleMap.cellsWide;y++)
-         {
-                if(glWidget->battleMap.gridCell[x][y].isSelected)
-                {
-                        *ip1=x;
-                        *ip2=y;
-                        return (true);
-
-                }
-               return (false);
-         }
-        }return (false);
-}
+//bool mechanics::getGridCellSelected() //2D array of pointers of type gridBox
+//{
+//    int *ip1 = &targetx;
+//    int *ip2 = &targety;
+//        for(int x=0;x<=glWidget->battleMap.cellsTall;x++)
+//        {
+//         for(int y=0;y<=glWidget->battleMap.cellsWide;y++)
+//         {
+//                if(glWidget->battleMap.gridCell[x][y].isSelected)
+//                {
+//                        *ip1=x;
+//                        *ip2=y;
+//                        return (true);
+//
+//                }
+//               return (false);
+//         }
+//        }return (false);
+//}
 //////////////////////////////////////////////////TURNS//////////////////////////////////////////////
 ////executes when passed ENDTURN SIGNAL
 ////deselect focus unit?
@@ -313,13 +300,13 @@ bool mechanics::isGameOver()
     }
     return false;
 }
-////////////////////////////////////////////////////AI/////////////////////////////////////
- void mechanics::startAI()
-{
-
-    //AI myAI;
-   //bool result = myAI.getmove(px,py);
-     // if(result){move(Unit *UnitPointer,int x, int y);
-     //mechanics::isGameOver();
-
-}
+//////////////////////////////////////////////////////AI/////////////////////////////////////
+// void mechanics::startAI()
+//{
+//
+//    //AI myAI;
+//   //bool result = myAI.getmove(px,py);
+//     // if(result){move(Unit *UnitPointer,int x, int y);
+//     //mechanics::isGameOver();
+//
+//}

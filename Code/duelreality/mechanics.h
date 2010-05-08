@@ -40,30 +40,26 @@ signals:
 
 public slots:
 
- void attack();   //slot for attack
- //void endTurn();            //slot
-
-
 private:
    int targetx;
    int targety;
     bool isValidMove(int vloc, int hloc,int vnext,int hnext);
-    bool isValidAttack(int actionpoints, int moverate, int hLoc, int vLoc, int atkrange, int x, int  y);
+    bool isValidAttack(int targv, int targh, int atkrange, int atkrv, int  atkrh);
     bool isOccupied(int x, int y);
 
-   int nextPlayer() {return iNextplayer;}
-   void setNextPlayer(int player){iNextplayer=player;}
-   bool isUnitAt(int x, int y, Unit *UnitRetrieved);
+ //  int nextPlayer() {return iNextplayer;}
+  // void setNextPlayer(int player){iNextplayer=player;}
+ //  bool isUnitAt(int x, int y, Unit *UnitRetrieved);
    //    void endTurn();
     bool isGameOver();
     Unit *FocusUnit;
     bool gamerunning;
-    int iNextplayer;
+  //  int iNextplayer;
     bool battleRunning;
-    void startAI();
-    bool getGridCellSelected();
-    bool getPending();
-    Unit *getUnit(int x, int y);
+//    void startAI();
+  //  bool getGridCellSelected();
+   // bool getPending();
+  //  Unit *getUnit(int x, int y);
 };
 
 #endif // MECHANICS_H
