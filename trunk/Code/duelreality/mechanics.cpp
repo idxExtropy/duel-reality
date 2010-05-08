@@ -18,13 +18,13 @@ mechanics::~mechanics()
 
 void mechanics::handleAI()
 {
-    for (int i = 0; i < glWidget->battleMap.cellsWide; i++)
+    for (int i = 0; i < glWidget->battleMap.cellsTall; i++)
     {
-        for (int j = 0; j < glWidget->battleMap.cellsTall; j++)
+        for (int j = 0; j < glWidget->battleMap.cellsWide; j++)
         {
-            if (glWidget->battleMap.gridCell[i][j].unit->isPending)
+            if (glWidget->battleMap.gridCell[i][j].unit->isPending && glWidget->battleMap.gridCell[i][j].unit->team == AI_UNIT)
             {
-                glWidget->battleMap.gridCell[i][j].unit->vLocation++;
+                glWidget->moveUnit(i,j,i+1,j-1);
                 glWidget->battleMap.gridCell[i][j].unit->actionTime=0;
                 glWidget->battleMap.gridCell[i][j].unit->hitPoints-=10;
                 glWidget->battleMap.gridCell[i][j].unit->isPending=false;

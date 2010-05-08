@@ -100,6 +100,7 @@ void GLWidget::unitTest_GenerateContent()
     unit[0].attackRange = 3;
     unit[0].faceLeft = false;
     unit[0].movementRate = 1;
+    unit[0].team = USER_UNIT;
 
     // Create a new unit (for gl debug purposes).
     unit[1].name = "Crusader";
@@ -116,6 +117,7 @@ void GLWidget::unitTest_GenerateContent()
     unit[1].attackRange = 3;
     unit[1].faceLeft = false;
     unit[1].movementRate = 2;
+    unit[1].team = USER_UNIT;
 
     // Create a new unit (for gl debug purposes).
     unit[2].name = "Thai Boxer";
@@ -132,11 +134,12 @@ void GLWidget::unitTest_GenerateContent()
     unit[2].attackRange = 3;
     unit[2].faceLeft = false;
     unit[2].movementRate = 1;
+    unit[1].team = USER_UNIT;
 
     // Create a new unit (for gl debug purposes).
     unit[3].name = "Assassin";
     unit[3].actionTime = 40;
-    unit[3].actionRate = 100;
+    unit[3].actionRate = 101;
     unit[3].hitPoints = 30;
     unit[3].totalHitPoints = 100;
     unit[3].image.load("sprites/assassin.png");
@@ -148,11 +151,12 @@ void GLWidget::unitTest_GenerateContent()
     unit[3].attackRange = 3;
     unit[3].faceLeft = true;
     unit[3].movementRate = 2;
+    unit[3].team = AI_UNIT;
 
     // Create a new unit (for gl debug purposes).
     unit[4].name = "Berserker";
     unit[4].actionTime = 40;
-    unit[4].actionRate = 100;
+    unit[4].actionRate = 102;
     unit[4].hitPoints = 22;
     unit[4].totalHitPoints = 100;
     unit[4].image.load("sprites/berserker.png");
@@ -164,11 +168,12 @@ void GLWidget::unitTest_GenerateContent()
     unit[4].attackRange = 3;
     unit[4].faceLeft = true;
     unit[4].movementRate = 2;
+    unit[4].team = AI_UNIT;
 
     // Create a new unit (for gl debug purposes).
     unit[5].name = "Valkyrie";
     unit[5].actionTime = 40;
-    unit[5].actionRate = 100;
+    unit[5].actionRate = 103;
     unit[5].hitPoints = 10;
     unit[5].totalHitPoints = 100;
     unit[5].image.load("sprites/valkyrie.png");
@@ -180,6 +185,7 @@ void GLWidget::unitTest_GenerateContent()
     unit[5].attackRange = 3;
     unit[5].faceLeft = true;
     unit[5].movementRate = 1;
+    unit[5].team = AI_UNIT;
 
     for (int i = 0; i < MAX_MAP_UNITS; i++)
     {
@@ -274,23 +280,17 @@ void GLWidget::paintGL()
             // Update the action time (unitTest).
             if (unit[i].actionTime >= 100)
             {
-                if (unit[i].actionTime == 100)
-                {
-                    // Play 'ready' sound.
-                    QSound *soundBkgnd = new QSound("sounds/blip.wav");
-                    soundBkgnd->play();
+                // Play 'ready' sound.
+                QSound *soundBkgnd = new QSound("sounds/blip.wav");
+                soundBkgnd->play();
 
-                    // The unit is ready to go, so pause the game.
-                    battleMap.gridCell[unit[i].vLocation][unit[i].hLocation].unit->isPending = true;
-                    isPending = true;
+                // The unit is ready to go, so pause the game.
+                battleMap.gridCell[unit[i].vLocation][unit[i].hLocation].unit->isPending = true;
+                isPending = true;
 
-                    // Tell mechanics to handl AI.
-                    mech->handleAI();
-                    break;
-                }
-
-                // Reset the action time.
-                unit[i].actionTime = 0;
+                // Tell mechanics to handle AI.
+                mech->handleAI();
+                break;
             }
             unit[i].actionTime += 0.005 * unit[i].actionRate;
         }
@@ -818,4 +818,10 @@ void GLWidget::setBackgroundTrack(QString trackFileName)
     music->stop();
     music = Phonon::createPlayer(Phonon::MusicCategory, Phonon::MediaSource(trackFileName));
     music->play();
+}
+
+void GLWidget::moveUnit(int vLocPrev, int hLocPrev, int vLocNext, int hLocNext)
+{
+    battleMap.gridCell[vLocPrev][hLocPrev].unit->vLocation = vLocNext;
+    battleMap.gridCell[vLocPrev][hLocPrev].unit->hLocation = hLocNext;
 }
