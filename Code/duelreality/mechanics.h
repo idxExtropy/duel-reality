@@ -24,6 +24,7 @@ public:
     void endBattle();
     void handleAI();
     void moveUnit();
+    void attackUnit();
 
 signals:
  void SignalP1Win();   //signal emited from isGameOVer if P1 Wins

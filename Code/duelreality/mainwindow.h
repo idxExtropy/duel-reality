@@ -36,6 +36,7 @@ public slots:
     void onBattleEnd();     // Disables battle interactions
     void onUserTurn();      // Enables user turn interactions
     void onMove();
+    void onAttack();
 
 private slots:
     void newGame();         // Calls New Game dialogs

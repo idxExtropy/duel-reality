@@ -829,3 +829,21 @@ void GLWidget::moveUnit(int vLocPrev, int hLocPrev, int vLocNext, int hLocNext)
     battleMap.gridCell[vLocPrev][hLocPrev].unit->actionTime = 0;
     isPending = false;
 }
+
+void GLWidget::hitUnit(int vLocation, int hLocation, int damage, int vAttackerLoc, int hAttackerLoc)
+{
+    battleMap.gridCell[vLocation][hLocation].unit->hitPoints -= damage;
+
+    battleMap.gridCell[vAttackerLoc][hAttackerLoc].unit->isPending = false;
+    battleMap.gridCell[vAttackerLoc][hAttackerLoc].unit->actionTime = 0;
+    isPending = false;
+}
+
+void GLWidget::killUnit(int vLocation, int hLocation, int vAttackerLoc, int hAttackerLoc)
+{
+    battleMap.gridCell[vLocation][hLocation].unit->status = NO_UNIT;
+
+    battleMap.gridCell[vAttackerLoc][hAttackerLoc].unit->isPending = false;
+    battleMap.gridCell[vAttackerLoc][hAttackerLoc].unit->actionTime = 0;
+    isPending = false;
+}

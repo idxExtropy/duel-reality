@@ -116,7 +116,7 @@ void MainWindow::createActions()
     actionAttack->setShortcut(tr("Ctrl+A"));
     actionAttack->setStatusTip(tr("Attack opponent"));
     connect(this, SIGNAL(isBattleMode(bool)), actionAttack, SLOT(setEnabled(bool)));
-    //connect(actionAttack, SIGNAL(triggered()), this, SLOT(attack()));
+    connect(actionAttack, SIGNAL(triggered()), this, SLOT(onAttack()));
 
     actionMove = new QAction(tr("&Move"), this);
     actionMove->setIcon(QIcon("icons/rightarrow.png"));
@@ -124,7 +124,7 @@ void MainWindow::createActions()
     actionMove->setStatusTip(tr("Move unit"));
     connect(this, SIGNAL(isBattleMode(bool)), actionMove, SLOT(setEnabled(bool)));
     connect(actionMove, SIGNAL(triggered()), this, SLOT(onMove()));
-    //connect(this, SIGNAL(signalmove()), mech, SLOT(move()));
+
     actionEndTurn = new QAction(tr("&End Turn"), this);
     actionEndTurn->setIcon(QIcon("icons/endturn.png"));
     actionEndTurn->setShortcut(tr("Ctrl+T"));
@@ -136,6 +136,11 @@ void MainWindow::createActions()
 void MainWindow::onMove()
 {
     mech->moveUnit();
+}
+
+void MainWindow::onAttack()
+{
+    mech->attackUnit();
 }
 
 void MainWindow::onBattleStart()
