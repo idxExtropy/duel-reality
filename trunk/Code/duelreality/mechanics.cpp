@@ -34,6 +34,38 @@ void mechanics::handleAI()
     }
 }
 
+void mechanics::moveUnit()
+{
+    int vLocNext = 0, hLocNext = 0;
+    for (int i = 0; i < glWidget->battleMap.cellsTall; i++)
+    {
+        for (int j = 0; j < glWidget->battleMap.cellsWide; j++)
+        {
+            if (glWidget->battleMap.gridCell[i][j].isSelected)
+            {
+                vLocNext = i;
+                hLocNext = j;
+            }
+        }
+    }
+
+    for (int i = 0; i < glWidget->battleMap.cellsTall; i++)
+    {
+        for (int j = 0; j < glWidget->battleMap.cellsWide; j++)
+        {
+            if (glWidget->battleMap.gridCell[i][j].unit->isPending)
+            {
+
+                glWidget->moveUnit(i,j,vLocNext,hLocNext);
+                glWidget->battleMap.gridCell[i][j].unit->isPending=false;
+                glWidget->isPending=false;
+                glWidget->battleMap.gridCell[i][j].unit->actionTime=0;
+                return;
+            }
+        }
+    }
+}
+
 ///////////////////////////////////////////////////BATTLE ACTIVE///////////////////////////
 //Returns whether a battle is active
 bool mechanics::isBattle()
