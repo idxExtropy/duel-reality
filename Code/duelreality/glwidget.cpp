@@ -20,7 +20,6 @@ GLWidget::GLWidget()
     // Initialize some variables.
     isPending = false;
     isBattle = false;
-    selectedBorder = 1;
     titleIndex = 0;
     iEventCounter = 0;
 
@@ -134,7 +133,7 @@ void GLWidget::unitTest_GenerateContent()
     unit[2].attackRange = 3;
     unit[2].faceLeft = false;
     unit[2].movementRate = 1;
-    unit[1].team = USER_UNIT;
+    unit[2].team = USER_UNIT;
 
     // Create a new unit (for gl debug purposes).
     unit[3].name = "Assassin";
@@ -328,7 +327,7 @@ void GLWidget::paintGL()
             if (unit[i].isPending)
             {
                 // Draw information header.
-                glColor4f( 0.0f, 0.0f, 0.2f, 0.9f );
+                glColor4f( 0.2f, 0.2f, 0.2f, 0.9f );
                 glBegin (GL_QUADS);
                     glVertex3f (15, GLWidget::height() - 20, 0.0);
                     glVertex3f (15 + 250, GLWidget::height() - 20, 0.0);
@@ -349,7 +348,7 @@ void GLWidget::paintGL()
 
                 // Unit hit points.
                 itoa(unit[i].hitPoints, tmpString, 10);
-                displayString = "Hit Points: ";
+                displayString = "Health: ";
                 displayString.append(tmpString);
                 displayString.append(" / ");
                 itoa(unit[i].totalHitPoints, tmpString, 10);
@@ -417,7 +416,7 @@ void GLWidget::paintGL()
 
                 // Unit hit points.
                 itoa(battleMap.gridCell[i][j].unit->hitPoints, tmpString, 10);
-                displayString = "Hit Points: ";
+                displayString = "Health: ";
                 displayString.append(tmpString);
                 displayString.append(" / ");
                 itoa(battleMap.gridCell[i][j].unit->totalHitPoints, tmpString, 10);
@@ -496,29 +495,28 @@ bool GLWidget::isGridBoxSelected(int i, int j)
 bool GLWidget::drawGridBox(int i, int j)
 {
     // Find out whether or not the current grid is selected.
+    bool isHighlighted = false;
     battleMap.gridCell[i][j].isSelected = isGridBoxSelected(i, j);
 
     // Cell border style.
     int padding = 3;
-    if (battleMap.gridCell[i][j].isSelected)
+    if (battleMap.gridCell[i][j].isSelected || battleMap.gridCell[i][j].unit->isPending)
     {
-        if( selectedBorder == 2 )   selectedBorder = 1;
-        else                        selectedBorder = 2;
-        glLineWidth(selectedBorder);
-        glColor4f( 0.4f, 0.0f, 0.0f, 0.8f );
+       if (battleMap.gridCell[i][j].isSelected)
+        {
+            glColor4f( 0.4f, 0.0f, 0.0f, 0.7f );
+        }
+        else if(battleMap.gridCell[i][j].unit->isPending)
+        {
+            glColor4f( 0.2f, 0.2f, 0.2f, 0.7f );
+        }
+        isHighlighted = true;
     }
     else
     {
         glLineWidth( 1 );
-        glColor4f( 0.4f, 0.4f, 0.4f, 0.8f );
-    }
-
-    if (battleMap.gridCell[i][j].unit->status != NO_UNIT)
-    {
-        if (battleMap.gridCell[i][j].unit->isPending)
-        {
-            glColor4f( 0.0f, 0.0f, 0.4f, 0.8f );
-        }
+        glColor4f( 0.4f, 0.4f, 0.4f, 1.0f );
+        isHighlighted = false;
     }
 
     // Define corner locations (without perspective).
@@ -550,6 +548,26 @@ bool GLWidget::drawGridBox(int i, int j)
         glVertex3f(blLoc.hLoc, blLoc.vLoc, 0.0f);
         glVertex3f(brLoc.hLoc, brLoc.vLoc, 0.0f);
     glEnd();
+
+    if (isHighlighted == true)
+    {
+        glBegin(GL_QUADS);
+            // Bottom left.
+            glVertex3f (blLoc.hLoc, blLoc.vLoc, 0.0);
+
+            // Bottom right.
+            glVertex3f (brLoc.hLoc, brLoc.vLoc, 0.0);
+
+            // Top right.
+            glVertex3f (urLoc.hLoc, urLoc.vLoc, 0.0);
+
+            // Top left.
+            glVertex3f (ulLoc.hLoc, ulLoc.vLoc, 0.0);
+
+            glRotatef(5, 1.0, 0.0, 0.0);
+        glEnd();
+    }
+
     glRotatef(5, 1.0, 0.0, 0.0);
 
     return (true);
@@ -685,7 +703,11 @@ bool GLWidget::updateUnit(Unit myUnit)
         glVertex3f( leftEdge,  bottomEdge, 0.0f );
         glVertex3f( leftEdge - statusWidth, bottomEdge, 0.0f );
     glEnd();
-    glColor3f(0.6f, 0.0f, 0.0f);
+    glColor3f(0.0f, 0.6f, 0.0f);
+    if (myUnit.team == AI_UNIT)
+    {
+        glColor3f(0.6f, 0.0f, 0.0f);
+    }
     glBegin(GL_QUADS);
         glVertex3f( leftEdge - statusWidth, bottomEdge + cellHeight/2 * hitPoints, 0.0f );
         glVertex3f( leftEdge, bottomEdge + cellHeight/2 * hitPoints, 0.0f );

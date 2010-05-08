@@ -11,7 +11,7 @@
 using namespace std;
 
 // Constants.
-static const int titleTransitionSeconds = 3;
+static const int    titleTransitionSeconds = 3;
 
 class point
 {
@@ -62,8 +62,7 @@ protected:
     point   mouseClick;
     
     // Effect information.
-
-    int selectedBorder;
+    //
 
 private:
 };
