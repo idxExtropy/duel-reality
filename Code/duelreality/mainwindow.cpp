@@ -8,6 +8,7 @@
 
 // Global classes.
 GLWidget *glWidget;
+mechanics *mech;
 
 MainWindow::MainWindow()
 {
@@ -36,11 +37,6 @@ MainWindow::MainWindow()
     emit isBattleMode(false);
     emit isGameCfgMode(true);
     emit isUserTurn(false);
-
-    // Initialize background sound
-    //soundBkgnd = new QSound("sounds/crazy.wav");
-    //soundBkgnd->setLoops(-1);
-    //soundBkgnd->play();
 
     // Play main theme.
     glWidget->music = Phonon::createPlayer(Phonon::MusicCategory, Phonon::MediaSource("sounds/MainTheme.mp3"));

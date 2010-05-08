@@ -6,6 +6,7 @@
 #include <string>
 #include "globals.h"
 #include "mechanics.h"
+#include "mainwindow.h"
 
 using namespace std;
 
