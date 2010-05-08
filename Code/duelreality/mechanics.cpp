@@ -278,7 +278,7 @@ bool mechanics::isGameOver()
                 if (deadcount ==4)
                 {
                     emit SignalP2Win();
-                  //mechanics::EndBattle();
+                  //mechanics::endBattle(2);
                     return true;
                 }
             }
@@ -310,3 +310,7 @@ bool mechanics::isGameOver()
 //     //mechanics::isGameOver();
 //
 //}
+int mechanics::endBattle(int x)
+{
+    return x;
+}
