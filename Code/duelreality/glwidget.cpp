@@ -830,16 +830,19 @@ void GLWidget::moveUnit(int vLocPrev, int hLocPrev, int vLocNext, int hLocNext)
     //isPending = false;
 
     // Update the new cell.
-    battleMap.gridCell[vLocNext][vLocNext].unit = battleMap.gridCell[vLocPrev][hLocPrev].unit;
-    battleMap.gridCell[vLocNext][vLocNext].unit->vLocation = vLocNext;
-    battleMap.gridCell[vLocNext][vLocNext].unit->hLocation = hLocNext;
-    battleMap.gridCell[vLocNext][vLocNext].unit->isPending = false;
-    battleMap.gridCell[vLocNext][vLocNext].unit->actionTime = 0;
-    battleMap.gridCell[vLocNext][vLocNext].isUnit = true;
+    battleMap.gridCell[vLocNext][hLocNext].unit = battleMap.gridCell[vLocPrev][hLocPrev].unit;
+    battleMap.gridCell[vLocNext][hLocNext].unit->vLocation = vLocNext;
+    battleMap.gridCell[vLocNext][hLocNext].unit->hLocation = hLocNext;
+    battleMap.gridCell[vLocNext][hLocNext].unit->isPending = false;
+    battleMap.gridCell[vLocNext][hLocNext].unit->actionTime = 0;
+    battleMap.gridCell[vLocNext][hLocNext].isUnit = true;
 
     // Clear the old cell.
-    battleMap.gridCell[vLocPrev][vLocPrev].unit = new Unit;
-    battleMap.gridCell[vLocPrev][vLocPrev].unit->status = NO_UNIT;
+    battleMap.gridCell[vLocPrev][hLocPrev].unit = new Unit;
+    battleMap.gridCell[vLocPrev][hLocPrev].isUnit = false;
+    battleMap.gridCell[vLocPrev][hLocPrev].unit->vLocation = -1;
+    battleMap.gridCell[vLocPrev][hLocPrev].unit->hLocation = -1;
+    battleMap.gridCell[vLocPrev][hLocPrev].unit->isPending = false;
 
     isPending = false;
 }
