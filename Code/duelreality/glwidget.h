@@ -21,8 +21,10 @@ class GLWidget : public QGLWidget
 public:
     GLWidget();
     void    unitTest_GenerateContent();
+    bool    isBattle;
     Map     battleMap;
     Unit    unit[MAX_MAP_UNITS];
+    Phonon::MediaObject *music;
 
 protected:
     // Functions.
@@ -36,6 +38,7 @@ protected:
     bool drawGridBox(int cellFromBottom, int cellFromLeft);
     bool isGridBoxSelected(int cellFromBottom, int cellFromLeft);
     void initGrid();
+    void setBackgroundTrack(QString trackFileName);
 
     // Content information.
     GLfloat statusWidth, fullWidth, fullHeight, cellWidth, cellHeight;

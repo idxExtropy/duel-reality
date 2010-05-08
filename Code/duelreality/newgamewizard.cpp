@@ -614,7 +614,7 @@ void SelectMapPage::selectButtonClicked()
 {
     Map map;
 
-    map.fileName = mapFileName;
+    map.imageFileName = mapFileName;
     db.saveMap(NewGameWizard::playerName, map);
 }
 

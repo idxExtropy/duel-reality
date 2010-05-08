@@ -61,7 +61,7 @@ public:
 class gridBox
 {
 public:
-    Unit unit;
+    Unit *unit;
     bool isUnit;
     bool isSelected;
     float cellWidth;
@@ -74,7 +74,8 @@ class Map
 {
 public:
     QString name;
-    QString fileName;
+    QString imageFileName;
+    QString audioFileName;
     int     cellsWide;
     int     cellsTall;
     float   gridHeight; // Ratio of grid to header.

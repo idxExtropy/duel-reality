@@ -9,6 +9,7 @@
 GLWidget::GLWidget()
 {
     isPending = false;
+    isBattle = false;
     selectedBorder = 1;
     startTimer( GL_TIMER_INTERVAL );
 }
@@ -22,7 +23,8 @@ GLWidget::GLWidget()
 void GLWidget::unitTest_GenerateContent()
 {
     // Select a battle map.
-    battleMap.fileName = "backgrounds/grass.png";
+    battleMap.imageFileName = "backgrounds/plains.png";
+    battleMap.audioFileName = "sounds/Battle_01.mp3";
     battleMap.cellsTall = 6;
     battleMap.cellsWide = 9;
     battleMap.gridHeight = 0.58;
@@ -117,12 +119,33 @@ void GLWidget::unitTest_GenerateContent()
     unit[5].attackRange = 3;
     unit[5].faceLeft = true;
 
+    for (int i = 0; i < MAX_MAP_UNITS; i++)
+    {
+        // No units are pending to start.
+        unit[i].isPending = false;
+    }
+
     for (int i = 6; i < MAX_MAP_UNITS; i++)
     {
         // Tell OpenGL whether or not the unit exists.
         unit[i].status = NO_UNIT;
-        unit[i].isPending = false;
     }
+
+    // Load a background image (debug).
+    bkImage.load(battleMap.imageFileName);
+    bkImage = bkImage.scaled(GLWidget::width(), GLWidget::height(), Qt::KeepAspectRatio, Qt::SmoothTransformation );
+    glBkImage = QGLWidget::convertToGLFormat(bkImage);
+
+    // Initialize the grid.
+    initGrid();
+
+    setBackgroundTrack(battleMap.audioFileName);
+
+    // Start the battle.
+    isBattle = true;
+
+    // Ensure proper graphics scaling.
+    resizeGL(GLWidget::width(), GLWidget::height());
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -133,15 +156,6 @@ void GLWidget::unitTest_GenerateContent()
 ///////////////////////////////////////////////////////////////////////////////
 void GLWidget::initializeGL()
 {
-    unitTest_GenerateContent();
-
-    initGrid();
-
-    // Load a background image (debug).
-    bkImage.load(battleMap.fileName);
-    bkImage = bkImage.scaled(GLWidget::width(), GLWidget::height(), Qt::KeepAspectRatio, Qt::SmoothTransformation );
-    glBkImage = QGLWidget::convertToGLFormat(bkImage);
-
     // Setup OpenGL values for appropriate graphics.
     glShadeModel(GL_SMOOTH);						// Enable Smooth Shading
     glClearColor(0.0f, 0.0f, 0.0f, 0.5f);				// Black Background
@@ -149,8 +163,6 @@ void GLWidget::initializeGL()
     glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);				// Set Line Antialiasing
     glEnable(GL_BLEND);                                                 // Enable Blending
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);			// Type Of Blending To Use
-
-    return;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -165,6 +177,9 @@ void GLWidget::initGrid()
     {
         for (int j = 0; j < MAX_GRID_DIMENSION; j++)
         {
+            battleMap.gridCell[i][j].unit = new Unit;
+            battleMap.gridCell[i][j].unit->status = NO_UNIT;
+            battleMap.gridCell[i][j].unit->isPending = false;
             battleMap.gridCell[i][j].isUnit = false;
             battleMap.gridCell[i][j].isSelected = false;
 
@@ -184,6 +199,11 @@ void GLWidget::initGrid()
 ///////////////////////////////////////////////////////////////////////////////
 void GLWidget::paintGL()
 {
+    if (!isBattle)
+    {
+        return;
+    }
+
     if (!isPending)
     {
         for (int i = 0; i < MAX_MAP_UNITS; i++)
@@ -194,14 +214,12 @@ void GLWidget::paintGL()
                 if (unit[i].actionTime == 100)
                 {
                     // Play 'ready' sound.
-                    //soundBkgnd = new QSound("sounds/crazy.wav");
-                    //soundBkgnd->setLoops(-1);
-                    //soundBkgnd->play();
+                    QSound *soundBkgnd = new QSound("sounds/blip.wav");
+                    soundBkgnd->play();
 
                     // The unit is ready to go, so pause the game.
+                    battleMap.gridCell[unit[i].vLocation][unit[i].hLocation].unit->isPending = true;
                     isPending = true;
-                    battleMap.gridCell[unit[i].hLocation][unit[i].vLocation].unit.isPending = true;
-                    unit[i].isPending = true;
                     break;
                 }
 
@@ -232,66 +250,69 @@ void GLWidget::paintGL()
 
     for (int i = 0; i < MAX_MAP_UNITS; i++)
     {
-        // Draw the units.
-        updateUnit(unit[i]);
-
-        // Make sure the map is up to date.
-        battleMap.gridCell[unit[i].vLocation][unit[i].hLocation].unit = unit[i];
-        battleMap.gridCell[unit[i].vLocation][unit[i].hLocation].isUnit = true;
-
-        if (unit[i].isPending)
+        if (unit[i].status != NO_UNIT)
         {
-            // Draw information header.
-            glColor4f( 0.0f, 0.0f, 0.2f, 0.8f );
-            glBegin (GL_QUADS);
-                glVertex3f (15, GLWidget::height() - 20, 0.0);
-                glVertex3f (15 + 250, GLWidget::height() - 20, 0.0);
-                glVertex3f (15 + 250, GLWidget::height() - 20 - 100, 0.0);
-                glVertex3f (15, GLWidget::height() - 20 - 100, 0.0);
-            glEnd();
+            // Make sure the map is up to date.
+            battleMap.gridCell[unit[i].vLocation][unit[i].hLocation].unit = &unit[i];
+            battleMap.gridCell[unit[i].vLocation][unit[i].hLocation].isUnit = true;
 
-            qglColor(Qt::white);
-            char *tmpString = (char*)malloc(256);
-            string displayString = "";
-            int vLoc = GLWidget::height() - 40;
+            // Draw the units.
+            updateUnit(unit[i]);
 
-            // Unit name.
-            QFont nameFont = GLWidget::font();
-            nameFont.setBold(true);
-            renderText (30, vLoc, 0.0, unit[i].name, nameFont);
-            vLoc -= 15;
+            if (unit[i].isPending)
+            {
+                // Draw information header.
+                glColor4f( 0.0f, 0.0f, 0.2f, 0.8f );
+                glBegin (GL_QUADS);
+                    glVertex3f (15, GLWidget::height() - 20, 0.0);
+                    glVertex3f (15 + 250, GLWidget::height() - 20, 0.0);
+                    glVertex3f (15 + 250, GLWidget::height() - 20 - 100, 0.0);
+                    glVertex3f (15, GLWidget::height() - 20 - 100, 0.0);
+                glEnd();
 
-            // Unit hit points.
-            itoa(unit[i].hitPoints, tmpString, 10);
-            displayString = "Hit Points: ";
-            displayString.append(tmpString);
-            displayString.append(" / ");
-            itoa(unit[i].totalHitPoints, tmpString, 10);
-            displayString.append(tmpString);
-            renderText (30, vLoc, 0.0, displayString.c_str());
-            vLoc -= 15;
+                qglColor(Qt::white);
+                char *tmpString = (char*)malloc(256);
+                string displayString = "";
+                int vLoc = GLWidget::height() - 40;
 
-            // Unit attack power.
-            itoa(unit[i].attackPower, tmpString, 10);
-            displayString = "Attack Power: ";
-            displayString.append(tmpString);
-            renderText (30, vLoc, 0.0, displayString.c_str());
-            vLoc -= 15;
+                // Unit name.
+                QFont nameFont = GLWidget::font();
+                nameFont.setBold(true);
+                renderText (30, vLoc, 0.0, unit[i].name, nameFont);
+                vLoc -= 15;
 
-            // Unit attack range.
-            itoa(unit[i].attackRange, tmpString, 10);
-            displayString = "Attack Range: ";
-            displayString.append(tmpString);
-            renderText (30, vLoc, 0.0, displayString.c_str());
-            vLoc -= 15;
+                // Unit hit points.
+                itoa(unit[i].hitPoints, tmpString, 10);
+                displayString = "Hit Points: ";
+                displayString.append(tmpString);
+                displayString.append(" / ");
+                itoa(unit[i].totalHitPoints, tmpString, 10);
+                displayString.append(tmpString);
+                renderText (30, vLoc, 0.0, displayString.c_str());
+                vLoc -= 15;
 
-            // Unit action time.
-            itoa(unit[i].actionTime, tmpString, 10);
-            displayString = "Action Time: ";
-            displayString.append(tmpString);
-            displayString.append("%");
-            renderText (30, vLoc, 0.0, displayString.c_str());
-            vLoc -= 15;
+                // Unit attack power.
+                itoa(unit[i].attackPower, tmpString, 10);
+                displayString = "Attack Power: ";
+                displayString.append(tmpString);
+                renderText (30, vLoc, 0.0, displayString.c_str());
+                vLoc -= 15;
+
+                // Unit attack range.
+                itoa(unit[i].attackRange, tmpString, 10);
+                displayString = "Attack Range: ";
+                displayString.append(tmpString);
+                renderText (30, vLoc, 0.0, displayString.c_str());
+                vLoc -= 15;
+
+                // Unit action time.
+                itoa(unit[i].actionTime, tmpString, 10);
+                displayString = "Action Time: ";
+                displayString.append(tmpString);
+                displayString.append("%");
+                renderText (30, vLoc, 0.0, displayString.c_str());
+                vLoc -= 15;
+            }
         }
     }
 
@@ -318,35 +339,35 @@ void GLWidget::paintGL()
                 // Unit name.
                 QFont nameFont = GLWidget::font();
                 nameFont.setBold(true);
-                renderText (GLWidget::width() - 250, vLoc, 0.0, battleMap.gridCell[i][j].unit.name, nameFont);
+                renderText (GLWidget::width() - 250, vLoc, 0.0, battleMap.gridCell[i][j].unit->name, nameFont);
                 vLoc -= 15;
 
                 // Unit hit points.
-                itoa(battleMap.gridCell[i][j].unit.hitPoints, tmpString, 10);
+                itoa(battleMap.gridCell[i][j].unit->hitPoints, tmpString, 10);
                 displayString = "Hit Points: ";
                 displayString.append(tmpString);
                 displayString.append(" / ");
-                itoa(battleMap.gridCell[i][j].unit.totalHitPoints, tmpString, 10);
+                itoa(battleMap.gridCell[i][j].unit->totalHitPoints, tmpString, 10);
                 displayString.append(tmpString);
                 renderText (GLWidget::width() - 250, vLoc, 0.0, displayString.c_str());
                 vLoc -= 15;
 
                 // Unit attack power.
-                itoa(battleMap.gridCell[i][j].unit.attackPower, tmpString, 10);
+                itoa(battleMap.gridCell[i][j].unit->attackPower, tmpString, 10);
                 displayString = "Attack Power: ";
                 displayString.append(tmpString);
                 renderText (GLWidget::width() - 250, vLoc, 0.0, displayString.c_str());
                 vLoc -= 15;
 
                 // Unit attack range.
-                itoa(battleMap.gridCell[i][j].unit.attackRange, tmpString, 10);
+                itoa(battleMap.gridCell[i][j].unit->attackRange, tmpString, 10);
                 displayString = "Attack Range: ";
                 displayString.append(tmpString);
                 renderText (GLWidget::width() - 250, vLoc, 0.0, displayString.c_str());
                 vLoc -= 15;
 
                 // Unit action time.
-                itoa(battleMap.gridCell[i][j].unit.actionTime, tmpString, 10);
+                itoa(battleMap.gridCell[i][j].unit->actionTime, tmpString, 10);
                 displayString = "Action Time: ";
                 displayString.append(tmpString);
                 displayString.append("%");
@@ -412,9 +433,12 @@ bool GLWidget::drawGridBox(int i, int j)
         glColor4f( 0.4f, 0.4f, 0.4f, 0.8f );
     }
 
-    if (battleMap.gridCell[i][j].unit.isPending)
+    if (battleMap.gridCell[i][j].unit->status != NO_UNIT)
     {
-        glColor4f( 0.0f, 0.0f, 0.2f, 0.8f );
+        if (battleMap.gridCell[i][j].unit->isPending)
+        {
+            glColor4f( 0.0f, 0.0f, 0.2f, 0.8f );
+        }
     }
 
     // Define corner locations (without perspective).
@@ -459,11 +483,6 @@ bool GLWidget::drawGridBox(int i, int j)
 ///////////////////////////////////////////////////////////////////////////////
 bool GLWidget::updateUnit(Unit myUnit)
 {
-    if (myUnit.status == NO_UNIT)
-    {
-        return (false);
-    }
-
     // Calculate the action and hit point bars as a percentage.
     float actionTime = (float)myUnit.actionTime / (float)100;
     float hitPoints = (float)myUnit.hitPoints / (float)myUnit.totalHitPoints;
@@ -637,6 +656,11 @@ void GLWidget::resizeGL(int width, int height)
     mouseClick.hLoc = 0;
     mouseClick.vLoc = 0;
 
+    if (!isBattle)
+    {
+        return;
+    }
+
     // Reset grid locations and dimensions.
     initGrid();
     
@@ -652,7 +676,7 @@ void GLWidget::resizeGL(int width, int height)
     updateGL();
 
     // Reload and resize the background image.
-    bkImage.load(battleMap.fileName);
+    bkImage.load(battleMap.imageFileName);
     bkImage = bkImage.scaled(GLWidget::width(), GLWidget::height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
     glBkImage = QGLWidget::convertToGLFormat(bkImage);
 }
@@ -676,12 +700,22 @@ void GLWidget::timerEvent(QTimerEvent *event)
 ///////////////////////////////////////////////////////////////////////////////
 void GLWidget::mousePressEvent(QMouseEvent *event)
 {
-    // Proces mouse events for rotate/move inside 3D scene
-    mouseClick.hLoc = event->x();
-    mouseClick.vLoc = (fullHeight / battleMap.gridHeight) - event->y();
+    if (isBattle)
+    {
+        // Proces mouse events for rotate/move inside 3D scene
+        mouseClick.hLoc = event->x();
+        mouseClick.vLoc = (fullHeight / battleMap.gridHeight) - event->y();
+    }
 }
 
 void GLWidget::mouseMoveEvent(QMouseEvent *event)
 {
     // Process mouse stuff...
+}
+
+void GLWidget::setBackgroundTrack(QString trackFileName)
+{
+    music->stop();
+    music = Phonon::createPlayer(Phonon::MusicCategory, Phonon::MediaSource(trackFileName));
+    music->play();
 }
