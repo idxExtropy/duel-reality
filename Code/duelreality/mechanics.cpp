@@ -31,6 +31,7 @@ void mechanics::handleAI()
     }
 }
 
+// loads selected square into lext location V&H
 void mechanics::moveUnit()
 {
     int vLocNext = 0, hLocNext = 0;
@@ -40,7 +41,6 @@ void mechanics::moveUnit()
         {
             if (glWidget->battleMap.gridCell[i][j].isSelected)
             {
-                // Get the selected cell.
                 vLocNext = i;
                 hLocNext = j;
             }
@@ -53,13 +53,16 @@ void mechanics::moveUnit()
         {
             if (glWidget->battleMap.gridCell[i][j].unit->isPending)
             {
-                // Move to the selected cell.
-                glWidget->moveUnit(i,j,vLocNext,hLocNext);
+                if(mechanics::isValidMove(i,j,vLocNext,hLocNext))
+                {
+                glWidget->moveUnit(i,j,vLocNext,hLocNext);       //moves from pending to selected!!!
+                }
                 return;
             }
         }
     }
 }
+
 
 void mechanics::attackUnit()
 {
@@ -132,23 +135,18 @@ void mechanics::move()
 }
 
 //Determines Whether a move is valid
-bool mechanics::isValidMove(int actionpoints, int moverate, int hLoc, int vLoc,int x,int y)
+bool mechanics::isValidMove(int vLoc, int hLoc,int vnext,int hnext)
 {
-if(!mechanics::isOccupied(x, y))
+if(!mechanics::isOccupied(hnext, vnext))
         {
-        if (isSufficientAP(actionpoints, moverate))
-        {
-                if((vLoc==y)||(hLoc==x))
-                {
-                        if(((abs(vLoc-y))<=1)&&((abs(hLoc-x))<=1))
-                        {
-                        return (true);
-                        }
-                }
-                return(false);
-        }
-        return (false);
-
+           if((vLoc==vnext)||(hLoc==hnext))
+           {
+              if(((abs(vLoc-vnext))<=glWidget->battleMap.gridCell[vLoc][hLoc].unit->movementRate)&&((abs(hLoc-hnext))<=glWidget->battleMap.gridCell[vLoc][hLoc].unit->movementRate))
+               {
+                return (true);
+               }
+               }
+         return (false);
 }
 return (false);
 }
@@ -164,15 +162,7 @@ bool mechanics::isOccupied(int x, int y)  ///DOUBLECHECK
        else return false;
 }
 
-//Returns whether Unit has enough Action Points to Move/act
-bool mechanics::isSufficientAP(int a, int b)
-{
-        if(a>=b)
-        {
-        return true;
-        }
-        else return false;
-}
+
 ////////////////////////////////////////////////ATTACK////////////////////////////////////////////////
 void mechanics::attack()
 {
@@ -197,8 +187,7 @@ bool mechanics::isValidAttack(int actionpoints, int moverate, int hLoc, int vLoc
 {
 if(mechanics::isOccupied(x, y))
        {
-        if (isSufficientAP(actionpoints, moverate))
-        {
+
                 if((vLoc==y)||(hLoc==x))
                 {
                         if(((abs(vLoc-y))<=atkrange)&&((abs(hLoc-x))<=atkrange))
@@ -207,8 +196,7 @@ if(mechanics::isOccupied(x, y))
                         }
                 }
                 return(false);
-        }
-        return (false);
+
 }
 return (false);
 }

@@ -47,14 +47,13 @@ public slots:
 private:
    int targetx;
    int targety;
-    bool isValidMove(int actionpoints, int moverate, int hLoc, int vLoc,int x,int y);
+    bool isValidMove(int vloc, int hloc,int vnext,int hnext);
     bool isValidAttack(int actionpoints, int moverate, int hLoc, int vLoc, int atkrange, int x, int  y);
     bool isOccupied(int x, int y);
-    bool isSufficientAP(int a, int b);
+
    int nextPlayer() {return iNextplayer;}
    void setNextPlayer(int player){iNextplayer=player;}
    bool isUnitAt(int x, int y, Unit *UnitRetrieved);
-   //void startTurn(Unit team[4]);
    //    void endTurn();
     bool isGameOver();
     Unit *FocusUnit;
