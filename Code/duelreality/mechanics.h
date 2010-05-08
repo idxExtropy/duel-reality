@@ -24,44 +24,44 @@ public:
     void endBattle();
 
 signals:
- void signalP1wins();   //signal emited from isGameOVer if P1 Wins
- void signalP2wins();   //signal emited if P2 Wins
- void signalSwitchPlayer(); //signal emitted when player switches
- void signalMoveDone();     //signal emitted when move is complete
- void signalAttackDone();   //signal emitted when attack is complete
- void signalError();        //signal emitted on error
- void signalStartAI();      //signal when AI moves
+ void SignalP1Win();   //signal emited from isGameOVer if P1 Wins
+ void SignalP2Win();   //signal emited if P2 Wins
+ void SignalSwitchPlayer(); //signal emitted when player switches
+ void SignalMoveDone();     //signal emitted when move is complete
+ void SignalAttackDone();   //signal emitted when attack is complete
+ void SignalError();        //signal emitted on error
+ void SignalStartAI();      //signal when AI moves
  void signalBattleStart();  //signal when battle starts
 
 
 
 public slots:
- void move(Unit *Focus);   //slot for move
- //void attack(Unit *Focus, Unit *Target);   //slot for attack
- //void endTurn(int player);            //slot
+ void move();   //slot for move
+ void attack();   //slot for attack
+ //void endTurn();            //slot
 
 
 private:
-
-    bool isValidMove(int actionpoints, int moverate, int hLoc, int vLoc,int targetx,int targety);
+   int targetx;
+   int targety;
+    bool isValidMove(int actionpoints, int moverate, int hLoc, int vLoc,int x,int y);
+    bool isValidAttack(int actionpoints, int moverate, int hLoc, int vLoc, int atkrange, int x, int  y);
     bool isOccupied(int x, int y);
     bool isSufficientAP(int a, int b);
    int nextPlayer() {return iNextplayer;}
    void setNextPlayer(int player){iNextplayer=player;}
    bool isUnitAt(int x, int y, Unit *UnitRetrieved);
-   //  //  Unit setFocus(int x, int y);
-   //    //void startTurn(Unit team[4]);
+   //void startTurn(Unit team[4]);
    //    void endTurn();
-    int isGameOver();
-    Unit *UnitPointer;
-    int targetx;
-    int targety;
+    bool isGameOver();
+    Unit *FocusUnit;
     bool gamerunning;
     int iNextplayer;
     bool battleRunning;
     void startAI();
-    bool getGridCellSelected(int x, int y, int *ip1, int *ip2);
-
+    bool getGridCellSelected();
+    bool getPending();
+    Unit getUnit(int x, int y);
 };
 
 #endif // MECHANICS_H
