@@ -42,9 +42,8 @@ void mechanics::endBattle()
 //////////////////////////////////////////////////////MOVE///////////////////////////////////////
 //////////////////////////////////////////////////////MOVE///////////////////////////////////////
 //Move Function, from Slot Move
-void mechanics::move(Unit *UnitPointer, int targetx, int targety)
+void mechanics::move(Unit *UnitPointer)
 {
-
 
         if(isValidMove(UnitPointer->actionPoints, UnitPointer->movementRate, UnitPointer->hLocation, UnitPointer->vLocation, targetx, targety))
         {
@@ -52,8 +51,8 @@ void mechanics::move(Unit *UnitPointer, int targetx, int targety)
         UnitPointer->vLocation=targety;
         UnitPointer->actionPoints-=UnitPointer->movementRate;
         }
-
 }
+
 //Determines Whether a move is valid
 bool mechanics::isValidMove(int actionpoints, int moverate, int hLoc, int vLoc,int targetx,int targety)
 {
@@ -76,7 +75,7 @@ if(!mechanics::isOccupied(targetx, targety))
 return (false);
 }
 
- //Determines if a space is occupied
+//Determines if a space is occupied
 bool mechanics::isOccupied(int x, int y)  ///DOUBLECHECK
 {
 
@@ -85,10 +84,9 @@ bool mechanics::isOccupied(int x, int y)  ///DOUBLECHECK
         return (true);
         }
        else return false;
-
 }
 
-//Returns whether Unit has wnough Action Points to Move/act
+//Returns whether Unit has enough Action Points to Move/act
 bool mechanics::isSufficientAP(int a, int b)
 {
         if(a>=b)
@@ -197,6 +195,26 @@ bool mechanics::isUnitAt(int x, int y, Unit *UnitRetrieved)
 ////    }
 ////    return (a);
 ////}
+//finds which gridCell is selected, passes coordinates to targetx & target y
+bool mechanics::getGridCellSelected(int x, int y, int *ip1, int *ip2) //2D array of pointers of type gridBox
+{
+    ip1 = &targetx;
+    ip2 = &targety;
+        for(int x=0;x<=glWidget->battleMap.cellsTall;x++)
+        {
+         for(int y=0;y<=glWidget->battleMap.cellsWide;y++)
+         {
+                if(glWidget->battleMap.gridCell[x][y].isSelected)
+                {
+                        *ip1=x;
+                        *ip1=y;
+                        return (true);
+
+                }
+               return (false);
+         }
+        }return (false);
+}
 //////////////////////////////////////////////////TURNS//////////////////////////////////////////////
 ////executes when passed ENDTURN SIGNAL
 ////deselect focus unit?

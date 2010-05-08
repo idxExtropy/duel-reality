@@ -36,7 +36,7 @@ signals:
 
 
 public slots:
- void move(Unit *Focus, int x, int y);   //slot for move
+ void move(Unit *Focus);   //slot for move
  //void attack(Unit *Focus, Unit *Target);   //slot for attack
  //void endTurn(int player);            //slot
 
@@ -54,11 +54,13 @@ private:
    //    void endTurn();
     int isGameOver();
     Unit *UnitPointer;
+    int targetx;
+    int targety;
     bool gamerunning;
     int iNextplayer;
     bool battleRunning;
     void startAI();
-
+    bool getGridCellSelected(int x, int y, int *ip1, int *ip2);
 
 };
 
