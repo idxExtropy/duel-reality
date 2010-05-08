@@ -48,6 +48,7 @@ public:
     int     attackRange;
     int     attackPower;
     int     status;             // Unit status
+    QString imageFileName;
     QPixmap pixMap;
     QImage  image;              // Associated unit image
     QImage  mask_image;         // Associate unit mask image
