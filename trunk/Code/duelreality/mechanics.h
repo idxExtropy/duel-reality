@@ -39,7 +39,7 @@ signals:
 
 
 public slots:
- void move();   //slot for move
+
  void attack();   //slot for attack
  //void endTurn();            //slot
 

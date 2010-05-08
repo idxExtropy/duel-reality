@@ -22,46 +22,32 @@ void mechanics::handleAI()
     {
         for (int j = 0; j < glWidget->battleMap.cellsWide; j++)
         {
-            if (glWidget->battleMap.gridCell[i][j].unit->isPending && glWidget->battleMap.gridCell[i][j].unit->team == AI_UNIT)
+            if ((glWidget->battleMap.gridCell[i][j].unit->isPending) && (glWidget->battleMap.gridCell[i][j].unit->team == AI_UNIT))
             {
                 // Dummy movement for now...
-                glWidget->moveUnit(i,j,i+1,j-1);
-            }
-        }
-    }
-}
-
-// loads selected square into lext location V&H
-void mechanics::moveUnit()
-{
-    int vLocNext = 0, hLocNext = 0;
-    for (int i = 0; i < glWidget->battleMap.cellsTall; i++)
-    {
-        for (int j = 0; j < glWidget->battleMap.cellsWide; j++)
-        {
-            if (glWidget->battleMap.gridCell[i][j].isSelected)
-            {
-                vLocNext = i;
-                hLocNext = j;
-            }
-        }
-    }
-
-    for (int i = 0; i < glWidget->battleMap.cellsTall; i++)
-    {
-        for (int j = 0; j < glWidget->battleMap.cellsWide; j++)
-        {
-            if (glWidget->battleMap.gridCell[i][j].unit->isPending)
-            {
-                if(mechanics::isValidMove(i,j,vLocNext,hLocNext))
+                if(mechanics::isValidMove(i,j,i+1,j))//Move UP
                 {
-                glWidget->moveUnit(i,j,vLocNext,hLocNext);       //moves from pending to selected!!!
-                }
-                return;
+                glWidget->moveUnit(i,j,i+1,j);
+                 }
+                else glWidget->moveUnit(i,j,i-1,j);
+//                 else if(mechanics::isValidMove(i,j,i,j+1))//MOVE LEFT
+//                 {
+//                 glWidget->moveUnit(i,j,i,j+1);
+//                 }
+//                 else if(mechanics::isValidMove(i,j,i-1,j))//MOVE Down
+//                 {
+//                 glWidget->moveUnit(i,j,i-1,j);
+//                 }
+//                 else if(mechanics::isValidMove(i,j,i,j-1))//MOVE Right
+//                 {
+//                 glWidget->moveUnit(i,j,i,j-1);
+//                 }
             }
         }
     }
 }
+
+
 
 
 void mechanics::attackUnit()
@@ -120,34 +106,63 @@ void mechanics::endBattle()
 }
 
 //////////////////////////////////////////////////////MOVE///////////////////////////////////////
-//Move Function, from Slot Move
-void mechanics::move()
+// loads selected square into lext location V&H
+void mechanics::moveUnit()
 {
-    glWidget->unit[2].vLocation=0;
-//        mechanics::getPending();
-//        mechanics::getGridCellSelected();
-//        if(isValidMove(FocusUnit->actionPoints, FocusUnit->movementRate, FocusUnit->hLocation, FocusUnit->vLocation, targetx, targety))
-//        {
-//        FocusUnit->hLocation=targetx;
-//        FocusUnit->vLocation=targety;
-//        FocusUnit->actionPoints-=FocusUnit->movementRate;
-//        }
+    int vLocNext = 0, hLocNext = 0;
+    for (int i = 0; i < glWidget->battleMap.cellsTall; i++)
+    {
+        for (int j = 0; j < glWidget->battleMap.cellsWide; j++)
+        {
+            if (glWidget->battleMap.gridCell[i][j].isSelected)
+            {
+                vLocNext = i;
+                hLocNext = j;
+            }
+        }
+    }
+
+    for (int i = 0; i < glWidget->battleMap.cellsTall; i++)
+    {
+        for (int j = 0; j < glWidget->battleMap.cellsWide; j++)
+        {
+            if (glWidget->battleMap.gridCell[i][j].unit->isPending)
+            {
+                if(mechanics::isValidMove(i,j,vLocNext,hLocNext))
+                {
+                glWidget->moveUnit(i,j,vLocNext,hLocNext);       //moves from pending to selected!!!
+                }
+                return;
+            }
+        }
+    }
 }
+
+
 
 //Determines Whether a move is valid
 bool mechanics::isValidMove(int vLoc, int hLoc,int vnext,int hnext)
 {
 if(!mechanics::isOccupied(hnext, vnext))
         {
-           if((vLoc==vnext)||(hLoc==hnext))
+           if((vLoc==vnext)||(hLoc==hnext))//no diagonal
            {
-              if(((abs(vLoc-vnext))<=glWidget->battleMap.gridCell[vLoc][hLoc].unit->movementRate)&&((abs(hLoc-hnext))<=glWidget->battleMap.gridCell[vLoc][hLoc].unit->movementRate))
+               if(vnext<=glWidget->battleMap.cellsTall-1&&vnext>=0)//6
                {
-                return (true);
+                   if(hnext<=glWidget->battleMap.cellsWide-1&&hnext>=0)//9
+                   {
+                     if(((abs(vLoc-vnext))<=glWidget->battleMap.gridCell[vLoc][hLoc].unit->movementRate)&&((abs(hLoc-hnext))<=glWidget->battleMap.gridCell[vLoc][hLoc].unit->movementRate))
+                     {
+                     return (true);
+                     }
+                   return (false);
+                   }
+               return (false);
                }
-               }
-         return (false);
-}
+          return (false);
+          }
+    return (false);
+    }
 return (false);
 }
 
