@@ -1,5 +1,8 @@
 #include "glwidget.h"
 
+// Global classes.
+extern mechanics *mech;
+
 /*******************************************************
 * GLWidget()
 *
@@ -280,6 +283,9 @@ void GLWidget::paintGL()
                     // The unit is ready to go, so pause the game.
                     battleMap.gridCell[unit[i].vLocation][unit[i].hLocation].unit->isPending = true;
                     isPending = true;
+
+                    // Tell mechanics to handl AI.
+                    mech->handleAI();
                     break;
                 }
 

@@ -6,8 +6,10 @@ INPUT(
 ./debug\test_db.o
 ./debug\newgamewizard.o
 ./debug\mechanics.o
+./debug\loadgamewizard.o
 ./debug\moc_mainwindow.o
 ./debug\moc_usernamedialog.o
 ./debug\moc_newgamewizard.o
 ./debug\moc_mechanics.o
+./debug\moc_loadgamewizard.o
 );

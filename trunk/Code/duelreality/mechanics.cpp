@@ -15,6 +15,21 @@ mechanics::mechanics(QObject *parent) :
 mechanics::~mechanics()
 {
 }
+
+void mechanics::handleAI()
+{
+    for (int i = 0; i < glWidget->battleMap.cellsWide; i++)
+    {
+        for (int j = 0; j < glWidget->battleMap.cellsTall; j++)
+        {
+            if (glWidget->battleMap.gridCell[i][j].unit->isPending)
+            {
+                glWidget->battleMap.gridCell[i][j].unit->vLocation++;
+            }
+        }
+    }
+}
+
 ///////////////////////////////////////////////////BATTLE ACTIVE///////////////////////////
 //Returns whether a battle is active
 bool mechanics::isBattle()

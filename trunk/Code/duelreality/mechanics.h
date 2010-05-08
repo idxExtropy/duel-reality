@@ -22,6 +22,7 @@ public:
     void setBattleRunning(bool battle); //{battleRunning = battle;}
     void startBattle();
     void endBattle();
+    void handleAI();
 
 signals:
  void SignalP1Win();   //signal emited from isGameOVer if P1 Wins

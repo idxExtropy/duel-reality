@@ -6,8 +6,10 @@ INPUT(
 ./release\test_db.o
 ./release\newgamewizard.o
 ./release\mechanics.o
+./release\loadgamewizard.o
 ./release\moc_mainwindow.o
 ./release\moc_usernamedialog.o
 ./release\moc_newgamewizard.o
 ./release\moc_mechanics.o
+./release\moc_loadgamewizard.o
 );
