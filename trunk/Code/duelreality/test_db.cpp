@@ -58,6 +58,7 @@ void Database::addSprite(Sprite sprite)
     Database::spriteList << sprite;
 }
 
+/*
 void Database::saveMap(QString &userName, Map map)
 {
     int i;
@@ -65,6 +66,27 @@ void Database::saveMap(QString &userName, Map map)
     for (i = 0; i < userList.count(); i++)
         if (userList[i].name == userName)
             userList[i].map = map;
+}
+
+
+void Database::saveGameMode(QString &userName, int gameMode)
+{
+    int i;
+
+    for (i = 0; i < userList.count(); i++)
+        if (userList[i].name == userName)
+            userList[i].gameMode = gameMode;
+}
+*/
+
+
+void Database::saveLevel(QString &userName, int level)
+{
+    int i;
+
+    for (i = 0; i < userList.count(); i++)
+        if (userList[i].name == userName)
+            userList[i].level = level;
 }
 
 
@@ -107,6 +129,12 @@ const int Database::spriteRange(int index) const
 }
 
 
+const int Database::spriteRate(int index) const
+{
+    return spriteList[index].rate;
+}
+
+
 Sprite Database::loadSprite(QString &spriteName)
 {
     int i;
@@ -124,6 +152,7 @@ void Database::addUser(QString &userName)
     User newUser;
     
     newUser.name = userName;
+    newUser.level = 0;
     Database::userList << newUser;
 }
 
@@ -141,6 +170,25 @@ void Database::saveUser(QString &userName, User user)
     for (i = 0; i < userList.count(); i++)
         if (Database::userList[i].name == userName)
             Database::userList[i] = user;
+}
+
+void Database::activateUser(QString &userName)
+{
+    int i;
+
+    for (i = 0; i < userList.count(); i++)
+        if (Database::userList[i].name == userName)
+            Database::userList[i].isActive = true;
+}
+
+
+void Database::deactivateUser(QString &userName)
+{
+    int i;
+
+    for (i = 0; i < userList.count(); i++)
+        if (Database::userList[i].name == userName)
+            Database::userList[i].isActive = false;
 }
 
 
@@ -179,7 +227,18 @@ int Database::loadXP(QString &userName) const
 
     return 0;
 }
+/*
+int Database::loadGameMode(QString &userName) const
+{
+    int i;
 
+    for (i = 0; i < userList.count(); i++)
+        if (userList[i].name == userName)
+            return userList[i].gameMode;
+
+    return 0;
+}
+*/
 
 void Database::saveUnits(QString &userName, QList<Unit> units)
 {
@@ -229,29 +288,33 @@ void Database::generateSprites()
         //testSprites[0].pixMap.load("sprites/wizard.png");
         testSprites[0].fileName = "sprites/wizard.png";
         testSprites[0].AP = 8;
-        testSprites[0].HP = 8;
-        testSprites[0].range = 8;
+        testSprites[0].HP = 6;
+        testSprites[0].range = 4;
+        testSprites[0].rate = 2;
 
         testSprites[1].name = "Monk";
         //testSprites[1].pixMap.load("sprites/buddhist.png");
         testSprites[1].fileName = "sprites/buddhist.png";
-        testSprites[1].AP = 6;
-        testSprites[1].HP = 6;
+        testSprites[1].AP = 2;
+        testSprites[1].HP = 4;
         testSprites[1].range = 6;
+        testSprites[1].rate = 8;
 
         testSprites[2].name = "Bard";
         //testSprites[2].pixMap.load("sprites/bard.png");
         testSprites[2].fileName = "sprites/bard.png";
-        testSprites[2].AP = 4;
-        testSprites[2].HP = 4;
-        testSprites[2].range = 4;
+        testSprites[2].AP = 1;
+        testSprites[2].HP = 2;
+        testSprites[2].range = 3;
+        testSprites[2].rate = 4;
 
         testSprites[3].name = "Desert Soldier";
         //testSprites[3].pixMap.load("sprites/desertsoldier.png");
         testSprites[3].fileName = "sprites/desertsoldier.png";
-        testSprites[3].AP = 4;
-        testSprites[3].HP = 6;
+        testSprites[3].AP = 10;
+        testSprites[3].HP = 9;
         testSprites[3].range = 8;
+        testSprites[3].rate = 7;
 
         for (i = 0; i < MAX_SPRITES; i++)
             addSprite(testSprites[i]);
@@ -307,35 +370,39 @@ void Database::testGenerateUsers()
 
         testUsers[0].name = "Tom";
         testUsers[0].experiencePoints = 2;
+        testUsers[0].isActive = false;
 
         testUsers[0].units[0].status = UNIT_OK;
         testUsers[0].units[0].name = "Wizard";
         testUsers[0].units[0].imageFileName = "sprites/wizard.png";
-        testUsers[0].units[0].attackPower = 2;
+        testUsers[0].units[0].attackPower = 1;
         testUsers[0].units[0].hitPoints = 2;
-        testUsers[0].units[0].attackRange = 2;
+        testUsers[0].units[0].attackRange = 3;
+        testUsers[0].units[0].movementRate = 4;
 
         testUsers[0].units[1].status = NO_UNIT;
         testUsers[0].units[2].status = NO_UNIT;
         testUsers[0].units[3].status = NO_UNIT;
 
-
         testUsers[1].name = "Dick";
         testUsers[1].experiencePoints = 4;
+        testUsers[1].isActive = false;
 
         testUsers[1].units[0].status = UNIT_OK;
         testUsers[1].units[0].name = "Monk";
         testUsers[1].units[0].imageFileName = "sprites/buddhist.png";
         testUsers[1].units[0].attackPower = 4;
-        testUsers[1].units[0].hitPoints = 4;
-        testUsers[1].units[0].attackRange = 4;
+        testUsers[1].units[0].hitPoints = 3;
+        testUsers[1].units[0].attackRange = 2;
+        testUsers[1].units[0].movementRate = 1;
 
         testUsers[1].units[2].status = UNIT_OK;
         testUsers[1].units[2].name = "Desert Soldier";
         testUsers[1].units[2].imageFileName = "sprites/desertsoldier.png";
-        testUsers[1].units[2].attackPower = 6;
-        testUsers[1].units[2].hitPoints = 6;
+        testUsers[1].units[2].attackPower = 2;
+        testUsers[1].units[2].hitPoints = 4;
         testUsers[1].units[2].attackRange = 6;
+        testUsers[1].units[2].movementRate = 8;
 
         testUsers[1].units[1].status = NO_UNIT;
         testUsers[1].units[3].status = NO_UNIT;
@@ -343,34 +410,39 @@ void Database::testGenerateUsers()
 
         testUsers[2].name = "Harry";
         testUsers[2].experiencePoints = 4;
+        testUsers[2].isActive = false;
 
         testUsers[2].units[0].status = UNIT_OK;
         testUsers[2].units[0].name = "Bard";
         testUsers[2].units[0].imageFileName = "sprites/bard.png";
-        testUsers[2].units[0].attackPower = 2;
-        testUsers[2].units[0].hitPoints = 4;
-        testUsers[2].units[0].attackRange = 6;
+        testUsers[2].units[0].attackPower = 10;
+        testUsers[2].units[0].hitPoints = 9;
+        testUsers[2].units[0].attackRange = 8;
+        testUsers[2].units[0].movementRate = 7;
 
         testUsers[2].units[1].status = UNIT_OK;
         testUsers[2].units[1].name = "Wizard";
         testUsers[2].units[1].imageFileName = "sprites/wizard.png";
-        testUsers[2].units[1].attackPower = 6;
-        testUsers[2].units[1].hitPoints = 4;
-        testUsers[2].units[1].attackRange = 2;
+        testUsers[2].units[1].attackPower = 2;
+        testUsers[2].units[1].hitPoints = 3;
+        testUsers[2].units[1].attackRange = 4;
+        testUsers[2].units[1].movementRate = 5;
 
         testUsers[2].units[2].status = UNIT_DEAD;
         testUsers[2].units[2].name = "Monk";
         testUsers[2].units[2].imageFileName = "sprites/buddhist.png";
-        testUsers[2].units[2].attackPower = 5;
-        testUsers[2].units[2].hitPoints = 5;
+        testUsers[2].units[2].attackPower = 1;
+        testUsers[2].units[2].hitPoints = 3;
         testUsers[2].units[2].attackRange = 5;
+        testUsers[2].units[2].movementRate = 7;
 
         testUsers[2].units[3].status = UNIT_DEAD;
         testUsers[2].units[3].name = "Priestess";
         testUsers[2].units[3].imageFileName = "sprites/priestess.png";
-        testUsers[2].units[3].attackPower = 5;
-        testUsers[2].units[3].hitPoints = 5;
-        testUsers[2].units[3].attackRange = 5;
+        testUsers[2].units[3].attackPower = 3;
+        testUsers[2].units[3].hitPoints = 6;
+        testUsers[2].units[3].attackRange = 9;
+        testUsers[2].units[3].movementRate = 12;
 
         for (i = 0; i < NUM_TEST_USERS; i ++)
             addUser(testUsers[i]);

@@ -98,8 +98,9 @@ public:
     QString name;               // Player name
     int     experiencePoints;   // Player experience points
     bool    isActive;           // True if player is selected for battle
-    int     gameMode;
-    Map   map;
+    //int     gameMode;
+    //Map     map;
+    int     level;
 };
 
 #endif // GLOBALS_H

@@ -6,7 +6,6 @@
 #include "glwidget.h"
 
 QString NewGameWizard::playerName;
-//User    NewGameWizard::tempUser;
 
 NewGameWizard::NewGameWizard(QWidget *parent)
     : QWizard(parent)
@@ -30,11 +29,16 @@ NewGameWizard::NewGameWizard(QWidget *parent)
 
     // Set window logo and title
     setWindowIcon(QIcon("icons/logo.png"));
-    //setPixmap(QWizard::LogoPixmap, QPixmap("icons/logo.png"));
     setWindowTitle(tr("New Game"));
 
     // Check for logic execution each time next button is clicked
     connect(button(NextButton), SIGNAL(clicked()), this, SLOT(nextButtonClicked()));
+    connect(button(FinishButton), SIGNAL(clicked()), this, SLOT(finishButtonClicked()));
+}
+
+void NewGameWizard::finishButtonClicked()
+{
+    db.activateUser(NewGameWizard::playerName);
 }
 
 void NewGameWizard::nextButtonClicked()
@@ -43,7 +47,7 @@ void NewGameWizard::nextButtonClicked()
 
     switch (currentId())
     {
-    // Before units can be recruited, create new user if non-existent
+    // Before units are recruited, create new user if non-existent
     case Page_RecruitUnits:
         for (i = 0; i < db.userCount(); i++)
         {
@@ -119,6 +123,7 @@ IntroPage::IntroPage(QWidget *parent)
     returningPlayerRadioButton = new QRadioButton(tr("&Returning Player"));
     newPlayerRadioButton->setChecked(true);
 
+    // Organize into layouts
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(topLabel);
     layout->addWidget(newPlayerRadioButton);
@@ -138,6 +143,7 @@ int IntroPage::nextId() const
 CreatePlayerPage::CreatePlayerPage(QWidget *parent)
     : QWizardPage(parent)
 {
+    // Set titles
     setTitle(tr("Create Player"));
     setSubTitle(tr("Type a new player name"));
 
@@ -148,11 +154,9 @@ CreatePlayerPage::CreatePlayerPage(QWidget *parent)
     QGridLayout *layout = new QGridLayout;
     layout->addWidget(playerNameLabel, 0, 0);
     layout->addWidget(playerNameLineEdit, 0, 1);
-    //layout->addWidget(playerNameLabel, 1, 0);
-    //layout->addWidget(playerNameLineEdit, 1, 1);
     setLayout(layout);
 
-    // Automatically enables next button only if user name is entered
+    // Enable next button only if user name is entered
     registerField("player.name*", playerNameLineEdit);
 
     connect(playerNameLineEdit, SIGNAL(textChanged(const QString &)), this, SLOT(playerNameCreated(const QString &)));
@@ -180,22 +184,21 @@ LoadPlayerPage::LoadPlayerPage(QWidget *parent)
     setSubTitle(tr("Select player name from drop-down menu"));
 
     playerNameLabel = new QLabel(tr("Player Name:"));
-
     playerNameComboBox = new QComboBox;
 
+    // Get user name from database and sort
     for (i = 0; i < db.userCount(); i++)
         userNames << db.userName(i);
 
     userNames.sort();
 
-    playerNameComboBox->setCurrentIndex(-1);
-
+    // Inset names in combo box and initialize combox box index
     for (i = 0; i < userNames.count(); i++)
         playerNameComboBox->addItem(userNames.at(i));
 
-    //playerNameComboBox->addItem(tr("Blah1"));
-    //playerNameComboBox->addItem(tr("Blah2"));
+    playerNameComboBox->setCurrentIndex(-1);
 
+    // Organize layouts
     QGridLayout *layout = new QGridLayout;
     layout->addWidget(playerNameLabel, 0, 0);
     layout->addWidget(playerNameComboBox, 0, 1);
@@ -203,6 +206,7 @@ LoadPlayerPage::LoadPlayerPage(QWidget *parent)
 
     connect(playerNameComboBox, SIGNAL(activated(int)), this, SLOT(playerNameChanged(int)));
 }
+
 
 void LoadPlayerPage::playerNameChanged(int index)
 {
@@ -221,16 +225,18 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
 {
     int i;
 
-    // Initialize isAlive flag
+    // Initialize variables
     for (i = 0; i < MAX_TEAM_UNITS; i++)
         isAlive[i] = false;
 
     spriteIndex = 0;
     spriteFileName = db.spriteFileName(0);
 
+    // Set titles
     setTitle(tr("Recruit Units"));
     setSubTitle(tr("Recruit units for battle"));
 
+    // Create layouts and boxes
     QHBoxLayout *mainLayout = new QHBoxLayout;
     mainLayout->setObjectName(QString::fromUtf8("mainLayout"));
     mainLayout->setContentsMargins(0, 0, 0, 0);
@@ -309,6 +315,16 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
     spriteRangeVal->setObjectName(QString::fromUtf8("spriteRangeVal"));
     spriteRangeVal->setText(QString::number(db.spriteRange(0)));
     spriteStatsLayout->addWidget(spriteRangeVal, 3, 1, 1, 1);
+    //leftMidLayout->addLayout(spriteStatsLayout);
+
+    spriteRate = new QLabel(tr("Rate:"), spriteBox);
+    spriteRate->setObjectName(QString::fromUtf8("spriteRate"));
+    spriteStatsLayout->addWidget(spriteRate, 4, 0, 1, 1);
+
+    spriteRateVal = new QLabel(spriteBox);
+    spriteRateVal->setObjectName(QString::fromUtf8("spriteRateVal"));
+    spriteRateVal->setText(QString::number(db.spriteRate(0)));
+    spriteStatsLayout->addWidget(spriteRateVal, 4, 1, 1, 1);
     leftMidLayout->addLayout(spriteStatsLayout);
 
     QSpacerItem *hRightSpacerSpriteStats = new QSpacerItem(18, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
@@ -390,6 +406,7 @@ void RecruitUnitsPage::nextSpriteButtonClicked()
     spriteAPVal->setText(QString::number(db.spriteAP(spriteIndex)));
     spriteHPVal->setText(QString::number(db.spriteHP(spriteIndex)));
     spriteRangeVal->setText(QString::number(db.spriteRange(spriteIndex)));
+    spriteRateVal->setText(QString::number(db.spriteRate(spriteIndex)));
 }
 
 
@@ -403,6 +420,7 @@ void RecruitUnitsPage::prevSpriteButtonClicked()
     spriteAPVal->setText(QString::number(db.spriteAP(spriteIndex)));
     spriteHPVal->setText(QString::number(db.spriteHP(spriteIndex)));
     spriteRangeVal->setText(QString::number(db.spriteRange(spriteIndex)));
+    spriteRateVal->setText(QString::number(db.spriteRate(spriteIndex)));
 }
 
 
@@ -426,7 +444,7 @@ void RecruitUnitsPage::recruitButtonClicked()
 
             tempUnits[i].name = spriteNameVal->text();
             tempUnits[i].imageFileName = spriteFileName;
-            tempUnits[i].actionPoints = spriteAPVal->text().toInt();
+            tempUnits[i].attackPower = spriteAPVal->text().toInt();
             tempUnits[i].hitPoints = spriteHPVal->text().toInt();
             tempUnits[i].status = UNIT_OK;
 
@@ -505,7 +523,7 @@ SelectModePage::SelectModePage(QWidget *parent)
 
 
 int SelectModePage::nextId() const
-{
+{  
     if (freePlayModeRadioButton->isChecked())
         return NewGameWizard::Page_SelectMap;
     else
@@ -627,10 +645,11 @@ void SelectMapPage::prevMapButtonClicked()
 
 void SelectMapPage::selectButtonClicked()
 {
-    Map map;
+    //Map map;
 
-    map.imageFileName = mapFileName;
-    db.saveMap(NewGameWizard::playerName, map);
+    //map.imageFileName = mapFileName;
+    db.saveLevel(NewGameWizard::playerName, mapIndex);
+    //db.saveMap(NewGameWizard::playerName, map);
 }
 
 

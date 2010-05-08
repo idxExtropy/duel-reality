@@ -22,6 +22,7 @@ public:
             Page_LoadPlayer,
             Page_RecruitUnits,
             Page_UpgradeUnits,
+            Page_SelectMode,
             Page_SelectMap,
             Page_Conclusion };
 
@@ -32,6 +33,7 @@ public:
 
 private slots:
     void    showHelp();
+    void    finishButtonClicked();
     //void    nextButtonClicked();
 
 private:
@@ -131,12 +133,58 @@ public:
     UpgradeUnitsPageL(QWidget *parent = 0);
 
     int nextId() const;
+    /*void initializePage();
 
 private slots:
-    
+    void acceptButtonClicked();
+    void upgradeButton0Clicked();
+    void upgradeButton1Clicked();
+    void upgradeButton2Clicked();
+    void upgradeButton3Clicked();
+    void upgradeButtonAnyClicked(int index);
 
 private:
-    Database    db;
+    //int                     i;
+    int                     spriteIndex;
+    QString                 spriteFileName;
+    QLabel                  *spriteImage;
+    QPushButton             *nextSpriteButton;
+    QPushButton             *prevSpriteButton;
+    QLabel                  *spriteName;
+    QLabel                  *spriteAP;
+    QLabel                  *spriteHP;
+    QLabel                  *spriteRange;
+    QLabel                  *spriteNameVal;
+    QLabel                  *spriteAPVal;
+    QLabel                  *spriteHPVal;
+    QLabel                  *spriteRangeVal;
+    QPushButton             *recruitButton;
+    QList<QLabel *>         unitImageList;
+    QList<QLabel *>         unitNameList;
+    QList<QPushButton *>    rejectButtonList;
+    bool                    isAlive[MAX_TEAM_UNITS];*/
+    Database                db;
+};
+
+
+class SelectModePageL : public QWizardPage
+{
+    Q_OBJECT
+
+public:
+    SelectModePageL(QWidget *parent = 0);
+
+    int nextId() const;
+
+private slots:
+    //void campaignModeSelected(bool);
+    //void freeplayModeSelected(bool);
+
+private:
+    //QLabel          *topLabel;
+    QRadioButton    *campaignModeRadioButton;
+    QRadioButton    *freePlayModeRadioButton;
+    Database        db;
 };
 
 
@@ -165,6 +213,8 @@ private:
     QPushButton *selectButton;
     Database    db;
 };
+
+
 
 class ConclusionPageL : public QWizardPage
 {

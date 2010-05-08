@@ -16,6 +16,7 @@ LoadGameWizard::LoadGameWizard(QWidget *parent)
     setPage(Page_LoadPlayer, new LoadPlayerPageL);
     setPage(Page_RecruitUnits, new RecruitUnitsPageL);
     setPage(Page_UpgradeUnits, new UpgradeUnitsPageL);
+    setPage(Page_SelectMode, new SelectModePageL);
     setPage(Page_SelectMap, new SelectMapPageL);
     setPage(Page_Conclusion, new ConclusionPageL);
 
@@ -33,6 +34,12 @@ LoadGameWizard::LoadGameWizard(QWidget *parent)
 
     // Check for logic execution each time next button is clicked
     //connect(button(NextButton), SIGNAL(clicked()), this, SLOT(nextButtonClicked()));
+    connect(button(FinishButton), SIGNAL(clicked()), this, SLOT(finishButtonClicked()));
+}
+
+void LoadGameWizard::finishButtonClicked()
+{
+    db.activateUser(LoadGameWizard::playerName);
 }
 
 /*
@@ -81,6 +88,9 @@ void LoadGameWizard::showHelp()
         break;
     case Page_UpgradeUnits:
         message = tr("Upgrade units stats using available XP");
+        break;
+    case Page_SelectMode:
+        message = tr("In campaign mode, levels and maps are predetermined");
         break;
     case Page_SelectMap:
         message = tr("Select a desired map for freestyle mode battle");
@@ -401,7 +411,7 @@ void RecruitUnitsPageL::recruitButtonClicked()
 
             tempUnits[i].name = spriteNameVal->text();
             tempUnits[i].imageFileName = spriteFileName;
-            tempUnits[i].actionPoints = spriteAPVal->text().toInt();
+            tempUnits[i].attackPower = spriteAPVal->text().toInt();
             tempUnits[i].hitPoints = spriteHPVal->text().toInt();
             tempUnits[i].status = UNIT_OK;
 
@@ -476,14 +486,36 @@ UpgradeUnitsPageL::UpgradeUnitsPageL(QWidget *parent)
 
 int UpgradeUnitsPageL::nextId() const
 {
-    int XP = db.loadXP(LoadGameWizard::playerName);
+    return LoadGameWizard::Page_SelectMap;
+}
 
-    if (XP)
+
+SelectModePageL::SelectModePageL(QWidget *parent)
+    : QWizardPage(parent)
+{
+    setTitle(tr("Game Mode"));
+    setSubTitle(tr("Select the game mode"));
+
+    // Initialize radio buttons
+    campaignModeRadioButton = new QRadioButton(tr("&Campaign Mode"));
+    freePlayModeRadioButton = new QRadioButton(tr("&Free Play Mode"));
+    campaignModeRadioButton->setChecked(true);
+
+    QVBoxLayout *layout = new QVBoxLayout;
+    //layout->addWidget(topLabel);
+    layout->addWidget(campaignModeRadioButton);
+    layout->addWidget(freePlayModeRadioButton);
+    setLayout(layout);
+}
+
+
+int SelectModePageL::nextId() const
+{
+    if (freePlayModeRadioButton->isChecked())
         return LoadGameWizard::Page_SelectMap;
     else
         return LoadGameWizard::Page_Conclusion;
 }
-
 
 SelectMapPageL::SelectMapPageL(QWidget *parent)
     : QWizardPage(parent)
@@ -599,10 +631,11 @@ void SelectMapPageL::prevMapButtonClicked()
 
 void SelectMapPageL::selectButtonClicked()
 {
-    Map map;
+    //Map map;
 
-    map.imageFileName = mapFileName;
-    db.saveMap(LoadGameWizard::playerName, map);
+    //map.imageFileName = mapFileName;
+    db.saveLevel(LoadGameWizard::playerName, mapIndex);
+    //db.saveMap(LoadGameWizard::playerName, map);
 }
 
 
