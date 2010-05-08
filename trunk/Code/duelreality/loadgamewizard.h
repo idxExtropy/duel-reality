@@ -113,10 +113,12 @@ private:
     QLabel                  *spriteAP;
     QLabel                  *spriteHP;
     QLabel                  *spriteRange;
+    QLabel                  *spriteRate;
     QLabel                  *spriteNameVal;
     QLabel                  *spriteAPVal;
     QLabel                  *spriteHPVal;
     QLabel                  *spriteRangeVal;
+    QLabel                  *spriteRateVal;
     QPushButton             *recruitButton;
     QList<QLabel *>         unitImageList;
     QList<QLabel *>         unitNameList;

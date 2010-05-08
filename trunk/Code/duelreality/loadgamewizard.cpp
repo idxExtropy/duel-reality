@@ -274,6 +274,16 @@ RecruitUnitsPageL::RecruitUnitsPageL(QWidget *parent)
     spriteRangeVal->setObjectName(QString::fromUtf8("spriteRangeVal"));
     spriteRangeVal->setText(QString::number(db.spriteRange(0)));
     spriteStatsLayout->addWidget(spriteRangeVal, 3, 1, 1, 1);
+    //leftMidLayout->addLayout(spriteStatsLayout);
+
+    spriteRate = new QLabel(tr("Rate:"), spriteBox);
+    spriteRate->setObjectName(QString::fromUtf8("spriteRate"));
+    spriteStatsLayout->addWidget(spriteRate, 4, 0, 1, 1);
+
+    spriteRateVal = new QLabel(spriteBox);
+    spriteRateVal->setObjectName(QString::fromUtf8("spriteRateVal"));
+    spriteRateVal->setText(QString::number(db.spriteRate(0)));
+    spriteStatsLayout->addWidget(spriteRateVal, 4, 1, 1, 1);
     leftMidLayout->addLayout(spriteStatsLayout);
 
     QSpacerItem *hRightSpacerSpriteStats = new QSpacerItem(18, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
@@ -375,6 +385,7 @@ void RecruitUnitsPageL::nextSpriteButtonClicked()
     spriteAPVal->setText(QString::number(db.spriteAP(spriteIndex)));
     spriteHPVal->setText(QString::number(db.spriteHP(spriteIndex)));
     spriteRangeVal->setText(QString::number(db.spriteRange(spriteIndex)));
+    spriteRateVal->setText(QString::number(db.spriteRate(spriteIndex)));
 }
 
 
@@ -388,6 +399,7 @@ void RecruitUnitsPageL::prevSpriteButtonClicked()
     spriteAPVal->setText(QString::number(db.spriteAP(spriteIndex)));
     spriteHPVal->setText(QString::number(db.spriteHP(spriteIndex)));
     spriteRangeVal->setText(QString::number(db.spriteRange(spriteIndex)));
+    spriteRateVal->setText(QString::number(db.spriteRate(spriteIndex)));
 }
 
 
