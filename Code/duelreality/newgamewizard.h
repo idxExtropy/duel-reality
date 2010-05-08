@@ -38,6 +38,7 @@ public:
 private slots:
     void    showHelp();
     void    nextButtonClicked();
+    void    finishButtonClicked();
 
 private:
     Database    db;
@@ -133,10 +134,12 @@ private:
     QLabel                  *spriteAP;
     QLabel                  *spriteHP;
     QLabel                  *spriteRange;
+    QLabel                  *spriteRate;
     QLabel                  *spriteNameVal;
     QLabel                  *spriteAPVal;
     QLabel                  *spriteHPVal;
     QLabel                  *spriteRangeVal;
+    QLabel                  *spriteRateVal;
     QPushButton             *recruitButton;
     QList<QLabel *>         unitImageList;
     QList<QLabel *>         unitNameList;
@@ -155,10 +158,15 @@ public:
 
     int nextId() const;
 
+private slots:
+    //void campaignModeSelected(bool);
+    //void freeplayModeSelected(bool);
+
 private:
     //QLabel          *topLabel;
     QRadioButton    *campaignModeRadioButton;
     QRadioButton    *freePlayModeRadioButton;
+    Database        db;
 };
 
 
