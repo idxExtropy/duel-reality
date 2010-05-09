@@ -20,7 +20,7 @@ mechanics::~mechanics()
 //////////////////////////////////////////////////////AI/////////////////////////////////////
 void mechanics::handleAI()
 {
-     // int value=0;
+    // int value=0;
 
     for (int i = 0; i < glWidget->battleMap.cellsTall; i++)
     {
@@ -40,58 +40,47 @@ void mechanics::handleAI()
                 switch (attackCheckResult)
                 {
                 case 0:
-                   // glWidget->hitUnit(targv,targh,power,i,j);
+                    // glWidget->hitUnit(targv,targh,power,i,j);
                     break;
                 case 1:
                     //glWidget->killUnit(targv,targh,i,j);
                     break;
                 default:
                     {
-                    moveCheckResult=mechanics::AImoveCheck(i,j,moverange);
-                    switch(moveCheckResult)
-                    {
-                     //case 0: glWidget->moveUnit(i,j,i-1,j);break;
-                      case 0: if(mechanics::isValidMove(i,j,i+1,j))//Move UP
-                              {
-                                  glWidget->moveUnit(i,j,i+1,j);
-                              }
-                     // case 2: glWidget->moveUnit(i,j,i-1,j);break;
-                      case 1:if(mechanics::isValidMove(i,j,i-1,j))//Move DOWN
-                          {
-                              glWidget->moveUnit(i,j,i-1,j);
+                        moveCheckResult=mechanics::AImoveCheck(i,j,moverange);
+                        switch(moveCheckResult)
+                        {
+                            //case 0: glWidget->moveUnit(i,j,i-1,j);break;
+                        case 0: if(mechanics::isValidMove(i,j,i+moverange,j))//Move UP
+                            {
+                                glWidget->moveUnit(i,j,i+moverange,j);
+                            }
+                            // case 2: glWidget->moveUnit(i,j,i-1,j);break;
+                      case 1:if(mechanics::isValidMove(i,j,i-moverange,j))//Move DOWN
+                            {
+                              glWidget->moveUnit(i,j,i-moverange,j);
                           }
-                     // case 4: glWidget->moveUnit(i,j,i-1,j);break;
-                      case 2: if(mechanics::isValidMove(i,j,i,j+1))//Move RIGHT
+                          // case 4: glWidget->moveUnit(i,j,i-1,j);break;
+                      case 2: if(mechanics::isValidMove(i,j,i,j+moverange))//Move RIGHT
                           {
-                              glWidget->moveUnit(i,j,i,j+1);
+                              glWidget->moveUnit(i,j,i,j+moverange);
                           }
-                //      case 6: glWidget->moveUnit(i,j,i-1,j);break;
-                      case 3: if(mechanics::isValidMove(i,j,i,j-1))//Move LEFT
+                          //      case 6: glWidget->moveUnit(i,j,i-1,j);break;
+                      case 3: if(mechanics::isValidMove(i,j,i,j-moverange))//Move LEFT
                           {
-                              glWidget->moveUnit(i,j,i,j-1);
+                              glWidget->moveUnit(i,j,i,j-moverange);
                           }
 
                       default: //DO NOTHING
+                          glWidget->moveUnit(i,j,i,j);
+                        break;
 
-                              glWidget->moveUnit(i,j,i-1,j);
-
+                         } break;
                     }
-                       if(mechanics::isValidMove(i,j,i+1,j))//Move UP
-                      {
-                        glWidget->moveUnit(i,j,i+1,j);
-                       }
-                        else glWidget->moveUnit(i,j,i-1,j);
-                      break;
-                    }
-
-//                 else if(mechanics::isValidMove(i,j,i,j+1))//MOVE LEFT
-//                 {
-//                 glWidget->moveUnit(i,j,i,j+1);
-
+                }
             }
         }
     }
-}
 }
 int mechanics::AIAttackCheck(int aiV, int aiH, int range, int power)
 {
@@ -166,7 +155,7 @@ int mechanics::AImoveCheck(int aiV, int aiH, int range)
     {
         if (val1>0)
         return 0;       //go UP
-        if (val2<0)
+        if (val1<0)
         return 1;       //go DOWN
     }
     else if(abs(val1)<abs(val2))
