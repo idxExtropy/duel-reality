@@ -234,7 +234,7 @@ void GLWidget::unitTest_GenerateContent()
     unit[7].vLocation = 4;
     unit[7].hLocation = 8;
     unit[7].attackPower = 18;
-    unit[7].attackRange = 9;
+    unit[7].attackRange = 3;
     unit[7].faceLeft = true;
     unit[7].movementRate = 9;
     unit[7].team =AI_UNIT;
@@ -953,11 +953,11 @@ void GLWidget::hitUnit(int vLocation, int hLocation, int damage, int vAttackerLo
 void GLWidget::killUnit(int vLocation, int hLocation, int vAttackerLoc, int hAttackerLoc)
 {
 
-
+    battleMap.gridCell[vLocation][hLocation].unit->status = NO_UNIT;
     battleMap.gridCell[vAttackerLoc][hAttackerLoc].unit->isPending = false;
     battleMap.gridCell[vAttackerLoc][hAttackerLoc].unit->actionTime = 0;
     isPending = false;
-    battleMap.gridCell[vLocation][hLocation].unit->status = NO_UNIT;
+
     // Play 'ready' sound.
     QSound *soundBkgnd = new QSound("sounds/Action_Hit.wav");
     soundBkgnd->play();
