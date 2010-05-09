@@ -16,16 +16,30 @@ mechanics::mechanics(QObject *parent) :
 mechanics::~mechanics()
 {
 }
-
+//
 void mechanics::handleAI()
 {
+     // int value=0;
+
     for (int i = 0; i < glWidget->battleMap.cellsTall; i++)
     {
         for (int j = 0; j < glWidget->battleMap.cellsWide; j++)
         {
             if ((glWidget->battleMap.gridCell[i][j].unit->isPending) && (glWidget->battleMap.gridCell[i][j].unit->team == AI_UNIT) && (glWidget->battleMap.gridCell[i][j].unit->status == UNIT_OK))
-            {
-                // Dummy movement for now...
+            { ///START AI ROUTINE
+             //   int range = glWidget->battleMap.gridCell[i][j].unit->attackRange;
+            //    int result;
+             //       result = mechanics::AIcheckboard(i,j, range);
+
+//                switch (result)
+//                {
+//                        case 0:
+//                        mechanics::attackUnit();
+//                        default:
+//                    }
+
+
+
                 if(mechanics::isValidMove(i,j,i+1,j))//Move UP
                 {
                 glWidget->moveUnit(i,j,i+1,j);
@@ -301,15 +315,36 @@ int mechanics::isGameOver()
 }
 
 //////////////////////////////////////////////////////AI/////////////////////////////////////
-// void mechanics::startAI()
+//int mechanics::AIcheckboard(int aiV, int aiH, int range)
 //{
+//    int val1=0, val2=0;
+//    for (int i = 0; i < glWidget->battleMap.cellsTall; i++)
+//    {
+//        for (int j = 0; j < glWidget->battleMap.cellsWide; j++)
+//        {
+//            if(mechanics::isOccupied(i,j))
+//            {
+//                if(glWidget->battleMap.gridCell[i][j].unit->team==USER_UNIT)
+//                {
+//                    if(mechanics::isValidAttack(i,j,range, aiV, aiH, 2,1))
+//                        
+//                    {
+//                        glWidget->battleMap.gridCell[i][j].isSelected==true;
+//                        return 0; //ATTACK
+//                    }
 //
-//    //AI myAI;
-//   //bool result = myAI.getmove(px,py);
-//     // if(result){move(Unit *UnitPointer,int x, int y);
-//     //mechanics::isGameOver();
+//                }
 //
+//            }
+//
+//
+//                }
+//    }
 //}
+//
+
+
+///////////////////////////////////////////////////////////////////////////////////
 int mechanics::endBattle(int x)
 {
     return x;
