@@ -84,13 +84,19 @@ void MainWindow::createActions()
     actionNewGame->setShortcut(QKeySequence::New);
     actionNewGame->setStatusTip(tr("Start a new game"));
     connect(this, SIGNAL(isGameCfgMode(bool)), actionNewGame, SLOT(setEnabled(bool)));
+    connect(actionNewGame, SIGNAL(hovered()), this, SLOT(playHoveredSound()));
+    connect(actionNewGame, SIGNAL(triggered()), this, SLOT(playClickedSound()));
     connect(actionNewGame, SIGNAL(triggered()), this, SLOT(newGame()));
+
+
 
     actionLoadGame = new QAction(tr("&Load Game"), this);
     actionLoadGame->setIcon(QIcon("icons/fileopen.png"));
     actionLoadGame->setShortcut(tr("Ctrl+L"));
     actionLoadGame->setStatusTip(tr("Load a saved game"));
     connect(this, SIGNAL(isGameCfgMode(bool)), actionLoadGame, SLOT(setEnabled(bool)));
+    connect(actionLoadGame, SIGNAL(hovered()), this, SLOT(playHoveredSound()));
+    connect(actionLoadGame, SIGNAL(triggered()), this, SLOT(playClickedSound()));
     connect(actionLoadGame, SIGNAL(triggered()), this, SLOT(loadGame()));
 
     actionSaveGame = new QAction(tr("&Save Game"), this);
@@ -98,27 +104,37 @@ void MainWindow::createActions()
     actionSaveGame->setShortcut(QKeySequence::Save);
     actionSaveGame->setStatusTip(tr("Save a game"));
     connect(this, SIGNAL(isBattleMode(bool)), actionSaveGame, SLOT(setEnabled(bool)));
+    connect(actionSaveGame, SIGNAL(hovered()), this, SLOT(playHoveredSound()));
+    connect(actionSaveGame, SIGNAL(triggered()), this, SLOT(playClickedSound()));
     //connect(actionSaveGame, SIGNAL(triggered()), this, SLOT(saveGame()));
 
     actionExitGame = new QAction(tr("E&xit Game"), this);
     actionExitGame->setIcon(QIcon("icons/exit.png"));
     actionExitGame->setShortcut(tr("Ctrl+X"));
     actionExitGame->setStatusTip(tr("Exit the game"));
+    connect(actionExitGame, SIGNAL(hovered()), this, SLOT(playHoveredSound()));
+    connect(actionExitGame, SIGNAL(triggered()), this, SLOT(playClickedSound()));
     connect(actionExitGame, SIGNAL(triggered()), this, SLOT(exitGame()));
 
     actionAbout = new QAction(tr("&About"), this);
     actionAbout->setStatusTip(tr("Provides information about the game"));
+    connect(actionAbout, SIGNAL(hovered()), this, SLOT(playHoveredSound()));
+    connect(actionAbout, SIGNAL(triggered()), this, SLOT(playClickedSound()));
     connect(actionAbout, SIGNAL(triggered()), this, SLOT(about()));
 
     turnIndicator = new QAction(tr("&Turn Signal"), this);
     turnIndicator->setIcon(QIcon("icons/redcircle.png"));
     turnIndicator->setStatusTip(tr("Computer's turn to play"));
+    connect(turnIndicator, SIGNAL(hovered()), this, SLOT(playHoveredSound()));
+    connect(turnIndicator, SIGNAL(triggered()), this, SLOT(playClickedSound()));
 
     actionAttack = new QAction(tr("&Attack"), this);
     actionAttack->setIcon(QIcon("icons/attack.png"));
     actionAttack->setShortcut(tr("Ctrl+A"));
     actionAttack->setStatusTip(tr("Attack opponent"));
     connect(this, SIGNAL(isBattleMode(bool)), actionAttack, SLOT(setEnabled(bool)));
+    connect(actionAttack, SIGNAL(hovered()), this, SLOT(playHoveredSound()));
+    connect(actionAttack, SIGNAL(triggered()), this, SLOT(playClickedSound()));
     connect(actionAttack, SIGNAL(triggered()), this, SLOT(onAttack()));
 
     actionMove = new QAction(tr("&Move"), this);
@@ -126,6 +142,8 @@ void MainWindow::createActions()
     actionMove->setShortcut(tr("Ctrl+M"));
     actionMove->setStatusTip(tr("Move unit"));
     connect(this, SIGNAL(isBattleMode(bool)), actionMove, SLOT(setEnabled(bool)));
+    connect(actionMove, SIGNAL(hovered()), this, SLOT(playHoveredSound()));
+    connect(actionMove, SIGNAL(triggered()), this, SLOT(playClickedSound()));
     connect(actionMove, SIGNAL(triggered()), this, SLOT(onMove()));
 
     actionEndTurn = new QAction(tr("&End Turn"), this);
@@ -133,8 +151,23 @@ void MainWindow::createActions()
     actionEndTurn->setShortcut(tr("Ctrl+T"));
     actionEndTurn->setStatusTip(tr("End Turn"));
     connect(this, SIGNAL(isBattleMode(bool)), actionEndTurn, SLOT(setEnabled(bool)));
+    connect(actionEndTurn, SIGNAL(hovered()), this, SLOT(playHoveredSound()));
+    connect(actionEndTurn, SIGNAL(triggered()), this, SLOT(playClickedSound()));
     connect(actionEndTurn, SIGNAL(triggered()), this, SLOT(endTurnClicked()));
 }
+
+
+void MainWindow::playHoveredSound()
+{
+    QSound::play("sounds/click1.wav");
+}
+
+
+void MainWindow::playClickedSound()
+{
+    QSound::play("sounds/blip.wav");
+}
+
 
 void MainWindow::onMove()
 {
@@ -190,6 +223,9 @@ void MainWindow::onBattleEnd()
     }
     else
     {
+        Phonon::MediaObject *victoryMusic = Phonon::createPlayer(Phonon::MusicCategory, Phonon::MediaSource("sounds/victory.mp3"));
+        victoryMusic->play();
+
         QMessageBox gameOverMessageBox;
 
         gameOverMessageBox.setIcon(QMessageBox::Information);

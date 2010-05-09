@@ -46,6 +46,8 @@ private slots:
     void exitGame();    // Exits game
     void saveGame();    // Calls Save Game dialog
     void endTurnClicked();  // Disables user turn interactions
+    void playHoveredSound();
+    void playClickedSound();
 
 private:
     void createActions();   // Creates actions
@@ -64,6 +66,8 @@ private:
     // Action sounds
     //QSound  *soundBkgnd;        // Played when not in battle
     QSound  *soundBattleStart;  // Played at start of battle
+    //QSound  *soundClicked;
+    //QSound  *soundHovered;
 
     // Action items
     QAction     *actionNewGame;     // Triggered to start new game
