@@ -139,13 +139,29 @@ public:
 
 private slots:
     //void acceptButtonClicked();
-    //void upgradeButton0Clicked();
-    //void upgradeButton1Clicked();
-    //void upgradeButton2Clicked();
-    //void upgradeButton3Clicked();
+    void upgradeAPButtonClicked();
+    void upgradeHPButtonClicked();
+    void upgradeRangeButtonClicked();
+    void upgradeRateButtonClicked();
     //void upgradeButtonAnyClicked(int index);
+    void selectButton0Clicked();
+    void selectButton1Clicked();
+    void selectButton2Clicked();
+    void selectButton3Clicked();
+    void selectButtonAnyClicked(int index);
 
 private:
+    int                     unitIndex;
+    int                     unitAP;
+    int                     unitHP;
+    int                     unitRange;
+    int                     unitRate;
+    int                     userXP;
+    int                     tempAP;
+    int                     tempHP;
+    int                     tempRange;
+    int                     tempRate;
+    int                     tempXP;
     //int                     i;
     //int                     spriteIndex;
     //QString                 spriteFileName;
@@ -171,6 +187,7 @@ private:
     QList<QLabel *>         unitImageList;
     QList<QLabel *>         unitNameList;
     QList<QPushButton *>    selectButtonList;
+    QList<Unit>             units;
     //bool                    isAlive[MAX_TEAM_UNITS];
     Database                db;
 };

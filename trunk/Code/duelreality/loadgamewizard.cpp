@@ -520,7 +520,6 @@ UpgradeUnitsPageL::UpgradeUnitsPageL(QWidget *parent)
     selectedUnitImage->setObjectName(QString::fromUtf8("selectedUnitmage"));
     selectedUnitImage->setMinimumSize(QSize(71, 101));
     selectedUnitImage->setMaximumSize(QSize(71, 101));
-    selectedUnitImage->setPixmap(QPixmap(QString::fromUtf8("sprites/blank.PNG")));
     selectedUnitImage->setScaledContents(true);
     leftTopLayout->addWidget(selectedUnitImage);
     //leftLayout->addWidget(selectedUnitImage);
@@ -669,17 +668,132 @@ UpgradeUnitsPageL::UpgradeUnitsPageL(QWidget *parent)
     //connect(nextSpriteButton, SIGNAL(clicked()), this, SLOT(nextSpriteButtonClicked()));
     //connect(prevSpriteButton, SIGNAL(clicked()), this, SLOT(prevSpriteButtonClicked()));
     //connect(recruitButton, SIGNAL(clicked()), this, SLOT(recruitButtonClicked()));
-    //connect(rejectButtonList[0], SIGNAL(clicked()), this, SLOT(rejectButton0Clicked()));
-    //connect(rejectButtonList[1], SIGNAL(clicked()), this, SLOT(rejectButton1Clicked()));
-    //connect(rejectButtonList[2], SIGNAL(clicked()), this, SLOT(rejectButton2Clicked()));
-    //connect(rejectButtonList[3], SIGNAL(clicked()), this, SLOT(rejectButton3Clicked()));
+    connect(upgradeAPButton, SIGNAL(clicked()), this, SLOT(upgradeAPButtonClicked()));
+    connect(upgradeHPButton, SIGNAL(clicked()), this, SLOT(upgradeHPButtonClicked()));
+    connect(upgradeRangeButton, SIGNAL(clicked()), this, SLOT(upgradeRangeButtonClicked()));
+    connect(upgradeRateButton, SIGNAL(clicked()), this, SLOT(upgradeRateButtonClicked()));
+    connect(selectButtonList[0], SIGNAL(clicked()), this, SLOT(selectButton0Clicked()));
+    connect(selectButtonList[1], SIGNAL(clicked()), this, SLOT(selectButton1Clicked()));
+    connect(selectButtonList[2], SIGNAL(clicked()), this, SLOT(selectButton2Clicked()));
+    connect(selectButtonList[3], SIGNAL(clicked()), this, SLOT(selectButton3Clicked()));
 }
+
+void UpgradeUnitsPageL::upgradeAPButtonClicked()
+{
+    if ((units[unitIndex].status == UNIT_OK) && tempXP)
+    {
+        tempXP--;
+        tempAP++;
+
+        selectedUnitXPVal->setText(QString::number(tempXP));
+        selectedUnitAPVal->setText(QString::number(tempAP));
+    }
+}
+
+void UpgradeUnitsPageL::upgradeHPButtonClicked()
+{
+    if ((units[unitIndex].status == UNIT_OK) && tempXP)
+    {
+        tempXP--;
+        tempHP++;
+
+        selectedUnitXPVal->setText(QString::number(tempXP));
+        selectedUnitHPVal->setText(QString::number(tempHP));
+    }
+}
+
+void UpgradeUnitsPageL::upgradeRangeButtonClicked()
+{
+    if ((units[unitIndex].status == UNIT_OK) && tempXP)
+    {
+        tempXP--;
+        tempRange++;
+
+        selectedUnitXPVal->setText(QString::number(tempXP));
+        selectedUnitRangeVal->setText(QString::number(tempRange));
+    }
+}
+
+
+void UpgradeUnitsPageL::upgradeRateButtonClicked()
+{
+    if ((units[unitIndex].status == UNIT_OK) && tempXP)
+    {
+        tempXP--;
+        tempRate++;
+
+        selectedUnitXPVal->setText(QString::number(tempXP));
+        selectedUnitRateVal->setText(QString::number(tempRate));
+    }
+}
+
+
+void UpgradeUnitsPageL::selectButton0Clicked()
+{
+    selectButtonAnyClicked(0);
+}
+
+void UpgradeUnitsPageL::selectButton1Clicked()
+{
+    selectButtonAnyClicked(1);
+}
+
+void UpgradeUnitsPageL::selectButton2Clicked()
+{
+    selectButtonAnyClicked(2);
+}
+
+void UpgradeUnitsPageL::selectButton3Clicked()
+{
+    selectButtonAnyClicked(3);
+}
+
+void UpgradeUnitsPageL::selectButtonAnyClicked(int index)
+{
+    if (units[index].status == UNIT_OK)
+    {
+        unitIndex = index;
+
+        selectedUnitImage->setPixmap(QPixmap(units[index].imageFileName));
+
+        userXP = db.loadXP(LoadGameWizard::playerName);
+        unitAP = units[index].attackPower;
+        unitHP = units[index].hitPoints;
+        unitRange = units[index].attackRange;
+        unitRate = units[index].movementRate;
+
+        tempXP = userXP;
+        tempAP = unitAP;
+        tempHP = unitHP;
+        tempRange = unitRange;
+        tempRate = unitRate;
+
+        selectedUnitXPVal->setText(QString::number(tempXP));
+        selectedUnitAPVal->setText(QString::number(tempAP));
+        selectedUnitHPVal->setText(QString::number(tempHP));
+        selectedUnitRangeVal->setText(QString::number(tempRange));
+        selectedUnitRateVal->setText(QString::number(tempRate));
+    }
+    else
+    {
+        selectedUnitImage->setPixmap(QPixmap(QString::fromUtf8("sprites/blank.PNG")));
+
+        selectedUnitXPVal->setText(QString::number(0));
+        selectedUnitAPVal->setText(QString::number(0));
+        selectedUnitHPVal->setText(QString::number(0));
+        selectedUnitRangeVal->setText(QString::number(0));
+        selectedUnitRateVal->setText(QString::number(0));
+    }
+}
+
 
 
 void UpgradeUnitsPageL::initializePage()
 {
     int i;
-    QList<Unit> units = db.loadUnits(LoadGameWizard::playerName);
+    units = db.loadUnits(LoadGameWizard::playerName);
+
+    selectedUnitImage->setPixmap(QPixmap(QString::fromUtf8("sprites/blank.PNG")));
 
     selectedUnitXPVal->setText(QString::number(0));
     selectedUnitAPVal->setText(QString::number(0));
@@ -689,7 +803,7 @@ void UpgradeUnitsPageL::initializePage()
     
     for (i = 0; i < MAX_TEAM_UNITS; i++)
     {
-        if (units[i].status)
+        if (units[i].status == UNIT_OK)
         {
             unitImageList[i]->setPixmap(units[i].imageFileName);
             unitNameList[i]->setText(units[i].name);
@@ -697,6 +811,7 @@ void UpgradeUnitsPageL::initializePage()
         }
     }
 }
+
 
 int UpgradeUnitsPageL::nextId() const
 {
@@ -730,6 +845,7 @@ int SelectModePageL::nextId() const
     else
         return LoadGameWizard::Page_Conclusion;
 }
+
 
 SelectMapPageL::SelectMapPageL(QWidget *parent)
     : QWizardPage(parent)
@@ -820,6 +936,7 @@ SelectMapPageL::SelectMapPageL(QWidget *parent)
     connect(prevMapButton, SIGNAL(clicked()), this, SLOT(prevMapButtonClicked()));
     connect(selectButton, SIGNAL(clicked()), this, SLOT(selectButtonClicked()));
 }
+
 
 void SelectMapPageL::nextMapButtonClicked()
 {
