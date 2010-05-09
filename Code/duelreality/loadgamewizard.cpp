@@ -366,7 +366,7 @@ void RecruitUnitsPageL::initializePage()
 
     for (i = 0; i < MAX_TEAM_UNITS; i++)
     {
-        if (units[i].status)
+        if (units[i].status == UNIT_OK)
         {
             unitImageList[i]->setPixmap(units[i].imageFileName);
             unitNameList[i]->setText(units[i].name);
@@ -425,6 +425,8 @@ void RecruitUnitsPageL::recruitButtonClicked()
             tempUnits[i].imageFileName = spriteFileName;
             tempUnits[i].attackPower = spriteAPVal->text().toInt();
             tempUnits[i].hitPoints = spriteHPVal->text().toInt();
+            tempUnits[i].attackRange = spriteRangeVal->text().toInt();
+            tempUnits[i].movementRate = spriteRateVal->text().toInt();
             tempUnits[i].status = UNIT_OK;
 
             db.saveUnits(LoadGameWizard::playerName, tempUnits);
@@ -665,9 +667,8 @@ UpgradeUnitsPageL::UpgradeUnitsPageL(QWidget *parent)
     mainLayout->addWidget(unitsBox);
     setLayout(mainLayout);
     
-    //connect(nextSpriteButton, SIGNAL(clicked()), this, SLOT(nextSpriteButtonClicked()));
-    //connect(prevSpriteButton, SIGNAL(clicked()), this, SLOT(prevSpriteButtonClicked()));
-    //connect(recruitButton, SIGNAL(clicked()), this, SLOT(recruitButtonClicked()));
+    connect(acceptButton, SIGNAL(clicked()), this, SLOT(acceptButtonClicked()));
+    connect(resetButton, SIGNAL(clicked()), this, SLOT(resetButtonClicked()));
     connect(upgradeAPButton, SIGNAL(clicked()), this, SLOT(upgradeAPButtonClicked()));
     connect(upgradeHPButton, SIGNAL(clicked()), this, SLOT(upgradeHPButtonClicked()));
     connect(upgradeRangeButton, SIGNAL(clicked()), this, SLOT(upgradeRangeButtonClicked()));
@@ -677,6 +678,45 @@ UpgradeUnitsPageL::UpgradeUnitsPageL(QWidget *parent)
     connect(selectButtonList[2], SIGNAL(clicked()), this, SLOT(selectButton2Clicked()));
     connect(selectButtonList[3], SIGNAL(clicked()), this, SLOT(selectButton3Clicked()));
 }
+
+void UpgradeUnitsPageL::acceptButtonClicked()
+{
+    if (units[unitIndex].status == UNIT_OK)
+    {
+        userXP = tempXP;
+        unitAP = tempAP;
+        unitHP = tempHP;
+        unitRange = tempRange;
+        unitRate = tempRate;
+
+        units[unitIndex].attackPower = unitAP;
+        units[unitIndex].hitPoints = unitHP;
+        units[unitIndex].attackRange = unitRange;
+        units[unitIndex].movementRate = unitRate;
+
+        db.saveXP(LoadGameWizard::playerName, userXP);
+        db.saveUnits(LoadGameWizard::playerName, units);
+    }
+}
+
+void UpgradeUnitsPageL::resetButtonClicked()
+{
+    if (units[unitIndex].status == UNIT_OK)
+    {
+        tempXP = userXP;
+        tempAP = unitAP;
+        tempHP = unitHP;
+        tempRange = unitRange;
+        tempRate = unitRate;
+
+        selectedUnitXPVal->setText(QString::number(tempXP));
+        selectedUnitAPVal->setText(QString::number(tempAP));
+        selectedUnitHPVal->setText(QString::number(tempHP));
+        selectedUnitRangeVal->setText(QString::number(tempRange));
+        selectedUnitRateVal->setText(QString::number(tempRate));
+    }
+}
+
 
 void UpgradeUnitsPageL::upgradeAPButtonClicked()
 {
@@ -815,7 +855,7 @@ void UpgradeUnitsPageL::initializePage()
 
 int UpgradeUnitsPageL::nextId() const
 {
-    return LoadGameWizard::Page_SelectMap;
+    return LoadGameWizard::Page_SelectMode;
 }
 
 

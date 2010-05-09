@@ -446,6 +446,8 @@ void RecruitUnitsPage::recruitButtonClicked()
             tempUnits[i].imageFileName = spriteFileName;
             tempUnits[i].attackPower = spriteAPVal->text().toInt();
             tempUnits[i].hitPoints = spriteHPVal->text().toInt();
+            tempUnits[i].attackRange = spriteRangeVal->text().toInt();
+            tempUnits[i].movementRate = spriteRateVal->text().toInt();
             tempUnits[i].status = UNIT_OK;
 
             db.saveUnits(NewGameWizard::playerName, tempUnits);

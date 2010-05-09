@@ -53,13 +53,16 @@ public:
     const int   spriteRate(int index) const;
     Sprite      loadSprite(QString &spriteName);    // Returns sprite data for associated sprite name
 
+    void    saveGameData(QString &userName);
 
     void    addUser(User user);                                // Creates user player data
     void    addUser(QString &userName);
     void    activateUser(QString &userName);
     void    deactivateUser(QString &userName);
+    User    loadActiveUser();
     void    saveUser(QString &userName, User user);
     int     userCount();                                        // Returns total number of user player data entries
+    void    saveXP(QString &userName, int xp);
     int     loadXP(QString &userName) const;
     void    saveLevel(QString &userName, int level);
     //void    saveGameMode(QString &userName, int gameMode);

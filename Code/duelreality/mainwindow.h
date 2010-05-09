@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QtOpenGL>
 
+#include "globals.h"
+#include "test_db.h"
 
 // Forward declarations
 class QAction;
@@ -11,7 +13,6 @@ class QMenu;
 class GLWidget;
 class NewGameWizard;
 class LoadGameWizard;
-
 
 class MainWindow : public QMainWindow
 {
@@ -42,8 +43,8 @@ private slots:
     void newGame();         // Calls New Game dialogs
     void about();           // Calls About Game dialogs
     void loadGame();        // Calls Load Game dialogs
-    //bool exitGame();    // Exits game
-    //bool saveGame();    // Calls Save Game dialog    
+    void exitGame();    // Exits game
+    void saveGame();    // Calls Save Game dialog
     void endTurnClicked();  // Disables user turn interactions
 
 private:
@@ -89,6 +90,9 @@ private:
     QAction     *actionTestSignalBattleStart;
     QAction     *actionTestSignalUserTurnStart;
     QAction     *actionTestSignalBattleEnd;
+
+    Database    db;
 };
+
 
 #endif // MAINWINDOW_H

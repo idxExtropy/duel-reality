@@ -1,5 +1,7 @@
 #include <QtGui>
 
+#include "globals.h"
+#include "test_db.h"
 #include "mainwindow.h"
 #include "glwidget.h"
 #include "newgamewizard.h"
@@ -101,7 +103,7 @@ void MainWindow::createActions()
     actionExitGame->setIcon(QIcon("icons/exit.png"));
     actionExitGame->setShortcut(tr("Ctrl+X"));
     actionExitGame->setStatusTip(tr("Exit the game"));
-    connect(actionExitGame, SIGNAL(triggered()), this, SLOT(close()));
+    connect(actionExitGame, SIGNAL(triggered()), this, SLOT(exitGame()));
 
     actionAbout = new QAction(tr("&About"), this);
     actionAbout->setStatusTip(tr("Provides information about the game"));
@@ -240,6 +242,32 @@ void MainWindow::loadGame()
         emit signalGameCfgComplete();
     }
     delete loadgamewizard;
+}
+
+void MainWindow::saveGame()
+{
+    User activeUser = db.loadActiveUser();
+    db.saveGameData(activeUser.name);
+}
+
+
+void MainWindow::exitGame()
+{
+    QMessageBox exitMessageBox;
+    int exitMessageReturn;
+
+    exitMessageBox.setIcon(QMessageBox::Warning);
+    exitMessageBox.setText("Are you sure you want to exit?");
+    exitMessageBox.setInformativeText("Your game data will be automatically saved on exit");
+    exitMessageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    exitMessageBox.setDefaultButton(QMessageBox::Yes);
+    exitMessageReturn = exitMessageBox.exec();
+
+    if (exitMessageReturn == QMessageBox::Yes)
+    {
+        saveGame();
+        close();
+    }
 }
 
 void MainWindow::about()
