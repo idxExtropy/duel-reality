@@ -67,6 +67,25 @@ void GLWidget::updateTitleScreen()
 
     // Draw the background.
     glDrawPixels(glBkImage.width(), glBkImage.height(), GL_RGBA, GL_UNSIGNED_BYTE, glBkImage.bits());
+    
+    // Draw title screen header.
+    glColor4f( 0.2f, 0.2f, 0.2f, 0.9f );
+    glBegin (GL_QUADS);
+        glVertex3f (0, GLWidget::height() - 20, 0.0);
+        glVertex3f (GLWidget::width(), GLWidget::height() - 20, 0.0);
+        glVertex3f (GLWidget::width(), GLWidget::height() - 20 - 110, 0.0);
+        glVertex3f (0, GLWidget::height() - 20 - 110, 0.0);
+    glEnd();
+
+    qglColor(Qt::white);
+    int vLoc = GLWidget::height() - 80;
+
+    // Unit name.
+    QFont nameFont = GLWidget::font();
+    nameFont.setBold(true);
+    nameFont.setPointSize(24);
+    renderText (GLWidget::width() - 250, vLoc, 0.0, "Duel Reality", nameFont);
+    vLoc -= 15;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -79,7 +98,7 @@ void GLWidget::unitTest_GenerateContent()
 {
     // Select a battle map.
     battleMap.imageFileName = "backgrounds/plains.png";
-    battleMap.audioFileName = "sounds/Battle_01.mp3";
+    battleMap.audioFileName = "sounds/Battle_02.mp3";
     battleMap.cellsTall = 6;
     battleMap.cellsWide = 9;
     battleMap.gridHeight = 0.58;
@@ -878,6 +897,10 @@ void GLWidget::moveUnit(int vLocPrev, int hLocPrev, int vLocNext, int hLocNext)
     battleMap.gridCell[vLocPrev][hLocPrev].unit->isPending = false;
 
     isPending = false;
+
+    // Play 'ready' sound.
+    QSound *soundBkgnd = new QSound("sounds/Action_Move.wav");
+    soundBkgnd->play();
 }
 
 void GLWidget::hitUnit(int vLocation, int hLocation, int damage, int vAttackerLoc, int hAttackerLoc)
@@ -887,6 +910,10 @@ void GLWidget::hitUnit(int vLocation, int hLocation, int damage, int vAttackerLo
     battleMap.gridCell[vAttackerLoc][hAttackerLoc].unit->isPending = false;
     battleMap.gridCell[vAttackerLoc][hAttackerLoc].unit->actionTime = 0;
     isPending = false;
+
+    // Play 'ready' sound.
+    QSound *soundBkgnd = new QSound("sounds/Action_Hit.wav");
+    soundBkgnd->play();
 }
 
 void GLWidget::killUnit(int vLocation, int hLocation, int vAttackerLoc, int hAttackerLoc)
@@ -896,4 +923,8 @@ void GLWidget::killUnit(int vLocation, int hLocation, int vAttackerLoc, int hAtt
     battleMap.gridCell[vAttackerLoc][hAttackerLoc].unit->isPending = false;
     battleMap.gridCell[vAttackerLoc][hAttackerLoc].unit->actionTime = 0;
     isPending = false;
+
+    // Play 'ready' sound.
+    QSound *soundBkgnd = new QSound("sounds/Action_Hit.wav");
+    soundBkgnd->play();
 }
