@@ -296,7 +296,7 @@ void GLWidget::paintGL()
         for (int i = 0; i < MAX_MAP_UNITS; i++)
         {
             // Update the action time (unitTest).
-            if (unit[i].actionTime >= 100)
+            if (unit[i].actionTime >= 100 && unit[i].status==UNIT_OK)
             {
                 // Play 'ready' sound.
                 QSound *soundBkgnd = new QSound("sounds/blip.wav");
