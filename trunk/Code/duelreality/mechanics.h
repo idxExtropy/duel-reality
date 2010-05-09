@@ -66,6 +66,7 @@ private:
   //  Unit *getUnit(int x, int y);
     int AIcheckboard(int, int, int);
     int AIAttackCheck(int a, int b, int c, int power);
+    int AImoveCheck(int aiV, int aiH, int range);
 };
 
 #endif // MECHANICS_H

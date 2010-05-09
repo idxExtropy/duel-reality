@@ -32,7 +32,11 @@ void mechanics::handleAI()
                 int range = glWidget->battleMap.gridCell[i][j].unit->attackRange;
                 int power = glWidget->battleMap.gridCell[i][j].unit->attackPower;
                 int attackCheckResult;
+                int moverange= glWidget->battleMap.gridCell[i][j].unit->movementRate;
                 attackCheckResult = mechanics::AIAttackCheck(i,j, range, power);         //from AI postion, hit anything in range
+                int moveCheckResult;
+
+
                 switch (attackCheckResult)
                 {
                 case 0:
@@ -42,6 +46,36 @@ void mechanics::handleAI()
                     //glWidget->killUnit(targv,targh,i,j);
                     break;
                 default:
+                    {
+                    moveCheckResult=mechanics::AImoveCheck(i,j,moverange);
+                    switch(moveCheckResult)
+                    {
+                     //case 0: glWidget->moveUnit(i,j,i-1,j);break;
+                      case 0: if(mechanics::isValidMove(i,j,i+1,j))//Move UP
+                              {
+                                  glWidget->moveUnit(i,j,i+1,j);
+                              }
+                     // case 2: glWidget->moveUnit(i,j,i-1,j);break;
+                      case 1:if(mechanics::isValidMove(i,j,i-1,j))//Move DOWN
+                          {
+                              glWidget->moveUnit(i,j,i-1,j);
+                          }
+                     // case 4: glWidget->moveUnit(i,j,i-1,j);break;
+                      case 2: if(mechanics::isValidMove(i,j,i,j+1))//Move RIGHT
+                          {
+                              glWidget->moveUnit(i,j,i,j+1);
+                          }
+                //      case 6: glWidget->moveUnit(i,j,i-1,j);break;
+                      case 3: if(mechanics::isValidMove(i,j,i,j-1))//Move LEFT
+                          {
+                              glWidget->moveUnit(i,j,i,j-1);
+                          }
+
+                      default: //DO NOTHING
+
+                              glWidget->moveUnit(i,j,i-1,j);
+
+                    }
                        if(mechanics::isValidMove(i,j,i+1,j))//Move UP
                       {
                         glWidget->moveUnit(i,j,i+1,j);
@@ -58,7 +92,7 @@ void mechanics::handleAI()
         }
     }
 }
-
+}
 int mechanics::AIAttackCheck(int aiV, int aiH, int range, int power)
 {
         for (int i = 0; i < glWidget->battleMap.cellsTall; i++)
@@ -83,45 +117,67 @@ int mechanics::AIAttackCheck(int aiV, int aiH, int range, int power)
                                glWidget->killUnit(i,j,aiV,aiH);
                                 return 1;
                                 }
-
-                        } //return false;
-                    } //return false;
-                } //return false;
-
-            } //return false;
-        } //return false;
+                        }
+                    }
+                }
+            }
+        }
         return 2;
-    }
+}
 
-//int mechanics::AIcheckboard(int aiV, int aiH, int range)
-//{
-//    int val1=0, val2=0;
-//
-//      //if I can't attack Enemy yet, I probably want to move toward him, but I care more if he's close
-//                    else
-//                    {
-//                        if (aiH>targh)
-//                        {
-//
-//                        }
-//                       int a=(abs(aiV-i)*100);
-//                       int b = (abs(aiH-j)*100);
-//                    }
-//                 val1+=a;
-//                 val2+=2;
-//                 if(val1<val2){
-//                     return 1;
-//                 }
-//                }
-//
-//
-//            }
-//
-//
-//                }
-//    }
-//}
-//
+int mechanics::AImoveCheck(int aiV, int aiH, int range)
+{
+    static int val1=0, val2=0;
+    int a, b;
+    for (int i = 0; i < glWidget->battleMap.cellsTall; i++)
+    {
+        for (int j = 0; j < glWidget->battleMap.cellsWide; j++)
+        {
+            if(mechanics::isOccupied(i,j))                                  // for all spaces, if one is occupied
+            {
+                if(glWidget->battleMap.gridCell[i][j].unit->team==USER_UNIT)  //BY ENEMY
+      //if I can't attack Enemy yet, I probably want to move toward him, but I care more if he's close
+                    {
+                        if (aiV>i)                   //ai unitabove target
+                        {
+                             a=(abs(aiV-i)*-100);
+                        }
+                        else
+                        {
+                             a=(abs(aiH-i)*100); //ai unit below or on same v as target
+                        }
+                        if (aiH>j)                  // ai to RIGHT of target
+                        {
+                            b = (abs(aiH-j)*-100);
+                        }
+                        else                        //ai to LEFT or same H as Target
+                        {
+                             b = (abs(aiH-j)*100);
+                        }
+                        val1+=a;
+                        val2+=b;
+                    }
+
+
+                  }
+        }
+    }
+    if(abs(val1)>abs(val2))
+    {
+        if (val1>0)
+        return 0;       //go UP
+        if (val2<0)
+        return 1;       //go DOWN
+    }
+    else if(abs(val1)<abs(val2))
+    {
+        if (val2>0)           //GO RIGHT
+            return 2;
+        if(val2<0)
+            return 3;   //GO LEFT
+    }
+    return 4; //do NOTHING
+}
 
 ///////////////////////////////////////////////////BATTLE ACTIVE///////////////////////////
 //Returns whether a battle is active
