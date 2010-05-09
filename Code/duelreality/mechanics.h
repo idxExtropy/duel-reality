@@ -65,6 +65,7 @@ private:
    // bool getPending();
   //  Unit *getUnit(int x, int y);
     int AIcheckboard(int, int, int);
+    int AIAttackCheck(int a, int b, int c, int power);
 };
 
 #endif // MECHANICS_H
