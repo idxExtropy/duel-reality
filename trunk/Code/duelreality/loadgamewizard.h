@@ -138,7 +138,8 @@ public:
     void initializePage();
 
 private slots:
-    //void acceptButtonClicked();
+    void acceptButtonClicked();
+    void resetButtonClicked();
     void upgradeAPButtonClicked();
     void upgradeHPButtonClicked();
     void upgradeRangeButtonClicked();

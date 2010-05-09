@@ -79,6 +79,14 @@ void Database::saveGameMode(QString &userName, int gameMode)
 }
 */
 
+void Database::saveXP(QString &userName, int xp)
+{
+    int i;
+
+    for (i = 0; i < userList.count(); i++)
+        if (userList[i].name == userName)
+            userList[i].experiencePoints = xp;
+}
 
 void Database::saveLevel(QString &userName, int level)
 {
@@ -203,6 +211,16 @@ QString Database::userName(int index) const
     return userList[index].name;
 }
 
+User Database::loadActiveUser()
+{
+    int i;
+
+    for (i = 0; i < userList.count(); i++)
+        if (userList[i].isActive == true)
+            return userList[i];
+
+    return dummyUser;
+}
 
 User Database::loadUser(const QString &userName)
 {
@@ -275,6 +293,10 @@ QList<Unit> Database::loadUnits(QString &userName)
     return dummyUnitsList;
 }
 
+void Database::saveGameData(QString &userName)
+{
+
+}
 
 void Database::generateSprites()
 {
@@ -396,6 +418,8 @@ void Database::testGenerateUsers()
         testUsers[1].units[0].attackRange = 2;
         testUsers[1].units[0].movementRate = 1;
 
+        testUsers[1].units[1].status = NO_UNIT;
+
         testUsers[1].units[2].status = UNIT_OK;
         testUsers[1].units[2].name = "Desert Soldier";
         testUsers[1].units[2].imageFileName = "sprites/desertsoldier.png";
@@ -404,7 +428,6 @@ void Database::testGenerateUsers()
         testUsers[1].units[2].attackRange = 6;
         testUsers[1].units[2].movementRate = 8;
 
-        testUsers[1].units[1].status = NO_UNIT;
         testUsers[1].units[3].status = NO_UNIT;
 
 
