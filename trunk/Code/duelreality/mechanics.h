@@ -11,6 +11,7 @@
 class Unit;
 class test_db;
 //class GLWidget;
+class MainWindow;
 class mechanics : public QObject
 {
 Q_OBJECT
@@ -46,7 +47,7 @@ private:
    int targetx;
    int targety;
     bool isValidMove(int vloc, int hloc,int vnext,int hnext);
-    bool isValidAttack(int targv, int targh, int atkrange, int atkrv, int  atkrh);
+    bool isValidAttack(int targv, int targh, int atkrange, int atkrv, int  atkrh, int atkteam, int tarteam);
     bool isOccupied(int x, int y);
 
  //  int nextPlayer() {return iNextplayer;}

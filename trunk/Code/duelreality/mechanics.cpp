@@ -4,6 +4,7 @@
 
 // Global classes.
 extern GLWidget *glWidget;
+MainWindow *mainwindow;
 
 //constructor
 mechanics::mechanics(QObject *parent) :
@@ -81,6 +82,7 @@ void mechanics::endBattle()
 // loads selected square into lext location V&H
 void mechanics::moveUnit()
 {
+
     int vLocNext = 0, hLocNext = 0;
     for (int i = 0; i < glWidget->battleMap.cellsTall; i++)
     {
@@ -150,7 +152,7 @@ bool mechanics::isOccupied(int x, int y)  ///DOUBLECHECK
 ////////////////////////////////////////////////ATTACK////////////////////////////////////////////////
 void mechanics::attackUnit()
 {
-    int vAttackerLoc = 0, hAttackerLoc = 0, damage = 0, range =0;
+    int vAttackerLoc = 0, hAttackerLoc = 0, damage = 0, range =0, atkteam=0;
 
     for (int i = 0; i < glWidget->battleMap.cellsTall; i++)
     {
@@ -163,6 +165,7 @@ void mechanics::attackUnit()
                 vAttackerLoc = glWidget->battleMap.gridCell[i][j].unit->vLocation;
                 hAttackerLoc = glWidget->battleMap.gridCell[i][j].unit->hLocation;
                 range = glWidget->battleMap.gridCell[i][j].unit->attackRange;
+                atkteam = glWidget->battleMap.gridCell[i][j].unit->team;
             }
         }
     }
@@ -172,11 +175,12 @@ void mechanics::attackUnit()
         {
             if (glWidget->battleMap.gridCell[i][j].isSelected)
             {
-                if(mechanics::isValidAttack( i,j, range, vAttackerLoc, hAttackerLoc))
+                if(mechanics::isValidAttack( i,j, range, vAttackerLoc, hAttackerLoc, atkteam, glWidget->battleMap.gridCell[i][j].unit->team))
                 {
                   if (glWidget->battleMap.gridCell[i][j].unit->hitPoints<=glWidget->battleMap.gridCell[vAttackerLoc][hAttackerLoc].unit->attackPower)
                   {
                    glWidget->killUnit(i,j,vAttackerLoc, hAttackerLoc);
+
                    mechanics::checkGameEnd();
                   }
                  else glWidget->hitUnit(i,j,damage,vAttackerLoc,hAttackerLoc);
@@ -186,10 +190,12 @@ void mechanics::attackUnit()
     }
 }
 //Determines Whether an attack is valid
-bool mechanics::isValidAttack(int targv, int targh, int atkrange, int atkrv, int  atkrh)
+bool mechanics::isValidAttack(int targv, int targh, int atkrange, int atkrv, int  atkrh, int atkteam, int tarteam)
 {
 if(mechanics::isOccupied(targv, targh))
        {
+        if(atkteam!=tarteam)
+         {
                 if(((abs(atkrv-targv))+(abs(atkrh-targh)))<=atkrange)//no diagonals
                 {
                         if(((abs(atkrv-targv))<=atkrange)&&((abs(atkrh-targh))<=atkrange))
@@ -199,7 +205,8 @@ if(mechanics::isOccupied(targv, targh))
                         return false;
                 }
                 return(false);
-
+            }
+            return(false);
         }
         return (false);
 }
@@ -268,39 +275,31 @@ if(mechanics::isOccupied(targv, targh))
 ////////////////////////////////////////////////GAMEOVER//////////////////////////////////
 int mechanics::isGameOver()
 {
-    int deadcount=0;
-    for(int x=0;x<=glWidget->battleMap.cellsTall;x++)
+   // int livecount1=4, livecount2=4;
+    for(int x=0;x<glWidget->battleMap.cellsTall;x++)
     {
-     for(int y=0;y<=glWidget->battleMap.cellsWide;y++)
+     for(int y=0;y<glWidget->battleMap.cellsWide;y++)
      {
-           if(glWidget->battleMap.gridCell[x][y].unit->status==UNIT_DEAD&&glWidget->battleMap.gridCell[x][y].unit->team==USER_UNIT)
+           if((glWidget->battleMap.gridCell[x][y].unit->status==UNIT_OK)&&(glWidget->battleMap.gridCell[x][y].unit->team==USER_UNIT))
            {
-                    deadcount++;
-                if (deadcount ==4)
-                {
-                   // emit SignalP2Win();
-                  //mechanics::endBattle(2);
-                    return 2;
-                }
-            }
 
-            if (glWidget->battleMap.gridCell[x][y].unit->status==UNIT_DEAD&&glWidget->battleMap.gridCell[x][y].unit->team==AI_UNIT)
-            {
-                    deadcount++;
-                if (deadcount ==4)
-                 {
-                 //emit SignalP1Win();
-                 //mechanics::EndBattle();
+             if ((glWidget->battleMap.gridCell[x][y].unit->status==UNIT_OK)&&(glWidget->battleMap.gridCell[x][y].unit->team==AI_UNIT))
+              {
+              return 0;
+              }
+              else
+              {
                  return 1;
-                 }
-            }
-            else
-                deadcount=0;
-                return 0;
-        }
-    }
-    return 0;
+              }
+           }
+           else
+           {
+               return 2;
+           }
+       }
+ } return 0;
 }
+
 //////////////////////////////////////////////////////AI/////////////////////////////////////
 // void mechanics::startAI()
 //{
@@ -317,15 +316,18 @@ int mechanics::endBattle(int x)
 }
 void mechanics::checkGameEnd()
 {
-        switch(mechanics::isGameOver())
+    int bogey;
+    bogey=mechanics::isGameOver();
+        switch(bogey)
         {
         case 0:
             break;
         case 1: //P1 Wins
             //call Obi's game end function, wipe board, delete what needs deleting and tally xp
+      //      mainwindow->???
             break;
         case 2:  //P2 Wins
-            //go to new/load game, tally xp
+       //    mainwindow->???
             break;
         default:
             break;
