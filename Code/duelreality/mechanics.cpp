@@ -22,7 +22,7 @@ void mechanics::handleAI()
     {
         for (int j = 0; j < glWidget->battleMap.cellsWide; j++)
         {
-            if ((glWidget->battleMap.gridCell[i][j].unit->isPending) && (glWidget->battleMap.gridCell[i][j].unit->team == AI_UNIT))
+            if ((glWidget->battleMap.gridCell[i][j].unit->isPending) && (glWidget->battleMap.gridCell[i][j].unit->team == AI_UNIT) && (glWidget->battleMap.gridCell[i][j].unit->status == UNIT_OK))
             {
                 // Dummy movement for now...
                 if(mechanics::isValidMove(i,j,i+1,j))//Move UP
@@ -98,7 +98,7 @@ void mechanics::moveUnit()
     {
         for (int j = 0; j < glWidget->battleMap.cellsWide; j++)
         {
-            if (glWidget->battleMap.gridCell[i][j].unit->isPending)
+            if ((glWidget->battleMap.gridCell[i][j].unit->status == UNIT_OK)&&(glWidget->battleMap.gridCell[i][j].unit->isPending))
             {
                 if(mechanics::isValidMove(i,j,vLocNext,hLocNext))
                 {
@@ -113,7 +113,7 @@ void mechanics::moveUnit()
 //Determines Whether a move is valid
 bool mechanics::isValidMove(int vLoc, int hLoc,int vnext,int hnext)
 {
-if(!mechanics::isOccupied(hnext, vnext))
+if(!mechanics::isOccupied(vnext, hnext))
         {
            if((vLoc==vnext)||(hLoc==hnext))//no diagonal
            {
@@ -156,7 +156,7 @@ void mechanics::attackUnit()
     {
         for (int j = 0; j < glWidget->battleMap.cellsWide; j++)
         {
-            if (glWidget->battleMap.gridCell[i][j].unit->isPending)
+            if ((glWidget->battleMap.gridCell[i][j].unit->status == UNIT_OK)&&(glWidget->battleMap.gridCell[i][j].unit->isPending))
             {
                 // Get the upcoming attack power and location.
                 damage = glWidget->battleMap.gridCell[i][j].unit->attackPower;
@@ -172,14 +172,14 @@ void mechanics::attackUnit()
         {
             if (glWidget->battleMap.gridCell[i][j].isSelected)
             {
-           //     if(mechanics::isValidAttack( i,j, range, vAttackerLoc, hAttackerLoc))
-            //    {
+                if(mechanics::isValidAttack( i,j, range, vAttackerLoc, hAttackerLoc))
+                {
                   if (glWidget->battleMap.gridCell[i][j].unit->hitPoints<=glWidget->battleMap.gridCell[vAttackerLoc][hAttackerLoc].unit->attackPower)
                   {
                    glWidget->killUnit(i,j,vAttackerLoc, hAttackerLoc);
                   }
                  else glWidget->hitUnit(i,j,damage,vAttackerLoc,hAttackerLoc);
-          //    }
+              }
             }
         }
     }
@@ -187,7 +187,7 @@ void mechanics::attackUnit()
 //Determines Whether an attack is valid
 bool mechanics::isValidAttack(int targv, int targh, int atkrange, int atkrv, int  atkrh)
 {
-if(mechanics::isOccupied(targh, targv))
+if(mechanics::isOccupied(targv, targh))
        {
                 if((atkrv==targv)||(atkrh==targh))//no diagonals
                 {
