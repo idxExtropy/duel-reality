@@ -135,7 +135,7 @@ public:
     UpgradeUnitsPageL(QWidget *parent = 0);
 
     int nextId() const;
-    //void initializePage();
+    void initializePage();
 
 private slots:
     //void acceptButtonClicked();
@@ -152,12 +152,12 @@ private:
     QLabel                  *selectedUnitImage;
     //QPushButton             *nextSpriteButton;
     //QPushButton             *prevSpriteButton;
-    QLabel                  *selectedUnitName;
+    QLabel                  *selectedUnitXP;
     QLabel                  *selectedUnitAP;
     QLabel                  *selectedUnitHP;
     QLabel                  *selectedUnitRange;
     QLabel                  *selectedUnitRate;
-    QLabel                  *selectedUnitNameVal;
+    QLabel                  *selectedUnitXPVal;
     QLabel                  *selectedUnitAPVal;
     QLabel                  *selectedUnitHPVal;
     QLabel                  *selectedUnitRangeVal;
@@ -167,8 +167,9 @@ private:
     QPushButton             *upgradeRangeButton;
     QPushButton             *upgradeRateButton;
     QPushButton             *acceptButton;
-    //QList<QLabel *>         unitImageList;
-    //QList<QLabel *>         unitNameList;
+    QPushButton             *resetButton;
+    QList<QLabel *>         unitImageList;
+    QList<QLabel *>         unitNameList;
     QList<QPushButton *>    selectButtonList;
     //bool                    isAlive[MAX_TEAM_UNITS];
     Database                db;
