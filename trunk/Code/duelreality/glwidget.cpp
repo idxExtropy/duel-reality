@@ -313,77 +313,23 @@ void GLWidget::paintGL()
         }
     }
 
-    for (int i = 0; i < MAX_MAP_UNITS; i++)
+    for (int i = battleMap.cellsTall - 1; i >= 0; i--)
     {
-        if (unit[i].status != NO_UNIT)
+        for (int j = 0; j < battleMap.cellsWide; j++)
         {
-            // Make sure the map is up to date.
-            battleMap.gridCell[unit[i].vLocation][unit[i].hLocation].unit = &unit[i];
-            battleMap.gridCell[unit[i].vLocation][unit[i].hLocation].isUnit = true;
-
-            // Draw the units.
-            updateUnit(unit[i]);
-
-            if (unit[i].isPending)
+            for (int k = 0; k < MAX_MAP_UNITS; k++)
             {
-                // Draw information header.
-                glColor4f( 0.2f, 0.2f, 0.2f, 0.9f );
-                glBegin (GL_QUADS);
-                    glVertex3f (15, GLWidget::height() - 20, 0.0);
-                    glVertex3f (15 + 250, GLWidget::height() - 20, 0.0);
-                    glVertex3f (15 + 250, GLWidget::height() - 20 - 110, 0.0);
-                    glVertex3f (15, GLWidget::height() - 20 - 110, 0.0);
-                glEnd();
+                if (unit[k].status != NO_UNIT)
+                {
+                    if (i == unit[k].vLocation && j == unit[k].hLocation)
+                    {
+                        battleMap.gridCell[i][j].unit = &unit[k];
+                        battleMap.gridCell[i][j].isUnit = true;
 
-                qglColor(Qt::white);
-                char *tmpString = (char*)malloc(256);
-                string displayString = "";
-                int vLoc = GLWidget::height() - 40;
-
-                // Unit name.
-                QFont nameFont = GLWidget::font();
-                nameFont.setBold(true);
-                renderText (30, vLoc, 0.0, unit[i].name, nameFont);
-                vLoc -= 15;
-
-                // Unit hit points.
-                itoa(unit[i].hitPoints, tmpString, 10);
-                displayString = "Health: ";
-                displayString.append(tmpString);
-                displayString.append(" / ");
-                itoa(unit[i].totalHitPoints, tmpString, 10);
-                displayString.append(tmpString);
-                renderText (30, vLoc, 0.0, displayString.c_str());
-                vLoc -= 15;
-
-                // Unit attack power.
-                itoa(unit[i].attackPower, tmpString, 10);
-                displayString = "Attack Power: ";
-                displayString.append(tmpString);
-                renderText (30, vLoc, 0.0, displayString.c_str());
-                vLoc -= 15;
-
-                // Unit attack range.
-                itoa(unit[i].attackRange, tmpString, 10);
-                displayString = "Attack Range: ";
-                displayString.append(tmpString);
-                renderText (30, vLoc, 0.0, displayString.c_str());
-                vLoc -= 15;
-
-                // Unit movement rate.
-                itoa(unit[i].movementRate, tmpString, 10);
-                displayString = "Movement Rate: ";
-                displayString.append(tmpString);
-                renderText (30, vLoc, 0.0, displayString.c_str());
-                vLoc -= 15;
-
-                // Unit action time.
-                itoa(unit[i].actionTime, tmpString, 10);
-                displayString = "Action Time: ";
-                displayString.append(tmpString);
-                displayString.append("%");
-                renderText (30, vLoc, 0.0, displayString.c_str());
-                vLoc -= 15;
+                        // Draw the units.
+                        updateUnit(unit[k]);
+                    }
+                }
             }
         }
     }
@@ -392,6 +338,71 @@ void GLWidget::paintGL()
     {
         for (int j = 0; j < battleMap.cellsWide; j++)
         {
+            if (battleMap.gridCell[i][j].unit->status != NO_UNIT)
+            {
+                if (battleMap.gridCell[i][j].unit->isPending)
+                {
+                    // Draw information header.
+                    glColor4f( 0.2f, 0.2f, 0.2f, 0.9f );
+                    glBegin (GL_QUADS);
+                        glVertex3f (15, GLWidget::height() - 20, 0.0);
+                        glVertex3f (15 + 250, GLWidget::height() - 20, 0.0);
+                        glVertex3f (15 + 250, GLWidget::height() - 20 - 110, 0.0);
+                        glVertex3f (15, GLWidget::height() - 20 - 110, 0.0);
+                    glEnd();
+
+                    qglColor(Qt::white);
+                    char *tmpString = (char*)malloc(256);
+                    string displayString = "";
+                    int vLoc = GLWidget::height() - 40;
+
+                    // Unit name.
+                    QFont nameFont = GLWidget::font();
+                    nameFont.setBold(true);
+                    renderText (30, vLoc, 0.0, battleMap.gridCell[i][j].unit->name, nameFont);
+                    vLoc -= 15;
+
+                    // Unit hit points.
+                    itoa(battleMap.gridCell[i][j].unit->hitPoints, tmpString, 10);
+                    displayString = "Health: ";
+                    displayString.append(tmpString);
+                    displayString.append(" / ");
+                    itoa(battleMap.gridCell[i][j].unit->totalHitPoints, tmpString, 10);
+                    displayString.append(tmpString);
+                    renderText (30, vLoc, 0.0, displayString.c_str());
+                    vLoc -= 15;
+
+                    // Unit attack power.
+                    itoa(battleMap.gridCell[i][j].unit->attackPower, tmpString, 10);
+                    displayString = "Attack Power: ";
+                    displayString.append(tmpString);
+                    renderText (30, vLoc, 0.0, displayString.c_str());
+                    vLoc -= 15;
+
+                    // Unit attack range.
+                    itoa(battleMap.gridCell[i][j].unit->attackRange, tmpString, 10);
+                    displayString = "Attack Range: ";
+                    displayString.append(tmpString);
+                    renderText (30, vLoc, 0.0, displayString.c_str());
+                    vLoc -= 15;
+
+                    // Unit movement rate.
+                    itoa(battleMap.gridCell[i][j].unit->movementRate, tmpString, 10);
+                    displayString = "Movement Rate: ";
+                    displayString.append(tmpString);
+                    renderText (30, vLoc, 0.0, displayString.c_str());
+                    vLoc -= 15;
+
+                    // Unit action time.
+                    itoa(battleMap.gridCell[i][j].unit->actionTime, tmpString, 10);
+                    displayString = "Action Time: ";
+                    displayString.append(tmpString);
+                    displayString.append("%");
+                    renderText (30, vLoc, 0.0, displayString.c_str());
+                    vLoc -= 15;
+                }
+            }
+
             if (battleMap.gridCell[i][j].isSelected && battleMap.gridCell[i][j].isUnit)
             {
                 // Draw information header.
