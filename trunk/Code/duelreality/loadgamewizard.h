@@ -135,36 +135,42 @@ public:
     UpgradeUnitsPageL(QWidget *parent = 0);
 
     int nextId() const;
-    /*void initializePage();
+    //void initializePage();
 
 private slots:
-    void acceptButtonClicked();
-    void upgradeButton0Clicked();
-    void upgradeButton1Clicked();
-    void upgradeButton2Clicked();
-    void upgradeButton3Clicked();
-    void upgradeButtonAnyClicked(int index);
+    //void acceptButtonClicked();
+    //void upgradeButton0Clicked();
+    //void upgradeButton1Clicked();
+    //void upgradeButton2Clicked();
+    //void upgradeButton3Clicked();
+    //void upgradeButtonAnyClicked(int index);
 
 private:
     //int                     i;
-    int                     spriteIndex;
-    QString                 spriteFileName;
-    QLabel                  *spriteImage;
-    QPushButton             *nextSpriteButton;
-    QPushButton             *prevSpriteButton;
-    QLabel                  *spriteName;
-    QLabel                  *spriteAP;
-    QLabel                  *spriteHP;
-    QLabel                  *spriteRange;
-    QLabel                  *spriteNameVal;
-    QLabel                  *spriteAPVal;
-    QLabel                  *spriteHPVal;
-    QLabel                  *spriteRangeVal;
-    QPushButton             *recruitButton;
-    QList<QLabel *>         unitImageList;
-    QList<QLabel *>         unitNameList;
-    QList<QPushButton *>    rejectButtonList;
-    bool                    isAlive[MAX_TEAM_UNITS];*/
+    //int                     spriteIndex;
+    //QString                 spriteFileName;
+    QLabel                  *selectedUnitImage;
+    //QPushButton             *nextSpriteButton;
+    //QPushButton             *prevSpriteButton;
+    QLabel                  *selectedUnitName;
+    QLabel                  *selectedUnitAP;
+    QLabel                  *selectedUnitHP;
+    QLabel                  *selectedUnitRange;
+    QLabel                  *selectedUnitRate;
+    QLabel                  *selectedUnitNameVal;
+    QLabel                  *selectedUnitAPVal;
+    QLabel                  *selectedUnitHPVal;
+    QLabel                  *selectedUnitRangeVal;
+    QLabel                  *selectedUnitRateVal;
+    QPushButton             *upgradeAPButton;
+    QPushButton             *upgradeHPButton;
+    QPushButton             *upgradeRangeButton;
+    QPushButton             *upgradeRateButton;
+    QPushButton             *acceptButton;
+    //QList<QLabel *>         unitImageList;
+    //QList<QLabel *>         unitNameList;
+    QList<QPushButton *>    selectButtonList;
+    //bool                    isAlive[MAX_TEAM_UNITS];
     Database                db;
 };
 

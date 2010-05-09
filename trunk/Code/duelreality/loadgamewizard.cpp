@@ -488,11 +488,179 @@ UpgradeUnitsPageL::UpgradeUnitsPageL(QWidget *parent)
     setTitle(tr("Upgrade Units"));
     setSubTitle(tr("Upgrade your units"));
 
-    //QVBoxLayout *layout = new QVBoxLayout;
-    //layout->addWidget(topLabel);
-    //layout->addWidget(campaignModeRadioButton);
-    //layout->addWidget(freePlayModeRadioButton);
-    //setLayout(layout);
+    int i;
+
+    // Initialize isAlive flag
+    //for (i = 0; i < MAX_TEAM_UNITS; i++)
+      //  isAlive[i] = false;
+
+    //spriteIndex = 0;
+    //spriteFileName = db.spriteFileName(0);
+
+    QHBoxLayout *mainLayout = new QHBoxLayout;
+    mainLayout->setObjectName(QString::fromUtf8("mainLayout"));
+    mainLayout->setContentsMargins(0, 0, 0, 0);
+
+    QGroupBox *selectedUnitBox = new QGroupBox(tr("&Selected Unit"));
+    selectedUnitBox->setObjectName(QString::fromUtf8("selectedUnitBox"));
+    
+    QGridLayout *selectedUnitBoxLayout = new QGridLayout(selectedUnitBox);
+    selectedUnitBoxLayout->setObjectName(QString::fromUtf8("selectedUnitBoxLayout"));
+
+    QVBoxLayout *leftLayout = new QVBoxLayout;
+    leftLayout->setObjectName(QString::fromUtf8("leftLayout"));
+    
+    //QHBoxLayout *leftTopLayout = new QHBoxLayout;
+    //leftTopLayout->setObjectName(QString::fromUtf8("leftTopLayout"));
+
+    selectedUnitImage = new QLabel(selectedUnitBox);
+    selectedUnitImage->setObjectName(QString::fromUtf8("selectedUnitmage"));
+    selectedUnitImage->setMinimumSize(QSize(71, 101));
+    selectedUnitImage->setMaximumSize(QSize(71, 101));
+    selectedUnitImage->setPixmap(QPixmap(QString::fromUtf8("sprites/blank.PNG")));
+    selectedUnitImage->setScaledContents(true);
+    //leftTopLayout->addWidget(selectedUnitImage);
+    leftLayout->addWidget(selectedUnitImage);
+
+    QHBoxLayout *leftMidLayout = new QHBoxLayout;
+    leftMidLayout->setObjectName(QString::fromUtf8("leftMidLayout"));
+    QSpacerItem *hLeftSpacerSpriteStats = new QSpacerItem(18, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+    leftMidLayout->addItem(hLeftSpacerSpriteStats);
+
+    QGridLayout *selectedUnitStatsLayout = new QGridLayout;
+    selectedUnitStatsLayout->setObjectName(QString::fromUtf8("selectedUnitStatsLayout"));
+
+    selectedUnitName = new QLabel(tr("Name:"), selectedUnitBox);
+    selectedUnitName->setObjectName(QString::fromUtf8("selectedUnitName"));
+    selectedUnitStatsLayout->addWidget(selectedUnitName, 0, 0, 1, 1);
+    
+    selectedUnitNameVal = new QLabel(selectedUnitBox);
+    selectedUnitNameVal->setObjectName(QString::fromUtf8("selectedUnitNameVal"));
+    selectedUnitNameVal->setText(QString::fromUtf8("Unit"));
+    selectedUnitStatsLayout->addWidget(selectedUnitNameVal, 0, 1, 1, 1);
+
+    selectedUnitAP = new QLabel(tr("AP:"), selectedUnitBox);
+    selectedUnitAP->setObjectName(QString::fromUtf8("selectedUnitAP"));
+    selectedUnitStatsLayout->addWidget(selectedUnitAP, 1, 0, 1, 1);
+    
+    selectedUnitAPVal = new QLabel(selectedUnitBox);
+    selectedUnitAPVal->setObjectName(QString::fromUtf8("selectedUnitAPVal"));
+    selectedUnitAPVal->setText(QString::number(0));
+    selectedUnitStatsLayout->addWidget(selectedUnitAPVal, 1, 1, 1, 1);
+
+    upgradeAPButton = new QPushButton(tr("&Upgrade"), selectedUnitBox);
+    upgradeAPButton->setObjectName(QString::fromUtf8("upgradeAP"));
+    selectedUnitStatsLayout->addWidget(upgradeAPButton, 1, 2, 1, 1);
+
+    selectedUnitHP = new QLabel(tr("HP:"), selectedUnitBox);
+    selectedUnitHP->setObjectName(QString::fromUtf8("selectedUnitHP"));
+    selectedUnitStatsLayout->addWidget(selectedUnitHP, 2, 0, 1, 1);
+    
+    selectedUnitHPVal = new QLabel(selectedUnitBox);
+    selectedUnitHPVal->setObjectName(QString::fromUtf8("selectedUnitHPVal"));
+    selectedUnitHPVal->setText(QString::number(0));
+    selectedUnitStatsLayout->addWidget(selectedUnitHPVal, 2, 1, 1, 1);
+
+    upgradeHPButton = new QPushButton(tr("&Upgrade"), selectedUnitBox);
+    upgradeHPButton->setObjectName(QString::fromUtf8("upgradeHP"));
+    selectedUnitStatsLayout->addWidget(upgradeHPButton, 2, 2, 1, 1);
+
+    selectedUnitRange = new QLabel(tr("Range:"), selectedUnitBox);
+    selectedUnitRange->setObjectName(QString::fromUtf8("selectedUnitRange"));
+    selectedUnitStatsLayout->addWidget(selectedUnitRange, 3, 0, 1, 1);
+
+    selectedUnitRangeVal = new QLabel(selectedUnitBox);
+    selectedUnitRangeVal->setObjectName(QString::fromUtf8("selectedUnitRangeVal"));
+    selectedUnitRangeVal->setText(QString::number(0));
+    selectedUnitStatsLayout->addWidget(selectedUnitRangeVal, 3, 1, 1, 1);
+
+    upgradeRangeButton = new QPushButton(tr("&Upgrade"), selectedUnitBox);
+    upgradeRangeButton->setObjectName(QString::fromUtf8("upgradeRange"));
+    selectedUnitStatsLayout->addWidget(upgradeRangeButton, 3, 2, 1, 1);
+
+    selectedUnitRate = new QLabel(tr("Rate:"), selectedUnitBox);
+    selectedUnitRate->setObjectName(QString::fromUtf8("selectedUnitRate"));
+    selectedUnitStatsLayout->addWidget(selectedUnitRate, 4, 0, 1, 1);
+
+    selectedUnitRateVal = new QLabel(selectedUnitBox);
+    selectedUnitRateVal->setObjectName(QString::fromUtf8("selectedUnitRateVal"));
+    selectedUnitRateVal->setText(QString::number(0));
+    selectedUnitStatsLayout->addWidget(selectedUnitRateVal, 4, 1, 1, 1);
+
+    upgradeRateButton = new QPushButton(tr("&Upgrade"), selectedUnitBox);
+    upgradeRateButton->setObjectName(QString::fromUtf8("upgradeRate"));
+    selectedUnitStatsLayout->addWidget(upgradeRateButton, 4, 2, 1, 1);
+    leftMidLayout->addLayout(selectedUnitStatsLayout);
+
+    QSpacerItem *hRightSpacerSpriteStats = new QSpacerItem(18, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+    leftMidLayout->addItem(hRightSpacerSpriteStats);
+    leftLayout->addLayout(leftMidLayout);
+
+    QHBoxLayout *leftBotLayout = new QHBoxLayout;
+    leftBotLayout->setObjectName(QString::fromUtf8("leftBotLayout"));
+
+    QSpacerItem *hLeftSpacerRecruit = new QSpacerItem(28, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+    leftBotLayout->addItem(hLeftSpacerRecruit);
+
+    acceptButton = new QPushButton(tr("&Accept"), selectedUnitBox);
+    acceptButton->setObjectName(QString::fromUtf8("acceptButton"));
+    leftBotLayout->addWidget(acceptButton);
+
+    QSpacerItem *hRightSpacerRecruit = new QSpacerItem(28, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+    leftBotLayout->addItem(hRightSpacerRecruit);
+    leftLayout->addLayout(leftBotLayout);
+    selectedUnitBoxLayout->addLayout(leftLayout, 0, 0, 1, 1);
+    mainLayout->addWidget(selectedUnitBox);
+
+    QGroupBox *unitsBox = new QGroupBox(tr("&Player Units"));
+    unitsBox->setObjectName(QString::fromUtf8("unitsBox"));
+    
+    QGridLayout *unitBoxLayout = new QGridLayout(unitsBox);
+    unitBoxLayout->setObjectName(QString::fromUtf8("unitBoxLayout"));
+
+    // Iteratively fill Player Units section
+    for (i = 0; i < MAX_TEAM_UNITS; i++)
+    {
+        QHBoxLayout *rightUnitLayout = new QHBoxLayout();
+        
+        QLabel *unitImage = new QLabel(unitsBox);
+        
+        unitImage->setMaximumSize(QSize(41, 41));
+        unitImage->setMinimumSize(QSize(41, 41));
+
+        unitImage->setPixmap(QPixmap(QString::fromUtf8("sprites/blank.PNG")));
+        unitImage->setScaledContents(true);
+        rightUnitLayout->addWidget(unitImage);
+
+        QVBoxLayout *unitSelectLayout = new QVBoxLayout;
+        
+        QLabel *unitName = new QLabel(tr("Unit"), unitsBox);
+        
+        unitSelectLayout->addWidget(unitName);
+
+        QPushButton *selectButton = new QPushButton(tr("Select"), unitsBox);
+        
+        unitSelectLayout->addWidget(selectButton);
+        rightUnitLayout->addLayout(unitSelectLayout);
+        unitBoxLayout->addLayout(rightUnitLayout, i, 0, 1, 1);
+
+        //unitImageList << unitImage;
+        //unitNameList << unitName;
+        selectButtonList << selectButton;
+    }
+
+    mainLayout->addWidget(unitsBox);
+    setLayout(mainLayout);
+    
+    //connect(nextSpriteButton, SIGNAL(clicked()), this, SLOT(nextSpriteButtonClicked()));
+    //connect(prevSpriteButton, SIGNAL(clicked()), this, SLOT(prevSpriteButtonClicked()));
+    //connect(recruitButton, SIGNAL(clicked()), this, SLOT(recruitButtonClicked()));
+    //connect(rejectButtonList[0], SIGNAL(clicked()), this, SLOT(rejectButton0Clicked()));
+    //connect(rejectButtonList[1], SIGNAL(clicked()), this, SLOT(rejectButton1Clicked()));
+    //connect(rejectButtonList[2], SIGNAL(clicked()), this, SLOT(rejectButton2Clicked()));
+    //connect(rejectButtonList[3], SIGNAL(clicked()), this, SLOT(rejectButton3Clicked()));    
+
+ 
 }
 
 
