@@ -53,7 +53,8 @@ private:
   // void setNextPlayer(int player){iNextplayer=player;}
  //  bool isUnitAt(int x, int y, Unit *UnitRetrieved);
    //    void endTurn();
-    bool isGameOver();
+    int isGameOver();
+    void checkGameEnd();
     Unit *FocusUnit;
     bool gamerunning;
   //  int iNextplayer;

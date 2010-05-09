@@ -106,7 +106,7 @@ void GLWidget::unitTest_GenerateContent()
     // Create a new unit (for gl debug purposes).
     unit[0].name = "Knight";
     unit[0].actionTime = 10;
-    unit[0].actionRate = 150;
+    unit[0].actionRate =500;
     unit[0].hitPoints = 80;
     unit[0].totalHitPoints = 100;
     unit[0].image.load("sprites/knight.png");
@@ -114,16 +114,16 @@ void GLWidget::unitTest_GenerateContent()
     unit[0].status = UNIT_OK;
     unit[0].vLocation = 1;
     unit[0].hLocation = 2;
-    unit[0].attackPower = 8;
-    unit[0].attackRange = 3;
+    unit[0].attackPower = 18;
+    unit[0].attackRange = 9;
     unit[0].faceLeft = false;
-    unit[0].movementRate = 1;
+    unit[0].movementRate = 9;
     unit[0].team = USER_UNIT;
 
     // Create a new unit (for gl debug purposes).
     unit[1].name = "Crusader";
     unit[1].actionTime = 10;
-    unit[1].actionRate = 200;
+    unit[1].actionRate = 500;
     unit[1].hitPoints = 67;
     unit[1].totalHitPoints = 100;
     unit[1].image.load("sprites/crusader.png");
@@ -131,16 +131,16 @@ void GLWidget::unitTest_GenerateContent()
     unit[1].status = UNIT_OK;
     unit[1].vLocation = 2;
     unit[1].hLocation = 1;
-    unit[1].attackPower = 8;
-    unit[1].attackRange = 3;
+    unit[1].attackPower = 18;
+    unit[1].attackRange = 9;
     unit[1].faceLeft = false;
-    unit[1].movementRate = 2;
+    unit[1].movementRate = 9;
     unit[1].team = USER_UNIT;
 
     // Create a new unit (for gl debug purposes).
     unit[2].name = "Thai Boxer";
     unit[2].actionTime = 60;
-    unit[2].actionRate = 200;
+    unit[2].actionRate =500;
     unit[2].hitPoints = 10;
     unit[2].totalHitPoints = 100;
     unit[2].image.load("sprites/thaiboxer.png");
@@ -148,16 +148,16 @@ void GLWidget::unitTest_GenerateContent()
     unit[2].status = UNIT_OK;
     unit[2].vLocation = 3;
     unit[2].hLocation = 2;
-    unit[2].attackPower = 8;
-    unit[2].attackRange = 3;
+    unit[2].attackPower = 18;
+    unit[2].attackRange = 9;
     unit[2].faceLeft = false;
-    unit[2].movementRate = 1;
+    unit[2].movementRate = 9;
     unit[2].team = USER_UNIT;
 
     // Create a new unit (for gl debug purposes).
     unit[3].name = "Assassin";
     unit[3].actionTime = 40;
-    unit[3].actionRate = 101;
+    unit[3].actionRate = 500;
     unit[3].hitPoints = 30;
     unit[3].totalHitPoints = 100;
     unit[3].image.load("sprites/assassin.png");
@@ -174,7 +174,7 @@ void GLWidget::unitTest_GenerateContent()
     // Create a new unit (for gl debug purposes).
     unit[4].name = "Berserker";
     unit[4].actionTime = 40;
-    unit[4].actionRate = 102;
+    unit[4].actionRate = 500;
     unit[4].hitPoints = 22;
     unit[4].totalHitPoints = 100;
     unit[4].image.load("sprites/berserker.png");
@@ -191,7 +191,7 @@ void GLWidget::unitTest_GenerateContent()
     // Create a new unit (for gl debug purposes).
     unit[5].name = "Valkyrie";
     unit[5].actionTime = 40;
-    unit[5].actionRate = 103;
+    unit[5].actionRate = 500;
     unit[5].hitPoints = 10;
     unit[5].totalHitPoints = 100;
     unit[5].image.load("sprites/valkyrie.png");
@@ -205,13 +205,47 @@ void GLWidget::unitTest_GenerateContent()
     unit[5].movementRate = 1;
     unit[5].team = AI_UNIT;
 
+    // Create a new unit (for gl debug purposes).
+    unit[6].name = "Valkyrie";
+    unit[6].actionTime = 40;
+    unit[6].actionRate = 500;
+    unit[6].hitPoints = 10;
+    unit[6].totalHitPoints = 100;
+    unit[6].image.load("sprites/valkyrie.png");
+    unit[6].mask_image.load("sprites/mask_valkyrie.png");
+    unit[6].status = UNIT_OK;
+    unit[6].vLocation = 2;
+    unit[6].hLocation = 2;
+    unit[6].attackPower = 8;
+    unit[6].attackRange = 9;
+    unit[6].faceLeft = false;
+    unit[6].movementRate = 5;
+    unit[6].team = USER_UNIT;
+
+    // Create a new unit (for gl debug purposes).
+    unit[7].name = "Valkyrie";
+    unit[7].actionTime = 40;
+    unit[7].actionRate = 500;
+    unit[7].hitPoints = 10;
+    unit[7].totalHitPoints = 100;
+    unit[7].image.load("sprites/valkyrie.png");
+    unit[7].mask_image.load("sprites/mask_valkyrie.png");
+    unit[7].status = UNIT_OK;
+    unit[7].vLocation = 4;
+    unit[7].hLocation = 8;
+    unit[7].attackPower = 18;
+    unit[7].attackRange = 9;
+    unit[7].faceLeft = true;
+    unit[7].movementRate = 9;
+    unit[7].team = AI_UNIT;
+
     for (int i = 0; i < MAX_MAP_UNITS; i++)
     {
         // No units are pending to start.
         unit[i].isPending = false;
     }
 
-    for (int i = 6; i < MAX_MAP_UNITS; i++)
+    for (int i = 8; i < MAX_MAP_UNITS; i++)
     {
         // Tell OpenGL whether or not the unit exists.
         unit[i].status = NO_UNIT;
@@ -296,7 +330,7 @@ void GLWidget::paintGL()
         for (int i = 0; i < MAX_MAP_UNITS; i++)
         {
             // Update the action time (unitTest).
-            if (unit[i].actionTime >= 100 && unit[i].status==UNIT_OK)
+            if (unit[i].actionTime >= 100 && unit[i].status==UNIT_OK) //the dead shall not move :o
             {
                 // Play 'ready' sound.
                 QSound *soundBkgnd = new QSound("sounds/blip.wav");

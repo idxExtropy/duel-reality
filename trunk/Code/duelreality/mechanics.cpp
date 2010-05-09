@@ -177,6 +177,7 @@ void mechanics::attackUnit()
                   if (glWidget->battleMap.gridCell[i][j].unit->hitPoints<=glWidget->battleMap.gridCell[vAttackerLoc][hAttackerLoc].unit->attackPower)
                   {
                    glWidget->killUnit(i,j,vAttackerLoc, hAttackerLoc);
+                   mechanics::checkGameEnd();
                   }
                  else glWidget->hitUnit(i,j,damage,vAttackerLoc,hAttackerLoc);
               }
@@ -189,7 +190,7 @@ bool mechanics::isValidAttack(int targv, int targh, int atkrange, int atkrv, int
 {
 if(mechanics::isOccupied(targv, targh))
        {
-                if((atkrv==targv)||(atkrh==targh))//no diagonals
+                if(((abs(atkrv-targv))+(abs(atkrh-targh)))<=atkrange)//no diagonals
                 {
                         if(((abs(atkrv-targv))<=atkrange)&&((abs(atkrh-targh))<=atkrange))
                         {
@@ -265,7 +266,7 @@ if(mechanics::isOccupied(targv, targh))
 ////
 //
 ////////////////////////////////////////////////GAMEOVER//////////////////////////////////
-bool mechanics::isGameOver()
+int mechanics::isGameOver()
 {
     int deadcount=0;
     for(int x=0;x<=glWidget->battleMap.cellsTall;x++)
@@ -277,9 +278,9 @@ bool mechanics::isGameOver()
                     deadcount++;
                 if (deadcount ==4)
                 {
-                    emit SignalP2Win();
+                   // emit SignalP2Win();
                   //mechanics::endBattle(2);
-                    return true;
+                    return 2;
                 }
             }
 
@@ -288,17 +289,17 @@ bool mechanics::isGameOver()
                     deadcount++;
                 if (deadcount ==4)
                  {
-                 emit SignalP1Win();
+                 //emit SignalP1Win();
                  //mechanics::EndBattle();
-                 return true;
+                 return 1;
                  }
             }
             else
                 deadcount=0;
-                return false;
+                return 0;
         }
     }
-    return false;
+    return 0;
 }
 //////////////////////////////////////////////////////AI/////////////////////////////////////
 // void mechanics::startAI()
@@ -314,3 +315,19 @@ int mechanics::endBattle(int x)
 {
     return x;
 }
+void mechanics::checkGameEnd()
+{
+        switch(mechanics::isGameOver())
+        {
+        case 0:
+            break;
+        case 1: //P1 Wins
+            //call Obi's game end function, wipe board, delete what needs deleting and tally xp
+            break;
+        case 2:  //P2 Wins
+            //go to new/load game, tally xp
+            break;
+        default:
+            break;
+        }
+    }
