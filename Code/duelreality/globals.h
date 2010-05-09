@@ -55,7 +55,7 @@ public:
     QImage  image;              // Associated unit image
     QImage  mask_image;         // Associate unit mask image
     int     team;               // Unit's associated team
-    int     actionPoints;
+    //int     actionPoints;
     int     unitWorth;          // Amount of XP awarded for killing unit
     int     isPending;
 };
