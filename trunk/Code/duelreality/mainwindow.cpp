@@ -14,6 +14,8 @@ mechanics *mech;
 
 MainWindow::MainWindow()
 {
+    mech = new mechanics;
+
     // Set central widget
     glWidget = new GLWidget;
     setCentralWidget(glWidget);
@@ -46,6 +48,9 @@ MainWindow::MainWindow()
 
     // Set window icon
     setWindowIcon(QIcon("icons/logo.png"));
+
+    connect(this, SIGNAL(signalGameCfgComplete()), mech, SLOT(slotTestInput()));
+    connect(mech, SIGNAL(signalTestOutput()), this, SLOT(onBattleStart()));
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)

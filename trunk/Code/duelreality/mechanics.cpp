@@ -18,6 +18,13 @@ mechanics::~mechanics()
 }
 //
 //////////////////////////////////////////////////////AI/////////////////////////////////////
+
+
+void mechanics::slotTestInput()
+{
+    emit signalTestOutput();
+}
+
 void mechanics::handleAI()
 {
     // int value=0;
