@@ -431,6 +431,10 @@ void Database::testGenerateUsers()
         testUsers[0].units[0].hitPoints = 2;
         testUsers[0].units[0].attackRange = 3;
         testUsers[0].units[0].movementRate = 4;
+        testUsers[0].units[0].team = USER_UNIT;
+        testUsers[0].units[0].vLocation = 1;
+        testUsers[0].units[0].hLocation = 2;
+        testUsers[0].units[0].faceLeft = false;
 
         testUsers[0].units[1].status = NO_UNIT;
         testUsers[0].units[2].status = NO_UNIT;
@@ -448,6 +452,10 @@ void Database::testGenerateUsers()
         testUsers[1].units[0].hitPoints = 3;
         testUsers[1].units[0].attackRange = 2;
         testUsers[1].units[0].movementRate = 1;
+        testUsers[1].units[0].team = USER_UNIT;
+        testUsers[1].units[0].vLocation = 2;
+        testUsers[1].units[0].hLocation = 1;
+        testUsers[1].units[0].faceLeft = false;
 
         testUsers[1].units[1].status = NO_UNIT;
 
@@ -458,6 +466,10 @@ void Database::testGenerateUsers()
         testUsers[1].units[2].hitPoints = 4;
         testUsers[1].units[2].attackRange = 6;
         testUsers[1].units[2].movementRate = 8;
+        testUsers[1].units[2].team = USER_UNIT;
+        testUsers[0].units[0].vLocation = 3;
+        testUsers[0].units[0].hLocation = 2;
+        testUsers[0].units[0].faceLeft = false;
 
         testUsers[1].units[3].status = NO_UNIT;
 
@@ -474,6 +486,10 @@ void Database::testGenerateUsers()
         testUsers[2].units[0].hitPoints = 9;
         testUsers[2].units[0].attackRange = 8;
         testUsers[2].units[0].movementRate = 7;
+        testUsers[2].units[0].team = USER_UNIT;
+        testUsers[0].units[0].vLocation = 3;
+        testUsers[0].units[0].hLocation = 5;
+        testUsers[0].units[0].faceLeft = false;
 
         testUsers[2].units[1].status = UNIT_OK;
         testUsers[2].units[1].name = "Wizard";
@@ -482,6 +498,10 @@ void Database::testGenerateUsers()
         testUsers[2].units[1].hitPoints = 3;
         testUsers[2].units[1].attackRange = 4;
         testUsers[2].units[1].movementRate = 5;
+        testUsers[2].units[1].team = USER_UNIT;
+        testUsers[0].units[0].vLocation = 1;
+        testUsers[0].units[0].hLocation = 5;
+        testUsers[0].units[0].faceLeft = false;
 
         testUsers[2].units[2].status = UNIT_DEAD;
         testUsers[2].units[2].name = "Monk";
@@ -490,6 +510,10 @@ void Database::testGenerateUsers()
         testUsers[2].units[2].hitPoints = 3;
         testUsers[2].units[2].attackRange = 5;
         testUsers[2].units[2].movementRate = 7;
+        testUsers[2].units[2].team = USER_UNIT;
+        testUsers[0].units[0].vLocation = 4;
+        testUsers[0].units[0].hLocation = 7;
+        testUsers[0].units[0].faceLeft = false;
 
         testUsers[2].units[3].status = UNIT_DEAD;
         testUsers[2].units[3].name = "Priestess";
@@ -498,6 +522,10 @@ void Database::testGenerateUsers()
         testUsers[2].units[3].hitPoints = 6;
         testUsers[2].units[3].attackRange = 9;
         testUsers[2].units[3].movementRate = 12;
+        testUsers[2].units[3].team = USER_UNIT;
+        testUsers[0].units[0].vLocation = 2;
+        testUsers[0].units[0].hLocation = 6;
+        testUsers[0].units[0].faceLeft = false;
 
         for (i = 0; i < NUM_TEST_USERS; i ++)
             addUser(testUsers[i]);
