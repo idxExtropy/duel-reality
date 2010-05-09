@@ -12,6 +12,7 @@ class Unit;
 class test_db;
 //class GLWidget;
 class MainWindow;
+
 class mechanics : public QObject
 {
 Q_OBJECT
@@ -39,9 +40,10 @@ signals:
  void SignalStartAI();      //signal when AI moves
  void signalBattleStart();  //signal when battle starts
 
-
+ void signalTestOutput();
 
 public slots:
+ void slotTestInput();
 
 private:
    int targetx;
