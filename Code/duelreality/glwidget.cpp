@@ -106,7 +106,7 @@ void GLWidget::unitTest_GenerateContent()
     // Create a new unit (for gl debug purposes).
     unit[0].name = "Knight";
     unit[0].actionTime = 10;
-    unit[0].actionRate=202;
+    unit[0].actionRate=450;
     unit[0].hitPoints = 80;
     unit[0].totalHitPoints = 100;
     unit[0].image.load("sprites/knight.png");
@@ -114,16 +114,16 @@ void GLWidget::unitTest_GenerateContent()
     unit[0].status = UNIT_OK;
     unit[0].vLocation = 1;
     unit[0].hLocation = 2;
-    unit[0].attackPower = 18;
-    unit[0].attackRange = 9;
+    unit[0].attackPower = 8;
+    unit[0].attackRange = 2;
     unit[0].faceLeft = false;
-    unit[0].movementRate = 9;
+    unit[0].movementRate = 2;
     unit[0].team =USER_UNIT;
 
     // Create a new unit (for gl debug purposes).
     unit[1].name = "Crusader";
     unit[1].actionTime = 10;
-    unit[1].actionRate = 200;
+    unit[1].actionRate = 500;
     unit[1].hitPoints = 67;
     unit[1].totalHitPoints = 100;
     unit[1].image.load("sprites/crusader.png");
@@ -131,16 +131,16 @@ void GLWidget::unitTest_GenerateContent()
     unit[1].status =UNIT_OK;
     unit[1].vLocation = 2;
     unit[1].hLocation = 1;
-    unit[1].attackPower = 18;
-    unit[1].attackRange = 9;
+    unit[1].attackPower = 15;
+    unit[1].attackRange = 1;
     unit[1].faceLeft = false;
-    unit[1].movementRate = 9;
+    unit[1].movementRate = 1;
     unit[1].team =USER_UNIT;
 
     // Create a new unit (for gl debug purposes).
     unit[2].name = "Thai Boxer";
     unit[2].actionTime = 60;
-    unit[2].actionRate =202;
+    unit[2].actionRate =400;
     unit[2].hitPoints = 50;
     unit[2].totalHitPoints = 100;
     unit[2].image.load("sprites/thaiboxer.png");
@@ -148,25 +148,25 @@ void GLWidget::unitTest_GenerateContent()
     unit[2].status =UNIT_OK;
     unit[2].vLocation = 3;
     unit[2].hLocation = 2;
-    unit[2].attackPower = 18;
-    unit[2].attackRange = 9;
+    unit[2].attackPower = 7;
+    unit[2].attackRange = 2;
     unit[2].faceLeft = false;
-    unit[2].movementRate = 9;
+    unit[2].movementRate = 4;
     unit[2].team =USER_UNIT;
 
     // Create a new unit (for gl debug purposes).
     unit[3].name = "Assassin";
     unit[3].actionTime = 40;
-    unit[3].actionRate = 500;
-    unit[3].hitPoints = 30;
+    unit[3].actionRate = 400;
+    unit[3].hitPoints = 60;
     unit[3].totalHitPoints = 100;
     unit[3].image.load("sprites/assassin.png");
     unit[3].mask_image.load("sprites/mask_assassin.png");
     unit[3].status =UNIT_OK;
     unit[3].vLocation = 3;
     unit[3].hLocation = 5;
-    unit[3].attackPower = 8;
-    unit[3].attackRange = 3;
+    unit[3].attackPower = 10;
+    unit[3].attackRange = 2;
     unit[3].faceLeft = true;
     unit[3].movementRate = 2;
     unit[3].team =AI_UNIT;
@@ -174,8 +174,8 @@ void GLWidget::unitTest_GenerateContent()
     // Create a new unit (for gl debug purposes).
     unit[4].name = "Berserker";
     unit[4].actionTime = 40;
-    unit[4].actionRate = 500;
-    unit[4].hitPoints = 22;
+    unit[4].actionRate = 300;
+    unit[4].hitPoints = 66;
     unit[4].totalHitPoints = 100;
     unit[4].image.load("sprites/berserker.png");
     unit[4].mask_image.load("sprites/mask_berserker.png");
@@ -183,7 +183,7 @@ void GLWidget::unitTest_GenerateContent()
     unit[4].vLocation = 1;
     unit[4].hLocation = 5;
     unit[4].attackPower = 8;
-    unit[4].attackRange = 3;
+    unit[4].attackRange = 2;
     unit[4].faceLeft = true;
     unit[4].movementRate = 2;
     unit[4].team =AI_UNIT;
@@ -208,8 +208,8 @@ void GLWidget::unitTest_GenerateContent()
     // Create a new unit (for gl debug purposes).
     unit[6].name = "Valkyrie";
     unit[6].actionTime = 40;
-    unit[6].actionRate = 300;
-    unit[6].hitPoints = 10;
+    unit[6].actionRate = 500;
+    unit[6].hitPoints = 40;
     unit[6].totalHitPoints = 100;
     unit[6].image.load("sprites/valkyrie.png");
     unit[6].mask_image.load("sprites/mask_valkyrie.png");
@@ -217,15 +217,15 @@ void GLWidget::unitTest_GenerateContent()
     unit[6].vLocation = 2;
     unit[6].hLocation = 2;
     unit[6].attackPower = 8;
-    unit[6].attackRange = 9;
+    unit[6].attackRange = 2;
     unit[6].faceLeft = false;
-    unit[6].movementRate = 5;
+    unit[6].movementRate = 2;
     unit[6].team =USER_UNIT;
 
     // Create a new unit (for gl debug purposes).
     unit[7].name = "Valkyrie";
     unit[7].actionTime = 40;
-    unit[7].actionRate = 500;
+    unit[7].actionRate = 400;
     unit[7].hitPoints = 10;
     unit[7].totalHitPoints = 100;
     unit[7].image.load("sprites/valkyrie.png");
