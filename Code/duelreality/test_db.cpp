@@ -84,8 +84,13 @@ void Database::saveXP(QString &userName, int xp)
     int i;
 
     for (i = 0; i < userList.count(); i++)
+    {
         if (userList[i].name == userName)
+        {
             userList[i].experiencePoints = xp;
+            return;
+        }
+    }
 }
 
 void Database::saveLevel(QString &userName, int level)
@@ -93,8 +98,13 @@ void Database::saveLevel(QString &userName, int level)
     int i;
 
     for (i = 0; i < userList.count(); i++)
+    {
         if (userList[i].name == userName)
+        {
             userList[i].level = level;
+            return;
+        }
+    }
 }
 
 
@@ -176,8 +186,13 @@ void Database::saveUser(QString &userName, User user)
     int i;
 
     for (i = 0; i < userList.count(); i++)
+    {
         if (Database::userList[i].name == userName)
+        {
             Database::userList[i] = user;
+            return;
+        }
+    }
 }
 
 void Database::activateUser(QString &userName)
@@ -185,8 +200,13 @@ void Database::activateUser(QString &userName)
     int i;
 
     for (i = 0; i < userList.count(); i++)
+    {
         if (Database::userList[i].name == userName)
+        {
             Database::userList[i].isActive = true;
+            return;
+        }
+    }
 }
 
 
@@ -195,8 +215,13 @@ void Database::deactivateUser(QString &userName)
     int i;
 
     for (i = 0; i < userList.count(); i++)
+    {
         if (Database::userList[i].name == userName)
+        {
             Database::userList[i].isActive = false;
+            return;
+        }
+    }
 }
 
 
@@ -269,6 +294,8 @@ void Database::saveUnits(QString &userName, QList<Unit> units)
         {
             for (j = 0; j < MAX_TEAM_UNITS; j++)
                 userList[i].units[j] = units[j];
+
+            return;
         }
     }
 }
@@ -393,6 +420,7 @@ void Database::testGenerateUsers()
         testUsers[0].name = "Tom";
         testUsers[0].experiencePoints = 2;
         testUsers[0].isActive = false;
+        testUsers[0].level = 2;
 
         testUsers[0].units[0].status = UNIT_OK;
         testUsers[0].units[0].name = "Wizard";
@@ -409,6 +437,7 @@ void Database::testGenerateUsers()
         testUsers[1].name = "Dick";
         testUsers[1].experiencePoints = 4;
         testUsers[1].isActive = false;
+        testUsers[1].level = 1;
 
         testUsers[1].units[0].status = UNIT_OK;
         testUsers[1].units[0].name = "Monk";
@@ -434,6 +463,7 @@ void Database::testGenerateUsers()
         testUsers[2].name = "Harry";
         testUsers[2].experiencePoints = 4;
         testUsers[2].isActive = false;
+        testUsers[2].level = 6;
 
         testUsers[2].units[0].status = UNIT_OK;
         testUsers[2].units[0].name = "Bard";

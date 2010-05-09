@@ -17,6 +17,7 @@ using std::string;
 
 /*---------------- C o n s t a n t    d e f i n i t i o n s ----------------*/
 
+static const int    MAX_LEVELS = 7;
 static const int    MAX_SPRITES = 4;
 static const int    MAX_TEAM_UNITS = 4;      // Maximum number of units per player
 static const int    NO_UNIT = 0;        // Unit status (unit doesn't exist)

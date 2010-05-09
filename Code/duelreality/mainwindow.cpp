@@ -50,6 +50,7 @@ MainWindow::MainWindow()
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
+    saveGame();
     event->accept();
 }
 
@@ -155,8 +156,47 @@ void MainWindow::onBattleStart()
 
 void MainWindow::onBattleEnd()
 {
+    int activeUserLevel;
+
     emit isBattleMode(false);
     emit isGameCfgMode(true);
+
+    // Save game data
+    User activeUser = db.loadActiveUser();
+    db.saveGameData(activeUser.name);
+
+    // Set new user level
+    activeUserLevel = activeUser.level;
+    activeUserLevel = (activeUserLevel + 1) % MAX_LEVELS;
+    db.saveLevel(activeUser.name, activeUserLevel);
+
+    // Prompt user to continue battle if last level not reached
+    if (activeUserLevel)
+    {
+        QMessageBox battleMessageBox;
+        int battleMessageReturn;
+
+        battleMessageBox.setIcon(QMessageBox::Question);
+        battleMessageBox.setText("<h2>You have not completed game</h2>");
+        battleMessageBox.setInformativeText("Would you like to keep battling?");
+        battleMessageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+        battleMessageBox.setDefaultButton(QMessageBox::Yes);
+        battleMessageReturn = battleMessageBox.exec();
+
+        if (battleMessageReturn == QMessageBox::Yes)
+            loadGame();
+        else
+            db.deactivateUser(activeUser.name);
+    }
+    else
+    {
+        QMessageBox gameOverMessageBox;
+
+        gameOverMessageBox.setIcon(QMessageBox::Information);
+        gameOverMessageBox.setText("<h2>CONGRATULATIONS! YOU HAVE WON THE GAME</h2>");
+        gameOverMessageBox.exec();
+        db.deactivateUser(activeUser.name);
+    }
 }
 
 
@@ -218,7 +258,7 @@ void MainWindow::newGame()
 
     if (newgamewizard->exec())
     {
-        soundBkgnd->stop();
+        //soundBkgnd->stop();
 
         soundBattleStart = new QSound("sounds/trumpet.wav");
         soundBattleStart->play();
@@ -234,7 +274,7 @@ void MainWindow::loadGame()
 
     if (loadgamewizard->exec())
     {
-        soundBkgnd->stop();
+        //soundBkgnd->stop();
 
         soundBattleStart = new QSound("sounds/trumpet.wav");
         soundBattleStart->play();

@@ -62,7 +62,7 @@ private:
     //Database    *db;
 
     // Action sounds
-    QSound  *soundBkgnd;        // Played when not in battle
+    //QSound  *soundBkgnd;        // Played when not in battle
     QSound  *soundBattleStart;  // Played at start of battle
 
     // Action items
