@@ -171,6 +171,8 @@ void Database::addUser(QString &userName)
     
     newUser.name = userName;
     newUser.level = 0;
+    newUser.experiencePoints = 0;
+    newUser.isActive = false;
     Database::userList << newUser;
 }
 
