@@ -64,6 +64,7 @@ private:
   //  bool getGridCellSelected();
    // bool getPending();
   //  Unit *getUnit(int x, int y);
+    int AIcheckboard(int, int, int);
 };
 
 #endif // MECHANICS_H
