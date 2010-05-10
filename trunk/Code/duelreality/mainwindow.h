@@ -6,7 +6,7 @@
 
 #include "globals.h"
 #include "test_db.h"
-
+#include "mechanics.h"
 // Forward declarations
 class QAction;
 class QMenu;
