@@ -4,7 +4,7 @@
 #include <QGLWidget>
 #include <QtOpenGL>
 #include <string>
-#include "globals.h"
+#include "duelreality.h"
 #include "mechanics.h"
 #include "mainwindow.h"
 
