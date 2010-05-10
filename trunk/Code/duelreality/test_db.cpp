@@ -1,9 +1,8 @@
-#include "duelreality.h"
+#include "globals.h"
 #include "test_db.h"
 #include "glwidget.h"
 
-//Database *db;
-QList<Map>    Database::mapList;
+QList<Map>          Database::mapList;
 QList<Sprite>       Database::spriteList;
 QList<User>         Database::userList;
 QList<Unit>         Database::unitList;
@@ -121,7 +120,7 @@ QString Database::spriteName(int index) const
 
 QString Database::spriteFileName(int index) const
 {
-    return Database::spriteList[index].fileName;
+    return Database::spriteList[index].imageFileName;
 }
 
 /*
@@ -131,19 +130,19 @@ const QPixmap Database::spritePixMap(int index) const
 }
 */
 
-const int Database::spriteAP(int index) const
+const int Database::spriteAttackPower(int index) const
 {
-    return Database::spriteList[index].AP;
+    return Database::spriteList[index].attackPower;
 }
 
-const int Database::spriteHP(int index) const
+const int Database::spriteHitPoints(int index) const
 {
-    return Database::spriteList[index].HP;
+    return Database::spriteList[index].hitPoints;
 }
 
-const int Database::spriteRange(int index) const
+const int Database::spriteAttackRange(int index) const
 {
-    return spriteList[index].range;
+    return spriteList[index].attackRange;
 }
 
 
@@ -331,43 +330,59 @@ void Database::generateSprites()
 {
     if (Database::spriteList.count() == 0)
     {
-        int i;
-        //Sprite* testSprites = new Sprite[MAX_SPRITES];
-        Sprite testSprites[MAX_SPRITES];
+        int     i;
+        Sprite  testSprites[NUM_TEST_SPRITES];
 
         testSprites[0].name = "Wizard";
-        //testSprites[0].pixMap.load("sprites/wizard.png");
-        testSprites[0].fileName = "sprites/wizard.png";
-        testSprites[0].AP = 8;
-        testSprites[0].HP = 6;
-        testSprites[0].range = 4;
+        testSprites[0].imageFileName = "sprites/wizard.png";
+        testSprites[0].maskFileName = "sprites/mask_wizard.png";
+        testSprites[0].attackPower = 8;
+        testSprites[0].attackRange = 4;
+        testSprites[0].hitPoints = 6;
+        //testSprites[0].totalHitPoints = 6;
+        testSprites[0].actionRate = 4;
+        testSprites[0].actionTime = 4;
+        testSprites[0].movementRange = 4;
         testSprites[0].rate = 2;
 
         testSprites[1].name = "Monk";
-        //testSprites[1].pixMap.load("sprites/buddhist.png");
-        testSprites[1].fileName = "sprites/buddhist.png";
-        testSprites[1].AP = 2;
-        testSprites[1].HP = 4;
-        testSprites[1].range = 6;
+        testSprites[1].imageFileName = "sprites/buddhist.png";
+        testSprites[1].maskFileName = "sprites/mask_buddhist.png";
+        testSprites[1].attackPower = 1;
+        testSprites[1].attackRange = 2;
+        testSprites[1].hitPoints = 3;
+        //testSprites[1].totalHitPoints = 4;
+        testSprites[1].actionRate = 5;
+        testSprites[1].actionTime = 6;
+        testSprites[1].movementRange = 7;
         testSprites[1].rate = 8;
 
         testSprites[2].name = "Bard";
-        //testSprites[2].pixMap.load("sprites/bard.png");
-        testSprites[2].fileName = "sprites/bard.png";
-        testSprites[2].AP = 1;
-        testSprites[2].HP = 2;
-        testSprites[2].range = 3;
+        testSprites[2].imageFileName = "sprites/bard.png";
+        testSprites[2].maskFileName = "sprites/mask_bard.png";
+        testSprites[2].attackPower = 2;
+        testSprites[2].attackRange = 2;
+        testSprites[2].hitPoints = 2;
+        //testSprites[2].totalHitPoints = 2;
+        testSprites[2].actionRate = 4;
+        testSprites[2].actionTime = 4;
+        testSprites[2].movementRange = 4;
         testSprites[2].rate = 4;
 
         testSprites[3].name = "Desert Soldier";
-        //testSprites[3].pixMap.load("sprites/desertsoldier.png");
-        testSprites[3].fileName = "sprites/desertsoldier.png";
-        testSprites[3].AP = 10;
-        testSprites[3].HP = 9;
-        testSprites[3].range = 8;
-        testSprites[3].rate = 7;
+        testSprites[3].imageFileName = "sprites/desertsoldier.png";
+        testSprites[3].imageFileName = "sprites/desertsoldier.png";
+        testSprites[3].maskFileName = "sprites/mask_desertsoldier.png";
+        testSprites[3].attackPower = 4;
+        testSprites[3].attackRange = 4;
+        testSprites[3].hitPoints = 4;
+        //testSprites[3].totalHitPoints = 4;
+        testSprites[3].actionRate = 6;
+        testSprites[3].actionTime = 6;
+        testSprites[3].movementRange = 6;
+        testSprites[3].rate = 6;
 
-        for (i = 0; i < MAX_SPRITES; i++)
+        for (i = 0; i < NUM_TEST_SPRITES; i++)
             addSprite(testSprites[i]);
     }
 }
@@ -377,30 +392,34 @@ void Database::generateMaps()
 {
     if (Database::mapList.count() == 0)
     {
-        int         i;
-        int         NUM_TEST_MAPS = 4;
-        Map   testMaps[NUM_TEST_MAPS];
+        int i;
+        int NUM_TEST_MAPS = 4;
+        Map testMaps[NUM_TEST_MAPS];
 
         testMaps[0].name = "Grass";
         testMaps[0].imageFileName = "backgrounds/grass.png";
+        testMaps[0].audioFileName = "sounds/Battle_02.mp3";
         testMaps[0].cellsWide = 6;
         testMaps[0].cellsTall = 9;
         testMaps[0].gridHeight = 0.58;
 
         testMaps[1].name = "Beach";
         testMaps[1].imageFileName = "backgrounds/beach.png";
+        testMaps[1].audioFileName = "sounds/Battle_02.mp3";
         testMaps[1].cellsWide = 6;
         testMaps[1].cellsTall = 9;
         testMaps[1].gridHeight = 0.58;
 
         testMaps[2].name = "Snow";
         testMaps[2].imageFileName = "backgrounds/snow.png";
+        testMaps[2].audioFileName = "sounds/Battle_02.mp3";
         testMaps[2].cellsWide = 6;
         testMaps[2].cellsTall = 9;
         testMaps[2].gridHeight = 0.58;
 
         testMaps[3].name = "Plains";
         testMaps[3].imageFileName = "backgrounds/plains.png";
+        testMaps[3].audioFileName = "sounds/Battle_02.mp3";
         testMaps[3].cellsWide = 6;
         testMaps[3].cellsTall = 9;
         testMaps[3].gridHeight = 0.58;
@@ -427,14 +446,21 @@ void Database::testGenerateUsers()
         testUsers[0].units[0].status = UNIT_OK;
         testUsers[0].units[0].name = "Wizard";
         testUsers[0].units[0].imageFileName = "sprites/wizard.png";
+        testUsers[0].units[0].image.load("sprites/wizard.png");
         testUsers[0].units[0].attackPower = 1;
         testUsers[0].units[0].hitPoints = 2;
         testUsers[0].units[0].attackRange = 3;
-        testUsers[0].units[0].movementRate = 4;
         testUsers[0].units[0].team = USER_UNIT;
         testUsers[0].units[0].vLocation = 1;
         testUsers[0].units[0].hLocation = 2;
         testUsers[0].units[0].faceLeft = false;
+        testUsers[0].units[0].movementRange = 4;
+        testUsers[0].units[0].actionRate = 1;
+        testUsers[0].units[0].actionTime = 1;
+        testUsers[0].units[0].maskFileName = "sprites/mask_wizard.png";
+        testUsers[0].units[0].mask_image.load("sprites/mask_wizard.png");
+        testUsers[0].units[0].totalHitPoints = 2;
+        
 
         testUsers[0].units[1].status = NO_UNIT;
         testUsers[0].units[2].status = NO_UNIT;
@@ -448,28 +474,40 @@ void Database::testGenerateUsers()
         testUsers[1].units[0].status = UNIT_OK;
         testUsers[1].units[0].name = "Monk";
         testUsers[1].units[0].imageFileName = "sprites/buddhist.png";
+        testUsers[1].units[0].image.load("sprites/buddhist.png");
         testUsers[1].units[0].attackPower = 4;
         testUsers[1].units[0].hitPoints = 3;
         testUsers[1].units[0].attackRange = 2;
-        testUsers[1].units[0].movementRate = 1;
         testUsers[1].units[0].team = USER_UNIT;
         testUsers[1].units[0].vLocation = 2;
         testUsers[1].units[0].hLocation = 1;
         testUsers[1].units[0].faceLeft = false;
+        testUsers[1].units[0].movementRange = 4;
+        testUsers[1].units[0].actionRate = 1;
+        testUsers[1].units[0].actionTime = 1;
+        testUsers[1].units[0].maskFileName = "sprites/mask_buddhist.png";
+        testUsers[1].units[0].mask_image.load("sprites/mask_buddhist.png");
+        testUsers[1].units[0].totalHitPoints = 3;
 
         testUsers[1].units[1].status = NO_UNIT;
 
         testUsers[1].units[2].status = UNIT_OK;
         testUsers[1].units[2].name = "Desert Soldier";
         testUsers[1].units[2].imageFileName = "sprites/desertsoldier.png";
+        testUsers[1].units[2].image.load("sprites/desertsoldier.png");
         testUsers[1].units[2].attackPower = 2;
         testUsers[1].units[2].hitPoints = 4;
         testUsers[1].units[2].attackRange = 6;
-        testUsers[1].units[2].movementRate = 8;
         testUsers[1].units[2].team = USER_UNIT;
-        testUsers[0].units[0].vLocation = 3;
-        testUsers[0].units[0].hLocation = 2;
-        testUsers[0].units[0].faceLeft = false;
+        testUsers[1].units[2].vLocation = 3;
+        testUsers[1].units[2].hLocation = 2;
+        testUsers[1].units[2].faceLeft = false;
+        testUsers[1].units[2].movementRange = 4;
+        testUsers[1].units[2].actionRate = 1;
+        testUsers[1].units[2].actionTime = 1;
+        testUsers[1].units[2].maskFileName = "sprites/mask_desertsoldier.png";
+        testUsers[1].units[2].mask_image.load("sprites/mask_desertsoldier.png");
+        testUsers[1].units[0].totalHitPoints = 4;
 
         testUsers[1].units[3].status = NO_UNIT;
 
@@ -482,50 +520,75 @@ void Database::testGenerateUsers()
         testUsers[2].units[0].status = UNIT_OK;
         testUsers[2].units[0].name = "Bard";
         testUsers[2].units[0].imageFileName = "sprites/bard.png";
+        testUsers[2].units[0].image.load("sprites/bard.png");
         testUsers[2].units[0].attackPower = 10;
         testUsers[2].units[0].hitPoints = 9;
         testUsers[2].units[0].attackRange = 8;
-        testUsers[2].units[0].movementRate = 7;
         testUsers[2].units[0].team = USER_UNIT;
-        testUsers[0].units[0].vLocation = 3;
-        testUsers[0].units[0].hLocation = 5;
-        testUsers[0].units[0].faceLeft = false;
+        testUsers[2].units[0].vLocation = 3;
+        testUsers[2].units[0].hLocation = 5;
+        testUsers[2].units[0].faceLeft = false;
+        testUsers[2].units[0].movementRange = 4;
+        testUsers[2].units[0].actionRate = 1;
+        testUsers[2].units[0].actionTime = 1;
+        testUsers[2].units[0].maskFileName = "sprites/mask_bard.png";
+        testUsers[2].units[0].mask_image.load("sprites/mask_bard.png");
+        testUsers[2].units[0].totalHitPoints = 3;
 
         testUsers[2].units[1].status = UNIT_OK;
         testUsers[2].units[1].name = "Wizard";
         testUsers[2].units[1].imageFileName = "sprites/wizard.png";
+        testUsers[2].units[1].image.load("sprites/wizard.png");
         testUsers[2].units[1].attackPower = 2;
         testUsers[2].units[1].hitPoints = 3;
         testUsers[2].units[1].attackRange = 4;
-        testUsers[2].units[1].movementRate = 5;
         testUsers[2].units[1].team = USER_UNIT;
-        testUsers[0].units[0].vLocation = 1;
-        testUsers[0].units[0].hLocation = 5;
-        testUsers[0].units[0].faceLeft = false;
+        testUsers[2].units[1].vLocation = 1;
+        testUsers[2].units[1].hLocation = 5;
+        testUsers[2].units[1].faceLeft = false;
+        testUsers[2].units[1].movementRange = 4;
+        testUsers[2].units[1].actionRate = 1;
+        testUsers[2].units[1].actionTime = 1;
+        testUsers[2].units[1].maskFileName = "sprites/mask_wizard.png";
+        testUsers[2].units[1].mask_image.load("sprites/mask_wizard.png");
+        testUsers[2].units[1].totalHitPoints = 3;
 
         testUsers[2].units[2].status = UNIT_DEAD;
         testUsers[2].units[2].name = "Monk";
         testUsers[2].units[2].imageFileName = "sprites/buddhist.png";
+        testUsers[2].units[2].image.load("sprites/buddhist.png");
         testUsers[2].units[2].attackPower = 1;
         testUsers[2].units[2].hitPoints = 3;
         testUsers[2].units[2].attackRange = 5;
-        testUsers[2].units[2].movementRate = 7;
         testUsers[2].units[2].team = USER_UNIT;
-        testUsers[0].units[0].vLocation = 4;
-        testUsers[0].units[0].hLocation = 7;
-        testUsers[0].units[0].faceLeft = false;
+        testUsers[2].units[2].vLocation = 4;
+        testUsers[2].units[2].hLocation = 7;
+        testUsers[2].units[2].faceLeft = false;
+        testUsers[2].units[2].movementRange = 4;
+        testUsers[2].units[2].actionRate = 1;
+        testUsers[2].units[2].actionTime = 1;
+        testUsers[2].units[2].maskFileName = "sprites/mask_buddhist.png";
+        testUsers[2].units[2].mask_image.load("sprites/mask_buddhist.png");
+        testUsers[2].units[2].totalHitPoints = 3;
 
         testUsers[2].units[3].status = UNIT_DEAD;
         testUsers[2].units[3].name = "Priestess";
         testUsers[2].units[3].imageFileName = "sprites/priestess.png";
+        testUsers[2].units[3].image.load("sprites/priestess.png");
         testUsers[2].units[3].attackPower = 3;
         testUsers[2].units[3].hitPoints = 6;
         testUsers[2].units[3].attackRange = 9;
-        testUsers[2].units[3].movementRate = 12;
+        testUsers[2].units[3].movementRange = 12;
         testUsers[2].units[3].team = USER_UNIT;
-        testUsers[0].units[0].vLocation = 2;
-        testUsers[0].units[0].hLocation = 6;
-        testUsers[0].units[0].faceLeft = false;
+        testUsers[2].units[3].vLocation = 2;
+        testUsers[2].units[3].hLocation = 6;
+        testUsers[2].units[3].faceLeft = false;
+        testUsers[2].units[3].movementRange = 4;
+        testUsers[2].units[3].actionRate = 1;
+        testUsers[2].units[3].actionTime = 1;
+        testUsers[2].units[3].maskFileName = "sprites/mask_priestess.png";
+        testUsers[2].units[3].mask_image.load("sprites/mask_priestess.png");
+        testUsers[2].units[3].totalHitPoints = 6;
 
         for (i = 0; i < NUM_TEST_USERS; i ++)
             addUser(testUsers[i]);

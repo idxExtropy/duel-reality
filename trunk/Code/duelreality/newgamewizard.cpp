@@ -1,6 +1,6 @@
 #include <QtGui>
 
-#include "duelreality.h"
+#include "globals.h"
 #include "test_db.h"
 #include "newgamewizard.h"
 #include "glwidget.h"
@@ -289,32 +289,32 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
     spriteNameVal->setText(db.spriteName(0));
     spriteStatsLayout->addWidget(spriteNameVal, 0, 1, 1, 1);
 
-    spriteAP = new QLabel(tr("AP:"), spriteBox);
-    spriteAP->setObjectName(QString::fromUtf8("spriteAP"));
-    spriteStatsLayout->addWidget(spriteAP, 1, 0, 1, 1);
+    spriteAttackPower = new QLabel(tr("AP:"), spriteBox);
+    spriteAttackPower->setObjectName(QString::fromUtf8("spriteAttackPower"));
+    spriteStatsLayout->addWidget(spriteAttackPower, 1, 0, 1, 1);
     
-    spriteAPVal = new QLabel(spriteBox);
-    spriteAPVal->setObjectName(QString::fromUtf8("spriteAPVal"));
-    spriteAPVal->setText(QString::number(db.spriteAP(0)));
-    spriteStatsLayout->addWidget(spriteAPVal, 1, 1, 1, 1);
+    spriteAttackPowerVal = new QLabel(spriteBox);
+    spriteAttackPowerVal->setObjectName(QString::fromUtf8("spriteAttackPowerVal"));
+    spriteAttackPowerVal->setText(QString::number(db.spriteAttackPower(0)));
+    spriteStatsLayout->addWidget(spriteAttackPowerVal, 1, 1, 1, 1);
 
-    spriteHP = new QLabel(tr("HP:"), spriteBox);
-    spriteHP->setObjectName(QString::fromUtf8("spriteHP"));
-    spriteStatsLayout->addWidget(spriteHP, 2, 0, 1, 1);
+    spriteHitPoints = new QLabel(tr("HP:"), spriteBox);
+    spriteHitPoints->setObjectName(QString::fromUtf8("spriteHitPoints"));
+    spriteStatsLayout->addWidget(spriteHitPoints, 2, 0, 1, 1);
     
-    spriteHPVal = new QLabel(spriteBox);
-    spriteHPVal->setObjectName(QString::fromUtf8("spriteHPVal"));
-    spriteHPVal->setText(QString::number(db.spriteHP(0)));
-    spriteStatsLayout->addWidget(spriteHPVal, 2, 1, 1, 1);
+    spriteHitPointsVal = new QLabel(spriteBox);
+    spriteHitPointsVal->setObjectName(QString::fromUtf8("spriteHitPointsVal"));
+    spriteHitPointsVal->setText(QString::number(db.spriteHitPoints(0)));
+    spriteStatsLayout->addWidget(spriteHitPointsVal, 2, 1, 1, 1);
 
-    spriteRange = new QLabel(tr("Range:"), spriteBox);
-    spriteRange->setObjectName(QString::fromUtf8("spriteRange"));
-    spriteStatsLayout->addWidget(spriteRange, 3, 0, 1, 1);
+    spriteAttackRange = new QLabel(tr("Range:"), spriteBox);
+    spriteAttackRange->setObjectName(QString::fromUtf8("spriteAttackRange"));
+    spriteStatsLayout->addWidget(spriteAttackRange, 3, 0, 1, 1);
 
-    spriteRangeVal = new QLabel(spriteBox);
-    spriteRangeVal->setObjectName(QString::fromUtf8("spriteRangeVal"));
-    spriteRangeVal->setText(QString::number(db.spriteRange(0)));
-    spriteStatsLayout->addWidget(spriteRangeVal, 3, 1, 1, 1);
+    spriteAttackRangeVal = new QLabel(spriteBox);
+    spriteAttackRangeVal->setObjectName(QString::fromUtf8("spriteAttackRangeVal"));
+    spriteAttackRangeVal->setText(QString::number(db.spriteAttackRange(0)));
+    spriteStatsLayout->addWidget(spriteAttackRangeVal, 3, 1, 1, 1);
     //leftMidLayout->addLayout(spriteStatsLayout);
 
     spriteRate = new QLabel(tr("Rate:"), spriteBox);
@@ -398,28 +398,28 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
 
 void RecruitUnitsPage::nextSpriteButtonClicked()
 {
-    spriteIndex = (spriteIndex + 1) % MAX_SPRITES;
+    spriteIndex = (spriteIndex + 1) % NUM_TEST_SPRITES;
     spriteFileName = db.spriteFileName(spriteIndex);
 
     spriteImage->setPixmap(spriteFileName);
     spriteNameVal->setText(db.spriteName(spriteIndex));
-    spriteAPVal->setText(QString::number(db.spriteAP(spriteIndex)));
-    spriteHPVal->setText(QString::number(db.spriteHP(spriteIndex)));
-    spriteRangeVal->setText(QString::number(db.spriteRange(spriteIndex)));
+    spriteAttackPowerVal->setText(QString::number(db.spriteAttackPower(spriteIndex)));
+    spriteHitPointsVal->setText(QString::number(db.spriteHitPoints(spriteIndex)));
+    spriteAttackRangeVal->setText(QString::number(db.spriteAttackRange(spriteIndex)));
     spriteRateVal->setText(QString::number(db.spriteRate(spriteIndex)));
 }
 
 
 void RecruitUnitsPage::prevSpriteButtonClicked()
 {
-    spriteIndex = (spriteIndex + MAX_SPRITES - 1) % MAX_SPRITES;
+    spriteIndex = (spriteIndex + NUM_TEST_SPRITES - 1) % NUM_TEST_SPRITES;
     spriteFileName = db.spriteFileName(spriteIndex);
 
     spriteImage->setPixmap(spriteFileName);
     spriteNameVal->setText(db.spriteName(spriteIndex));
-    spriteAPVal->setText(QString::number(db.spriteAP(spriteIndex)));
-    spriteHPVal->setText(QString::number(db.spriteHP(spriteIndex)));
-    spriteRangeVal->setText(QString::number(db.spriteRange(spriteIndex)));
+    spriteAttackPowerVal->setText(QString::number(db.spriteAttackPower(spriteIndex)));
+    spriteHitPointsVal->setText(QString::number(db.spriteHitPoints(spriteIndex)));
+    spriteAttackRangeVal->setText(QString::number(db.spriteAttackRange(spriteIndex)));
     spriteRateVal->setText(QString::number(db.spriteRate(spriteIndex)));
 }
 
@@ -444,10 +444,10 @@ void RecruitUnitsPage::recruitButtonClicked()
 
             tempUnits[i].name = spriteNameVal->text();
             tempUnits[i].imageFileName = spriteFileName;
-            tempUnits[i].attackPower = spriteAPVal->text().toInt();
-            tempUnits[i].hitPoints = spriteHPVal->text().toInt();
-            tempUnits[i].attackRange = spriteRangeVal->text().toInt();
-            tempUnits[i].movementRate = spriteRateVal->text().toInt();
+            tempUnits[i].attackPower = spriteAttackPowerVal->text().toInt();
+            tempUnits[i].hitPoints = spriteHitPointsVal->text().toInt();
+            tempUnits[i].attackRange = spriteAttackRangeVal->text().toInt();
+            tempUnits[i].movementRange = spriteRateVal->text().toInt();
             tempUnits[i].status = UNIT_OK;
 
             db.saveUnits(NewGameWizard::playerName, tempUnits);
