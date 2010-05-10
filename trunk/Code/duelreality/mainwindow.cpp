@@ -51,6 +51,7 @@ MainWindow::MainWindow()
 
     connect(this, SIGNAL(signalGameCfgComplete()), mech, SLOT(slotTestInput()));
     connect(mech, SIGNAL(signalTestOutput()), this, SLOT(onBattleStart()));
+    connect(mech, SIGNAL(signalBattleEnd()),this,SLOT(onBattleEnd()));
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
@@ -215,7 +216,7 @@ void MainWindow::onBattleEnd()
         int battleMessageReturn;
 
         battleMessageBox.setIcon(QMessageBox::Question);
-        battleMessageBox.setText("<h2>You have not completed game</h2>");
+        battleMessageBox.setText("<h2>YOU HAVE WON THE DAY</h2>");
         battleMessageBox.setInformativeText("Would you like to keep battling?");
         battleMessageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
         battleMessageBox.setDefaultButton(QMessageBox::Yes);
@@ -234,7 +235,7 @@ void MainWindow::onBattleEnd()
         QMessageBox gameOverMessageBox;
 
         gameOverMessageBox.setIcon(QMessageBox::Information);
-        gameOverMessageBox.setText("<h2>CONGRATULATIONS! YOU HAVE WON THE GAME</h2>");
+        gameOverMessageBox.setText("<h2>CONGRATULATIONS! YOU HAVE WON THE GAME, THERE WAS MUCH REJOICING AND CAKE</h2>");
         gameOverMessageBox.exec();
         db.deactivateUser(activeUser.name);
     }
