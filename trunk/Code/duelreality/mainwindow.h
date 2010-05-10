@@ -38,7 +38,7 @@ public slots:
     void onUserTurn();      // Enables user turn interactions
     void onMove();
     void onAttack();
-
+    void onPlayerLost();
 private slots:
     void newGame();         // Calls New Game dialogs
     void about();           // Calls About Game dialogs

@@ -52,6 +52,7 @@ MainWindow::MainWindow()
     connect(this, SIGNAL(signalGameCfgComplete()), mech, SLOT(slotTestInput()));
     connect(mech, SIGNAL(signalTestOutput()), this, SLOT(onBattleStart()));
     connect(mech, SIGNAL(signalBattleEnd()),this,SLOT(onBattleEnd()));
+    connect(mech, SIGNAL(signalPlayerLost()), this, SLOT(onPlayerLost()));
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
@@ -241,7 +242,31 @@ void MainWindow::onBattleEnd()
     }
 }
 
+void MainWindow::onPlayerLost()
+{
+emit isBattleMode(false);
+emit isGameCfgMode(true);
 
+//save game
+User activeUser = db.loadActiveUser();
+db.saveGameData(activeUser.name);
+
+QMessageBox battleMessageBox;
+       int battleMessageReturn;
+
+       battleMessageBox.setIcon(QMessageBox::Question);
+       battleMessageBox.setText("<h2>YOU HAVE BEEN VANQUISHED</h2>");
+       battleMessageBox.setInformativeText("PLAY AGAIN?");
+       battleMessageBox.setStandardButtons(QMessageBox::Yes |
+QMessageBox::No);
+       battleMessageBox.setDefaultButton(QMessageBox::Yes);
+       battleMessageReturn = battleMessageBox.exec();
+
+       if (battleMessageReturn == QMessageBox::Yes)
+           loadGame();
+       else
+           db.deactivateUser(activeUser.name);
+}
 void MainWindow::onUserTurn()
 {
     turnIndicator->setStatusTip(tr("Your turn to play"));
