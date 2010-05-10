@@ -371,7 +371,6 @@ void Database::generateSprites()
 
         testSprites[3].name = "Desert Soldier";
         testSprites[3].imageFileName = "sprites/desertsoldier.png";
-        testSprites[3].imageFileName = "sprites/desertsoldier.png";
         testSprites[3].maskFileName = "sprites/mask_desertsoldier.png";
         testSprites[3].attackPower = 4;
         testSprites[3].attackRange = 4;
@@ -382,6 +381,104 @@ void Database::generateSprites()
         testSprites[3].movementRange = 6;
         testSprites[3].rate = 6;
 
+        testSprites[4].name = "Valkyrie";
+        testSprites[4].imageFileName = "sprites/valkyrie.png";
+        testSprites[4].maskFileName = "sprites/mask_valkyrie.png";
+        testSprites[4].attackPower = 4;
+        testSprites[4].attackRange = 4;
+        testSprites[4].hitPoints = 4;
+        //testSprites[3].totalHitPoints = 4;
+        testSprites[4].actionRate = 6;
+        testSprites[4].actionTime = 6;
+        testSprites[4].movementRange = 6;
+        testSprites[4].rate = 6;
+
+        testSprites[5].name = "Thai Boxer";
+        testSprites[5].imageFileName = "sprites/thaiboxer.png";
+        testSprites[5].maskFileName = "sprites/mask_thaiboxer.png";
+        testSprites[5].attackPower = 4;
+        testSprites[5].attackRange = 4;
+        testSprites[5].hitPoints = 4;
+        //testSprites[3].totalHitPoints = 4;
+        testSprites[5].actionRate = 6;
+        testSprites[5].actionTime = 6;
+        testSprites[5].movementRange = 6;
+        testSprites[5].rate = 6;        
+
+        testSprites[6].name = "Merchant";
+        testSprites[6].imageFileName = "sprites/merchant.png";
+        testSprites[6].maskFileName = "sprites/mask_merchant.png";
+        testSprites[6].attackPower = 4;
+        testSprites[6].attackRange = 4;
+        testSprites[6].hitPoints = 4;
+        //testSprites[3].totalHitPoints = 4;
+        testSprites[6].actionRate = 6;
+        testSprites[6].actionTime = 6;
+        testSprites[6].movementRange = 6;
+        testSprites[6].rate = 6;
+
+        testSprites[7].name = "Knight";
+        testSprites[7].imageFileName = "sprites/knight.png";
+        testSprites[7].maskFileName = "sprites/mask_knight.png";
+        testSprites[7].attackPower = 4;
+        testSprites[7].attackRange = 4;
+        testSprites[7].hitPoints = 4;
+        //testSprites[3].totalHitPoints = 4;
+        testSprites[7].actionRate = 6;
+        testSprites[7].actionTime = 6;
+        testSprites[7].movementRange = 6;
+        testSprites[7].rate = 6;        
+
+        testSprites[8].name = "Crusader";
+        testSprites[8].imageFileName = "sprites/crusader.png";
+        testSprites[8].maskFileName = "sprites/mask_crusader.png";
+        testSprites[8].attackPower = 4;
+        testSprites[8].attackRange = 4;
+        testSprites[8].hitPoints = 4;
+        //testSprites[3].totalHitPoints = 4;
+        testSprites[8].actionRate = 6;
+        testSprites[8].actionTime = 6;
+        testSprites[8].movementRange = 6;
+        testSprites[8].rate = 6;
+
+        testSprites[9].name = "Criminal";
+        testSprites[9].imageFileName = "sprites/criminal.png";
+        testSprites[9].maskFileName = "sprites/mask_criminal.png";
+        testSprites[9].attackPower = 4;
+        testSprites[9].attackRange = 4;
+        testSprites[9].hitPoints = 4;
+        //testSprites[3].totalHitPoints = 4;
+        testSprites[9].actionRate = 6;
+        testSprites[9].actionTime = 6;
+        testSprites[9].movementRange = 6;
+        testSprites[9].rate = 6;
+
+        testSprites[10].name = "Assassin";
+        testSprites[10].imageFileName = "sprites/assassin.png";
+        testSprites[10].maskFileName = "sprites/mask_assassin.png";
+        testSprites[10].attackPower = 4;
+        testSprites[10].attackRange = 4;
+        testSprites[10].hitPoints = 4;
+        //testSprites[3].totalHitPoints = 4;
+        testSprites[10].actionRate = 6;
+        testSprites[10].actionTime = 6;
+        testSprites[10].movementRange = 6;
+        testSprites[10].rate = 6;
+
+        testSprites[11].name = "Berserker";
+        testSprites[11].imageFileName = "sprites/berserker.png";
+        testSprites[11].maskFileName = "sprites/mask_berserker.png";
+        testSprites[11].attackPower = 4;
+        testSprites[11].attackRange = 4;
+        testSprites[11].hitPoints = 4;
+        //testSprites[3].totalHitPoints = 4;
+        testSprites[11].actionRate = 6;
+        testSprites[11].actionTime = 6;
+        testSprites[11].movementRange = 6;
+        testSprites[11].rate = 6;
+
+
+        
         for (i = 0; i < NUM_TEST_SPRITES; i++)
             addSprite(testSprites[i]);
     }
