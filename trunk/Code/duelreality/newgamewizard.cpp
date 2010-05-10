@@ -398,7 +398,7 @@ RecruitUnitsPage::RecruitUnitsPage(QWidget *parent)
 
 void RecruitUnitsPage::nextSpriteButtonClicked()
 {
-    spriteIndex = (spriteIndex + 1) % NUM_TEST_SPRITES;
+    spriteIndex = (spriteIndex + 1) % db.spriteCount();
     spriteFileName = db.spriteFileName(spriteIndex);
 
     spriteImage->setPixmap(spriteFileName);
@@ -412,7 +412,7 @@ void RecruitUnitsPage::nextSpriteButtonClicked()
 
 void RecruitUnitsPage::prevSpriteButtonClicked()
 {
-    spriteIndex = (spriteIndex + NUM_TEST_SPRITES - 1) % NUM_TEST_SPRITES;
+    spriteIndex = (spriteIndex + db.spriteCount() - 1) % db.spriteCount();
     spriteFileName = db.spriteFileName(spriteIndex);
 
     spriteImage->setPixmap(spriteFileName);

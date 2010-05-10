@@ -377,7 +377,7 @@ void RecruitUnitsPageL::initializePage()
 
 void RecruitUnitsPageL::nextSpriteButtonClicked()
 {
-    spriteIndex = (spriteIndex + 1) % NUM_TEST_SPRITES;
+    spriteIndex = (spriteIndex + 1) % db.spriteCount();
     spriteFileName = db.spriteFileName(spriteIndex);
 
     spriteImage->setPixmap(spriteFileName);
@@ -391,7 +391,7 @@ void RecruitUnitsPageL::nextSpriteButtonClicked()
 
 void RecruitUnitsPageL::prevSpriteButtonClicked()
 {
-    spriteIndex = (spriteIndex + NUM_TEST_SPRITES - 1) % NUM_TEST_SPRITES;
+    spriteIndex = (spriteIndex + db.spriteCount() - 1) % db.spriteCount();
     spriteFileName = db.spriteFileName(spriteIndex);
 
     spriteImage->setPixmap(spriteFileName);
