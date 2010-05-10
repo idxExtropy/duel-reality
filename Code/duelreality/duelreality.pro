@@ -8,9 +8,9 @@ HEADERS += mainwindow.h \
     usernamedialog.h \
     test_db.h \
     newgamewizard.h \
-    globals.h \
     mechanics.h \
-    loadgamewizard.h
+    loadgamewizard.h \
+    duelreality.h
 SOURCES += mainwindow.cpp \
     glwidget.cpp \
     main.cpp \
