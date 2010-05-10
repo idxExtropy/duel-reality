@@ -82,8 +82,8 @@ bool Database::connection()
                      "Click Cancel to exit."), QMessageBox::Cancel);
         return false;
     }
-    /*QSqlQuery query;
-      query.exec("create table units (id int primary key, "
+    QSqlQuery query;
+      /*query.exec("create table units (id int primary key, "
                  "name varchar(20), health int, attack int)");
       query.exec("insert into units values(1, 'Male', 10, 10)");
       query.exec("insert into units values(2, 'Female', 5, 5)");
@@ -108,9 +108,20 @@ bool Database::connection()
     query.exec("insert into sprites values(4, 'Desert Soldier', "
                "'sprites/desertsoldier.png', 4, 6, 8)");
 
-    query.exec("create table players (id int primary key, "
-               "name varchar(30), experiencePoints int)");
-    query.exec("insert into players values(1, 'sleepwalker', 0)");*/
+    query.exec("create table user (id int primary key, "
+               "name varchar(30), experiencePoints int, isActive int, level int)");
+    query.exec("insert into user values(1, 'sleepwalker', 0, 0, 1)");
+
+create table save1 (id int primary key, imageFileName varchar(100), faceLeft int, vLocation int, hLocation int, hitPoints int, totalHitPoints int, actionTime numeric, actionRate int, movementRange int, attackRange int, attackPower int, status int, maskFileName varchar(100), team int, unitWorth int)
+
+insert into save1 values(1, 'image', 1, 1, 1, 1, 2, 1.1, 1, 1, 1, 1, 2, 'mask', 1, 1)
+
+    query.exec("create table save1 (id int primary key, imageFileName varchar(100),"
+               "faceLeft int, vLocation int, hLocation int, hitPoints int,"
+               "totalHitPoints int, actionTime numeric, actionRate int, "
+               "movementRange int, attackRange int, attackPower int, "
+               "status int, maskFileName varchar(100), team int, unitWorth int)");
+    query.exec("insert into save1 values(1, 'image', 1, 1, 1, 1, 2, 1.1, 1, 1, 1, 1, 2, 'mask', 1, 1)");*/
 
     return true;
 }
@@ -130,21 +141,21 @@ int Database::userCount()
     return model.rowCount();
 }
 
-bool Database::addPlayer (QString playerName)
+bool Database::addUser (QString userName)
 {
     QSqlQuery query;
     int numRows;
 
-    query.exec("SELECT name FROM players WHERE id > 0");
+    query.exec("SELECT name FROM user WHERE id > 0");
     while (query.next())
     {
 
         QString name = query.value(0).toString();
-        if (name==playerName)
+        if (name==userName)
             return false;
     }
 
-    query.exec("SELECT id FROM players WHERE id > 0");
+    query.exec("SELECT id FROM user WHERE id > 0");
     QSqlDatabase defaultDB = QSqlDatabase::database();
     if (defaultDB.driver()->hasFeature(QSqlDriver::QuerySize))
     {
@@ -157,11 +168,13 @@ bool Database::addPlayer (QString playerName)
     }
     numRows++;
     //query.exec("insert into players values(1, 'MA')");
-    query.prepare("insert into players(id, name, experiencePoints) "
-                  "values(:id, :name, :experiencePoints)");
+    query.prepare("insert into user(id, name, experiencePoints, isActive, level) "
+                  "values(:id, :name, :experiencePoints, :isActive, :level)");
     query.bindValue(":id", numRows);
-    query.bindValue(":name", playerName);
+    query.bindValue(":name", userName);
     query.bindValue(":experiencePoints", 0);
+    query.bindValue(":isActive", 0);
+    query.bindValue(":level", 1);
     query.exec();
 
     return true;
@@ -227,11 +240,11 @@ Sprite Database::loadSprite(QString spriteName)
         QSqlRecord record = model.record(i);
         if (record.value("name").toString()==spriteName)
         {
-            sprite.AP=record.value("AP").toInt();
-            sprite.HP=record.value("HP").toInt();
-            sprite.range=record.value("range").toInt();
+            sprite.attackPower=record.value("AP").toInt();
+            sprite.hitPoints=record.value("HP").toInt();
+            sprite.attackRange=record.value("range").toInt();
             sprite.name=record.value("name").toString();
-            sprite.pixMap.load(record.value("pixMap").toString());
+            sprite.image.load(record.value("pixMap").toString());
             break;
         }
     }
@@ -249,3 +262,54 @@ QString Database::userName(int index) const
 }
 
 
+void Database::saveUnits(QString userName, QList<Unit> units)
+{
+    QSqlTableModel model;
+    model.setTable("user");
+    model.select();
+    QString saveName;
+
+    for (int i=0; i<model.rowCount(); ++i)
+    {
+        QSqlRecord record = model.record(i);
+        if (record.value("name").toString()==userName)
+        {
+            saveName=record.value("id").toString();
+            break;
+        }
+    }
+    saveName.prepend("save");
+
+
+
+    model.setTable(saveName);
+    int row=0, line=0;
+    model.select();
+    model.removeRows(row, model.rowCount());
+    model.submitAll();
+
+    while(line<units.size())
+    {
+        model.insertRows(row,1);
+        model.setData(model.index(row,0), line+1);
+        model.setData(model.index(row,1), units[line].imageFileName);
+        model.setData(model.index(row,2), units[line].faceLeft);
+        model.setData(model.index(row,3), units[line].vLocation);
+        model.setData(model.index(row,4), units[line].hLocation);
+        model.setData(model.index(row,5), units[line].hitPoints);
+        model.setData(model.index(row,6), units[line].totalHitPoints);
+        model.setData(model.index(row,7), units[line].actionTime);
+        model.setData(model.index(row,8), units[line].actionRate);
+        model.setData(model.index(row,9), units[line].movementRange);
+        model.setData(model.index(row,10), units[line].attackRange);
+        model.setData(model.index(row,11), units[line].attackPower);
+        model.setData(model.index(row,12), units[line].status);
+        model.setData(model.index(row,13), units[line].maskFileName);
+        model.setData(model.index(row,14), units[line].team);
+        model.setData(model.index(row,15), units[line].unitWorth);
+        model.submitAll();
+        line++;
+
+    }
+
+}

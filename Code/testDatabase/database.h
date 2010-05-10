@@ -8,6 +8,7 @@
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QSqlQuery>
+#include <qDebug>
 
 #include "globals.h"
 
@@ -46,7 +47,7 @@ public:
     bool connection ();    //QT connection to the database file
     int show(QString &tableName);   //display the database table
     int userCount();  // Returns total number of user player data entries
-    bool addPlayer (QString playerName);   //add new player, if it is existed return false; if not, return true
+    bool addUser (QString userName);   //add new player, if it is existed return false; if not, return true
     QString spriteName(int index) const;   // Returns sprite name in entry index
     const QPixmap spritePixMap(int index) const;  //return QPixmap handle
     const int spriteAP(int index) const;
@@ -54,6 +55,8 @@ public:
     const int spriteRange(int index) const;
     Sprite loadSprite(QString spriteName);
     QString userName(int index) const;  // Returns user player name in entry index
+
+    void saveUnits(QString userName, QList<Unit> units);
 
 private:
     QString tableName;
