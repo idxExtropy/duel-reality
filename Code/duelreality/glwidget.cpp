@@ -340,9 +340,12 @@ void GLWidget::paintGL()
             // Update the action time (unitTest).
             if (unit[i].actionTime >= 100 && unit[i].status==UNIT_OK) //the dead shall not move :o
             {
-                // Play 'ready' sound.
-                QSound *soundBkgnd = new QSound("sounds/blip.wav");
-                soundBkgnd->play();
+                if (unit[i].team == USER_UNIT)
+                {
+                    // Play 'ready' sound.
+                    QSound *soundBkgnd = new QSound("sounds/blip.wav");
+                    soundBkgnd->play();
+                }
 
                 // The unit is ready to go, so pause the game.
                 battleMap.gridCell[unit[i].vLocation][unit[i].hLocation].unit->isPending = true;
