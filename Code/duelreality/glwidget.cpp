@@ -89,6 +89,9 @@ void GLWidget::updateTitleScreen()
     nameFont.setPointSize(24);
     renderText (GLWidget::width() - 250, vLoc, 0.0, "Duel Reality", nameFont);
     vLoc -= 15;
+
+    // Update event counter.
+    iEventCounter++;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -394,8 +397,85 @@ void GLWidget::drawEffects()
             isEffect = false;
             iEventCounter = 0;
         }
+        else
+        {
+            drawAttack();
+        }
         break;
     }
+
+    // Update event counter.
+    iEventCounter++;
+}
+
+void GLWidget::drawAttack()
+{
+    QImage mask_image, image;
+
+    mask_image.load("effects/mask_fireball.png");
+    image.load("effects/fireball.png");
+
+    // Dynamically define the height and width of the sprite.
+    float widthRatio = (float)image.width() / (float)image.height();
+    int spriteHeight = cellHeight * 1.5 + 1;
+    int spriteWidth = cellHeight * 1.5 * widthRatio;
+
+    // Dynamically define the OpenGL location of the sprite.
+    int bottomEdge = attack_vLoc * cellHeight + spriteHeight/6;
+    int leftEdge = attack_hLoc * cellWidth + (cellWidth / 2) - (spriteWidth / 2);
+
+    glColor4f( 1.0f, 1.0f, 1.0f, 0.5f );
+    glBlendFunc( GL_DST_COLOR,GL_ZERO );
+
+    glEnable(GL_TEXTURE_2D);
+
+    GLuint textureMask = bindTexture( mask_image, GL_TEXTURE_2D );
+
+    glBegin (GL_QUADS);
+        // Bottom left.
+        glTexCoord2f (0.0, 0.0);
+        glVertex3f (leftEdge, bottomEdge, 0.0);
+
+        // Bottom right.
+        glTexCoord2f (1.0, 0.0);
+        glVertex3f (leftEdge + spriteWidth, bottomEdge, 0.0);
+
+        // Top right.
+        glTexCoord2f (1.0, 1.0);
+        glVertex3f (leftEdge + spriteWidth, bottomEdge + spriteHeight, 0.0);
+
+        // Top left.
+        glTexCoord2f (0.0, 1.0);
+        glVertex3f (leftEdge, bottomEdge + spriteHeight, 0.0);
+    glEnd();
+
+    glBlendFunc(GL_ONE, GL_ONE);
+    GLuint textureValue = bindTexture( image, GL_TEXTURE_2D );
+
+    glBegin (GL_QUADS);
+        // Bottom left.
+        glTexCoord2f (0.0, 0.0);
+        glVertex3f (leftEdge, bottomEdge, 0.0);
+
+        // Bottom right.
+        glTexCoord2f (1.0, 0.0);
+        glVertex3f (leftEdge + spriteWidth, bottomEdge, 0.0);
+
+        // Top right.
+        glTexCoord2f (1.0, 1.0);
+        glVertex3f (leftEdge + spriteWidth, bottomEdge + spriteHeight, 0.0);
+
+        // Top left.
+        glTexCoord2f (0.0, 1.0);
+        glVertex3f (leftEdge, bottomEdge + spriteHeight, 0.0);
+    glEnd ();
+
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glDisable(GL_TEXTURE_2D);
+
+    // Free memory.
+    glDeleteTextures( 1, &textureMask );
+    glDeleteTextures( 1, &textureValue );
 }
 
 void GLWidget::drawBackground()
@@ -925,9 +1005,6 @@ void GLWidget::resizeGL(int width, int height)
 ///////////////////////////////////////////////////////////////////////////////
 void GLWidget::timerEvent(QTimerEvent *event)
 {
-    // Update event counter.
-    iEventCounter++;
-
     // Redraw the graphics window.
     updateGL();
 }
@@ -987,7 +1064,10 @@ void GLWidget::hitUnit(int vLocation, int hLocation, int damage, int vAttackerLo
     effectType = EFFECT_ATTACK;
     isPending = false;
 
-    battleMap.gridCell[vLocation][hLocation].unit->hitPoints -= damage;
+    attack_vLoc = vLocation;
+    attack_hLoc = hLocation;
+
+    battleMap.gridCell[attack_vLoc][attack_hLoc].unit->hitPoints -= damage;
 
     battleMap.gridCell[vAttackerLoc][hAttackerLoc].unit->isPending = false;
     battleMap.gridCell[vAttackerLoc][hAttackerLoc].unit->actionTime = 0;
@@ -1003,9 +1083,20 @@ void GLWidget::killUnit(int vLocation, int hLocation, int vAttackerLoc, int hAtt
     effectType = EFFECT_ATTACK;
     isPending = false;
 
-    battleMap.gridCell[vLocation][hLocation].unit->status = NO_UNIT;
+    attack_vLoc = vLocation;
+    attack_hLoc = hLocation;
+
+    battleMap.gridCell[attack_vLoc][attack_hLoc].unit->status = NO_UNIT;
+
     battleMap.gridCell[vAttackerLoc][hAttackerLoc].unit->isPending = false;
     battleMap.gridCell[vAttackerLoc][hAttackerLoc].unit->actionTime = 0;
+
+    // Clear the old cell.
+    battleMap.gridCell[attack_vLoc][attack_hLoc].unit = new Unit;
+    battleMap.gridCell[attack_vLoc][attack_hLoc].isUnit = false;
+    battleMap.gridCell[attack_vLoc][attack_hLoc].unit->vLocation = -1;
+    battleMap.gridCell[attack_vLoc][attack_hLoc].unit->hLocation = -1;
+    battleMap.gridCell[attack_vLoc][attack_hLoc].unit->isPending = false;
 
     // Play 'ready' sound.
     QSound *soundBkgnd = new QSound("sounds/Action_Hit.wav");
