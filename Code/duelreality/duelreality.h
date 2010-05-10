@@ -18,7 +18,6 @@ using std::string;
 /*---------------- C o n s t a n t    d e f i n i t i o n s ----------------*/
 
 static const int    MAX_LEVELS = 7;
-static const int    MAX_SPRITES = 4;
 static const int    MAX_TEAM_UNITS = 4;      // Maximum number of units per player
 static const int    NO_UNIT = 0;        // Unit status (unit doesn't exist)
 static const int    UNIT_DEAD = 1;      // Unit status (unit is dead)
@@ -36,6 +35,25 @@ static const int    FREEPLAY_MODE = 2;
 
 /*---------------- C l a s s    d e f i n i t i o n s ----------------*/
 
+class Sprite
+{
+public:
+    QString name;
+    QString imageFileName;
+    QString maskFileName;
+    QImage  image;
+    QImage  mask_image;
+    //QPixmap pixMap;
+    int     attackPower;
+    int     hitPoints;
+    int     attackRange;
+    int     actionRate;
+    int     actionTime;
+    int     movementRange;
+    int     rate;
+};
+
+
 class Unit
 {
 public:
@@ -47,12 +65,13 @@ public:
     int     totalHitPoints;     // Total unit hit points
     float   actionTime;
     int     actionRate;
-    int     movementRate;
+    int     movementRange;
     int     attackRange;
     int     attackPower;
     int     status;             // Unit status
     QString imageFileName;
-    QPixmap pixMap;
+    QString maskFileName;
+    //QPixmap pixMap;
     QImage  image;              // Associated unit image
     QImage  mask_image;         // Associate unit mask image
     int     team;               // Unit's associated team

@@ -10,6 +10,7 @@ class Unit;
 class QString;
 class QImage;
 class QPixmap;
+class Sprite;
 //class QList;
 
 
