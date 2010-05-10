@@ -10,7 +10,6 @@
 
 class Unit;
 class test_db;
-//class GLWidget;
 class MainWindow;
 class mechanics : public QObject
 {
@@ -39,6 +38,7 @@ signals:
  void SignalStartAI();      //signal when AI moves
  void signalBattleStart();  //signal when battle starts
 void signalTestOutput();
+void signalBattleEnd();
 
 
 public slots:
@@ -49,24 +49,19 @@ private:
     bool isValidMove(int vloc, int hloc,int vnext,int hnext);
     bool isValidAttack(int targv, int targh, int atkrange, int atkrv, int  atkrh, int atkteam, int tarteam);
     bool isOccupied(int x, int y);
+    bool isGameOverP1();
+    bool isGameOverP2();
 
- //  int nextPlayer() {return iNextplayer;}
-  // void setNextPlayer(int player){iNextplayer=player;}
- //  bool isUnitAt(int x, int y, Unit *UnitRetrieved);
-   //    void endTurn();
-    int isGameOver();
     void checkGameEnd();
     Unit *FocusUnit;
     bool gamerunning;
-  //  int iNextplayer;
     bool battleRunning;
-//    void startAI();
-  //  bool getGridCellSelected();
-   // bool getPending();
-  //  Unit *getUnit(int x, int y);
     int AIcheckboard(int, int, int);
     int AIAttackCheck(int a, int b, int c, int power);
     int AImoveCheck(int aiV, int aiH, int range);
+    void makeAIunits();
+    void sendBattleEnd();
+    Database db;
 };
 
 #endif // MECHANICS_H
