@@ -20,6 +20,7 @@ GLWidget::GLWidget()
     // Initialize some variables.
     isPending = false;
     isBattle = false;
+    isEffect = false;
     titleIndex = 0;
     iEventCounter = 0;
 
@@ -48,7 +49,9 @@ void GLWidget::updateTitleScreen()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
 
-    if (iEventCounter > GL_TIMER_INTERVAL / (10 / titleTransitionSeconds))
+    int ticksPerSecond = 1000 / GL_TIMER_INTERVAL;
+
+    if (iEventCounter / ticksPerSecond >= TITLE_TRANSITION_SECONDS)
     {
         // Next title image.
         titleIndex++;
@@ -319,13 +322,15 @@ void GLWidget::initGrid()
 ///////////////////////////////////////////////////////////////////////////////
 void GLWidget::paintGL()
 {
+    // Handle title screen.
     if (!isBattle)
     {
         updateTitleScreen();
         return;
     }
 
-    if (!isPending)
+    // Capture pending status.
+    if (!isPending && !isEffect)
     {
         for (int i = 0; i < MAX_MAP_UNITS; i++)
         {
@@ -348,24 +353,58 @@ void GLWidget::paintGL()
         }
     }
 
+    // Clear the background.
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glLoadIdentity();
 
-    // Draw the background.
-    glDrawPixels(glBkImage.width(), glBkImage.height(), GL_RGBA, GL_UNSIGNED_BYTE, glBkImage.bits());
-    
-    for (int i = 0; i < battleMap.cellsTall; i++)
+    // Draw items.
+    drawBackground();
+    drawGrid();
+    drawUnits();
+    drawHeaderInfo();
+
+    if (isEffect)
     {
-        for (int j = 0; j < battleMap.cellsWide; j++)
-        {
-            // Draw the grid.
-            drawGridBox(i, j);
-
-            // Assume no unit at the beginning.
-            battleMap.gridCell[i][j].isUnit = false;
-        }
+        drawEffects();
     }
+}
 
+void GLWidget::drawEffects()
+{
+    int ticksPerSecond = 1000 / GL_TIMER_INTERVAL;
+
+    switch(effectType)
+    {
+    case EFFECT_NONE:
+        if (iEventCounter / ticksPerSecond >= DEFAULT_TRANSITION_SECONDS)
+        {
+            isEffect = false;
+            iEventCounter = 0;
+        }
+        break;
+    case EFFECT_MOVE:
+        if (iEventCounter / ticksPerSecond >= MOVE_TRANSITION_SECONDS)
+        {
+            isEffect = false;
+            iEventCounter = 0;
+        }
+        break;
+    case EFFECT_ATTACK:
+        if (iEventCounter / ticksPerSecond >= ATTACK_TRANSITION_SECONDS)
+        {
+            isEffect = false;
+            iEventCounter = 0;
+        }
+        break;
+    }
+}
+
+void GLWidget::drawBackground()
+{
+    glDrawPixels(glBkImage.width(), glBkImage.height(), GL_RGBA, GL_UNSIGNED_BYTE, glBkImage.bits());
+}
+
+void GLWidget::drawUnits()
+{
     for (int i = battleMap.cellsTall - 1; i >= 0; i--)
     {
         for (int j = 0; j < battleMap.cellsWide; j++)
@@ -386,7 +425,22 @@ void GLWidget::paintGL()
             }
         }
     }
+}
 
+void GLWidget::drawGrid()
+{
+    for (int i = 0; i < battleMap.cellsTall; i++)
+    {
+        for (int j = 0; j < battleMap.cellsWide; j++)
+        {
+            // Draw the grid.
+            drawGridBox(i, j);
+        }
+    }
+}
+
+void GLWidget::drawHeaderInfo()
+{
     for (int i = 0; i < battleMap.cellsTall; i++)
     {
         for (int j = 0; j < battleMap.cellsWide; j++)
@@ -665,7 +719,7 @@ bool GLWidget::updateUnit(Unit myUnit)
     glEnable(GL_TEXTURE_2D);
     GLuint textureMask = bindTexture( myUnit.mask_image, GL_TEXTURE_2D );
 
-    // Draw the sprite facing left or right.
+    // Draw the sprite facing right.
     if (myUnit.faceLeft)
     {
         glBegin (GL_QUADS);
@@ -710,7 +764,7 @@ bool GLWidget::updateUnit(Unit myUnit)
     glBlendFunc(GL_ONE, GL_ONE);
     GLuint textureValue = bindTexture( myUnit.image, GL_TEXTURE_2D );
 
-    // Draw the sprite facing left or right.
+    // Draw the sprite facing left.
     if (myUnit.faceLeft)
     {
         glBegin (GL_QUADS);
@@ -793,7 +847,7 @@ bool GLWidget::updateUnit(Unit myUnit)
         glVertex3f( rightEdge + statusWidth, bottomEdge + cellHeight/2 * actionTime, 0.0f );	//Top Right
         glVertex3f( rightEdge + statusWidth, bottomEdge, 0.0f );	// Bottom Right
         glVertex3f( rightEdge, bottomEdge, 0.0f );	// Bottom Left
-        glEnd();
+    glEnd();
 
     return (true);
 }
@@ -894,11 +948,6 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
     }
 }
 
-void GLWidget::mouseMoveEvent(QMouseEvent *event)
-{
-    // Process mouse stuff...
-}
-
 void GLWidget::setBackgroundTrack(QString trackFileName)
 {
     music->stop();
@@ -908,12 +957,9 @@ void GLWidget::setBackgroundTrack(QString trackFileName)
 
 void GLWidget::moveUnit(int vLocPrev, int hLocPrev, int vLocNext, int hLocNext)
 {
-    //battleMap.gridCell[vLocPrev][hLocPrev].unit->vLocation = vLocNext;
-    //battleMap.gridCell[vLocPrev][hLocPrev].unit->hLocation = hLocNext;
-
-    //battleMap.gridCell[vLocPrev][hLocPrev].unit->isPending = false;
-    //battleMap.gridCell[vLocPrev][hLocPrev].unit->actionTime = 0;
-    //isPending = false;
+    isEffect = true;
+    effectType = EFFECT_MOVE;
+    isPending = false;
 
     // Update the new cell.
     battleMap.gridCell[vLocNext][hLocNext].unit = battleMap.gridCell[vLocPrev][hLocPrev].unit;
@@ -930,8 +976,6 @@ void GLWidget::moveUnit(int vLocPrev, int hLocPrev, int vLocNext, int hLocNext)
     battleMap.gridCell[vLocPrev][hLocPrev].unit->hLocation = -1;
     battleMap.gridCell[vLocPrev][hLocPrev].unit->isPending = false;
 
-    isPending = false;
-
     // Play 'ready' sound.
     QSound *soundBkgnd = new QSound("sounds/Action_Move.wav");
     soundBkgnd->play();
@@ -939,11 +983,14 @@ void GLWidget::moveUnit(int vLocPrev, int hLocPrev, int vLocNext, int hLocNext)
 
 void GLWidget::hitUnit(int vLocation, int hLocation, int damage, int vAttackerLoc, int hAttackerLoc)
 {
+    isEffect = true;
+    effectType = EFFECT_ATTACK;
+    isPending = false;
+
     battleMap.gridCell[vLocation][hLocation].unit->hitPoints -= damage;
 
     battleMap.gridCell[vAttackerLoc][hAttackerLoc].unit->isPending = false;
     battleMap.gridCell[vAttackerLoc][hAttackerLoc].unit->actionTime = 0;
-    isPending = false;
 
     // Play 'ready' sound.
     QSound *soundBkgnd = new QSound("sounds/Action_Hit.wav");
@@ -952,11 +999,13 @@ void GLWidget::hitUnit(int vLocation, int hLocation, int damage, int vAttackerLo
 
 void GLWidget::killUnit(int vLocation, int hLocation, int vAttackerLoc, int hAttackerLoc)
 {
+    isEffect = true;
+    effectType = EFFECT_ATTACK;
+    isPending = false;
 
     battleMap.gridCell[vLocation][hLocation].unit->status = NO_UNIT;
     battleMap.gridCell[vAttackerLoc][hAttackerLoc].unit->isPending = false;
     battleMap.gridCell[vAttackerLoc][hAttackerLoc].unit->actionTime = 0;
-    isPending = false;
 
     // Play 'ready' sound.
     QSound *soundBkgnd = new QSound("sounds/Action_Hit.wav");
