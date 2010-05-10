@@ -8,23 +8,14 @@ class User;
 class Map;
 class Unit;
 class QString;
+class QImage;
 class QPixmap;
 //class QList;
 
 
 /*---------------- C l a s s    d e f i n i t i o n s ----------------*/
 
-class Sprite
-{
-public:
-    QString name;
-    QString fileName;
-    //QPixmap pixMap;
-    int     AP;
-    int     HP;
-    int     range;
-    int     rate;
-};
+static const int    NUM_TEST_SPRITES = 4;
 
 
 class Database
@@ -47,9 +38,9 @@ public:
     int         spriteCount();                      // Returns total number of sprite data entries
     QString     spriteName(int index) const;        // Returns sprite name in entry index
     QString     spriteFileName(int index) const;
-    const int   spriteAP(int index) const;
-    const int   spriteHP(int index) const;
-    const int   spriteRange(int index) const;
+    const int   spriteAttackPower(int index) const;
+    const int   spriteHitPoints(int index) const;
+    const int   spriteAttackRange(int index) const;
     const int   spriteRate(int index) const;
     Sprite      loadSprite(QString &spriteName);    // Returns sprite data for associated sprite name
 

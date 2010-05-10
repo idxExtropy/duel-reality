@@ -3,7 +3,7 @@
 
 #include <QWizard>
 
-#include "duelreality.h"
+#include "globals.h"
 #include "test_db.h"
 
 class QCheckBox;
@@ -110,14 +110,14 @@ private:
     QPushButton             *nextSpriteButton;
     QPushButton             *prevSpriteButton;
     QLabel                  *spriteName;
-    QLabel                  *spriteAP;
-    QLabel                  *spriteHP;
-    QLabel                  *spriteRange;
+    QLabel                  *spriteAttackPower;
+    QLabel                  *spriteHitPoints;
+    QLabel                  *spriteAttackRange;
     QLabel                  *spriteRate;
     QLabel                  *spriteNameVal;
-    QLabel                  *spriteAPVal;
-    QLabel                  *spriteHPVal;
-    QLabel                  *spriteRangeVal;
+    QLabel                  *spriteAttackPowerVal;
+    QLabel                  *spriteHitPointsVal;
+    QLabel                  *spriteAttackRangeVal;
     QLabel                  *spriteRateVal;
     QPushButton             *recruitButton;
     QList<QLabel *>         unitImageList;

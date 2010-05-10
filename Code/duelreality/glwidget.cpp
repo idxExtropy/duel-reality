@@ -117,7 +117,7 @@ void GLWidget::unitTest_GenerateContent()
     unit[0].attackPower = 8;
     unit[0].attackRange = 2;
     unit[0].faceLeft = false;
-    unit[0].movementRate = 2;
+    unit[0].movementRange = 2;
     unit[0].team =USER_UNIT;
 
     // Create a new unit (for gl debug purposes).
@@ -134,7 +134,7 @@ void GLWidget::unitTest_GenerateContent()
     unit[1].attackPower = 15;
     unit[1].attackRange = 1;
     unit[1].faceLeft = false;
-    unit[1].movementRate = 1;
+    unit[1].movementRange = 1;
     unit[1].team =USER_UNIT;
 
     // Create a new unit (for gl debug purposes).
@@ -151,7 +151,7 @@ void GLWidget::unitTest_GenerateContent()
     unit[2].attackPower = 7;
     unit[2].attackRange = 2;
     unit[2].faceLeft = false;
-    unit[2].movementRate = 4;
+    unit[2].movementRange = 4;
     unit[2].team =USER_UNIT;
 
     // Create a new unit (for gl debug purposes).
@@ -168,7 +168,7 @@ void GLWidget::unitTest_GenerateContent()
     unit[3].attackPower = 10;
     unit[3].attackRange = 2;
     unit[3].faceLeft = true;
-    unit[3].movementRate = 2;
+    unit[3].movementRange = 2;
     unit[3].team =AI_UNIT;
 
     // Create a new unit (for gl debug purposes).
@@ -185,7 +185,7 @@ void GLWidget::unitTest_GenerateContent()
     unit[4].attackPower = 8;
     unit[4].attackRange = 2;
     unit[4].faceLeft = true;
-    unit[4].movementRate = 2;
+    unit[4].movementRange = 2;
     unit[4].team =AI_UNIT;
 
     // Create a new unit (for gl debug purposes).
@@ -202,7 +202,7 @@ void GLWidget::unitTest_GenerateContent()
     unit[5].attackPower = 8;
     unit[5].attackRange = 3;
     unit[5].faceLeft = true;
-    unit[5].movementRate = 1;
+    unit[5].movementRange = 1;
     unit[5].team =AI_UNIT;
 
     // Create a new unit (for gl debug purposes).
@@ -219,7 +219,7 @@ void GLWidget::unitTest_GenerateContent()
     unit[6].attackPower = 8;
     unit[6].attackRange = 2;
     unit[6].faceLeft = false;
-    unit[6].movementRate = 2;
+    unit[6].movementRange = 2;
     unit[6].team =USER_UNIT;
 
     // Create a new unit (for gl debug purposes).
@@ -233,10 +233,10 @@ void GLWidget::unitTest_GenerateContent()
     unit[7].status =UNIT_OK;
     unit[7].vLocation = 4;
     unit[7].hLocation = 8;
-    unit[7].attackPower = 11;
+    unit[7].attackPower = 18;
     unit[7].attackRange = 3;
     unit[7].faceLeft = true;
-    unit[7].movementRate = 4;
+    unit[7].movementRange = 9;
     unit[7].team =AI_UNIT;
 
     for (int i = 0; i < MAX_MAP_UNITS; i++)
@@ -440,7 +440,7 @@ void GLWidget::paintGL()
                     vLoc -= 15;
 
                     // Unit movement rate.
-                    itoa(battleMap.gridCell[i][j].unit->movementRate, tmpString, 10);
+                    itoa(battleMap.gridCell[i][j].unit->movementRange, tmpString, 10);
                     displayString = "Movement Rate: ";
                     displayString.append(tmpString);
                     renderText (30, vLoc, 0.0, displayString.c_str());
@@ -503,7 +503,7 @@ void GLWidget::paintGL()
                 vLoc -= 15;
 
                 // Unit movement rate.
-                itoa(battleMap.gridCell[i][j].unit->movementRate, tmpString, 10);
+                itoa(battleMap.gridCell[i][j].unit->movementRange, tmpString, 10);
                 displayString = "Movement Rate: ";
                 displayString.append(tmpString);
                 renderText (GLWidget::width() - 250, vLoc, 0.0, displayString.c_str());

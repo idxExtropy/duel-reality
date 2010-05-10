@@ -18,10 +18,12 @@ mechanics::~mechanics()
 }
 //
 //////////////////////////////////////////////////////AI/////////////////////////////////////
- void mechanics::slotTestInput()
- {
-     emit signalTestOutput();
- }
+
+
+void mechanics::slotTestInput()
+{
+    emit signalTestOutput();
+}
 
 void mechanics::handleAI()
 {
@@ -37,7 +39,7 @@ void mechanics::handleAI()
                 int range = glWidget->battleMap.gridCell[i][j].unit->attackRange;
                 int power = glWidget->battleMap.gridCell[i][j].unit->attackPower;
                 int attackCheckResult;
-                int moverange= glWidget->battleMap.gridCell[i][j].unit->movementRate;
+                int moverange= glWidget->battleMap.gridCell[i][j].unit->movementRange;
                 attackCheckResult = mechanics::AIAttackCheck(i,j, range, power);         //from AI postion, hit anything in range
                 int moveCheckResult;
 
@@ -131,83 +133,39 @@ int mechanics::AImoveCheck(int aiV, int aiH, int range)
             {
                 if(glWidget->battleMap.gridCell[i][j].unit->team==USER_UNIT)  //BY ENEMY
       //if I can't attack Enemy yet, I probably want to move toward him, but I care more if he's close
-                {
-
+                    {
                         if (aiV>i)                   //ai unitabove target
                         {
-                             a=(abs(aiV-i)*-200);
+                             a=(abs(aiV-i)*-100);
                         }
                         else
                         {
-                             a=(abs(aiH-i)*200); //ai unit below or on same v as target
+                             a=(abs(aiH-i)*100); //ai unit below or on same v as target
                         }
                         if (aiH>j)                  // ai to RIGHT of target
                         {
-                            b = (abs(aiH-j)*-200);
+                            b = (abs(aiH-j)*-100);
                         }
                         else                        //ai to LEFT or same H as Target
                         {
-                             b = (abs(aiH-j)*200);
+                             b = (abs(aiH-j)*100);
                         }
                         val1+=a;
                         val2+=b;
                     }
 
-                if(glWidget->battleMap.gridCell[i][j].unit->team==USER_UNIT&&(glWidget->battleMap.gridCell[i][j].unit->hitPoints<=((glWidget->battleMap.gridCell[i][j].unit->totalHitPoints)/2)))
-                {
 
-                        if (aiV>i)                   //ai unitabove target
-                        {
-                             a=(abs(aiV-i)*-500);
-                        }
-                        else
-                        {
-                             a=(abs(aiH-i)*500); //ai unit below or on same v as target
-                        }
-                        if (aiH>j)                  // ai to RIGHT of target
-                        {
-                            b = (abs(aiH-j)*-500);
-                        }
-                        else                        //ai to LEFT or same H as Target
-                        {
-                             b = (abs(aiH-j)*500);
-                        }
-                        val1+=a;
-                        val2+=b;
-                    }
                   }
-
-        if(glWidget->battleMap.gridCell[i][j].unit->team==AI_UNIT)
-        {
-            if (aiV>i)                   //ai unitabove target
-            {
-                 a=(abs(aiV-i)*100);
-            }
-            else
-            {
-                 a=(abs(aiH-i)*-100); //ai unit below or on same v as target
-            }
-            if (aiH>j)                  // ai to RIGHT of target
-            {
-                b = (abs(aiH-j)*100);
-            }
-            else                        //ai to LEFT or same H as Target
-            {
-                 b = (abs(aiH-j)*-100);
-            }
-            val1+=a;
-            val2+=b;
         }
     }
-    }
-    if((abs(val1))>(abs(val2)))
+    if(abs(val1)>abs(val2))
     {
         if (val1>0)
         return 0;       //go UP
         if (val1<0)
         return 1;       //go DOWN
     }
-    else if((abs(val1))<(abs(val2)))
+    else if(abs(val1)<abs(val2))
     {
         if (val2>0)           //GO RIGHT
             return 2;
@@ -287,7 +245,7 @@ if(!mechanics::isOccupied(vnext, hnext)|| ((vLoc==vnext)&&(hLoc==hnext)))
                {
                    if(hnext<=glWidget->battleMap.cellsWide-1&&hnext>=0)//9
                    {
-                     if(((abs(vLoc-vnext))<=glWidget->battleMap.gridCell[vLoc][hLoc].unit->movementRate)&&((abs(hLoc-hnext))<=glWidget->battleMap.gridCell[vLoc][hLoc].unit->movementRate))
+                     if(((abs(vLoc-vnext))<=glWidget->battleMap.gridCell[vLoc][hLoc].unit->movementRange)&&((abs(hLoc-hnext))<=glWidget->battleMap.gridCell[vLoc][hLoc].unit->movementRange))
                      {
                      return (true);
                      }
