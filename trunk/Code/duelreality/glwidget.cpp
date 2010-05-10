@@ -242,7 +242,7 @@ void GLWidget::unitTest_GenerateContent()
     unit[7].attackPower = 18;
     unit[7].attackRange = 3;
     unit[7].faceLeft = true;
-    unit[7].movementRange = 9;
+    unit[7].movementRange = 3;
     unit[7].team =AI_UNIT;
 
     for (int i = 0; i < MAX_MAP_UNITS; i++)
