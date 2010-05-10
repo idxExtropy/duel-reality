@@ -450,7 +450,7 @@ void mechanics::checkGameEnd()
     bogey=mechanics::isGameOverP1();
     if (!bogey)
     {
-        mechanics::sendBattleEnd();
+        mechanics::sendPlayerLost();
     }
     else
     {
@@ -461,6 +461,9 @@ void mechanics::checkGameEnd()
         }
     }
 }
-
+void mechanics::sendPlayerLost()
+{
+emit signalPlayerLost();
+}
 
 

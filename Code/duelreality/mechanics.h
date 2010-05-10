@@ -39,7 +39,7 @@ signals:
  void signalBattleStart();  //signal when battle starts
 void signalTestOutput();
 void signalBattleEnd();
-
+ void signalPlayerLost();
 
 public slots:
 void slotTestInput();
@@ -61,6 +61,7 @@ private:
     int AImoveCheck(int aiV, int aiH, int range);
     void makeAIunits();
     void sendBattleEnd();
+    void sendPlayerLost();
     Database db;
 };
 
