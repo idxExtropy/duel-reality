@@ -1,6 +1,6 @@
 #include <QtGui>
 
-#include "globals.h"
+#include "duelreality.h"
 #include "test_db.h"
 #include "newgamewizard.h"
 #include "glwidget.h"

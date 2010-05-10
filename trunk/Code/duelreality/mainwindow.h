@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include <QtOpenGL>
 
-#include "globals.h"
+#include "duelreality.h"
 #include "test_db.h"
 #include "mechanics.h"
 // Forward declarations

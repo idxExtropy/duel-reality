@@ -1,6 +1,6 @@
 #ifndef MECHANICS_H
 #define MECHANICS_H
-#include "globals.h"
+#include "duelreality.h"
 #include <QObject>
 #include <QWidget>
 #include <QTimer>

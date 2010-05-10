@@ -1,4 +1,4 @@
-#include "globals.h"
+#include "duelreality.h"
 #include "test_db.h"
 #include "glwidget.h"
 
