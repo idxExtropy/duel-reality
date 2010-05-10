@@ -3,7 +3,7 @@
 
 #include <QWizard>
 
-#include "globals.h"
+#include "duelreality.h"
 #include "test_db.h"
 
 class QCheckBox;
