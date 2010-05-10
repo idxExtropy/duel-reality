@@ -18,12 +18,10 @@ mechanics::~mechanics()
 }
 //
 //////////////////////////////////////////////////////AI/////////////////////////////////////
-
-
-void mechanics::slotTestInput()
-{
-    emit signalTestOutput();
-}
+ void mechanics::slotTestInput()
+ {
+     emit signalTestOutput();
+ }
 
 void mechanics::handleAI()
 {
@@ -133,39 +131,83 @@ int mechanics::AImoveCheck(int aiV, int aiH, int range)
             {
                 if(glWidget->battleMap.gridCell[i][j].unit->team==USER_UNIT)  //BY ENEMY
       //if I can't attack Enemy yet, I probably want to move toward him, but I care more if he's close
-                    {
+                {
+
                         if (aiV>i)                   //ai unitabove target
                         {
-                             a=(abs(aiV-i)*-100);
+                             a=(abs(aiV-i)*-200);
                         }
                         else
                         {
-                             a=(abs(aiH-i)*100); //ai unit below or on same v as target
+                             a=(abs(aiH-i)*200); //ai unit below or on same v as target
                         }
                         if (aiH>j)                  // ai to RIGHT of target
                         {
-                            b = (abs(aiH-j)*-100);
+                            b = (abs(aiH-j)*-200);
                         }
                         else                        //ai to LEFT or same H as Target
                         {
-                             b = (abs(aiH-j)*100);
+                             b = (abs(aiH-j)*200);
                         }
                         val1+=a;
                         val2+=b;
                     }
 
+                if(glWidget->battleMap.gridCell[i][j].unit->team==USER_UNIT&&(glWidget->battleMap.gridCell[i][j].unit->hitPoints<=((glWidget->battleMap.gridCell[i][j].unit->totalHitPoints)/2)))
+                {
 
+                        if (aiV>i)                   //ai unitabove target
+                        {
+                             a=(abs(aiV-i)*-500);
+                        }
+                        else
+                        {
+                             a=(abs(aiH-i)*500); //ai unit below or on same v as target
+                        }
+                        if (aiH>j)                  // ai to RIGHT of target
+                        {
+                            b = (abs(aiH-j)*-500);
+                        }
+                        else                        //ai to LEFT or same H as Target
+                        {
+                             b = (abs(aiH-j)*500);
+                        }
+                        val1+=a;
+                        val2+=b;
+                    }
                   }
+
+        if(glWidget->battleMap.gridCell[i][j].unit->team==AI_UNIT)
+        {
+            if (aiV>i)                   //ai unitabove target
+            {
+                 a=(abs(aiV-i)*100);
+            }
+            else
+            {
+                 a=(abs(aiH-i)*-100); //ai unit below or on same v as target
+            }
+            if (aiH>j)                  // ai to RIGHT of target
+            {
+                b = (abs(aiH-j)*100);
+            }
+            else                        //ai to LEFT or same H as Target
+            {
+                 b = (abs(aiH-j)*-100);
+            }
+            val1+=a;
+            val2+=b;
         }
     }
-    if(abs(val1)>abs(val2))
+    }
+    if((abs(val1))>(abs(val2)))
     {
         if (val1>0)
         return 0;       //go UP
         if (val1<0)
         return 1;       //go DOWN
     }
-    else if(abs(val1)<abs(val2))
+    else if((abs(val1))<(abs(val2)))
     {
         if (val2>0)           //GO RIGHT
             return 2;

@@ -6,7 +6,7 @@
 #include "glwidget.h"
 #include "newgamewizard.h"
 #include "loadgamewizard.h"
-#include "mechanics.h"
+
 
 // Global classes.
 GLWidget *glWidget;
