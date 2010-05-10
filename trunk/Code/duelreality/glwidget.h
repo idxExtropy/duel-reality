@@ -13,8 +13,8 @@ using namespace std;
 // Constants.
 static const int    DEFAULT_TRANSITION_SECONDS = 2;
 static const int    TITLE_TRANSITION_SECONDS = 3;
-static const int    MOVE_TRANSITION_SECONDS = 5;
-static const int    ATTACK_TRANSITION_SECONDS = 5;
+static const int    MOVE_TRANSITION_SECONDS = 1;
+static const int    ATTACK_TRANSITION_SECONDS = 1;
 static const int    EFFECT_NONE = 0;
 static const int    EFFECT_MOVE = 1;
 static const int    EFFECT_ATTACK = 2;
@@ -76,6 +76,7 @@ protected:
     int  attack_vLoc, attack_hLoc;
     void drawEffects();
     int  iEventCounter;
+    void drawAttack();
 
 private:
 };
