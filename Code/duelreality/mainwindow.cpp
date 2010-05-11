@@ -227,6 +227,7 @@ void MainWindow::onBattleEnd()
             loadGame();
         else
             db.deactivateUser(activeUser.name);
+            MainWindow::exitGame();
     }
     else
     {
@@ -266,6 +267,7 @@ QMessageBox::No);
            loadGame();
        else
            db.deactivateUser(activeUser.name);
+           MainWindow::exitGame();
 }
 void MainWindow::onUserTurn()
 {
