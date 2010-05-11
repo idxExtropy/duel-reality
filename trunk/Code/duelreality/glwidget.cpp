@@ -90,6 +90,13 @@ void GLWidget::updateTitleScreen()
     renderText (GLWidget::width() - 250, vLoc, 0.0, "Duel Reality", nameFont);
     vLoc -= 15;
 
+    // Restart sound track if necessary.
+    if (music->state() == Phonon::StoppedState)
+    {
+        music = Phonon::createPlayer(Phonon::MusicCategory, Phonon::MediaSource(sounds/MainTheme.mp3));
+        music->play();
+    }
+
     // Update event counter.
     iEventCounter++;
 }
@@ -1018,7 +1025,7 @@ void GLWidget::timerEvent(QTimerEvent *event)
     // Restart sound track if necessary.
     if (music->state() == Phonon::StoppedState)
     {
-        music = Phonon::createPlayer(Phonon::MusicCategory, Phonon::MediaSource(trackFileName));
+        music = Phonon::createPlayer(Phonon::MusicCategory, Phonon::MediaSource(battleMap.audioFileName));
         music->play();
     }
 }
