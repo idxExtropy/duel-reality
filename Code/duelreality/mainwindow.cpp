@@ -171,7 +171,7 @@ void MainWindow::playHoveredSound()
 
 void MainWindow::playClickedSound()
 {
-    QSound::play("sounds/blip.wav");
+    QSound::play("sounds/guncocking.wav");
 }
 
 

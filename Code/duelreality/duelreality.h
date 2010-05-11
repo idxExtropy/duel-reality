@@ -19,6 +19,8 @@ using std::string;
 
 static const int        MAX_LEVELS = 7;
 static const int        MAX_TEAM_UNITS = 4;      // Maximum number of units per player
+static const int        MAX_MAPS = 7;      // Maximum number maps
+static const int        MAX_SPRITES = 12;      // Maximum number maps
 static const int        NO_UNIT = 0;        // Unit status (unit doesn't exist)
 static const int        UNIT_DEAD = 1;      // Unit status (unit is dead)
 static const int        UNIT_OK = 2;        // Unit status (unit is alive)
