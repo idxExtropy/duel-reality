@@ -87,6 +87,7 @@ void GLWidget::LoadContent(Database db)
         // Load the actual sprite images.
         unit[i].image.load(unit[i].imageFileName);
         unit[i].mask_image.load(unit[i].maskFileName);
+        unit[i].faceLeft = false;
     }
 
     // Load a background image.
@@ -681,7 +682,7 @@ void GLWidget::drawEffects()
         if (iEventCounter / ticksPerSecond >= MOVE_TRANSITION_SECONDS)
         {
             isEffect = false;
-            battleMap.gridCell[move_vLocNext][move_hLocNext].unit->mask_image.load("moveMask");
+            battleMap.gridCell[move_vLocNext][move_hLocNext].unit->mask_image.load(moveMask);
         }
         break;
     case EFFECT_ATTACK:
@@ -1424,12 +1425,12 @@ void GLWidget::moveUnit(int vLocPrev, int hLocPrev, int vLocNext, int hLocNext)
     move_hLocNext = hLocNext;
 
     // Update the new cell.
-    battleMap.gridCell[vLocNext][hLocNext].unit = battleMap.gridCell[vLocPrev][hLocPrev].unit;
-    battleMap.gridCell[vLocNext][hLocNext].unit->vLocation = vLocNext;
-    battleMap.gridCell[vLocNext][hLocNext].unit->hLocation = hLocNext;
-    battleMap.gridCell[vLocNext][hLocNext].unit->isPending = false;
-    battleMap.gridCell[vLocNext][hLocNext].unit->actionTime = 0;
-    battleMap.gridCell[vLocNext][hLocNext].isUnit = true;
+    battleMap.gridCell[move_vLocNext][move_hLocNext].unit = battleMap.gridCell[vLocPrev][hLocPrev].unit;
+    battleMap.gridCell[move_vLocNext][move_hLocNext].unit->vLocation = vLocNext;
+    battleMap.gridCell[move_vLocNext][move_hLocNext].unit->hLocation = hLocNext;
+    battleMap.gridCell[move_vLocNext][move_hLocNext].unit->isPending = false;
+    battleMap.gridCell[move_vLocNext][move_hLocNext].unit->actionTime = 0;
+    battleMap.gridCell[move_vLocNext][move_hLocNext].isUnit = true;
 
     // Clear the old cell.
     battleMap.gridCell[vLocPrev][hLocPrev].unit = new Unit;
@@ -1439,8 +1440,8 @@ void GLWidget::moveUnit(int vLocPrev, int hLocPrev, int vLocNext, int hLocNext)
     battleMap.gridCell[vLocPrev][hLocPrev].unit->isPending = false;
 
     // Remove mask temporarily.
-    moveMask = battleMap.gridCell[vLocNext][hLocNext].unit->maskFileName;
-    battleMap.gridCell[move_vLocNext][move_hLocNext].unit->mask_image.load("NO_IMAGE");
+    moveMask = battleMap.gridCell[move_vLocNext][move_hLocNext].unit->maskFileName;
+    battleMap.gridCell[move_vLocNext][move_hLocNext].unit->mask_image.load("sprites/white.png");
 
     // Play 'move' sound.
     QSound *soundBkgnd = new QSound("sounds/Action_Move.wav");
