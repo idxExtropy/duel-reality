@@ -43,8 +43,7 @@ MainWindow::MainWindow()
     emit isUserTurn(false);
 
     // Play main theme.
-    glWidget->music = Phonon::createPlayer(Phonon::MusicCategory, Phonon::MediaSource("sounds/MainTheme.mp3"));
-    glWidget->music->play();
+    glWidget->playBackgroundTrack();
 
     // Set window icon
     setWindowIcon(QIcon("icons/logo.png"));
