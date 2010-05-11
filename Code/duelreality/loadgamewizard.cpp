@@ -5,8 +5,9 @@
 #include "loadgamewizard.h"
 #include "glwidget.h"
 
-QString LoadGameWizard::playerName;
+extern GLWidget *glWidget;
 
+QString LoadGameWizard::playerName;
 
 LoadGameWizard::LoadGameWizard(QWidget *parent)
     : QWizard(parent)
@@ -40,6 +41,8 @@ LoadGameWizard::LoadGameWizard(QWidget *parent)
 void LoadGameWizard::finishButtonClicked()
 {
     db.activateUser(LoadGameWizard::playerName);
+
+    glWidget->LoadContent(db);
 }
 
 /*

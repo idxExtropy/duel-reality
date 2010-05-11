@@ -62,12 +62,16 @@ tempunits = db.loadUnits(tempUser.name);
 
  for (int x; x<MAX_TEAM_UNITS; x++)
     {
-     AIunits[x] = tempunits[x];
+     if (tempunits[x].status == UNIT_OK)
+         AIunits[x] = tempunits[x];
     }
      for(int i=0; i<MAX_TEAM_UNITS; i++)
  {
-         AIunits[i].faceLeft = true;
-         AIunits[i].team = AI_UNIT;
+         if (AIunits[i].status == UNIT_OK)
+         {
+             AIunits[i].faceLeft = true;
+             AIunits[i].team = AI_UNIT;
+         }
      }
 }
 
