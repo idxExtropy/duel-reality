@@ -16,9 +16,6 @@ class Sprite;
 
 /*---------------- C l a s s    d e f i n i t i o n s ----------------*/
 
-static const int    NUM_TEST_SPRITES = 12;
-
-
 class Database
 {
 public:

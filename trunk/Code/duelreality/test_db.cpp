@@ -331,7 +331,7 @@ void Database::generateSprites()
     if (Database::spriteList.count() == 0)
     {
         int     i;
-        Sprite  testSprites[NUM_TEST_SPRITES];
+        Sprite  testSprites[MAX_SPRITES];
 
         testSprites[0].name = "Wizard";
         testSprites[0].imageFileName = "sprites/wizard.png";
@@ -476,10 +476,8 @@ void Database::generateSprites()
         testSprites[11].actionTime = 6;
         testSprites[11].movementRange = 6;
         testSprites[11].rate = 6;
-
-
         
-        for (i = 0; i < NUM_TEST_SPRITES; i++)
+        for (i = 0; i < MAX_SPRITES; i++)
             addSprite(testSprites[i]);
     }
 }
@@ -490,12 +488,11 @@ void Database::generateMaps()
     if (Database::mapList.count() == 0)
     {
         int i;
-        int NUM_TEST_MAPS = 4;
-        Map testMaps[NUM_TEST_MAPS];
+        Map testMaps[MAX_MAPS];
 
         testMaps[0].name = "Grass";
         testMaps[0].imageFileName = "backgrounds/grass.png";
-        testMaps[0].audioFileName = "sounds/Battle_02.mp3";
+        testMaps[0].audioFileName = "sounds/Battle_01.mp3";
         testMaps[0].cellsWide = 6;
         testMaps[0].cellsTall = 9;
         testMaps[0].gridHeight = 0.58;
@@ -509,19 +506,40 @@ void Database::generateMaps()
 
         testMaps[2].name = "Snow";
         testMaps[2].imageFileName = "backgrounds/snow.png";
-        testMaps[2].audioFileName = "sounds/Battle_02.mp3";
+        testMaps[2].audioFileName = "sounds/Battle_03.mp3";
         testMaps[2].cellsWide = 6;
         testMaps[2].cellsTall = 9;
         testMaps[2].gridHeight = 0.58;
 
         testMaps[3].name = "Plains";
         testMaps[3].imageFileName = "backgrounds/plains.png";
-        testMaps[3].audioFileName = "sounds/Battle_02.mp3";
+        testMaps[3].audioFileName = "sounds/Battle_04.mp3";
         testMaps[3].cellsWide = 6;
         testMaps[3].cellsTall = 9;
         testMaps[3].gridHeight = 0.58;
 
-        for (i = 0; i < NUM_TEST_MAPS; i++)
+        testMaps[4].name = "Beach";
+        testMaps[4].imageFileName = "backgrounds/beach2.png";
+        testMaps[4].audioFileName = "sounds/Battle_01.mp3";
+        testMaps[4].cellsWide = 6;
+        testMaps[4].cellsTall = 9;
+        testMaps[4].gridHeight = 0.58;
+
+        testMaps[5].name = "Night Town";
+        testMaps[5].imageFileName = "backgrounds/townnight.png";
+        testMaps[5].audioFileName = "sounds/Battle_02.mp3";
+        testMaps[5].cellsWide = 6;
+        testMaps[5].cellsTall = 9;
+        testMaps[5].gridHeight = 0.58;
+
+        testMaps[6].name = "Night Grass";
+        testMaps[6].imageFileName = "backgrounds/grassnight.png";
+        testMaps[6].audioFileName = "sounds/Battle_03.mp3";
+        testMaps[6].cellsWide = 6;
+        testMaps[6].cellsTall = 9;
+        testMaps[6].gridHeight = 0.58;
+
+        for (i = 0; i < MAX_MAPS; i++)
             addMap(testMaps[i]);
     }
 }
