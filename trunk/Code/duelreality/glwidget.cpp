@@ -93,6 +93,10 @@ void GLWidget::updateTitleScreen()
     // Update event counter.
     iEventCounter++;
 }
+//void GLWidget::GenerateContent()
+//{
+//
+//}
 
 ///////////////////////////////////////////////////////////////////////////////
 //	Function Name:	unitTest_GenerateContent()
@@ -113,14 +117,14 @@ void GLWidget::unitTest_GenerateContent()
     unit[0].name = "Knight";
     unit[0].actionTime = 10;
     unit[0].actionRate=450;
-    unit[0].hitPoints = 80;
+    unit[0].hitPoints = 100;
     unit[0].totalHitPoints = 100;
     unit[0].image.load("sprites/knight.png");
     unit[0].mask_image.load("sprites/mask_knight.png");
     unit[0].status = UNIT_OK;
     unit[0].vLocation = 1;
     unit[0].hLocation = 2;
-    unit[0].attackPower = 8;
+    unit[0].attackPower = 12;
     unit[0].attackRange = 2;
     unit[0].faceLeft = false;
     unit[0].movementRange = 2;
@@ -130,15 +134,15 @@ void GLWidget::unitTest_GenerateContent()
     unit[1].name = "Crusader";
     unit[1].actionTime = 10;
     unit[1].actionRate = 500;
-    unit[1].hitPoints = 67;
+    unit[1].hitPoints = 100;
     unit[1].totalHitPoints = 100;
     unit[1].image.load("sprites/crusader.png");
     unit[1].mask_image.load("sprites/mask_crusader.png");
     unit[1].status =UNIT_OK;
     unit[1].vLocation = 2;
     unit[1].hLocation = 1;
-    unit[1].attackPower = 15;
-    unit[1].attackRange = 1;
+    unit[1].attackPower = 16;
+    unit[1].attackRange = 2;
     unit[1].faceLeft = false;
     unit[1].movementRange = 1;
     unit[1].team =USER_UNIT;
@@ -147,15 +151,15 @@ void GLWidget::unitTest_GenerateContent()
     unit[2].name = "Thai Boxer";
     unit[2].actionTime = 60;
     unit[2].actionRate =400;
-    unit[2].hitPoints = 50;
-    unit[2].totalHitPoints = 100;
+    unit[2].hitPoints = 80;
+    unit[2].totalHitPoints = 80;
     unit[2].image.load("sprites/thaiboxer.png");
     unit[2].mask_image.load("sprites/mask_thaiboxer.png");
     unit[2].status =UNIT_OK;
     unit[2].vLocation = 3;
     unit[2].hLocation = 2;
-    unit[2].attackPower = 7;
-    unit[2].attackRange = 2;
+    unit[2].attackPower = 15;
+    unit[2].attackRange = 1;
     unit[2].faceLeft = false;
     unit[2].movementRange = 4;
     unit[2].team =USER_UNIT;
@@ -165,14 +169,14 @@ void GLWidget::unitTest_GenerateContent()
     unit[3].actionTime = 40;
     unit[3].actionRate = 400;
     unit[3].hitPoints = 60;
-    unit[3].totalHitPoints = 100;
+    unit[3].totalHitPoints = 60;
     unit[3].image.load("sprites/assassin.png");
     unit[3].mask_image.load("sprites/mask_assassin.png");
     unit[3].status =UNIT_OK;
-    unit[3].vLocation = 3;
+    unit[3].vLocation = 1;
     unit[3].hLocation = 5;
-    unit[3].attackPower = 10;
-    unit[3].attackRange = 2;
+    unit[3].attackPower = 12;
+    unit[3].attackRange = 3;
     unit[3].faceLeft = true;
     unit[3].movementRange = 2;
     unit[3].team =AI_UNIT;
@@ -181,15 +185,15 @@ void GLWidget::unitTest_GenerateContent()
     unit[4].name = "Berserker";
     unit[4].actionTime = 40;
     unit[4].actionRate = 300;
-    unit[4].hitPoints = 66;
-    unit[4].totalHitPoints = 100;
+    unit[4].hitPoints = 90;
+    unit[4].totalHitPoints = 90;
     unit[4].image.load("sprites/berserker.png");
     unit[4].mask_image.load("sprites/mask_berserker.png");
     unit[4].status =UNIT_OK;
-    unit[4].vLocation = 1;
+    unit[4].vLocation = 3;
     unit[4].hLocation = 5;
-    unit[4].attackPower = 8;
-    unit[4].attackRange = 2;
+    unit[4].attackPower = 10;
+    unit[4].attackRange = 1;
     unit[4].faceLeft = true;
     unit[4].movementRange = 2;
     unit[4].team =AI_UNIT;
@@ -198,15 +202,15 @@ void GLWidget::unitTest_GenerateContent()
     unit[5].name = "Valkyrie";
     unit[5].actionTime = 40;
     unit[5].actionRate = 500;
-    unit[5].hitPoints = 10;
-    unit[5].totalHitPoints = 100;
+    unit[5].hitPoints = 70;
+    unit[5].totalHitPoints = 70;
     unit[5].image.load("sprites/valkyrie.png");
     unit[5].mask_image.load("sprites/mask_valkyrie.png");
     unit[5].status =UNIT_OK;
     unit[5].vLocation = 4;
     unit[5].hLocation = 7;
-    unit[5].attackPower = 8;
-    unit[5].attackRange = 3;
+    unit[5].attackPower = 14;
+    unit[5].attackRange = 1;
     unit[5].faceLeft = true;
     unit[5].movementRange = 1;
     unit[5].team =AI_UNIT;
@@ -215,8 +219,8 @@ void GLWidget::unitTest_GenerateContent()
     unit[6].name = "Valkyrie";
     unit[6].actionTime = 40;
     unit[6].actionRate = 500;
-    unit[6].hitPoints = 40;
-    unit[6].totalHitPoints = 100;
+    unit[6].hitPoints = 70;
+    unit[6].totalHitPoints = 70;
     unit[6].image.load("sprites/valkyrie.png");
     unit[6].mask_image.load("sprites/mask_valkyrie.png");
     unit[6].status =UNIT_OK;
@@ -225,24 +229,24 @@ void GLWidget::unitTest_GenerateContent()
     unit[6].attackPower = 8;
     unit[6].attackRange = 2;
     unit[6].faceLeft = false;
-    unit[6].movementRange = 2;
+    unit[6].movementRange = 4;
     unit[6].team =USER_UNIT;
 
     // Create a new unit (for gl debug purposes).
-    unit[7].name = "Valkyrie";
+    unit[7].name = "Bard";
     unit[7].actionTime = 40;
     unit[7].actionRate = 400;
-    unit[7].hitPoints = 10;
-    unit[7].totalHitPoints = 100;
-    unit[7].image.load("sprites/valkyrie.png");
-    unit[7].mask_image.load("sprites/mask_valkyrie.png");
+    unit[7].hitPoints = 60;
+    unit[7].totalHitPoints = 60;
+    unit[7].image.load("sprites/bard.png");
+    unit[7].mask_image.load("sprites/mask_bard.png");
     unit[7].status =UNIT_OK;
     unit[7].vLocation = 4;
     unit[7].hLocation = 8;
-    unit[7].attackPower = 18;
+    unit[7].attackPower = 13;
     unit[7].attackRange = 3;
     unit[7].faceLeft = true;
-    unit[7].movementRange = 3;
+    unit[7].movementRange = 2;
     unit[7].team =AI_UNIT;
 
     for (int i = 0; i < MAX_MAP_UNITS; i++)
