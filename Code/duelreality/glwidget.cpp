@@ -46,7 +46,7 @@ GLWidget::GLWidget()
 * LoadContent()
 *
 * Description: Loads the battle map content passed from
-* the user interface.
+* the user interface (with some hard coded).
 *
 * Inputs: none
 *
@@ -56,7 +56,205 @@ GLWidget::GLWidget()
 *******************************************************/
 void GLWidget::LoadContent(Database db)
 {
+    // Get the active user.
+    User myUser =  db.loadActiveUser();
 
+    // Get the selected level (battle map).
+    int levelMapIndex = myUser.level;
+    battleMap.imageFileName = db.mapFileName(levelMapIndex);
+    battleMap.audioFileName = "sounds/Battle_02.mp3";
+    battleMap.cellsTall = 6;
+    battleMap.cellsWide = 9;
+    battleMap.gridHeight = 0.58;
+
+    // Add units.
+    unitTest_AddUnits();
+
+    for (int i = 0; i < 4; i++)
+    {
+        // Get unit images from UI selection.
+        unit[i].imageFileName = myUser.units[i].imageFileName;
+
+        QStringList splitString = unit[i].imageFileName.split("/");
+        QString maskFileName;
+        maskFileName.append(splitString[0]);
+        maskFileName.append("/mask_");
+        maskFileName.append(splitString[1]);
+
+        unit[i].maskFileName = maskFileName;
+        unit[i].name = myUser.units[i].name;
+
+        // Load the actual sprite images.
+        unit[i].image.load(unit[i].imageFileName);
+        unit[i].mask_image.load(unit[i].maskFileName);
+    }
+
+    // Load a background image.
+    bkImage.load(battleMap.imageFileName);
+    bkImage = bkImage.scaled(GLWidget::width(), GLWidget::height(), Qt::KeepAspectRatio, Qt::SmoothTransformation );
+    glBkImage = QGLWidget::convertToGLFormat(bkImage);
+
+    // Initialize the grid.
+    initGrid();
+
+    musicTrack = battleMap.audioFileName;
+    playBackgroundTrack();
+
+    // Start the battle.
+    isBattle = true;
+
+    // Ensure proper graphics scaling.
+    resizeGL(GLWidget::width(), GLWidget::height());
+}
+
+/*******************************************************
+* unitTest_AddUnits()
+*
+* Description: Create 8 "dummy" units.
+*
+* Inputs: none
+*
+* Outputs: none
+*
+* Return: none
+*******************************************************/
+void GLWidget::unitTest_AddUnits()
+{
+    // Create a new unit (for gl debug purposes).
+    unit[0].actionTime = 10;
+    unit[0].actionRate=450;
+    unit[0].hitPoints = 100;
+    unit[0].totalHitPoints = 100;
+    unit[0].status = UNIT_OK;
+    unit[0].vLocation = 1;
+    unit[0].hLocation = 2;
+    unit[0].attackPower = 12;
+    unit[0].attackRange = 2;
+    unit[0].faceLeft = false;
+    unit[0].movementRange = 2;
+    unit[0].team = USER_UNIT;
+
+    // Create a new unit (for gl debug purposes).
+    unit[1].actionTime = 10;
+    unit[1].actionRate = 500;
+    unit[1].hitPoints = 100;
+    unit[1].totalHitPoints = 100;
+    unit[1].status =UNIT_OK;
+    unit[1].vLocation = 2;
+    unit[1].hLocation = 1;
+    unit[1].attackPower = 16;
+    unit[1].attackRange = 2;
+    unit[1].faceLeft = false;
+    unit[1].movementRange = 1;
+    unit[1].team = USER_UNIT;
+
+    // Create a new unit (for gl debug purposes).
+    unit[2].actionTime = 60;
+    unit[2].actionRate =400;
+    unit[2].hitPoints = 80;
+    unit[2].totalHitPoints = 80;
+    unit[2].status =UNIT_OK;
+    unit[2].vLocation = 3;
+    unit[2].hLocation = 2;
+    unit[2].attackPower = 15;
+    unit[2].attackRange = 1;
+    unit[2].faceLeft = false;
+    unit[2].movementRange = 4;
+    unit[2].team = USER_UNIT;
+
+    // Create a new unit (for gl debug purposes).
+    unit[3].actionTime = 40;
+    unit[3].actionRate = 400;
+    unit[3].hitPoints = 60;
+    unit[3].totalHitPoints = 60;
+    unit[3].status =UNIT_OK;
+    unit[3].vLocation = 2;
+    unit[3].hLocation = 2;
+    unit[3].attackPower = 12;
+    unit[3].attackRange = 3;
+    unit[3].faceLeft = false;
+    unit[3].movementRange = 2;
+    unit[3].team = USER_UNIT;
+
+    // Create a new unit (for gl debug purposes).
+    unit[4].name = "Berserker";
+    unit[4].actionTime = 40;
+    unit[4].actionRate = 300;
+    unit[4].hitPoints = 90;
+    unit[4].totalHitPoints = 90;
+    unit[4].image.load("sprites/berserker.png");
+    unit[4].mask_image.load("sprites/mask_berserker.png");
+    unit[4].status =UNIT_OK;
+    unit[4].vLocation = 3;
+    unit[4].hLocation = 5;
+    unit[4].attackPower = 10;
+    unit[4].attackRange = 1;
+    unit[4].faceLeft = true;
+    unit[4].movementRange = 2;
+    unit[4].team = AI_UNIT;
+
+    // Create a new unit (for gl debug purposes).
+    unit[5].name = "Valkyrie";
+    unit[5].actionTime = 40;
+    unit[5].actionRate = 500;
+    unit[5].hitPoints = 70;
+    unit[5].totalHitPoints = 70;
+    unit[5].image.load("sprites/valkyrie.png");
+    unit[5].mask_image.load("sprites/mask_valkyrie.png");
+    unit[5].status =UNIT_OK;
+    unit[5].vLocation = 4;
+    unit[5].hLocation = 7;
+    unit[5].attackPower = 14;
+    unit[5].attackRange = 1;
+    unit[5].faceLeft = true;
+    unit[5].movementRange = 1;
+    unit[5].team = AI_UNIT;
+
+    // Create a new unit (for gl debug purposes).
+    unit[6].name = "Knight";
+    unit[6].actionTime = 40;
+    unit[6].actionRate = 500;
+    unit[6].hitPoints = 70;
+    unit[6].totalHitPoints = 70;
+    unit[6].image.load("sprites/knight.png");
+    unit[6].mask_image.load("sprites/mask_knight.png");
+    unit[6].status =UNIT_OK;
+    unit[6].vLocation = 1;
+    unit[6].hLocation = 5;
+    unit[6].attackPower = 8;
+    unit[6].attackRange = 2;
+    unit[6].faceLeft = true;
+    unit[6].movementRange = 4;
+    unit[6].team = AI_UNIT;
+
+    // Create a new unit (for gl debug purposes).
+    unit[7].name = "Bard";
+    unit[7].actionTime = 40;
+    unit[7].actionRate = 400;
+    unit[7].hitPoints = 60;
+    unit[7].totalHitPoints = 60;
+    unit[7].image.load("sprites/bard.png");
+    unit[7].mask_image.load("sprites/mask_bard.png");
+    unit[7].status =UNIT_OK;
+    unit[7].vLocation = 4;
+    unit[7].hLocation = 8;
+    unit[7].attackPower = 13;
+    unit[7].attackRange = 3;
+    unit[7].faceLeft = true;
+    unit[7].movementRange = 2;
+    unit[7].team = AI_UNIT;
+
+    for (int i = 0; i < MAX_MAP_UNITS; i++)
+    {
+        // No units are pending to start.
+        unit[i].isPending = false;
+    }
+
+    for (int i = 8; i < MAX_MAP_UNITS; i++)
+    {
+        // Tell OpenGL whether or not the unit exists.
+        unit[i].status = NO_UNIT;
+    }
 }
 
 /*******************************************************
@@ -144,9 +342,9 @@ void GLWidget::unitTest_GenerateContent()
     unit[3].hLocation = 5;
     unit[3].attackPower = 12;
     unit[3].attackRange = 3;
-    unit[3].faceLeft = true;
+    unit[3].faceLeft = false;
     unit[3].movementRange = 2;
-    unit[3].team =AI_UNIT;
+    unit[3].team =USER_UNIT;
 
     // Create a new unit (for gl debug purposes).
     unit[4].name = "Berserker";
@@ -195,9 +393,9 @@ void GLWidget::unitTest_GenerateContent()
     unit[6].hLocation = 2;
     unit[6].attackPower = 8;
     unit[6].attackRange = 2;
-    unit[6].faceLeft = false;
+    unit[6].faceLeft = true;
     unit[6].movementRange = 4;
-    unit[6].team =USER_UNIT;
+    unit[6].team =AI_UNIT;
 
     // Create a new unit (for gl debug purposes).
     unit[7].name = "Bard";
@@ -215,18 +413,6 @@ void GLWidget::unitTest_GenerateContent()
     unit[7].faceLeft = true;
     unit[7].movementRange = 2;
     unit[7].team =AI_UNIT;
-
-    for (int i = 0; i < MAX_MAP_UNITS; i++)
-    {
-        // No units are pending to start.
-        unit[i].isPending = false;
-    }
-
-    for (int i = 8; i < MAX_MAP_UNITS; i++)
-    {
-        // Tell OpenGL whether or not the unit exists.
-        unit[i].status = NO_UNIT;
-    }
 
     // Load a background image (debug).
     bkImage.load(battleMap.imageFileName);
@@ -497,6 +683,8 @@ void GLWidget::drawEffects()
         {
             isEffect = false;
             iEventCounter = 0;
+
+            battleMap.gridCell[move_vLocNext][move_hLocNext].unit->mask_image.load("moveMask");
         }
         break;
     case EFFECT_ATTACK:
@@ -1235,6 +1423,9 @@ void GLWidget::moveUnit(int vLocPrev, int hLocPrev, int vLocNext, int hLocNext)
     effectType = EFFECT_MOVE;
     isPending = false;
 
+    move_vLocNext = vLocNext;
+    move_hLocNext = hLocNext;
+
     // Update the new cell.
     battleMap.gridCell[vLocNext][hLocNext].unit = battleMap.gridCell[vLocPrev][hLocPrev].unit;
     battleMap.gridCell[vLocNext][hLocNext].unit->vLocation = vLocNext;
@@ -1249,6 +1440,10 @@ void GLWidget::moveUnit(int vLocPrev, int hLocPrev, int vLocNext, int hLocNext)
     battleMap.gridCell[vLocPrev][hLocPrev].unit->vLocation = -1;
     battleMap.gridCell[vLocPrev][hLocPrev].unit->hLocation = -1;
     battleMap.gridCell[vLocPrev][hLocPrev].unit->isPending = false;
+
+    // Remove mask temporarily.
+    moveMask = battleMap.gridCell[vLocNext][hLocNext].unit->maskFileName;
+    battleMap.gridCell[vLocNext][hLocNext].unit->mask_image.load("");
 
     // Play 'move' sound.
     QSound *soundBkgnd = new QSound("sounds/Action_Move.wav");

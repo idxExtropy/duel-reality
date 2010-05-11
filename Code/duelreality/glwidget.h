@@ -35,6 +35,7 @@ public:
     GLWidget();
     void LoadContent(Database db);
     void unitTest_GenerateContent();
+    void unitTest_AddUnits();
     void moveUnit(int vLocPrev, int hLocPrev, int vLocNext, int hLocNext);
     void hitUnit(int vLoc, int hLoc, int damage, int vAttackerLoc, int hAttackerLoc);
     void killUnit(int vLoc, int hLoc, int vAttackerLoc, int hAttackerLoc);
@@ -89,6 +90,7 @@ protected:
     void drawEffects();
     int  iEventCounter;
     void drawAttack();
+    QString moveMask;
 
 private:
 };
