@@ -36,7 +36,7 @@ MainWindow::MainWindow()
     createStatusBar();
 
     // Create test actions & toolbars
-    createTestTools();
+    //createTestTools();
 
     emit isBattleMode(false);
     emit isGameCfgMode(true);
@@ -60,7 +60,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
     event->accept();
 }
 
-
+/*
 void MainWindow::createTestTools()
 {
     actionTestSignalBattleStart = new QAction(tr("&Battle Start Test Signal"), this);
@@ -81,7 +81,7 @@ void MainWindow::createTestTools()
     testToolBar->addAction(actionTestSignalBattleEnd);
     testToolBar->addAction(actionTestSignalUserTurnStart);
 }
-
+*/
 
 void MainWindow::createActions()
 {

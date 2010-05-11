@@ -56,7 +56,7 @@ private:
     void createStatusBar(); // Creates status bars
 
     // Test methods
-    void createTestTools();
+    //void createTestTools();
 
     // Modules from other team members
     QWidget     *centralWidget;
@@ -90,10 +90,10 @@ private:
     QToolBar    *actionToolBar; // Action toolbar
 
     // Test Members
-    QToolBar    *testToolBar;
-    QAction     *actionTestSignalBattleStart;
-    QAction     *actionTestSignalUserTurnStart;
-    QAction     *actionTestSignalBattleEnd;
+    //QToolBar    *testToolBar;
+    //QAction     *actionTestSignalBattleStart;
+    //QAction     *actionTestSignalUserTurnStart;
+    //QAction     *actionTestSignalBattleEnd;
 
     Database    db;
 };
