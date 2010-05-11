@@ -6,6 +6,7 @@ QList<Map>          Database::mapList;
 QList<Sprite>       Database::spriteList;
 QList<User>         Database::userList;
 QList<Unit>         Database::unitList;
+AI                  Database::ai;
 
 Database::Database()
 {
@@ -246,6 +247,57 @@ User Database::loadActiveUser()
             return userList[i];
 
     return dummyUser;
+}
+
+
+QList<Unit> Database::loadActiveUserUnits()
+{
+    int i;
+    int j;
+    QList<Unit> units;
+
+    for (i = 0; i < userList.count(); i++)
+    {
+        if (userList[i].isActive == true)
+        {
+            for (j = 0; j < MAX_TEAM_UNITS; j++)
+                units[j] = userList[i].units[j];
+        }
+        return units;
+    }
+    return  dummyUnitsList;
+}
+
+
+
+AI Database::loadAI()
+{
+    return ai;
+}
+
+void Database::saveAI(AI aiPlayer)
+{
+    ai = aiPlayer;
+}
+
+QList<Unit> Database::loadAIUnits()
+{
+    int i;
+    
+    QList<Unit> units;
+
+    for (i = 0; i < MAX_TEAM_UNITS; i++)
+        units << ai.units[i];
+
+    return units;
+}
+
+void Database::saveAIUnits(QList<Unit> units)
+{
+    int i;
+    
+    for (i = 0; i < MAX_TEAM_UNITS; i++)
+        ai.units[i] = units[i];
 }
 
 User Database::loadUser(const QString &userName)
