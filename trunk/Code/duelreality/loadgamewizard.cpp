@@ -432,6 +432,7 @@ void RecruitUnitsPageL::recruitButtonClicked()
             tempUnits[i].movementRange = spriteRateVal->text().toInt();
             tempUnits[i].status = UNIT_OK;
             tempUnits[i].faceLeft = false;
+            tempUnits[i].team = USER_UNIT;
 
             db.saveUnits(LoadGameWizard::playerName, tempUnits);
 
