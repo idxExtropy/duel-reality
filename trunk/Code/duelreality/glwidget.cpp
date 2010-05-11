@@ -6,8 +6,8 @@ extern mechanics *mech;
 /*******************************************************
 * GLWidget()
 *
-* Description: Initializes the OpenGL widget and starts
-* the graphics update timer.
+* Description: Constructor which initializes the OpenGL
+* widget and starts the graphics update timer.
 *
 * Inputs: none
 *
@@ -42,87 +42,35 @@ GLWidget::GLWidget()
     startTimer( GL_TIMER_INTERVAL );
 }
 
-void GLWidget::playBackgroundTrack()
+/*******************************************************
+* LoadContent()
+*
+* Description: Loads the battle map content passed from
+* the user interface.
+*
+* Inputs: none
+*
+* Outputs: none
+*
+* Return: none
+*******************************************************/
+void GLWidget::LoadContent(Database db)
 {
-    // Play current track.
-    music->stop();
-    music->setCurrentSource(Phonon::MediaSource(musicTrack));
-    music->play();
+
 }
 
-void GLWidget::backgroundTrackFinished()
-{
-    // Restart current track.
-    playBackgroundTrack();
-}
-
-///////////////////////////////////////////////////////////////////////////////
-//	Function Name:	unitTest_GenerateContent()
-//	Description:	Add content for unit testing.
-//	Modified:	03/02/2010
-//	Author:		Tom Calloway
-///////////////////////////////////////////////////////////////////////////////
-void GLWidget::updateTitleScreen()
-{
-    // Clear the display.
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glLoadIdentity();
-
-    int ticksPerSecond = 1000 / GL_TIMER_INTERVAL;
-
-    if (iEventCounter / ticksPerSecond >= TITLE_TRANSITION_SECONDS)
-    {
-        // Next title image.
-        titleIndex++;
-        iEventCounter = 0;
-
-        if (titleIndex > 6)
-        {
-            titleIndex = 0;
-        }
-
-        // Change image if necessary.
-        bkImage.load(backgroundList[titleIndex]);
-        bkImage = bkImage.scaled(GLWidget::width(), GLWidget::height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
-        glBkImage = QGLWidget::convertToGLFormat(bkImage);
-    }
-
-    // Draw the background.
-    glDrawPixels(glBkImage.width(), glBkImage.height(), GL_RGBA, GL_UNSIGNED_BYTE, glBkImage.bits());
-    
-    // Draw title screen header.
-    glColor4f( 0.2f, 0.2f, 0.2f, 0.9f );
-    glBegin (GL_QUADS);
-        glVertex3f (0, GLWidget::height() - 20, 0.0);
-        glVertex3f (GLWidget::width(), GLWidget::height() - 20, 0.0);
-        glVertex3f (GLWidget::width(), GLWidget::height() - 20 - 110, 0.0);
-        glVertex3f (0, GLWidget::height() - 20 - 110, 0.0);
-    glEnd();
-
-    qglColor(Qt::white);
-    int vLoc = GLWidget::height() - 80;
-
-    // Unit name.
-    QFont nameFont = GLWidget::font();
-    nameFont.setBold(true);
-    nameFont.setPointSize(24);
-    renderText (GLWidget::width() - 250, vLoc, 0.0, "Duel Reality", nameFont);
-    vLoc -= 15;
-
-    // Update event counter.
-    iEventCounter++;
-}
-//void GLWidget::GenerateContent()
-//{
-//
-//}
-
-///////////////////////////////////////////////////////////////////////////////
-//	Function Name:	unitTest_GenerateContent()
-//	Description:	Add content for unit testing.
-//	Modified:	03/02/2010
-//	Author:		Tom Calloway
-///////////////////////////////////////////////////////////////////////////////
+/*******************************************************
+* unitTest_GenerateContent()
+*
+* Description: Loads hard coded battle map content for
+* unit testing.
+*
+* Inputs: none
+*
+* Outputs: none
+*
+* Return: none
+*******************************************************/
 void GLWidget::unitTest_GenerateContent()
 {
     // Select a battle map.
@@ -298,12 +246,120 @@ void GLWidget::unitTest_GenerateContent()
     resizeGL(GLWidget::width(), GLWidget::height());
 }
 
-///////////////////////////////////////////////////////////////////////////////
-//	Function Name:	initializeGL()
-//	Description:	Initialize the OpenGL widget.
-//	Modified:	03/02/2010
-//	Author:		Tom Calloway
-///////////////////////////////////////////////////////////////////////////////
+/*******************************************************
+* playBackgroundTrack()
+*
+* Description: Plays the currently selected background
+* track.
+*
+* Inputs: none
+*
+* Outputs: none
+*
+* Return: none
+*******************************************************/
+void GLWidget::playBackgroundTrack()
+{
+    // Play current track.
+    music->stop();
+    music->setCurrentSource(Phonon::MediaSource(musicTrack));
+    music->play();
+}
+
+/*******************************************************
+* backgroundTrackFinished()
+*
+* Description: Restarts the currently selected
+* background track when it is completed.
+*
+* Inputs: none
+*
+* Outputs: none
+*
+* Return: none
+*******************************************************/
+void GLWidget::backgroundTrackFinished()
+{
+    // Restart current track.
+    playBackgroundTrack();
+}
+
+/*******************************************************
+* updateTitleScreen()
+*
+* Description: Toggles through various battle map
+* backgrounds and displays a "Duel Reality" logo across
+* the top.
+*
+* Inputs: none
+*
+* Outputs: none
+*
+* Return: none
+*******************************************************/
+void GLWidget::updateTitleScreen()
+{
+    // Clear the display.
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glLoadIdentity();
+
+    int ticksPerSecond = 1000 / GL_TIMER_INTERVAL;
+
+    if (iEventCounter / ticksPerSecond >= TITLE_TRANSITION_SECONDS)
+    {
+        // Next title image.
+        titleIndex++;
+        iEventCounter = 0;
+
+        if (titleIndex > 6)
+        {
+            titleIndex = 0;
+        }
+
+        // Change image if necessary.
+        bkImage.load(backgroundList[titleIndex]);
+        bkImage = bkImage.scaled(GLWidget::width(), GLWidget::height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
+        glBkImage = QGLWidget::convertToGLFormat(bkImage);
+    }
+
+    // Draw the background.
+    glDrawPixels(glBkImage.width(), glBkImage.height(), GL_RGBA, GL_UNSIGNED_BYTE, glBkImage.bits());
+    
+    // Draw title screen header.
+    glColor4f( 0.2f, 0.2f, 0.2f, 0.9f );
+    glBegin (GL_QUADS);
+        glVertex3f (0, GLWidget::height() - 20, 0.0);
+        glVertex3f (GLWidget::width(), GLWidget::height() - 20, 0.0);
+        glVertex3f (GLWidget::width(), GLWidget::height() - 20 - 110, 0.0);
+        glVertex3f (0, GLWidget::height() - 20 - 110, 0.0);
+    glEnd();
+
+    qglColor(Qt::white);
+    int vLoc = GLWidget::height() - 80;
+
+    // Unit name.
+    QFont nameFont = GLWidget::font();
+    nameFont.setBold(true);
+    nameFont.setPointSize(24);
+    renderText (GLWidget::width() - 250, vLoc, 0.0, "Duel Reality", nameFont);
+    vLoc -= 15;
+
+    // Update event counter.
+    iEventCounter++;
+}
+
+/*******************************************************
+* initializeGL()
+*
+* Description: Initializes the OpenGL widget by setting
+* various color, shading, and blending options.
+*
+* Inputs: none
+*
+* Outputs: none
+*
+* Return: none
+*******************************************************/
 void GLWidget::initializeGL()
 {
     // Setup OpenGL values for appropriate graphics.
@@ -315,12 +371,18 @@ void GLWidget::initializeGL()
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);			// Type Of Blending To Use
 }
 
-///////////////////////////////////////////////////////////////////////////////
-//	Function Name:	initGrid()
-//	Description:
-//	Modified:	04/09/2010
-//	Author:		Tom Calloway
-///////////////////////////////////////////////////////////////////////////////
+/*******************************************************
+* initGrid()
+*
+* Description: Initializes the various battle map grid
+* cells with correct data.
+*
+* Inputs: none
+*
+* Outputs: none
+*
+* Return: none
+*******************************************************/
 void GLWidget::initGrid()
 {
     for (int i = 0; i < MAX_GRID_DIMENSION; i++)
@@ -341,12 +403,19 @@ void GLWidget::initGrid()
     }
 }
 
-///////////////////////////////////////////////////////////////////////////////
-//	Function Name:	paintGL()
-//	Description:	Paint the OpenGL widget (run on a timer).
-//	Modified:	03/02/2010
-//	Author:		Tom Calloway
-///////////////////////////////////////////////////////////////////////////////
+/*******************************************************
+* paintGL()
+*
+* Description: The primary painting function for the
+* OpenGL widget.  Everything is drawn here at the
+* specified update rate.
+*
+* Inputs: none
+*
+* Outputs: none
+*
+* Return: none
+*******************************************************/
 void GLWidget::paintGL()
 {
     // Handle title screen.
@@ -398,6 +467,18 @@ void GLWidget::paintGL()
     }
 }
 
+/*******************************************************
+* drawEffects()
+*
+* Description: Case statement to time and handle the
+* special effects.
+*
+* Inputs: none
+*
+* Outputs: none
+*
+* Return: none
+*******************************************************/
 void GLWidget::drawEffects()
 {
     int ticksPerSecond = 1000 / GL_TIMER_INTERVAL;
@@ -435,6 +516,18 @@ void GLWidget::drawEffects()
     iEventCounter++;
 }
 
+/*******************************************************
+* drawAttack()
+*
+* Description: Handles and draws the special effect for
+* the attack function.
+*
+* Inputs: none
+*
+* Outputs: none
+*
+* Return: none
+*******************************************************/
 void GLWidget::drawAttack()
 {
     QImage mask_image, image;
@@ -505,11 +598,34 @@ void GLWidget::drawAttack()
     glDeleteTextures( 1, &textureValue );
 }
 
+/*******************************************************
+* drawBackground()
+*
+* Description: Draws the static background.
+*
+* Inputs: none
+*
+* Outputs: none
+*
+* Return: none
+*******************************************************/
 void GLWidget::drawBackground()
 {
     glDrawPixels(glBkImage.width(), glBkImage.height(), GL_RGBA, GL_UNSIGNED_BYTE, glBkImage.bits());
 }
 
+/*******************************************************
+* drawUnits()
+*
+* Description: Draws the units themselves within the
+* correct battle map grid cell.
+*
+* Inputs: none
+*
+* Outputs: none
+*
+* Return: none
+*******************************************************/
 void GLWidget::drawUnits()
 {
     for (int i = battleMap.cellsTall - 1; i >= 0; i--)
@@ -534,6 +650,17 @@ void GLWidget::drawUnits()
     }
 }
 
+/*******************************************************
+* drawGrid()
+*
+* Description: Loop to draw all the various grid boxes.
+*
+* Inputs: none
+*
+* Outputs: none
+*
+* Return: none
+*******************************************************/
 void GLWidget::drawGrid()
 {
     for (int i = 0; i < battleMap.cellsTall; i++)
@@ -546,6 +673,18 @@ void GLWidget::drawGrid()
     }
 }
 
+/*******************************************************
+* drawHeaderInfo()
+*
+* Description: Paints the selected and pending unit info
+* to the header region of the battle map.
+*
+* Inputs: none
+*
+* Outputs: none
+*
+* Return: none
+*******************************************************/
 void GLWidget::drawHeaderInfo()
 {
     for (int i = 0; i < battleMap.cellsTall; i++)
@@ -682,14 +821,19 @@ void GLWidget::drawHeaderInfo()
     }
 }
 
-///////////////////////////////////////////////////////////////////////////////
-//	Function Name:	isGridBoxSelected()
-//	Description:	Draw the requested grid box.
-//                      Call this fuction in a loop to get full grid.
-//                      If 'isSelected' is true, the box is red.
-//	Modified:	03/02/2010
-//	Author:		Tom Calloway
-///////////////////////////////////////////////////////////////////////////////
+/*******************************************************
+* isGridBoxSelected()
+*
+* Description: Return whether or not a grid cell is
+* selected.
+*
+* Inputs: Coordinates of the grid cell in question.
+*
+* Outputs: none.
+*
+* Return: True = Cell Selected
+*         False = Cell not selected
+*******************************************************/
 bool GLWidget::isGridBoxSelected(int i, int j)
 {
     if (mouseClick.hLoc > battleMap.gridCell[i][j].leftEdge && mouseClick.hLoc < battleMap.gridCell[i][j].leftEdge + cellWidth)
@@ -709,15 +853,18 @@ bool GLWidget::isGridBoxSelected(int i, int j)
     }
 }
 
-///////////////////////////////////////////////////////////////////////////////
-//	Function Name:	drawGridBox()
-//	Description:	Draw the requested grid box.
-//                      Call this fuction in a loop to get full grid.
-//                      If 'isSelected' is true, the box is red.
-//	Modified:	03/02/2010
-//	Author:		Tom Calloway
-///////////////////////////////////////////////////////////////////////////////
-bool GLWidget::drawGridBox(int i, int j)
+/*******************************************************
+* drawGridBox()
+*
+* Description: Draws an individual grid cell.
+*
+* Inputs: Coordinates of the grid cell to be drawn.
+*
+* Outputs: none.
+*
+* Return: none.
+*******************************************************/
+void GLWidget::drawGridBox(int i, int j)
 {
     // Find out whether or not the current grid is selected.
     bool isHighlighted = false;
@@ -794,17 +941,20 @@ bool GLWidget::drawGridBox(int i, int j)
     }
 
     glRotatef(5, 1.0, 0.0, 0.0);
-
-    return (true);
 }
 
-///////////////////////////////////////////////////////////////////////////////
-//	Function Name:	updateUnit()
-//	Description:	Update the requested Unit in the OpenGL widget.
-//	Modified:	03/02/2010
-//	Author:		Tom Calloway
-///////////////////////////////////////////////////////////////////////////////
-bool GLWidget::updateUnit(Unit myUnit)
+/*******************************************************
+* updateUnit()
+*
+* Description: Draws an individual unit.
+*
+* Inputs: Unit to be drawn.
+*
+* Outputs: none.
+*
+* Return: none.
+*******************************************************/
+void GLWidget::updateUnit(Unit myUnit)
 {
     // Calculate the action and hit point bars as a percentage.
     float actionTime = (float)myUnit.actionTime / (float)100;
@@ -955,16 +1105,19 @@ bool GLWidget::updateUnit(Unit myUnit)
         glVertex3f( rightEdge + statusWidth, bottomEdge, 0.0f );	// Bottom Right
         glVertex3f( rightEdge, bottomEdge, 0.0f );	// Bottom Left
     glEnd();
-
-    return (true);
 }
 
-///////////////////////////////////////////////////////////////////////////////
-//	Function Name:	resizeGL()
-//	Description:	Adjust drawing element dimensions on window resize.
-//	Modified:	03/02/2010
-//	Author:		Tom Calloway
-///////////////////////////////////////////////////////////////////////////////
+/*******************************************************
+* resizeGL()
+*
+* Description: Handles the UI resize event.
+*
+* Inputs: New dimensions of the OpenGL Widget.
+*
+* Outputs: none.
+*
+* Return: none.
+*******************************************************/
 void GLWidget::resizeGL(int width, int height)
 {
     // Never divide by zero.
@@ -1024,24 +1177,36 @@ void GLWidget::resizeGL(int width, int height)
     }
 }
 
-///////////////////////////////////////////////////////////////////////////////
-//	Function Name:	timerEvent()
-//	Description:	Redraw the OpenGl widget whenever the timer triggers.
-//	Modified:	03/02/2010
-//	Author:		Tom Calloway
-///////////////////////////////////////////////////////////////////////////////
+/*******************************************************
+* timerEvent()
+*
+* Description: Repaints the OpenGL widget whenever the
+* timer triggers.
+*
+* Inputs: The event itself (unused).
+*
+* Outputs: none.
+*
+* Return: none.
+*******************************************************/
 void GLWidget::timerEvent(QTimerEvent *event)
 {
     // Redraw the graphics window.
     updateGL();
 }
 
-///////////////////////////////////////////////////////////////////////////////
-//	Function Name:	mousePressEvent()
-//	Description:	Capture a user mouse click.
-//	Modified:	04/09/2010
-//	Author:		Tom Calloway
-///////////////////////////////////////////////////////////////////////////////
+/*******************************************************
+* mousePressEvent()
+*
+* Description: Capture the mouse coordinates when a
+* click event occurs on the OpenGL widget.
+*
+* Inputs: The event (used to capture coordinates).
+*
+* Outputs: none.
+*
+* Return: none.
+*******************************************************/
 void GLWidget::mousePressEvent(QMouseEvent *event)
 {
     if (isBattle)
@@ -1052,6 +1217,18 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
     }
 }
 
+/*******************************************************
+* moveUnit()
+*
+* Description: Handles the "move unit" event triggered
+* by the UI and managed by the mechanics modules.
+*
+* Inputs: Previous and new grid coordinates.
+*
+* Outputs: none.
+*
+* Return: none.
+*******************************************************/
 void GLWidget::moveUnit(int vLocPrev, int hLocPrev, int vLocNext, int hLocNext)
 {
     isEffect = true;
@@ -1078,6 +1255,19 @@ void GLWidget::moveUnit(int vLocPrev, int hLocPrev, int vLocNext, int hLocNext)
     soundBkgnd->play();
 }
 
+/*******************************************************
+* hitUnit()
+*
+* Description: Handles the "hit unit" event triggered
+* by the UI and managed by the mechanics modules.
+*
+* Inputs: Attacker and victim coordinates as well as
+* the damage to be done.
+*
+* Outputs: none.
+*
+* Return: none.
+*******************************************************/
 void GLWidget::hitUnit(int vLocation, int hLocation, int damage, int vAttackerLoc, int hAttackerLoc)
 {
     isEffect = true;
@@ -1097,6 +1287,18 @@ void GLWidget::hitUnit(int vLocation, int hLocation, int damage, int vAttackerLo
     soundBkgnd->play();
 }
 
+/*******************************************************
+* hitUnit()
+*
+* Description: Handles the "kill unit" event triggered
+* by the UI and managed by the mechanics modules.
+*
+* Inputs: Attacker and victim coordinates.
+*
+* Outputs: none.
+*
+* Return: none.
+*******************************************************/
 void GLWidget::killUnit(int vLocation, int hLocation, int vAttackerLoc, int hAttackerLoc)
 {
     isEffect = true;

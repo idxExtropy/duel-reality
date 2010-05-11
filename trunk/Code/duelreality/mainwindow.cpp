@@ -187,11 +187,11 @@ void MainWindow::onAttack()
 
 void MainWindow::onBattleStart()
 {
-    glWidget->unitTest_GenerateContent(); //unitTest
+    //glWidget->unitTest_GenerateContent(); //unitTest
+    //glWidget->LoadContent();
     emit isBattleMode(true);
     emit isGameCfgMode(false);
 }
-
 
 void MainWindow::onBattleEnd()
 {

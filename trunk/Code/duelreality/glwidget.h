@@ -7,6 +7,7 @@
 #include "duelreality.h"
 #include "mechanics.h"
 #include "mainwindow.h"
+#include "test_db.h"
 
 using namespace std;
 
@@ -32,6 +33,7 @@ class GLWidget : public QGLWidget
 
 public:
     GLWidget();
+    void LoadContent(Database db);
     void unitTest_GenerateContent();
     void moveUnit(int vLocPrev, int hLocPrev, int vLocNext, int hLocNext);
     void hitUnit(int vLoc, int hLoc, int damage, int vAttackerLoc, int hAttackerLoc);
@@ -61,8 +63,8 @@ protected:
     void mousePressEvent(QMouseEvent *event);
     void timerEvent(QTimerEvent *event);
     void resizeGL(int width, int height);
-    bool updateUnit(Unit unit);
-    bool drawGridBox(int cellFromBottom, int cellFromLeft);
+    void updateUnit(Unit unit);
+    void drawGridBox(int cellFromBottom, int cellFromLeft);
     bool isGridBoxSelected(int cellFromBottom, int cellFromLeft);
     void initGrid();
     void drawHeaderInfo();
