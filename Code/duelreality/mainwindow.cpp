@@ -385,5 +385,7 @@ void MainWindow::about()
                           "<p>Duel Reality is a turn-based strategy game. "
                           "It is a design project for the "
                           "Software Engineering course, 16.553, "
-                          "at University of Massachusetss, Lowell."));
+                          "at University of Massachusetss, Lowell."
+                          "<p>Duel Reality was designed by Josh Kilgore, "
+                          "Tom Calloway, Ye Tian and Obi Atueyi."));
 }
