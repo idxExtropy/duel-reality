@@ -11,13 +11,13 @@
 using namespace std;
 
 // Constants.
-static const int    DEFAULT_TRANSITION_SECONDS = 2;
-static const int    TITLE_TRANSITION_SECONDS = 3;
-static const int    MOVE_TRANSITION_SECONDS = 1;
-static const int    ATTACK_TRANSITION_SECONDS = 1;
-static const int    EFFECT_NONE = 0;
-static const int    EFFECT_MOVE = 1;
-static const int    EFFECT_ATTACK = 2;
+static const int        DEFAULT_TRANSITION_SECONDS = 2;
+static const int        TITLE_TRANSITION_SECONDS = 3;
+static const int        MOVE_TRANSITION_SECONDS = 1;
+static const int        ATTACK_TRANSITION_SECONDS = 1;
+static const int        EFFECT_NONE = 0;
+static const int        EFFECT_MOVE = 1;
+static const int        EFFECT_ATTACK = 2;
 
 class point
 {
@@ -28,6 +28,8 @@ public:
 
 class GLWidget : public QGLWidget
 {
+    Q_OBJECT
+
 public:
     GLWidget();
     void unitTest_GenerateContent();
@@ -35,13 +37,22 @@ public:
     void hitUnit(int vLoc, int hLoc, int damage, int vAttackerLoc, int hAttackerLoc);
     void killUnit(int vLoc, int hLoc, int vAttackerLoc, int hAttackerLoc);
 
+    // Battle state;
     bool    isBattle;
     Map     battleMap;
     Unit    unit[MAX_MAP_UNITS];
     QString backgroundList[7];
-    Phonon::MediaObject *music;
     bool    isPending;
 
+    // Music.
+    Phonon::MediaObject *music;
+    QString musicTrack;
+
+public slots:
+    void playBackgroundTrack();
+
+private slots:
+    void backgroundTrackFinished();
 
 protected:
     // Functions.
@@ -54,7 +65,6 @@ protected:
     bool drawGridBox(int cellFromBottom, int cellFromLeft);
     bool isGridBoxSelected(int cellFromBottom, int cellFromLeft);
     void initGrid();
-    void setBackgroundTrack(QString trackFileName);
     void drawHeaderInfo();
     void drawGrid();
     void drawUnits();

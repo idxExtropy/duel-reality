@@ -33,8 +33,27 @@ GLWidget::GLWidget()
     backgroundList[5] = "backgrounds/snow.png";
     backgroundList[6] = "backgrounds/townnight.png";
 
+    // Connect music slot.
+    musicTrack = TITLE_AUDIO_TRACK;
+    music = Phonon::createPlayer(Phonon::MusicCategory, Phonon::MediaSource(musicTrack));
+    connect(music, SIGNAL(finished()), SLOT(backgroundTrackFinished()));
+
     // Start the graphics display timer.
     startTimer( GL_TIMER_INTERVAL );
+}
+
+void GLWidget::playBackgroundTrack()
+{
+    // Play current track.
+    music->stop();
+    music->setCurrentSource(Phonon::MediaSource(musicTrack));
+    music->play();
+}
+
+void GLWidget::backgroundTrackFinished()
+{
+    // Restart current track.
+    playBackgroundTrack();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -89,13 +108,6 @@ void GLWidget::updateTitleScreen()
     nameFont.setPointSize(24);
     renderText (GLWidget::width() - 250, vLoc, 0.0, "Duel Reality", nameFont);
     vLoc -= 15;
-
-    // Restart sound track if necessary.
-    if (music->state() == Phonon::StoppedState)
-    {
-        music = Phonon::createPlayer(Phonon::MusicCategory, Phonon::MediaSource(sounds/MainTheme.mp3));
-        music->play();
-    }
 
     // Update event counter.
     iEventCounter++;
@@ -276,7 +288,8 @@ void GLWidget::unitTest_GenerateContent()
     // Initialize the grid.
     initGrid();
 
-    setBackgroundTrack(battleMap.audioFileName);
+    musicTrack = battleMap.audioFileName;
+    playBackgroundTrack();
 
     // Start the battle.
     isBattle = true;
@@ -1021,13 +1034,6 @@ void GLWidget::timerEvent(QTimerEvent *event)
 {
     // Redraw the graphics window.
     updateGL();
-
-    // Restart sound track if necessary.
-    if (music->state() == Phonon::StoppedState)
-    {
-        music = Phonon::createPlayer(Phonon::MusicCategory, Phonon::MediaSource(battleMap.audioFileName));
-        music->play();
-    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1044,13 +1050,6 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
         mouseClick.hLoc = event->x();
         mouseClick.vLoc = (fullHeight / battleMap.gridHeight) - event->y();
     }
-}
-
-void GLWidget::setBackgroundTrack(QString trackFileName)
-{
-    music->stop();
-    music = Phonon::createPlayer(Phonon::MusicCategory, Phonon::MediaSource(trackFileName));
-    music->play();
 }
 
 void GLWidget::moveUnit(int vLocPrev, int hLocPrev, int vLocNext, int hLocNext)
@@ -1074,7 +1073,7 @@ void GLWidget::moveUnit(int vLocPrev, int hLocPrev, int vLocNext, int hLocNext)
     battleMap.gridCell[vLocPrev][hLocPrev].unit->hLocation = -1;
     battleMap.gridCell[vLocPrev][hLocPrev].unit->isPending = false;
 
-    // Play 'ready' sound.
+    // Play 'move' sound.
     QSound *soundBkgnd = new QSound("sounds/Action_Move.wav");
     soundBkgnd->play();
 }
@@ -1093,7 +1092,7 @@ void GLWidget::hitUnit(int vLocation, int hLocation, int damage, int vAttackerLo
     battleMap.gridCell[vAttackerLoc][hAttackerLoc].unit->isPending = false;
     battleMap.gridCell[vAttackerLoc][hAttackerLoc].unit->actionTime = 0;
 
-    // Play 'ready' sound.
+    // Play 'hit' sound.
     QSound *soundBkgnd = new QSound("sounds/Action_Hit.wav");
     soundBkgnd->play();
 }
@@ -1119,7 +1118,7 @@ void GLWidget::killUnit(int vLocation, int hLocation, int vAttackerLoc, int hAtt
     battleMap.gridCell[attack_vLoc][attack_hLoc].unit->hLocation = -1;
     battleMap.gridCell[attack_vLoc][attack_hLoc].unit->isPending = false;
 
-    // Play 'ready' sound.
+    // Play 'hit' sound.
     QSound *soundBkgnd = new QSound("sounds/Action_Hit.wav");
     soundBkgnd->play();
 }
