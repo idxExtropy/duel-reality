@@ -186,6 +186,7 @@ void GLWidget::unitTest_AddUnits()
     unit[4].actionRate = 300;
     unit[4].hitPoints = 90;
     unit[4].totalHitPoints = 90;
+    unit[4].imageFileName = "sprites/berserker.png";
     unit[4].image.load("sprites/berserker.png");
     unit[4].mask_image.load("sprites/mask_berserker.png");
     unit[4].status =UNIT_OK;
@@ -203,6 +204,7 @@ void GLWidget::unitTest_AddUnits()
     unit[5].actionRate = 500;
     unit[5].hitPoints = 70;
     unit[5].totalHitPoints = 70;
+    unit[5].imageFileName = "sprites/valkyrie.png";
     unit[5].image.load("sprites/valkyrie.png");
     unit[5].mask_image.load("sprites/mask_valkyrie.png");
     unit[5].status =UNIT_OK;
@@ -220,6 +222,7 @@ void GLWidget::unitTest_AddUnits()
     unit[6].actionRate = 500;
     unit[6].hitPoints = 70;
     unit[6].totalHitPoints = 70;
+    unit[6].imageFileName = "sprites/knight.png";
     unit[6].image.load("sprites/knight.png");
     unit[6].mask_image.load("sprites/mask_knight.png");
     unit[6].status =UNIT_OK;
@@ -237,6 +240,7 @@ void GLWidget::unitTest_AddUnits()
     unit[7].actionRate = 400;
     unit[7].hitPoints = 60;
     unit[7].totalHitPoints = 60;
+    unit[7].imageFileName = "sprites/bard.png";
     unit[7].image.load("sprites/bard.png");
     unit[7].mask_image.load("sprites/mask_bard.png");
     unit[7].status =UNIT_OK;
@@ -685,7 +689,21 @@ void GLWidget::drawEffects()
         if (iEventCounter / ticksPerSecond >= MOVE_TRANSITION_SECONDS)
         {
             isEffect = false;
-            battleMap.gridCell[move_vLocNext][move_hLocNext].unit->mask_image.load(moveMask);
+
+            for (int i = 0; i < MAX_MAP_UNITS; i++)
+            {
+                if(unit[i].status != NO_UNIT)
+                {
+                    QStringList splitString = unit[i].imageFileName.split("/");
+                    QString maskFileName;
+                    maskFileName.append(splitString[0]);
+                    maskFileName.append("/mask_");
+                    maskFileName.append(splitString[1]);
+
+                    unit[i].mask_image.load(maskFileName);
+                    unit[i].maskFileName = maskFileName;
+                }
+            }
         }
         break;
     case EFFECT_ATTACK:
