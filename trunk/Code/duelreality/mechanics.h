@@ -27,6 +27,7 @@ public:
     void moveUnit();
     void attackUnit();
     int endBattle(int x);
+    void populate();
 
 signals:
  void SignalP1Win();   //signal emited from isGameOVer if P1 Wins
@@ -51,7 +52,6 @@ private:
     bool isOccupied(int x, int y);
     bool isGameOverP1();
     bool isGameOverP2();
-    void populate();
     void checkGameEnd();
     Unit *FocusUnit;
     bool gamerunning;

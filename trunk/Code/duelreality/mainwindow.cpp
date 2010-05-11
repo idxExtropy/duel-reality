@@ -188,7 +188,6 @@ void MainWindow::onAttack()
 void MainWindow::onBattleStart()
 {
     //glWidget->unitTest_GenerateContent(); //unitTest
-    //glWidget->LoadContent();
     emit isBattleMode(true);
     emit isGameCfgMode(false);
 }
@@ -329,7 +328,7 @@ void MainWindow::newGame()
         //soundBkgnd->stop();
 
         soundBattleStart = new QSound("sounds/trumpet.wav");
-        soundBattleStart->play();
+        //soundBattleStart->play();
 
         emit signalGameCfgComplete();
     }
@@ -345,7 +344,7 @@ void MainWindow::loadGame()
         //soundBkgnd->stop();
 
         soundBattleStart = new QSound("sounds/trumpet.wav");
-        soundBattleStart->play();
+       // soundBattleStart->play();
 
         emit signalGameCfgComplete();
     }
