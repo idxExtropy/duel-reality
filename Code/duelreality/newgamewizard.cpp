@@ -5,6 +5,8 @@
 #include "newgamewizard.h"
 #include "glwidget.h"
 
+extern GLWidget *glWidget;
+
 QString NewGameWizard::playerName;
 
 NewGameWizard::NewGameWizard(QWidget *parent)
@@ -39,6 +41,8 @@ NewGameWizard::NewGameWizard(QWidget *parent)
 void NewGameWizard::finishButtonClicked()
 {
     db.activateUser(NewGameWizard::playerName);
+
+    glWidget->LoadContent(db);
 }
 
 void NewGameWizard::nextButtonClicked()
