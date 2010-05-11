@@ -126,4 +126,12 @@ public:
     int     level;
 };
 
+
+class AI : public Player
+{
+public:
+    QString name;               // Player name
+};
+
+
 #endif // GLOBALS_H
