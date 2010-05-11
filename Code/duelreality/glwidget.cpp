@@ -419,8 +419,8 @@ void GLWidget::drawAttack()
 {
     QImage mask_image, image;
 
-    mask_image.load("effects/mask_fireball.png");
-    image.load("effects/fireball.png");
+    mask_image.load("effects/mask_wisp.png");
+    image.load("effects/wisp.png");
 
     // Dynamically define the height and width of the sprite.
     float widthRatio = (float)image.width() / (float)image.height();
