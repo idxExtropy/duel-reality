@@ -9,10 +9,10 @@ int main(int argc, char *argv[])
     Database gamedata;
     if (!gamedata.connection())
         return 1;
-    QString tableSprites="sprites";
+    QString tableSprite="sprite";
     QString tableUser="user";
     QString saveName="save";
-    QString num="1";
+    QString num="3";
     saveName.append(num);
 
     QString userName="Yue";
@@ -33,7 +33,9 @@ int main(int argc, char *argv[])
  //   int numPlayers=gamedata.userCount();
  //   qDebug()<<numPlayers;
 
-    QList<Unit> u;
+
+    // ***************saveUnits() test***************
+    /*QList<Unit> u;
 
     Unit units[2];
     units[0].status = UNIT_OK;
@@ -73,13 +75,63 @@ int main(int argc, char *argv[])
     u<<units[0]<<units[1];
 
 
-    gamedata.saveUnits(userName, u);
+    gamedata.saveUnits(userName, u);*/
 
 
+    // ***************loadUnits() test***************
+
+    /*QList<Unit> load;
+    load = gamedata.loadUnits(userName);
+    qDebug() << load[0].vLocation;
+    qDebug() << load[1].vLocation;*/
 
 
-    gamedata.show(saveName);
-//    gamedata.show(tablePlayers);
+    // ***************loadUser() test***************
+    /*User user = gamedata.loadUser(userName);
+    qDebug() << user.experiencePoints;*/
+
+    // ***************saveLevel() test***************
+    /*gamedata.saveLevel(userName, 2);*/
+
+    // ***************saveXP() test***************
+    /*gamedata.saveXP(userName, 2);*/
+
+    // ***************loadXP() test***************
+    /*qDebug()<<gamedata.loadXP(userName);*/
+
+    // ***************saveUser() test***************
+    /*User user;
+    user.experiencePoints = 1;
+    user.isActive = 0;
+    user.level =7;
+    gamedata.saveUser(userName, user);*/
+
+    // ***************addUser(User user) test***************
+    /*User user;
+    user.experiencePoints = 9;
+    user.isActive = 0;
+    user.level = 3;
+    user.name = "UML";
+    gamedata.addUser(user);*/
+
+    // ***************activateUser() test***************
+    //gamedata.activateUser(userName);
+
+    // ***************deactivateUser() test***************
+    /*gamedata.deactivateUser(userName);*/
+
+    // ***************loadActiveUser() test***************
+    /*User user;
+    user = gamedata.loadActiveUser();
+    qDebug() << user.name;*/
+
+    // ***************spriteFileName() test***************
+    //qDebug()<<gamedata.spriteFileName(12);
+
+    // ***************spriteAttackPower() test***************
+    //qDebug()<<gamedata.spriteAttackPower(1);
+
+    gamedata.show(tableSprite);
 
     return 0;
 }
