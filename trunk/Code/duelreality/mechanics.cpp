@@ -118,12 +118,13 @@ void mechanics::handleAI()
                           }
                           // case 4: glWidget->moveUnit(i,j,i-1,j);break;
                       case 2: if(mechanics::isValidMove(i,j,i,j+moverange))//Move RIGHT
-                          {
+                          {   glWidget->battleMap.gridCell[i][j].unit->faceLeft=false;
                               glWidget->moveUnit(i,j,i,j+moverange);
                           }
                           //      case 6: glWidget->moveUnit(i,j,i-1,j);break;
                       case 3: if(mechanics::isValidMove(i,j,i,j-moverange))//Move LEFT
                           {
+                              glWidget->battleMap.gridCell[i][j].unit->faceLeft=true;
                               glWidget->moveUnit(i,j,i,j-moverange);
                           }
 
@@ -150,8 +151,17 @@ int mechanics::AIAttackCheck(int aiV, int aiH, int range, int power)
                     {
                         if(mechanics::isValidAttack(i,j,range, aiV, aiH, 2,1))      //if I can attak
                         {
+                            if (aiH>j)
+                            {
+                                glWidget->battleMap.gridCell[aiV][aiH].unit->faceLeft=true;
+                            }
+                            if(aiH<=j)
+                            {
+                                glWidget->battleMap.gridCell[aiV][aiH].unit->faceLeft=false;
+                            }
                             if(power<glWidget->battleMap.gridCell[i][j].unit->hitPoints)
                                 {
+
                                 //targv=i; targh=j;
                                glWidget->hitUnit(i,j,power,aiV,aiH);
                                 return 0;
@@ -211,19 +221,19 @@ int mechanics::AImoveCheck(int aiV, int aiH, int range)
 
                         if (aiV>i)                   //ai unitabove target
                         {
-                             a=(abs(aiV-i)*-500);
+                             a=(abs(aiV-i)*-600);
                         }
                         else
                         {
-                             a=(abs(aiH-i)*500); //ai unit below or on same v as target
+                             a=(abs(aiH-i)*600); //ai unit below or on same v as target
                         }
                         if (aiH>j)                  // ai to RIGHT of target
                         {
-                            b = (abs(aiH-j)*-500);
+                            b = (abs(aiH-j)*-600);
                         }
                         else                        //ai to LEFT or same H as Target
                         {
-                             b = (abs(aiH-j)*500);
+                             b = (abs(aiH-j)*600);
                         }
                         val1+=a;
                         val2+=b;
@@ -298,6 +308,14 @@ void mechanics::moveUnit()
             {
                 if(mechanics::isValidMove(i,j,vLocNext,hLocNext))
                 {
+                    if (j>hLocNext)
+                    {
+                        glWidget->battleMap.gridCell[i][j].unit->faceLeft=true;
+                    }
+                    if(j<=hLocNext)
+                    {
+                        glWidget->battleMap.gridCell[i][j].unit->faceLeft=false;
+                    }
                 glWidget->moveUnit(i,j,vLocNext,hLocNext);       //moves from pending to selected!!!
                 }
                 return;
@@ -371,6 +389,14 @@ void mechanics::attackUnit()
             {
                 if(mechanics::isValidAttack( i,j, range, vAttackerLoc, hAttackerLoc, atkteam, glWidget->battleMap.gridCell[i][j].unit->team))
                 {
+                    if (j<=hAttackerLoc)
+                    {
+                        glWidget->battleMap.gridCell[vAttackerLoc][hAttackerLoc].unit->faceLeft=true;
+                    }
+                    if(j>hAttackerLoc)
+                    {
+                        glWidget->battleMap.gridCell[vAttackerLoc][hAttackerLoc].unit->faceLeft=false;
+                    }
                   if (glWidget->battleMap.gridCell[i][j].unit->hitPoints<=glWidget->battleMap.gridCell[vAttackerLoc][hAttackerLoc].unit->attackPower)
                   {
                    glWidget->killUnit(i,j,vAttackerLoc, hAttackerLoc);
@@ -467,3 +493,63 @@ emit signalPlayerLost();
 }
 
 
+void mechanics::populate()
+{
+       int location[MAX_MAP_UNITS][2];
+       QTime midnight(0, 0, 0);
+       qsrand(midnight.secsTo(QTime::currentTime()));
+
+       for(int i=0; i<MAX_MAP_UNITS; i++)
+       {
+           if( i<4)
+            {
+    location[i][0] = qrand() % glWidget->battleMap.cellsTall;
+        location[i][1] = (qrand()% (glWidget->battleMap.cellsWide/2) );
+            }
+            else if (i>=4&&i<8)
+            {
+        location[i][0] = qrand() % glWidget->battleMap.cellsTall;
+        location[i][1] = (qrand()% (glWidget->battleMap.cellsWide/2))+ (glWidget->battleMap.cellsWide/2);
+               }
+             else // in case we feel like populating a rock / tree
+                   {
+        location[i][0] = qrand() % glWidget->battleMap.cellsTall;
+        location[i][1] = (qrand()% (glWidget->battleMap.cellsWide) );
+                   }
+               }
+       glWidget->unit[0].vLocation = location[0][0];
+       glWidget->unit[0].hLocation = location[0][1];
+
+
+       glWidget->unit[1].vLocation = location[1][0];
+       glWidget->unit[1].hLocation = location[1][1];
+
+
+       glWidget->unit[2].vLocation = location[2][0];
+       glWidget->unit[2].hLocation = location[2][1];
+
+
+       glWidget->unit[3].vLocation = location[3][0];
+       glWidget->unit[3].hLocation = location[3][1];
+
+       glWidget->unit[4].vLocation = location[4][0];
+       glWidget->unit[4].hLocation = location[4][1];
+
+
+       glWidget->unit[5].vLocation = location[5][0];
+       glWidget->unit[5].hLocation = location[5][1];
+
+
+       glWidget->unit[6].vLocation = location[6][0];
+       glWidget->unit[6].hLocation = location[6][1];
+
+
+       glWidget->unit[7].vLocation = location[7][0];
+       glWidget->unit[7].hLocation = location[7][1];
+
+       glWidget->unit[8].vLocation = location[8][0];
+       glWidget->unit[8].hLocation = location[8][1];
+
+       glWidget->unit[9].vLocation = location[9][0];
+       glWidget->unit[9].hLocation = location[9][1];
+}

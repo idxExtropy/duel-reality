@@ -51,7 +51,7 @@ private:
     bool isOccupied(int x, int y);
     bool isGameOverP1();
     bool isGameOverP2();
-
+    void populate();
     void checkGameEnd();
     Unit *FocusUnit;
     bool gamerunning;
