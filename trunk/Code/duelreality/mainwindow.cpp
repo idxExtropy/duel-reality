@@ -194,6 +194,11 @@ void MainWindow::onBattleStart()
 
 void MainWindow::onBattleEnd()
 {
+    // Reinitialize the GL Widget.
+    glWidget->isBattle = false;
+    glWidget->musicTrack = TITLE_AUDIO_TRACK;
+    glWidget->playBackgroundTrack();
+
     int activeUserLevel;
 
     emit isBattleMode(false);
