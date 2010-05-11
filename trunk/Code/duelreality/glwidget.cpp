@@ -88,6 +88,9 @@ void GLWidget::LoadContent(Database db)
         unit[i].image.load(unit[i].imageFileName);
         unit[i].mask_image.load(unit[i].maskFileName);
         unit[i].faceLeft = false;
+
+        // Load data (if it makes sense).
+        unit[i].movementRange = myUser.units[i].movementRange;
     }
 
     // Load a background image.
