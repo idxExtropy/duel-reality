@@ -1014,6 +1014,13 @@ void GLWidget::timerEvent(QTimerEvent *event)
 {
     // Redraw the graphics window.
     updateGL();
+
+    // Restart sound track if necessary.
+    if (music->state() == Phonon::StoppedState)
+    {
+        music = Phonon::createPlayer(Phonon::MusicCategory, Phonon::MediaSource(trackFileName));
+        music->play();
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
