@@ -675,15 +675,12 @@ void GLWidget::drawEffects()
         if (iEventCounter / ticksPerSecond >= DEFAULT_TRANSITION_SECONDS)
         {
             isEffect = false;
-            iEventCounter = 0;
         }
         break;
     case EFFECT_MOVE:
         if (iEventCounter / ticksPerSecond >= MOVE_TRANSITION_SECONDS)
         {
             isEffect = false;
-            iEventCounter = 0;
-
             battleMap.gridCell[move_vLocNext][move_hLocNext].unit->mask_image.load("moveMask");
         }
         break;
@@ -691,7 +688,6 @@ void GLWidget::drawEffects()
         if (iEventCounter / ticksPerSecond >= ATTACK_TRANSITION_SECONDS)
         {
             isEffect = false;
-            iEventCounter = 0;
         }
         else
         {
@@ -1419,6 +1415,7 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
 *******************************************************/
 void GLWidget::moveUnit(int vLocPrev, int hLocPrev, int vLocNext, int hLocNext)
 {
+    iEventCounter = 0;
     isEffect = true;
     effectType = EFFECT_MOVE;
     isPending = false;
@@ -1443,7 +1440,7 @@ void GLWidget::moveUnit(int vLocPrev, int hLocPrev, int vLocNext, int hLocNext)
 
     // Remove mask temporarily.
     moveMask = battleMap.gridCell[vLocNext][hLocNext].unit->maskFileName;
-    battleMap.gridCell[vLocNext][hLocNext].unit->mask_image.load("");
+    battleMap.gridCell[move_vLocNext][move_hLocNext].unit->mask_image.load("NO_IMAGE");
 
     // Play 'move' sound.
     QSound *soundBkgnd = new QSound("sounds/Action_Move.wav");
@@ -1465,6 +1462,7 @@ void GLWidget::moveUnit(int vLocPrev, int hLocPrev, int vLocNext, int hLocNext)
 *******************************************************/
 void GLWidget::hitUnit(int vLocation, int hLocation, int damage, int vAttackerLoc, int hAttackerLoc)
 {
+    iEventCounter = 0;
     isEffect = true;
     effectType = EFFECT_ATTACK;
     isPending = false;
@@ -1496,6 +1494,7 @@ void GLWidget::hitUnit(int vLocation, int hLocation, int damage, int vAttackerLo
 *******************************************************/
 void GLWidget::killUnit(int vLocation, int hLocation, int vAttackerLoc, int hAttackerLoc)
 {
+    iEventCounter = 0;
     isEffect = true;
     effectType = EFFECT_ATTACK;
     isPending = false;
