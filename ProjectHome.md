@@ -1,0 +1,1 @@
+This proposal is for a turn based strategy game. Functional as a single player or multi-player combat role-playing game, the game features a two dimensional overhead map and grid.
